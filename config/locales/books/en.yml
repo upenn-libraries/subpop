@@ -1,0 +1,7 @@
+en:
+  activerecord:
+    models:
+      book: Book
+    attributes:
+      book:
+        repository: Current repository

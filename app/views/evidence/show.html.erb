@@ -1,0 +1,97 @@
+<p id="notice"><%= notice %></p>
+
+<% if @evidence.image.present? %>
+  <div class="row">
+    <div class="evidence-image">
+      <%= image_tag @evidence.image.url(:medium), class: 'img-responsive' %>
+    </div>
+  </div>
+<% end %>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :full_name %></div>
+  <div class="col-sm-6 field-value"><%= @book.full_name %></div>
+</div>
+
+<h3>What is it?</h3>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :location_in_book %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.location_name %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :format %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.format_name %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :content_type %></div>
+  <div class="col-sm-6 field-value">
+    <% if @evidence.content_types.present? %>
+      <ul class="list-unstyled">
+        <% @evidence.content_types.each do |ct| %>
+          <li><%= ct.name %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :location_in_book_page %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.location_in_book_page %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :transcription %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.transcription %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :year_when %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.year_when %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :year_start %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.year_start %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :year_end %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.year_end %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :date_narrative %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.date_narrative %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :where %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.where %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :comments %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.comments %></div>
+</div>
+
+  <h3>Provenance Agents</h3>
+
+  <% if @evidence.provenance_agents.present? %>
+    <ul class="list-unstyled">
+    <% @evidence.provenance_agents.each do |agent| %>
+      <div class="row field-group">
+        <div class="col-sm-4 field-label"><%= ProvenanceAgent.role_name agent.role %></div>
+        <div class="col-sm-6 field-value"><%= agent.name.name %></div>
+      </div>
+    <% end %>
+    </ul>
+  <% else %>
+    <p>No provenance agents associated with this evidence.</p>
+  <% end %>
+
+<%= link_to 'Back', book_path(@book), class: 'btn btn-default' %>
+<%= link_to 'Edit', edit_book_evidence_path(@book, @evidence), class: 'btn btn-primary' %>

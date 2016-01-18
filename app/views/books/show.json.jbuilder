@@ -1,0 +1,1 @@
+json.extract! @book, :id, :repository, :owner, :collection, :geo_location, :call_number, :catalog_url, :vol_number, :author, :title, :creation_place, :creation_date, :publisher, :created_at, :updated_at

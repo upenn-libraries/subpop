@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Name: <%= @name.name %></h1>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @name, :name %></div>
+  <div class="col-sm-6 field-value"><%= @name.name %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @name, :year_start %></div>
+  <div class="col-sm-6 field-value"><%= @name.year_start %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @name, :year_end %></div>
+  <div class="col-sm-6 field-value"><%= @name.year_end %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @name, :viaf_id %></div>
+  <div class="col-sm-6 field-value"><%= @name.viaf_id %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @name, :comment %></div>
+  <div class="col-sm-6 field-value"><%= @name.comment %></div>
+</div>
+
+
+<%= link_to 'Back', names_path, class: 'btn btn-default' %>
+<%= link_to 'Edit', edit_name_path(@name), class: 'btn btn-primary' %>

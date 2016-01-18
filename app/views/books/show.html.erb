@@ -1,0 +1,134 @@
+<p id="notice"><%= notice %></p>
+<h2><%= @book.full_name %></h2>
+
+<% if @book.title_pages.present? %>
+  <div class="row">
+    <div class="title-page">
+      <% @book.title_pages.each do |page| %>
+        <%= image_tag page.image.url(:medium), class: 'img-responsive' %><br/>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<h3>Who has it?</h3>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :repository %></div>
+  <div class="col-sm-6 field-value"><%= @book.repository %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :owner %></div>
+  <div class="col-sm-6 field-value"><%= @book.owner %></div>
+</div>
+
+<h3>Where is it?</h3>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :geo_location %></div>
+  <div class="col-sm-6 field-value"><%= @book.geo_location %></div>
+</div>
+
+<h3>How to find it?</h3>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :call_number %></div>
+  <div class="col-sm-6 field-value"><%= @book.call_number %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :vol_number %></div>
+  <div class="col-sm-6 field-value"><%= @book.vol_number %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :catalog_url %></div>
+  <div class="col-sm-6 field-value"><%= @book.catalog_url %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :collection %></div>
+  <div class="col-sm-6 field-value"><%= @book.collection %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :other_id_type %></div>
+  <div class="col-sm-6 field-value"><%= @book.other_id_type %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :other_id %></div>
+  <div class="col-sm-6 field-value"><%= @book.other_id %></div>
+</div>
+
+<h3>What is it?</h3>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book,  :author %></div>
+  <div class="col-sm-6 field-value"><%= @book.author %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :title %></div>
+  <div class="col-sm-6 field-value"><%= @book.title %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :creation_place %></div>
+  <div class="col-sm-6 field-value"><%= @book.creation_place %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :creation_date %></div>
+  <div class="col-sm-6 field-value"><%= @book.creation_date %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :publisher %></div>
+  <div class="col-sm-6 field-value"><%= @book.publisher %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :sammelband %></div>
+  <div class="col-sm-6 field-value"><%= @book.sammelband %></div>
+</div>
+
+
+<h3>Evidence</h3>
+<% if @book.evidence.present? %>
+  <ul class="list-inline">
+    <% @book.evidence.each do |evidence| %>
+      <li><%= image_tag evidence.image.url(:thumb), class: "center-block" %><br/>
+        <%= link_to evidence.format_name, book_evidence_path(@book,evidence) %>
+    <% end %>
+  </ul>
+<% end %>
+
+<div class="row field-group">
+  <h3>Photo queue</h3>
+  <ul class="list-inline">
+    <% @book.photos.each do |photo| %>
+      <li>
+        <%= form_tag "", method: :put do %>
+          <%= image_tag photo.image.url(:thumb), class: "center-block" %><br/>
+          <div class="form-group">
+            <%= hidden_field_tag "format", id: "evidence_format_#{@book.id}_#{photo.id}" %>
+            <%= hidden_field_tag "photo_id", photo.id, id: "photo-#{photo.id}" %>
+            <%= hidden_field_tag "book_id", @book.id, id: "photo-#{photo.id}-book-#{@book.id}" %>
+            <%= label_tag 'use', 'Use image for', class: 'control-label' %><br/>
+            <%= select_tag "use", options_for_select(ApplicationHelper::PHOTO_ASSIGNMENTS), include_blank: true, class: "form-control image-use", id: "use-#{photo.id.to_s}" %>
+          </div>
+
+          <div class="actions">
+            <%= submit_tag 'Go', class: "btn btn-success" %>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+<%= link_to 'Back', books_path, class: 'btn btn-default' %>
+<%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>

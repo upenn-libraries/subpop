@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Names</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @names.each do |name| %>
+      <tr>
+        <td><%= name.name %></td>
+        <td>
+          <%= link_to 'Show', name, class: 'btn btn-default btn-sm' %>
+          <%= link_to 'Edit', edit_name_path(name), class: 'btn btn-primary btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @names %>
+
+<br>
+
+<%= link_to 'New Name', new_name_path, class: 'btn btn-primary' %>

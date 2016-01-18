@@ -1,0 +1,65 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello, world"
+  activerecord:
+    models:
+      book: Book
+      evidence: Evidence
+    attributes:
+      book:
+        repository: Current repository
+        owner: Current owner
+        collection: Current collection
+        geo_location: Geographical location
+        call_number: Call number / Shelf mark
+        catalog_url: URL to catalog
+        vol_number: Volume number
+        author: Author
+        title: Title
+        creation_place: Place of publication / creation
+        creation_date: Date of publication / creation
+        publisher: Publisher / Printer / Scribe
+        other_id_type: Other ID type
+        other_id: Other ID
+      evidence:
+        format: Mark format
+        content_type: Content type
+        location_in_book: Location in book
+        location_in_book_page: Page, folio, signature
+        transcription: Transcription
+        year_when: Year
+        year_start: Year start
+        year_end: Year end
+        date_narrative: Date narrative
+        where: ""
+        comments: ""
+    hints:
+      book:
+        owner: If different from current repository
+      evidence:
+        location_in_book_page: Enter the page, folio, or signature number
+        year_when: Exact year of evidence; e.g., 1876
+        year_start: Beginning of a date range; e.g., 1870
+        year_end: End of a year range; e.g., 1880
+        date_narrative: "Text description of the date; e.g., '22
+          August 1876', 'c. 1875'"

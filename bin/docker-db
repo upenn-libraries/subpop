@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Sample command to connect to a mysql database running in a container
+# You should probably memorize it. Ha ha! Just kidding.
+# Here's the page where I got this:
+#
+#    - https://hub.docker.com/_/mysql/
+#
+
+# docker run -it --link 72e4e053f5b0:mysql --rm mysql sh -c 'exec mysql -h"192.168.99.100" -P"3306" -uroot -p"secret-password"'
+#
+# Here's what all that means:
+#
+#   run: run something
+#   -it: Run an [i]nteractive pseudo-[t]ty
+#
+#   --link: Link an existing container (72e4e053f5b0) to a new
+#       container (mysql)
+#
+#   --rm: Remove the new container (mysql) on exit
+#
+#   -c: the command to run
+
+MYSQL_SERVER_CONTAINER_ID=`docker ps | grep mysql-server | awk '{ print $1 }'`
+if [[ -n "$MYSQL_SERVER_CONTAINER_ID" ]]; then
+    echo "Using MYSQL_SERVER_CONTAINER_ID: $MYSQL_SERVER_CONTAINER_ID:"
+    echo
+    docker ps | egrep "^CONTAINER|mysql-server" | sed 's/^/> /'
+    echo
+else
+    echo "ERROR: couldn't find mysql-server in contain list:"
+    echo
+    docker ps | sed 's/^/> /'
+    echo
+    exit 1
+fi
+NEW_CONTAINER=mysql
+
+DOCKER_MACHINE_IP=`docker-machine ip default`
+echo "DOCKER_MACHINE_IP is $DOCKER_MACHINE_IP"
+MYSQL_PORT=3306
+MYSQL_USER=root
+
+DOCKER_ENV=`dirname $0`/../.docker-environment
+
+if [[ -f $DOCKER_ENV ]]; then
+    source $DOCKER_ENV
+else
+    echo "ERROR: Could not find Docker environment file: $DOCKER_ENV"
+    exit 1
+fi
+
+if [[ -n "$MYSQL_ROOT_PASSWORD" ]]; then
+    :
+else
+    echo "ERROR: Required env var MYSQL_ROOT_PASSWORD not set in $DOCKER_ENV"
+    exit 1
+fi
+
+docker run -it --link $MYSQL_SERVER_CONTAINER_ID:mysql \
+       --rm mysql \
+       sh -c "exec mysql -h\"$DOCKER_MACHINE_IP\" -P\"$MYSQL_PORT\" \-uroot -p\"$MYSQL_ROOT_PASSWORD\""

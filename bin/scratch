@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+alias rails >/dev/null 2>&1 || alias rails="bundle exec rails"
+
+cd `dirname $0`/..
+
+generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
+
+rails g scaffold_controller name \
+      $generator_options
+
+# rails g model provenance_agents \
+#       role:string \
+#       evidence:references \
+#       name:references \
+#       $generator_options
+
+# rails g model name name:string \
+#       year_start:integer \
+#       year_end:integer \
+#       viaf_id:string \
+#       comment:string \
+#       $generator_options
+
+# rails g model evidence_content_type evidence:references \
+#       content_type:references \
+#       $generator_options
+
+# rails g scaffold evidence book:references \
+#       format:string \
+#       content_type:string \
+#       location_in_book:string \
+#       location_in_book_page:string \
+#       transcription:text \
+#       year_when:integer \
+#       year_start:integer \
+#       year_end:integer \
+#       date_narrative:string \
+#       where:string \
+#       comments:text \
+#       $generator_options
+
+# rails g model title_page \
+#       book:references
+
+# rails g model photo \
+#       flickr_id:string \
+#       user_id:integer
+
+# rails g scaffold books \
+#       repository \
+#       owner \
+#       collection \
+#       geo_location \
+#       call_number \
+#       catalog_url \
+#       vol_number \
+#       author \
+#       title \
+#       creation_place \
+#       creation_date:integer \
+#       publisher \
+#       $generator_options

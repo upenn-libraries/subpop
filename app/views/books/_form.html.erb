@@ -1,0 +1,101 @@
+<%= form_for(@book, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+  <% if @book.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        The form contains <%= pluralize(@book.errors.count, "error") %>.
+      </div>
+      <ul>
+        <% @book.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h3>Who has it?</h3>
+
+  <div class="form-group">
+    <%= f.label :repository, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :repository, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :owner, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :owner, class: "form-control" %>
+      <span class="help-block"><%= t 'activerecord.hints.book.owner' %></span>
+    </div>
+  </div>
+
+  <h3>Where is it?</h3>
+
+  <div class="form-group">
+    <%= f.label :geo_location, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :geo_location, class: "form-control" %></div>
+  </div>
+
+  <h3>How to find it?</h3>
+  <div class="form-group">
+    <%= f.label :call_number, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :call_number, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :vol_number, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :vol_number, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :catalog_url, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :catalog_url, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :collection, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :collection, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :other_id_type, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :other_id_type, class: "form-control" %></div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :other_id, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :other_id, class: "form-control" %></div>
+  </div>
+
+  <h3>What is it?</h3>
+
+  <div class="form-group">
+    <%= f.label :author, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :author, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :title, class: "col-sm-3 control-label required" %>
+    <div class="col-sm-8"><%= f.text_field :title, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :creation_place, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :creation_place, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :creation_date, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.number_field :creation_date, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :publisher, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :publisher, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :sammelband, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.check_box :sammelband, class: "form-control" %></div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :images, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= file_field_tag "image[]".to_sym, accept: "image/jpeg", multiple: true %></div>
+  </div>
+
+
+
+  <div class="actions">
+    <%= link_to 'Cancel', books_path, class: "btn btn-default" %>
+    <%= f.submit class: "btn btn-success" %>
+  </div>
+<% end %>

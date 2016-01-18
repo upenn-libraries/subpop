@@ -1,0 +1,115 @@
+<%= form_for [ @book, @evidence ], html: { class: 'form-horizontal' } do |f| %>
+  <% if @evidence.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        The form contains <%= pluralize(@evidence.errors.count, "error") %>.
+      </div>
+      <ul>
+      <% @evidence.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :photo_id %>
+  <%= f.hidden_field :book_id %>
+  <p>
+    <strong>Book</strong>
+    <%= @book.full_name %>
+  </p>
+
+  <h3>What is it?</h3>
+
+  <div class="form-group">
+    <%= f.label :format, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.select :format, Evidence::FORMATS, { include_blank: true }, { class: "form-control" } %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :content_type, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.collection_check_boxes :content_type_ids, ContentType.all.sort, :id, :name do |c| %>
+        <div class="checkbox">
+          <label><%= c.check_box %> <%= c.text %></label><br>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :location_in_book, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.select :location_in_book, Evidence::LOCATIONS, { include_blank: true }, { class: "form-control" } %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :location_in_book_page, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :location_in_book_page, class: "form-control" %>
+      <span class="help-block"><%= t 'activerecord.hints.evidence.location_in_book_page' %></span>
+    </div>
+  </div>
+
+  <h3>What does it say?</h3>
+
+  <div class="form-group">
+    <%= f.label :transcription, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_area :transcription, class: "form-control" %></div>
+  </div>
+
+  <h3>When?</h3>
+
+  <div class="form-group">
+    <%= f.label :year_when, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.number_field :year_when, class: "form-control" %>
+      <span class="help-block"><%= t 'activerecord.hints.evidence.year_when' %></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :year_start, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.number_field :year_start, class: "form-control" %>
+      <span class="help-block"><%= t 'activerecord.hints.evidence.year_start' %></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :year_end, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.number_field :year_end, class: "form-control" %>
+      <span class="help-block"><%= t 'activerecord.hints.evidence.year_end' %></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :date_narrative, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :date_narrative, class: "form-control" %>
+      <span class="help-block"><%= t 'activerecord.hints.evidence.date_narrative' %></span>
+    </div>
+  </div>
+
+  <h3>Where?</h3>
+
+  <div class="form-group">
+    <%= f.label :where, '', class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :where, class: "form-control" %></div>
+  </div>
+
+  <h3>Comments</h3>
+  <div class="form-group">
+    <%= f.label :comments, '', class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_area :comments, class: "form-control" %></div>
+  </div>
+
+  <h3>Provenance</h3>
+  <%= f.fields_for :provenance_agents do |agent| %>
+    <%= render 'provenance_agent_fields', f: agent %>
+  <% end %>
+  <%= link_to_add_fields "Add name", f, :provenance_agents %>
+
+  <div class="actions">
+    <%= link_to 'Cancel', book_path(@book), class: "btn btn-default" %>
+    <%= f.submit class: "btn btn-success" %>
+  </div>
+<% end %>
