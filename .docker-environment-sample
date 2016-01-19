@@ -3,8 +3,8 @@
 # Note that containers will get network hostnames based on their
 # names in the docker-compose.yml file.
 #
-SUBPOP_DB_NAME=sdbm
-SUBPOP_DB_USER=sdbm
+SUBPOP_DB_NAME=fillinwithdbname
+SUBPOP_DB_USER=fillinwithdbuser
 # Provide a password of your choosing.
 SUBPOP_DB_PASSWORD=fillthisin
 SUBPOP_DB_HOST=db
@@ -25,9 +25,14 @@ SUBPOP_EMAIL_EXCEPTIONS_TO=fillthisin
 #
 # In dev, generate keys in Docker container.
 # SUBPOP_BLACKLIGHT_SECRET_KEY=fillthisin
+
+# Used by config/initializers/devise.rb
 # SUBPOP_DEVISE_SECRET_KEY=fillthisin
+
+# Used by config/secrets.yml
 # SUBPOP_SECRET_KEY_BASE=fillthisin
 # SUBPOP_SECRET_TOKEN=fillthisin
+
 # URL for Solr instance
 # SOLR_URL=http://solr:8983/solr/development
 # Used by MySQL docker image to set up MySQL root password

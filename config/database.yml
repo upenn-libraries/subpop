@@ -35,6 +35,8 @@ default: &default
 development:
   <<: *default
   database: subpop
+  password:
+  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -42,6 +44,8 @@ development:
 test:
   <<: *default
   database: subpop_test
+  password:
+  host: localhost
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -64,6 +68,6 @@ test:
 #
 production:
   <<: *default
-  database: subpop
-  username: subpop
-  password: <%= ENV['SUBPOP_DATABASE_PASSWORD'] %>
+  database: <%= ENV['SUBPOP_DB_NAME'] %>
+  username: <%= ENV['SUBPOP_DB_USER'] %>
+  password: <%= ENV['SUBPOP_DB_PASSWORD'] %>
