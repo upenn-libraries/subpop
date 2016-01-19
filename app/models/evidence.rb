@@ -18,6 +18,7 @@ class Evidence < ActiveRecord::Base
   has_attached_file :image,
     styles: {
        medium:   [ '800x800>',   :jpg ],
+       small:    [ '400x400>',   :jpg ],
        thumb:    [ '190x190>',   :jpg ]
     }, convert_options: {
        thumb: "-quality 75 -strip"

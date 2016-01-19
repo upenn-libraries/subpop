@@ -5,6 +5,7 @@ class Photo < ActiveRecord::Base
     styles: {
        original: [ '1800x1800>', :jpg ],
        medium:   [ '800x800>',   :jpg ],
+       small:    [ '400x400>',   :jpg ],
        thumb:    [ '190x190>',   :jpg ]
     }, convert_options: {
        thumb: "-quality 75 -strip"
