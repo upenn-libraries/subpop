@@ -28,10 +28,12 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        params[:image].each do |image|
-          @book.photos.create image: image
+        if params[:image].present?
+          params[:image].each do |image|
+            @book.photos.create image: image
+          end
         end
-        format.html { redirect_to @book, notice: 'Book was successfully created.' }
+          format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
         format.html { render :new }
