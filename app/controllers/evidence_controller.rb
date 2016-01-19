@@ -80,6 +80,6 @@ class EvidenceController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def evidence_params
-      params.require(:evidence).permit(:book_id, :format, :content_type, :location_in_book, :location_in_book_page, :transcription, :year_when, :year_start, :year_end, :date_narrative, :where, :comments, :photo_id, content_type_ids: [], provenance_agents_attributes: [ :id, :name_id, :role ] )
+      params.require(:evidence).permit(:book_id, :format, :content_type, :location_in_book, :location_in_book_page, :transcription, :year_when, :year_start, :year_end, :date_narrative, :where, :comments, :photo_id, content_type_ids: [], provenance_agents_attributes: [ :id, :name_id, :role, :_destroy ] )
     end
 end
