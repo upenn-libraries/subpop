@@ -1,10 +1,16 @@
 class NamesController < ApplicationController
   before_action :set_name, only: [:show, :edit, :update, :destroy]
 
+  autocomplete :name, :name, full: true
+
   # GET /names
   # GET /names.json
   def index
-    @names = Name.order(:name).page params[:page]
+    if params[:search]
+      @names = Name.name_like("%#{params[:search]}%").order('name').page(params[:page])
+    else
+      @names = Name.order(:name).page params[:page]
+    end
   end
 
   # GET /names/1

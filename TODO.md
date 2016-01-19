@@ -8,8 +8,6 @@ Double check field names:
 - Evidence
 
 
-Build name pages
-
 Create context images
 
 When selecting book images, don't delete image attached to book; goes
@@ -21,3 +19,8 @@ Investigate image editing
 Evidence show page:
 
 - Add name information
+
+User support:
+    - Login
+    - Show user's books
+    - Push to Flickr workflow
