@@ -37,4 +37,5 @@ bower.json
 # Ignore some more stuff
 *.bak
 .env.db
+.env
 .docker-environment
