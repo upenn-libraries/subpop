@@ -34,13 +34,6 @@ gem 'rails-jquery-autocomplete'
 
 gem 'devise'
 
-# For Heroku's serving of static assets
-group :production do
-  gem 'rails_12factor'
-  gem 'pg'
-  gem 'puma'
-end
-
 # pagination
 gem 'kaminari'
 
