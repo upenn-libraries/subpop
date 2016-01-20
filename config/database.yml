@@ -68,6 +68,7 @@ test:
 #
 production:
   <<: *default
-  database: <%= ENV['SUBPOP_DB_NAME'] %>
-  username: <%= ENV['SUBPOP_DB_USER'] %>
-  password: <%= ENV['SUBPOP_DB_PASSWORD'] %>
+  adapter: postgresql
+  database:
+  username:
+  password:
