@@ -1,12 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<% if @evidence.image.present? %>
-  <div class="row">
-    <div class="evidence-image">
-      <%= image_tag @evidence.image.url(:small), class: 'img-responsive' %>
-    </div>
-  </div>
-<% end %>
+<% if @evidence.photos.present? -%>
+  <%= render '/photos/small_photos', photos: @evidence.photos %>
+<% end -%>
 
 <h3>Book</h3>
 

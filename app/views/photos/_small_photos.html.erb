@@ -1,0 +1,7 @@
+<% photos.each do |photo| -%>
+<div class="row">
+  <div class="evidence-image">
+    <%= image_tag photo.image.url(:small), class: 'img-responsive' -%>
+  </div>
+</div>
+<% end -%>

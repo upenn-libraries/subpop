@@ -1,10 +1,6 @@
-<% if @evidence.image.present? %>
-  <div class="row">
-    <div class="evidence-image">
-      <%= image_tag @evidence.image.url(:small), class: 'img-responsive' %>
-    </div>
-  </div>
-<% end %>
+<% if @evidence.photos.present? -%>
+  <%= render '/photos/small_photos', photos: @evidence.photos %>
+<% end -%>
 
 <%= form_for [ @book, @evidence ], html: { class: 'form-horizontal' } do |f| %>
   <% if @evidence.errors.any? %>
@@ -20,7 +16,9 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :photo_id %>
+  <% @evidence.photos.each do |photo| -%>
+  <%= f.hidden_field :photo_ids, :multiple => true, :value => photo.id -%>
+  <% end -%>
   <%= f.hidden_field :book_id %>
   <p>
     <strong>Book</strong>

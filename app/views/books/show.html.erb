@@ -5,7 +5,9 @@
   <div class="row">
     <div class="title-page">
       <% @book.title_pages.each do |page| %>
-        <%= image_tag page.image.url(:small), class: 'img-responsive' %><br/>
+      <% page.photos.each do |photo| %>
+        <%= image_tag photo.image.url(:small), class: 'img-responsive' %><br/>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -98,11 +100,14 @@
 <h3>Evidence</h3>
 <% if @book.evidence.present? %>
   <ul class="list-inline">
-    <% @book.evidence.each do |evidence| %>
-      <li><%= image_tag evidence.image.url(:thumb), class: "center-block" %><br/>
-        <%= link_to evidence.format_name, book_evidence_path(@book,evidence) %>
-    <% end %>
-  </ul>
+    <% @book.evidence.each do |evidence| -%>
+    <% evidence.photos.each do |photo| -%>
+    <li><%= image_tag photo.image.url(:thumb), class: "center-block" %><br/>
+      <%= link_to evidence.format_name, book_evidence_path(@book,evidence) %>
+    </li>
+    <% end -%>
+    <% end -%>
+    </ul>
 <% end %>
 
 <div class="row field-group">

@@ -2,7 +2,7 @@ class Evidence < ActiveRecord::Base
   # Temp storage for photo_id for new evidence
   attr_accessor :photo_id
 
-  before_save :set_image
+  before_save :set_photo
 
   belongs_to :book
 
@@ -15,20 +15,10 @@ class Evidence < ActiveRecord::Base
   accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
     reject_if: proc { |attributes| attributes['name_id'].blank? }
 
-  has_attached_file :image,
-    styles: {
-       medium:   [ '800x800>',   :jpg ],
-       small:    [ '400x400>',   :jpg ],
-       thumb:    [ '190x190>',   :jpg ]
-    }, convert_options: {
-       thumb: "-quality 75 -strip"
-    },
-    preserve_files: false
+  has_many :evidence_photos, dependent: :destroy
+  has_many :photos, through: :evidence_photos
 
-  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates_presence_of :book
-
-  process_in_background :image, processing_image_url: "/images/:style/processing.png"
 
   FORMATS = [
              [ 'Binding',                      'binding' ],
@@ -78,10 +68,9 @@ class Evidence < ActiveRecord::Base
 
   private
 
-  def set_image
+  def set_photo
     if photo_id.present?
-      self.image = Photo.find(photo_id).image
+      self.photos << Photo.find(photo_id)
     end
   end
-
 end

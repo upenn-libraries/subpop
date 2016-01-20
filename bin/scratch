@@ -6,8 +6,18 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails g scaffold_controller name \
-      $generator_options
+rails g model evidence_photo \
+  evidence:references \
+  photo:references \
+  $generator_options
+
+# rails g model title_page_photos \
+#   tite_page:references \
+#   photo:references \
+#   $generator_options
+
+# rails g scaffold_controller name \
+#       $generator_options
 
 # rails g model provenance_agents \
 #       role:string \

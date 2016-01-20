@@ -73,7 +73,7 @@ class BooksController < ApplicationController
 
   def add_title_page
     photo = Photo.find params[:photo_id]
-    @title_page = TitlePage.new book: @book, image: photo.image
+    @title_page = TitlePage.new book: @book, photos: [ photo ]
     respond_to do |format|
       if @title_page.save
         format.html { redirect_to @book, notice: 'Add title page.' }

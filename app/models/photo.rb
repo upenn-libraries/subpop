@@ -1,5 +1,7 @@
 class Photo < ActiveRecord::Base
   belongs_to :book
+  has_many :title_page_photos, dependent: :destroy
+  has_many :evidence_photos, dependent: :destroy
 
   has_attached_file :image,
     styles: {

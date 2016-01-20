@@ -18,8 +18,9 @@ class EvidenceController < ApplicationController
   # GET /evidence/new
   def new
     logger.info "=== params: #{params.inspect} ==="
-    @evidence = Evidence.new book: @book, photo_id: params[:photo_id],
-      format: params[:format]
+    @evidence = Evidence.new book: @book, format: params[:format],
+      photos: [ get_photo ]
+    logger.info "\n==== photos is: #{@evidence.photos}"
   end
 
   # GET /evidence/1/edit
@@ -69,6 +70,14 @@ class EvidenceController < ApplicationController
   end
 
   private
+    def get_photo
+      photo = nil
+      if params[:photo_id].present?
+        photo = Photo.find params[:photo_id]
+      end
+      logger.info "\n===== returning photo #{photo}\n"
+      photo
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_evidence
       @evidence = Evidence.find(params[:id])
@@ -80,6 +89,6 @@ class EvidenceController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def evidence_params
-      params.require(:evidence).permit(:book_id, :format, :content_type, :location_in_book, :location_in_book_page, :transcription, :year_when, :year_start, :year_end, :date_narrative, :where, :comments, :photo_id, content_type_ids: [], provenance_agents_attributes: [ :id, :name_id, :role, :_destroy ] )
+      params.require(:evidence).permit(:book_id, :format, :content_type, :location_in_book, :location_in_book_page, :transcription, :year_when, :year_start, :year_end, :date_narrative, :where, :comments, :photos, photo_ids: [], content_type_ids: [], provenance_agents_attributes: [ :id, :name_id, :role, :_destroy ] )
     end
 end

@@ -1,5 +1,6 @@
 class Book < ActiveRecord::Base
-  has_many :photos, dependent: :destroy
+  has_many :book_photos, dependent: :destroy
+  has_many :photos, through: :book_photos
   has_many :title_pages, dependent: :destroy
   has_many :evidence, dependent: :destroy
 
