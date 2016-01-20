@@ -12,12 +12,16 @@
     <%= f.label :role, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <% ProvenanceAgent::ROLES.each do |role| %>
-        <div class="radio">
+        <div class="radio radio-inline">
           <label><%= f.radio_button :role, role[1] %></label> <%= role[0] %>
         </div>
 
       <% end %>
     </div>
   </div>
-  <%= f.label :_destroy, "Remove Question" %>
+  <div class="form-group">
+    <div class="col-sm-8">
+    <label><%= f.check_box :_destroy %> Remove name</label>
+    </div>
+  </div>
 </fieldset>

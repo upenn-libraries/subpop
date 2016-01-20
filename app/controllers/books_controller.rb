@@ -28,10 +28,12 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        params[:image].each do |image|
-          @book.photos.create image: image
+        if params[:image].present?
+          params[:image].each do |image|
+            @book.photos.create image: image
+          end
         end
-        format.html { redirect_to @book, notice: 'Book was successfully created.' }
+          format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
         format.html { render :new }
@@ -44,9 +46,11 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1.json
   def update
     respond_to do |format|
-      if @book.save
-        params[:image].each do |image|
-          @book.photos.create! image: image
+      if @book.update_attributes book_params
+        if params[:image].present?
+          params[:image].each do |image|
+            @book.photos.create! image: image
+          end
         end
         format.html { redirect_to @book, notice: 'Book was successfully updated.' }
         format.json { render :show, status: :ok, location: @book }
@@ -72,8 +76,6 @@ class BooksController < ApplicationController
     @title_page = TitlePage.new book: @book, image: photo.image
     respond_to do |format|
       if @title_page.save
-        # delete the photo, we don't need it anymore
-        photo.destroy
         format.html { redirect_to @book, notice: 'Add title page.' }
         format.json { render :show, status: :ok, location: @book }
       else

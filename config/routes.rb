@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :names, except: :destroy
+  resources :names, except: :destroy do
+    get :autocomplete_name_name, on: :collection
+  end
 
   devise_for :users
   get 'welcome/index'

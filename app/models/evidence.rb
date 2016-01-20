@@ -12,11 +12,13 @@ class Evidence < ActiveRecord::Base
 
   has_many :provenance_agents, dependent: :destroy
   has_many :names, through: :provenance_agents
-  accepts_nested_attributes_for :provenance_agents, allow_destroy: true
+  accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
+    reject_if: proc { |attributes| attributes['name_id'].blank? }
 
   has_attached_file :image,
     styles: {
        medium:   [ '800x800>',   :jpg ],
+       small:    [ '400x400>',   :jpg ],
        thumb:    [ '190x190>',   :jpg ]
     }, convert_options: {
        thumb: "-quality 75 -strip"

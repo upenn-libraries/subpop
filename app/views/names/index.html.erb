@@ -1,6 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Names</h1>
+<h1>Names</h1>
+
+<%= form_tag names_path, :method => "get", id: "search-form", class: "form form-inline" do %>
+<!-- text field tag=action,args,identifier,placeholdertext... -->
+<div class="form-group">
+<%= autocomplete_field_tag 'search', params[:search], autocomplete_name_name_names_path, class: "form-control", placeholder: "Search by name", type: "search" %>
+  <%= submit_tag "Search", class: "btn btn-default" %>
+</div>
+<%end%>
 
 <table class="table table-striped">
   <thead>

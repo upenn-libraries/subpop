@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
@@ -32,6 +33,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails-jquery-autocomplete'
 
 gem 'devise'
+
+# For Heroku's serving of static assets
+group :production do
+  gem 'rails_12factor'
+  gem 'pg'
+end
 
 # pagination
 gem 'kaminari'

@@ -3,10 +3,12 @@
 <% if @evidence.image.present? %>
   <div class="row">
     <div class="evidence-image">
-      <%= image_tag @evidence.image.url(:medium), class: 'img-responsive' %>
+      <%= image_tag @evidence.image.url(:small), class: 'img-responsive' %>
     </div>
   </div>
 <% end %>
+
+<h3>Book</h3>
 
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :full_name %></div>
@@ -78,7 +80,7 @@
   <div class="col-sm-6 field-value"><%= @evidence.comments %></div>
 </div>
 
-  <h3>Provenance Agents</h3>
+  <h3>Provenance</h3>
 
   <% if @evidence.provenance_agents.present? %>
     <ul class="list-unstyled">
