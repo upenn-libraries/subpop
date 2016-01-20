@@ -280,6 +280,7 @@ DEPENDENCIES
   pry-rails
   rails (= 4.2.4)
   rails-jquery-autocomplete
+  rb-fsevent
   rspec-rails
   sass-rails (>= 3.2)
   sdoc (~> 0.4.0)
@@ -290,3 +291,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.11.2
