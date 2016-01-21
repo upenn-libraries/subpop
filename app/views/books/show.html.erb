@@ -1,17 +1,19 @@
 <p id="notice"><%= notice %></p>
 <h2><%= @book.full_name %></h3>
 
-<% if @book.title_pages.present? %>
-  <div class="row">
-    <div class="title-page">
-      <% @book.title_pages.each do |page| %>
-      <% page.photos.each do |photo| %>
-        <%= image_tag photo.image.url(:small), class: 'img-responsive' %><br/>
-        <% end %>
-      <% end %>
-    </div>
+<% content_for :sidebar do -%>
+<% if @book.title_pages.present? -%>
+<div class="row">
+  <div class="title-page">
+    <% @book.title_pages.each do |page| %>
+    <% page.photos.each do |photo| %>
+    <%= image_tag photo.image.url(:small), class: 'img-responsive' %><br/>
+    <% end %>
+    <% end %>
   </div>
-<% end %>
+</div>
+<% end -%>
+<% end -%>
 
 <h3>Who has it?</h3>
 

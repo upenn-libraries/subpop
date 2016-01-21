@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<% content_for :sidebar do -%>
 <% if @evidence.photos.present? -%>
   <%= render '/photos/small_photos', photos: @evidence.photos %>
+<% end -%>
 <% end -%>
 
 <h3>Book</h3>
