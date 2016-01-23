@@ -67,10 +67,10 @@ ERROR
     def connect! options={}
       validates
       creds                 = {}
-      creds[:api_key]       = PopUploader.pop_flickr_api_key
-      creds[:shared_secret] = PopUploader.pop_flickr_shared_secret
-      creds[:access_token]  = PopUploader.pop_flickr_access_token
-      creds[:access_secret] = PopUploader.pop_flickr_access_secret
+      creds[:api_key]       = FlickrClient.flickr_api_key
+      creds[:shared_secret] = FlickrClient.flickr_shared_secret
+      creds[:access_token]  = FlickrClient.flickr_access_token
+      creds[:access_secret] = FlickrClient.flickr_access_secret
 
       client                = FlickrClient.new(creds)
       client.connect

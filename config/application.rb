@@ -34,5 +34,7 @@ module Subpop
     # Use delayed_job for background jobs
     config.active_job.queue_adapter = :delayed_job
 
+    # Make sure the lib dir is autoloaded
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end
