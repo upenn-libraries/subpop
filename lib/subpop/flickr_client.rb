@@ -1,27 +1,82 @@
+# FlickrClient uses FlickRaw for accessing Flickr.
 module Subpop
   class FlickrClient
-    attr_accessor :api_key, :shared_secret, :access_token, :access_secret, :userid
 
 
-    @@flickr_api_key = nil
+    # Flickr API key
+    cattr_accessor :flickr_api_key
+    @@flickr_api_key       = nil
+
+    # Flickr API secret
+    cattr_accessor :flickr_shared_secret
     @@flickr_shared_secret = nil
-    @@lickr_access_token = nil
-    @@lickr_access_secret = nil
 
-    class << self
-      def connect! options={}
-        creds                 = {}
-        creds[:api_key]       = PopUploader.pop_flickr_api_key
-        creds[:shared_secret] = PopUploader.pop_flickr_shared_secret
-        creds[:access_token]  = PopUploader.pop_flickr_access_token
-        creds[:access_secret] = PopUploader.pop_flickr_access_secret
+    # Following items are specific to the POP Flickr user account. SubPOP has
+    # a single Flickr account so we just connect to the one account.
+    #
+    # Flickr access token
+    cattr_accessor :flickr_access_token
+    @@flickr_access_token  = nil
+    # Flickr access secret
+    cattr_accessor :flickr_access_secret
+    @@flickr_access_secret = nil
+    # Flickr user ID; the POP account userid
+    cattr_accessor :flickr_userid
+    @@flickr_userid        = nil
+    # Flickr user name; the POP account user name
+    cattr_accessor :flickr_username
+    @@flickr_username      = nil
 
-        client                = FlickrClient.new(creds)
-        client.connect
-        client
+    @@flickr_required_vars = [
+     :@@flickr_api_key,
+     :@@flickr_shared_secret,
+     :@@flickr_access_token,
+     :@@flickr_access_secret,
+     :@@flickr_userid,
+     :@@flickr_username
+   ]
+
+   # Not going to use rails cattr for this, so we create the getters and setters.
+
+   class << self
+    def setup
+      yield self
+    end
+
+    def validate
+      missing_attributes = []
+      @@flickr_required_vars.each do |var|
+        unless class_variable_get(var)
+          name = var.to_s.sub(/^@@/, '')
+          missing_attributes << "config.#{name} = <%= ENV['#{name.upcase}'] %>"
+        end
       end
 
+      unless missing_attributes.empty?
+        raise <<-ERROR
+Required FlickrClient configuration variable(s) not set. Please set these in
+the FlickrClient initializer:
+
+  #{missing_attributes.join "\n  "}
+
+Please ensure you restarted your application after setting the variables.
+ERROR
+      end
     end
+
+    def connect! options={}
+      validates
+      creds                 = {}
+      creds[:api_key]       = PopUploader.pop_flickr_api_key
+      creds[:shared_secret] = PopUploader.pop_flickr_shared_secret
+      creds[:access_token]  = PopUploader.pop_flickr_access_token
+      creds[:access_secret] = PopUploader.pop_flickr_access_secret
+
+      client                = FlickrClient.new(creds)
+      client.connect
+      client
+    end
+  end
 
     # Create a new FlickrClient; credentials should be a hash of
     # :api_key, :shared_secret, :access_token, :access_secret, and
@@ -37,9 +92,10 @@ module Subpop
     def connect
       FlickRaw.api_key       = api_key
       FlickRaw.shared_secret = shared_secret
-      flickr.access_token    = access_token
-      flickr.access_secret   = access_secret
-      @login                 = flickr.test.login
+      @flickr                = FlickRaw::Flickr.new
+      @flickr.access_token   = access_token
+      @flickr.access_secret  = access_secret
+      @login                 = @flickr.test.login
     end
 
     def to_s
@@ -78,7 +134,7 @@ module Subpop
     #
     #
     def upload file, metadata={}
-      flickr.upload_photo file, metadata
+      @flickr.upload_photo file, metadata
     end
 
     # photo_id (Required)
@@ -134,12 +190,7 @@ module Subpop
     #   abuse on Flickr.
     #
     def delete photo_id
-      begin
-        flickr.photos.delete(photo_id: photo_id)
-      rescue
-        raise PopException, $!.to_s
-      end
-      puts "Deleted photo with ID: #{photo_id}"
+      @flickr.photos.delete(photo_id: photo_id)
     end
   end
 end
