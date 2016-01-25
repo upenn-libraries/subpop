@@ -84,6 +84,9 @@ GEM
     erubis (2.7.0)
     execjs (2.6.0)
     ffi (1.9.10)
+    flickraw (0.9.8)
+    flickraw-cached (20120701)
+      flickraw (>= 0.9)
     formatador (0.2.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -268,6 +271,7 @@ DEPENDENCIES
   delayed_paperclip
   devise
   dotenv-rails
+  flickraw-cached
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails
