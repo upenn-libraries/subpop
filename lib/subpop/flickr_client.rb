@@ -2,6 +2,21 @@
 module Subpop
   class FlickrClient
 
+    # url_s : Square
+    # url_q : Large Square
+    # url_t : Thumbnail
+    # url_m : Small
+    # url_n : Small 320
+    # url   : Medium
+    # url_z : Medium 640
+    # url_c : Medium 800
+    # url_b : Large
+    # url_o : Original
+    # url_profile
+    # url_photopage
+    # url_photoset, url_photosets
+    # url_short, url_short_m, url_short_s, url_short_t
+    # url_photostream
 
     # Flickr API key
     cattr_accessor :flickr_api_key
@@ -48,7 +63,7 @@ module Subpop
       @@flickr_required_vars.each do |var|
         unless class_variable_get(var)
           name = var.to_s.sub(/^@@/, '')
-          missing_attributes << "config.#{name} = <%= ENV['#{name.upcase}'] %>"
+          missing_attributes << "config.#{name} = ENV['#{name.upcase}']"
         end
       end
 
@@ -65,44 +80,20 @@ ERROR
     end
 
     def connect! options={}
-      validates
-      creds                 = {}
-      creds[:api_key]       = FlickrClient.flickr_api_key
-      creds[:shared_secret] = FlickrClient.flickr_shared_secret
-      creds[:access_token]  = FlickrClient.flickr_access_token
-      creds[:access_secret] = FlickrClient.flickr_access_secret
-
-      client                = FlickrClient.new(creds)
+      validate
+      client                = FlickrClient.new
       client.connect
       client
     end
   end
 
-    # Create a new FlickrClient; credentials should be a hash of
-    # :api_key, :shared_secret, :access_token, :access_secret, and
-    # :user_id. The last of these is not require, but can be handy for
-    # constructing user-specific URLs
-    #
-    def initialize credentials={}
-      credentials.each do |k, v|
-        instance_variable_set("@#{k}", v) unless v.nil?
-      end
-    end
-
     def connect
-      FlickRaw.api_key       = api_key
-      FlickRaw.shared_secret = shared_secret
+      FlickRaw.api_key       = FlickrClient.flickr_api_key
+      FlickRaw.shared_secret = FlickrClient.flickr_shared_secret
       @flickr                = FlickRaw::Flickr.new
-      @flickr.access_token   = access_token
-      @flickr.access_secret  = access_secret
+      @flickr.access_token   = FlickrClient.flickr_access_token
+      @flickr.access_secret  = FlickrClient.flickr_access_secret
       @login                 = @flickr.test.login
-    end
-
-    def to_s
-      "FlickrClient api_key=#{api_key && '[HIDDEN]'}..." +
-        "; shared_secret=#{shared_secret && '[HIDDEN]'}..." +
-        "; access_token=#{access_token && '[HIDDEN]'}..." +
-        "; access_secret=#{access_secret && '[HIDDEN]'}..."
     end
 
     # Upload file to Flickr with provided metadata and return the
@@ -135,6 +126,14 @@ ERROR
     #
     def upload file, metadata={}
       @flickr.upload_photo file, metadata
+    end
+
+    def get_info photo_id
+      @flickr.photos.getInfo photo_id: photo_id
+    end
+
+    def url info, url_type
+      FlickRaw.send :url_type, info
     end
 
     # photo_id (Required)
