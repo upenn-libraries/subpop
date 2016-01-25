@@ -1,4 +1,6 @@
 class Evidence < ActiveRecord::Base
+  include Publishable
+
   # Temp storage for photo_id for new evidence
   attr_accessor :photo_id
 

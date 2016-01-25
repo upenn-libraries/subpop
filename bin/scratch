@@ -6,10 +6,13 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails g model evidence_photo \
-  evidence:references \
-  photo:references \
+rails g migration add_flickr_info_to_photos flickr_info:text \
   $generator_options
+
+# rails g model evidence_photo \
+#   evidence:references \
+#   photo:references \
+#   $generator_options
 
 # rails g model title_page_photos \
 #   tite_page:references \

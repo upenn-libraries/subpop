@@ -18,4 +18,8 @@ class Photo < ActiveRecord::Base
 
   process_in_background :image, processing_image_url: "/images/:style/processing.png"
 
+  def image_data
+    Paperclip.io_adapters.for(image)
+  end
+
 end

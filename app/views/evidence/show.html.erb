@@ -95,3 +95,4 @@
 
 <%= link_to 'Back', book_path(@book), class: 'btn btn-default' %>
 <%= link_to 'Edit', edit_book_evidence_path(@book, @evidence), class: 'btn btn-primary' %>
+<%= link_to 'Publish', publish_book_evidence_path(@book, @evidence), method: :put, class: 'btn btn-primary' %>

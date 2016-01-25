@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :books do
     resources :evidence, except: :index do
       get :autocomplete_name_name, :on => :collection
+      put :publish, on: :member
     end
   end
 

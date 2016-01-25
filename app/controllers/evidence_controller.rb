@@ -1,5 +1,5 @@
 class EvidenceController < ApplicationController
-  before_action :set_evidence, only: [:show, :edit, :update, :destroy]
+  before_action :set_evidence, only: [:show, :edit, :update, :publish, :destroy]
   before_action :set_book
 
   autocomplete :name, :name, full: true
@@ -66,6 +66,13 @@ class EvidenceController < ApplicationController
     respond_to do |format|
       format.html { redirect_to evidence_index_url, notice: 'Evidence was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def publish
+    @evidence.publish!
+    respond_to do |format|
+      format.html { redirect_to [@book, @evidence], notice: 'Evidence queued for publication.' }
     end
   end
 
