@@ -1,0 +1,68 @@
+{
+  "id": "24512188721",
+  "secret": "579b82df00",
+  "server": "1455",
+  "farm": 2,
+  "dateuploaded": "1453686832",
+  "isfavorite": 0,
+  "license": "0",
+  "safety_level": "0",
+  "rotation": 0,
+  "originalsecret": "86d502e6c7",
+  "originalformat": "jpg",
+  "owner": {
+    "nsid": "130616888@N02",
+    "username": "popdevelopment",
+    "realname": "Laura Aydelotte",
+    "location": "",
+    "iconserver": "0",
+    "iconfarm": 0,
+    "path_alias": null
+  },
+  "title": "The title",
+  "description": "The description",
+  "visibility": {
+    "ispublic": 1,
+    "isfriend": 0,
+    "isfamily": 0
+  },
+  "dates": {
+    "posted": "1453686832",
+    "taken": "2015-09-02 11:58:53",
+    "takengranularity": "0",
+    "takenunknown": "0",
+    "lastupdate": "1453686836"
+  },
+  "permissions": {
+    "permcomment": 0,
+    "permaddmeta": 0
+  },
+  "views": "0",
+  "editability": {
+    "cancomment": 1,
+    "canaddmeta": 1
+  },
+  "publiceditability": {
+    "cancomment": 0,
+    "canaddmeta": 0
+  },
+  "usage": {
+    "candownload": 1,
+    "canblog": 1,
+    "canprint": 1,
+    "canshare": 1
+  },
+  "comments": "0",
+  "notes": [],
+  "people": {
+    "haspeople": 0
+  },
+  "tags": [],
+  "urls": [
+    {
+      "type": "photopage",
+      "_content": "https://www.flickr.com/photos/130616888@N02/24512188721/"
+    }
+  ],
+  "media": "photo"
+}
