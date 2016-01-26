@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160125015008) do
-
-  create_table "book_photos", force: :cascade do |t|
-    t.integer  "book_id",    limit: 4
-    t.integer  "photo_id",   limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "book_photos", ["book_id"], name: "index_book_photos_on_book_id", using: :btree
-  add_index "book_photos", ["photo_id"], name: "index_book_photos_on_photo_id", using: :btree
+ActiveRecord::Schema.define(version: 20160126191738) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -85,9 +75,14 @@ ActiveRecord::Schema.define(version: 20160125015008) do
     t.string   "image_content_type",    limit: 255
     t.integer  "image_file_size",       limit: 4
     t.datetime "image_updated_at"
+    t.integer  "photo_id",              limit: 4
+    t.string   "flickr_id",             limit: 255
+    t.text     "flickr_info",           limit: 65535
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree
+  add_index "evidence", ["flickr_id"], name: "index_evidence_on_flickr_id", using: :btree
+  add_index "evidence", ["photo_id"], name: "index_evidence_on_photo_id", using: :btree
 
   create_table "evidence_content_types", force: :cascade do |t|
     t.integer  "evidence_id",     limit: 4
@@ -98,16 +93,6 @@ ActiveRecord::Schema.define(version: 20160125015008) do
 
   add_index "evidence_content_types", ["content_type_id"], name: "index_evidence_content_types_on_content_type_id", using: :btree
   add_index "evidence_content_types", ["evidence_id"], name: "index_evidence_content_types_on_evidence_id", using: :btree
-
-  create_table "evidence_photos", force: :cascade do |t|
-    t.integer  "evidence_id", limit: 4
-    t.integer  "photo_id",    limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "evidence_photos", ["evidence_id"], name: "index_evidence_photos_on_evidence_id", using: :btree
-  add_index "evidence_photos", ["photo_id"], name: "index_evidence_photos_on_photo_id", using: :btree
 
   create_table "names", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -122,17 +107,15 @@ ActiveRecord::Schema.define(version: 20160125015008) do
   add_index "names", ["name"], name: "index_names_on_name", unique: true, using: :btree
 
   create_table "photos", force: :cascade do |t|
-    t.string   "flickr_id",          limit: 255
     t.integer  "user_id",            limit: 4
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "image_file_name",    limit: 255
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
     t.integer  "book_id",            limit: 4
     t.boolean  "image_processing"
-    t.text     "flickr_info",        limit: 65535
   end
 
   create_table "provenance_agents", force: :cascade do |t|
@@ -149,27 +132,22 @@ ActiveRecord::Schema.define(version: 20160125015008) do
   create_table "test_table", primary_key: "field_binary", force: :cascade do |t|
   end
 
-  create_table "title_page_photos", force: :cascade do |t|
-    t.integer  "title_page_id", limit: 4
-    t.integer  "photo_id",      limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "title_page_photos", ["photo_id"], name: "index_title_page_photos_on_photo_id", using: :btree
-  add_index "title_page_photos", ["title_page_id"], name: "index_title_page_photos_on_title_page_id", using: :btree
-
   create_table "title_pages", force: :cascade do |t|
     t.integer  "book_id",            limit: 4
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "image_file_name",    limit: 255
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
+    t.integer  "photo_id",           limit: 4
+    t.string   "flickr_id",          limit: 255
+    t.text     "flickr_info",        limit: 65535
   end
 
   add_index "title_pages", ["book_id"], name: "index_title_pages_on_book_id", using: :btree
+  add_index "title_pages", ["flickr_id"], name: "index_title_pages_on_flickr_id", using: :btree
+  add_index "title_pages", ["photo_id"], name: "index_title_pages_on_photo_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -190,16 +168,12 @@ ActiveRecord::Schema.define(version: 20160125015008) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "book_photos", "books"
-  add_foreign_key "book_photos", "photos"
   add_foreign_key "evidence", "books"
+  add_foreign_key "evidence", "photos"
   add_foreign_key "evidence_content_types", "content_types"
   add_foreign_key "evidence_content_types", "evidence"
-  add_foreign_key "evidence_photos", "evidence"
-  add_foreign_key "evidence_photos", "photos"
   add_foreign_key "provenance_agents", "evidence"
   add_foreign_key "provenance_agents", "names"
-  add_foreign_key "title_page_photos", "photos"
-  add_foreign_key "title_page_photos", "title_pages"
   add_foreign_key "title_pages", "books"
+  add_foreign_key "title_pages", "photos"
 end

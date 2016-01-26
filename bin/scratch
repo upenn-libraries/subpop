@@ -6,8 +6,23 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails g migration add_flickr_info_to_photos flickr_info:text \
-  $generator_options
+bin/rails g migration drop_table_book_photos
+
+# bin/rails g migration drop_table_evidence_photos
+
+# bin/rails g migration remove_columns_flickr_id_flickr_info_from_photos \
+#   flickr_id:string \
+#   flickr_info:text
+
+# bin/rails g migration drop_table_title_photos
+
+# bin/rails g migration add_photo_id_to_title_pages \
+#   photo:references \
+#   flickr_id:string \
+#   flickr_info:text
+
+# rails g migration add_flickr_info_to_photos flickr_info:text \
+#   $generator_options
 
 # rails g model evidence_photo \
 #   evidence:references \

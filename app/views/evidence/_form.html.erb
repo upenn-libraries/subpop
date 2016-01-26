@@ -12,9 +12,7 @@
     </div>
   <% end %>
 
-  <% @evidence.photos.each do |photo| -%>
-  <%= f.hidden_field :photo_ids, :multiple => true, :value => photo.id -%>
-  <% end -%>
+  <%= f.hidden_field :photo_id -%>
   <%= f.hidden_field :book_id %>
   <p>
     <strong>Book</strong>

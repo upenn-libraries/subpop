@@ -6,12 +6,11 @@ module Publishable
 
   def publish!
     client = Subpop::FlickrClient.connect!
-    photos.each do |ph|
-      flickr_id = client.upload(ph.image_data, metadata)
-      # ph.flickr_id = flickr_id
-      info = client.get_info flickr_id
-      ph.update_attributes! flickr_id: flickr_id, flickr_info: info.to_json
-    end
+
+    id     = client.upload(photo.image_data, metadata)
+    info   = client.get_info id
+    update_attributes! flickr_id: id, flickr_info: info.to_json
+
     client = nil
   end
 
@@ -19,8 +18,8 @@ module Publishable
 
   def metadata
     {
-      title: "The title",
-      description: "The description",
+      title: "The title: #{Time.now}",
+      description: "The description #{Time.now}",
       is_public: FLICKR_YES
     }
   end

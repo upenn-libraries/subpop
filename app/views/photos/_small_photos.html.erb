@@ -1,12 +1,17 @@
-<% photos.each do |photo| -%>
-<div class="row">
-  <div class=" evidence-image thumbnail">
-    <%= link_to image_tag(photo.image.url(:small), class: 'img-responsive'), photo.image.url(:original), target: '_blank', 'data-toggle' => 'tooltip', title: 'Click to open in new window.' -%>
-    <% if photo.on_flickr? -%>
-    <div class="caption">
-      <p><a target="_blank" href="<%= photo.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
-      </div>
-    <% end -%>
+<% items.each do |item| -%>
+  <% if item.photo.present? && item.photo.image? -%>
+  <div class="row">
+    <div class=" evidence-image thumbnail">
+      <%= link_to image_tag(item.photo.image.url(:small),
+        class: 'img-responsive'), item.photo.image.url(:original),
+        target: '_blank', 'data-toggle' => 'tooltip',
+        title: 'Click to open in new window.' -%>
+      <% if item.on_flickr? -%>
+      <div class="caption">
+        <p><a target="_blank" href="<%= item.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
+        </div>
+      <% end -%>
+    </div>
   </div>
-</div>
+  <% end -%>
 <% end -%>

@@ -1,12 +1,9 @@
 class Evidence < ActiveRecord::Base
   include Publishable
-
-  # Temp storage for photo_id for new evidence
-  attr_accessor :photo_id
-
-  before_save :set_photo
+  include FlickrData
 
   belongs_to :book
+  belongs_to :photo
 
   has_many :evidence_content_types, dependent: :destroy
   has_many :content_types, through: :evidence_content_types
@@ -16,9 +13,6 @@ class Evidence < ActiveRecord::Base
   has_many :names, through: :provenance_agents
   accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
     reject_if: proc { |attributes| attributes['name_id'].blank? }
-
-  has_many :evidence_photos, dependent: :destroy
-  has_many :photos, through: :evidence_photos
 
   validates_presence_of :book
 
@@ -68,11 +62,4 @@ class Evidence < ActiveRecord::Base
     LOCATIONS_BY_CODE[location_in_book]
   end
 
-  private
-
-  def set_photo
-    if photo_id.present?
-      self.photos << Photo.find(photo_id)
-    end
-  end
 end

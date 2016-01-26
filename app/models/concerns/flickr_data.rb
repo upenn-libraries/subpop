@@ -1,4 +1,4 @@
-module FlickrUrls
+module FlickrData
   extend ActiveSupport::Concern
 
   PHOTOSTREAM_URL = 'https://www.flickr.com/photos/'.freeze
@@ -12,5 +12,13 @@ module FlickrUrls
     return nil unless on_flickr?
     nsid = info_hash['owner']['nsid']
     PHOTOSTREAM_URL + nsid + '/'
+  end
+
+  def on_flickr?
+    flickr_info.present?
+  end
+
+  def info_hash
+    on_flickr? and JSON::load(flickr_info)
   end
 end
