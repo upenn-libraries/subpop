@@ -1,3 +1,9 @@
 <h1>New Evidence</h1>
 
+<% content_for :sidebar do -%>
+  <% if @evidence.photos.present? -%>
+    <%= render '/photos/small_photos', photos: @evidence.photos %>
+  <% end -%>
+<% end -%>
+
 <%= render 'form' %>
