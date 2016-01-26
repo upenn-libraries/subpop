@@ -24,8 +24,12 @@ class Photo < ActiveRecord::Base
     Paperclip.io_adapters.for(image)
   end
 
+  def on_flickr?
+    flickr_info.present?
+  end
+
   def info_hash
-    flickr_info.present? and JSON::load(flickr_info)
+    on_flickr? and JSON::load(flickr_info)
   end
 
 end
