@@ -1,8 +1,6 @@
 module Publishable
   extend ActiveSupport::Concern
-
-  FLICKR_YES = 1
-  FLICKR_NO  = 0
+  include FlickrMetadata
 
   def publish!
     client = Subpop::FlickrClient.connect!
@@ -13,14 +11,6 @@ module Publishable
 
     client = nil
   end
-
   handle_asynchronously :publish!
 
-  def metadata
-    {
-      title: "The title: #{Time.now}",
-      description: "The description #{Time.now}",
-      is_public: FLICKR_YES
-    }
-  end
 end
