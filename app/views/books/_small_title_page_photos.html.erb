@@ -1,0 +1,3 @@
+  <% if book.title_pages.present? -%>
+    <%= render '/photos/small_photos', photos: book.title_pages.flat_map{ |t| t.photos.first } %>
+  <% end -%>

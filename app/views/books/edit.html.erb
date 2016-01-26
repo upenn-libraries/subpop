@@ -1,9 +1,7 @@
 <h1>Editing Book</h1>
 
 <% content_for :sidebar do -%>
-  <% if @book.title_pages.present? -%>
-    <%= render '/photos/small_photos', photos: @book.title_pages.flat_map(&:photos) %>
-  <% end -%>
+  <%= render '/books/small_title_page_photos', book: @book -%>
 <% end -%>
 
 <%= render 'form' %>
