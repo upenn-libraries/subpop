@@ -29,8 +29,7 @@ Add hints to fields:
 
 Create context images
 
-When selecting book images, don't delete image attached to book; goes
-for title page and context images too.
+Show names -- show dates too when available
 
 Add ability to remove images from queue when done
 
