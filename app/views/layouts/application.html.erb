@@ -52,7 +52,10 @@
           <div  class="col-md-4">
             <%= yield :sidebar -%>
           </div>
-          <div  class="col-md-8"><%= yield %></div>
+          <div  class="col-md-8">
+            <%= render "/shared/flash_messages", flash: flash %>
+            <%= yield %>
+          </div>
         </div>
       </div>
 
