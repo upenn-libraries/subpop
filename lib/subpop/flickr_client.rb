@@ -133,7 +133,7 @@ ERROR
     end
 
     def url info, url_type
-      FlickRaw.send :url_type, info
+      FlickRaw.send url_type, info
     end
 
     # photo_id (Required)
