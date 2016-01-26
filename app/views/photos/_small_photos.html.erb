@@ -1,9 +1,11 @@
 <% photos.each do |photo| -%>
 <div class="row">
-  <div class="evidence-image">
-    <%= link_to image_tag(photo.image.url(:small), class: 'img-responsive'), photo.image.url(:original), target: '_blank' -%>
+  <div class=" evidence-image thumbnail">
+    <%= link_to image_tag(photo.image.url(:small), class: 'img-responsive'), photo.image.url(:original), target: '_blank', 'data-toggle' => 'tooltip', title: 'Click to open in new window.' -%>
     <% if photo.on_flickr? -%>
-      <p><%= link_to "View on Flickr", photo.photopage_url, target: '_blank'  -%></p>
+    <div class="caption">
+      <p><a target="_blank" href="<%= photo.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
+      </div>
     <% end -%>
   </div>
 </div>
