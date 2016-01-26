@@ -2,17 +2,9 @@
 <h2><%= @book.full_name %></h3>
 
 <% content_for :sidebar do -%>
-<% if @book.title_pages.present? -%>
-<div class="row">
-  <div class="title-page">
-    <% @book.title_pages.each do |page| %>
-    <% page.photos.each do |photo| %>
-    <%= image_tag photo.image.url(:small), class: 'img-responsive' %><br/>
-    <% end %>
-    <% end %>
-  </div>
-</div>
-<% end -%>
+  <% if @book.title_pages.present? -%>
+    <%= render '/photos/small_photos', photos: @book.title_pages.flat_map(&:photos) %>
+  <% end -%>
 <% end -%>
 
 <h3>Who has it?</h3>
