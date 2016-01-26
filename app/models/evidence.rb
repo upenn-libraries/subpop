@@ -59,7 +59,27 @@ class Evidence < ActiveRecord::Base
   end
 
   def location_name
+    return location_in_book_page if location_in_book == 'page_number'
     LOCATIONS_BY_CODE[location_in_book]
   end
 
+  def content_type_names
+    content_types.map(&:name)
+  end
+
+  def evidence_summary
+    [ format_name, content_type_names ].flat_map { |s|
+      s.present? ? s : []
+    }.join ', '
+  end
+
+  def has_date?
+    [ year_when, year_start, year_end ].any? &:present?
+  end
+
+  def date_string
+    return nil unless has_date?
+    return year_when.to_s if year_when.present?
+    [ year_start, year_end ].join '-'
+  end
 end

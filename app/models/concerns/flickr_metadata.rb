@@ -8,9 +8,33 @@ module FlickrMetadata
 
   def metadata
     {
-      title: "The title: #{Time.now}",
-      description: "The description #{Time.now}",
+      title: flickr_title,
+      description: description,
+      tags: flickrize_tags,
       is_public: FLICKR_YES
     }
+  end
+
+  def flickr_title
+    what = if kind_of? Evidence
+      format_name
+    else
+      "#{self.class.underscore.humanize} image"
+    end
+    [ book.full_name, what ].join ': '
+  end
+
+
+  def description
+   ac = ActionController::Base.new()
+   ac.render_to_string('/flickr/description', locals: { item: self, book: book })
+  end
+
+  def flickrize_tags
+    tags.map { |s| "\"#{s}\"" }.join ' '
+  end
+
+  def tags
+    [ "TODO: add tags", "Other tag" ]
   end
 end
