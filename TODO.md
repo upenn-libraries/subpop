@@ -20,7 +20,13 @@ Set up permanent servers:
 Clean up pages; improve layout
 
 Evidence:
-  - Add format_other; for when user selects "other" format type
+
+- Add format_other; for when user selects "other" format type
+- Have `location_in_book_page` show up when user selects page number for
+location
+
+Names:
+- Copy "Create name" to top of index page
 
 Double check fields:
 
