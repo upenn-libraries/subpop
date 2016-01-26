@@ -1,4 +1,6 @@
 class Photo < ActiveRecord::Base
+  include FlickrUrls
+
   belongs_to :book
   has_many :title_page_photos, dependent: :destroy
   has_many :evidence_photos, dependent: :destroy
@@ -20,6 +22,10 @@ class Photo < ActiveRecord::Base
 
   def image_data
     Paperclip.io_adapters.for(image)
+  end
+
+  def info_hash
+    flickr_info.present? and JSON::load(flickr_info)
   end
 
 end
