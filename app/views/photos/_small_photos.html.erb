@@ -1,7 +1,10 @@
 <% photos.each do |photo| -%>
 <div class="row">
   <div class="evidence-image">
-    <%= image_tag photo.image.url(:small), class: 'img-responsive' -%>
+    <%= link_to image_tag(photo.image.url(:small), class: 'img-responsive'), photo.image.url(:original), target: '_blank' -%>
+    <% if photo.on_flickr? -%>
+      <p><%= link_to "View on Flickr", photo.photopage_url, target: '_blank'  -%></p>
+    <% end -%>
   </div>
 </div>
 <% end -%>
