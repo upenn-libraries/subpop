@@ -19,6 +19,9 @@ Set up permanent servers:
 
 Clean up pages; improve layout
 
+Evidence:
+  - Add format_other; for when user selects "other" format type
+
 Double check fields:
 
 - Books
