@@ -26,6 +26,7 @@
 
 default: &default
   adapter: mysql2
+  database: subpop
   encoding: utf8
   pool: 5
   username: root
