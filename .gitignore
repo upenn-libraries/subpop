@@ -38,3 +38,4 @@ bower.json
 .env.db
 .env
 .docker-environment
+.ruby-version
