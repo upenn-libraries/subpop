@@ -6,6 +6,23 @@ COPY Gemfile /subpop/Gemfile
 
 RUN bundle install
 
+RUN gem install foreman
 ADD . /subpop
 
-CMD ["rails", "server"]
+# We're not setting any of the SUBPOP vars; we just need some dummy information
+# so we can precompile the assets.
+RUN SUBPOP_DEVISE_SECRET_KEY=dummy \
+  SUBPOP_FLICKR_API_KEY=dummy \
+  SUBPOP_FLICKR_API_SECRET=dummy \
+  SUBPOP_FLICKR_ACCESS_TOKEN=dummy \
+  SUBPOP_FLICKR_ACCESS_SECRET=dummy \
+  SUBPOP_FLICKR_USERID=dummy \
+  SUBPOP_FLICKR_USERNAME=dummy \
+  SUBPOP_SECRET_KEY_BASE=dummy \
+  SUBPOP_SECRET_TOKEN=dummy \
+  RAILS_ENV=production \
+  bundle exec rake assets:precompile --trace
+
+# CMD ["rails","server","-b","0.0.0.0"]
+# CMD ["rake","jobs:work"]
+# CMD ["foreman","start"]
