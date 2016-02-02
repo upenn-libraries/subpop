@@ -2,3 +2,6 @@ public/system
 log
 .git
 tmp
+.bundle
+vendor/bundle
+Gemfile.lock
