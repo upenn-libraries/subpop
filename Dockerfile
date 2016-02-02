@@ -6,7 +6,6 @@ COPY Gemfile /subpop/Gemfile
 
 RUN bundle install
 
-RUN gem install foreman
 ADD . /subpop
 
 # We're not setting any of the SUBPOP vars; we just need some dummy information
@@ -23,6 +22,6 @@ RUN SUBPOP_DEVISE_SECRET_KEY=dummy \
   RAILS_ENV=production \
   bundle exec rake assets:precompile --trace
 
-# CMD ["rails","server","-b","0.0.0.0"]
+CMD ["rails","server","-b","0.0.0.0"]
 # CMD ["rake","jobs:work"]
 # CMD ["foreman","start"]

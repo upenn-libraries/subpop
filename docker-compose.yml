@@ -12,7 +12,6 @@ web:
     - "3000:3000"
   links:
     - db
-  command: bundle exec rails server -b 0.0.0.0
 
 delayedjob:
   build: .
