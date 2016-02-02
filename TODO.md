@@ -8,8 +8,8 @@ Pushing to Flickr:
  - Publish whole book
  - Online republish if changed
  - Collect and publish metadata
- - Abilty to remove image from Flickr
- - Disply Flickr URL
+ - Ability to remove image from Flickr
+ - Display Flickr URL
 
 ### Unordered list of stuff
 
