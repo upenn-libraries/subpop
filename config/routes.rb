@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :evidence, except: :index do
       get :autocomplete_name_name, :on => :collection
       put :publish, on: :member
+      get :preview, on: :member
     end
   end
 
