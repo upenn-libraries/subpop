@@ -1,17 +1,23 @@
 module FlickrData
   extend ActiveSupport::Concern
 
-  PHOTOSTREAM_URL = 'https://www.flickr.com/photos/'.freeze
+  PHOTOS_URL = 'https://www.flickr.com/photos/'.freeze
 
   def photopage_url
-    return nil unless on_flickr?
-    photostream_url + info_hash['id']
+    "#{photostream_url}/#{info_hash['id']}"
+  end
+
+  def tag_url tag
+    t = tag.kind_of?(String) ? Subpop::Tag.new(tag) : tag
+
+    "#{photostream_url}/tag/#{t.normalize}"
   end
 
   def photostream_url
     return nil unless on_flickr?
     nsid = info_hash['owner']['nsid']
-    PHOTOSTREAM_URL + nsid + '/'
+
+    "#{PHOTOS_URL}#{nsid}"
   end
 
   def on_flickr?
@@ -19,6 +25,6 @@ module FlickrData
   end
 
   def info_hash
-    on_flickr? and JSON::load(flickr_info)
+    @info_hash ||= (on_flickr? and JSON::load(flickr_info))
   end
 end
