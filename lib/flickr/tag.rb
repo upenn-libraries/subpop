@@ -1,4 +1,4 @@
-module Subpop
+module Flickr
   class Tag
     attr_reader :str
 

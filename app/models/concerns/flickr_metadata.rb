@@ -36,6 +36,6 @@ module FlickrMetadata
   end
 
   def tags
-    [ "TODO: add tags", "Other tag" ].map { |s| Subpop::Tag.new(s) }
+    [ "TODO: add tags", "Other tag" ].map { |s| Flickr::Tag.new(s) }
   end
 end

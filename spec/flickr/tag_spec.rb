@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Subpop
+module Flickr
   RSpec.describe Tag do
     context "initialize" do
       it "creates a Tag" do
