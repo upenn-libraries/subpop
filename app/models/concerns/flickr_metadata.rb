@@ -27,7 +27,8 @@ module FlickrMetadata
 
   def description
    ac = ActionController::Base.new()
-   ac.render_to_string('/flickr/description', locals: { item: self, book: book })
+   ac.render_to_string('/flickr/description',
+    locals: { item: self, book: book })
   end
 
   def flickrize_tags
@@ -35,6 +36,6 @@ module FlickrMetadata
   end
 
   def tags
-    [ "TODO: add tags", "Other tag" ]
+    [ "TODO: add tags", "Other tag" ].map { |s| Subpop::Tag.new(s) }
   end
 end
