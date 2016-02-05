@@ -10,17 +10,31 @@ module Flickr
       end
     end
 
-    context "modification" do
+    context "quoting" do
       it "quotes the string" do
-        expect(Tag.new("tag string").quote).to eq("`tag string'")
+        expect(Tag.new("tag string").quote).to eq('"tag string"')
       end
 
       it "single quotes the string" do
-        expect(Tag.new("tag string").squote).to eq("'tag string'")
+        expect(Tag.new("tag string").single_quote).to eq("'tag string'")
       end
 
       it "double quotes the string" do
-        expect(Tag.new("tag string").dquote).to eq('"tag string"')
+        expect(Tag.new("tag string").double_quote).to eq('"tag string"')
+      end
+
+      it "cute quotes the string with ` and '" do
+        expect(Tag.new("tag string").cute_quote).to eq("`tag string'")
+      end
+    end
+
+    context "formatting" do
+      it "leaves raw tags without spaces unchanged" do
+        expect(Tag.new("mytag").flickr_format).to eq("mytag")
+      end
+
+      it "quote raw tags with spaces" do
+        expect(Tag.new("my tag").flickr_format).to eq('"my tag"')
       end
     end
 
