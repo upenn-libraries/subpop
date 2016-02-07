@@ -1,30 +1,26 @@
 module FlickrData
   extend ActiveSupport::Concern
 
-  PHOTOS_URL = 'https://www.flickr.com/photos/'.freeze
-
-  def photopage_url
-    "#{photostream_url}/#{info_hash['id']}"
-  end
-
-  def tag_url tag
-    t = tag.kind_of?(String) ? Subpop::Tag.new(tag) : tag
-
-    "#{photostream_url}/tag/#{t.normalize}"
-  end
-
-  def photostream_url
-    return nil unless on_flickr?
-    nsid = info_hash['owner']['nsid']
-
-    "#{PHOTOS_URL}#{nsid}"
-  end
-
   def on_flickr?
     flickr_info.present?
   end
 
-  def info_hash
-    @info_hash ||= (on_flickr? and JSON::load(flickr_info))
+  def info_obj
+    # don't keep @info_obj if flickr_info is empty?
+    return Flickr::Info.new if flickr_info.blank?
+    @info_obj ||= Flickr::Info.new(flickr_info)
   end
+
+  def respond_to_missing? method, include_private=false
+    info_obj.respond_to?(method, include_private) || super
+  end
+
+  def method_missing method, *args, &block
+    if info_obj.respond_to? method
+      info_obj.send(method, *args, &block)
+    else
+      super
+    end
+  end
+
 end
