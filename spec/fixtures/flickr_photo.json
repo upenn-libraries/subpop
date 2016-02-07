@@ -1,0 +1,150 @@
+{
+  "comments": "1",
+  "dates": {
+    "lastupdate": "1409065196",
+    "posted": "1409060415",
+    "taken": "2014-06-30 06:13:55",
+    "takengranularity": "0"
+  },
+  "dateuploaded": "1409060415",
+  "description": "Penn Libraries call number: BX4630.A1 L46 1615\n<a href=\"http://www.flickr.com/photos/58558794@N07/tags/bx4630a1l461615/\">All images from this book</a>\nPenn Libraries <a href=\"http://franklin.library.upenn.edu/record.html?id=FRANKLIN_6215020\" rel=\"nofollow\">catalog record</a>",
+  "editability": {
+    "canaddmeta": 0,
+    "cancomment": 0
+  },
+  "farm": 6,
+  "id": "15019795936",
+  "isfavorite": 0,
+  "license": "4",
+  "media": "photo",
+  "notes": {
+    "note": []
+  },
+  "originalformat": "jpg",
+  "originalsecret": "a4c023a161",
+  "owner": {
+    "iconfarm": 8,
+    "iconserver": "7337",
+    "location": "",
+    "nsid": "58558794@N07",
+    "path_alias": null,
+    "realname": "POP",
+    "username": "Provenance Online Project"
+  },
+  "people": {
+    "haspeople": 0
+  },
+  "publiceditability": {
+    "canaddmeta": 0,
+    "cancomment": 1
+  },
+  "rotation": 0,
+  "safety_level": "0",
+  "secret": "073b8837aa",
+  "server": "5584",
+  "tags": {
+    "tag": [
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-228796926",
+        "machine_tag": 0,
+        "raw": "BX4630.A1 L46 1615",
+        "text": "bx4630a1l461615"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-48632",
+        "machine_tag": 0,
+        "raw": "Inscriptions",
+        "text": "inscriptions"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-38045448",
+        "machine_tag": 0,
+        "raw": "Jay I. Kislak Collection",
+        "text": "jayikislakcollection"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-66694211",
+        "machine_tag": 0,
+        "raw": "Jesuit inscriptions",
+        "text": "jesuitinscriptions"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-173319",
+        "machine_tag": 0,
+        "raw": "Jesuits",
+        "text": "jesuits"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-141526555",
+        "machine_tag": 0,
+        "raw": "Kislak Center",
+        "text": "kislakcenter"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-37659184",
+        "machine_tag": 0,
+        "raw": "Penn Libraries",
+        "text": "pennlibraries"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-1080226",
+        "machine_tag": 0,
+        "raw": "Provenance",
+        "text": "provenance"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-871924",
+        "machine_tag": 0,
+        "raw": "Identified",
+        "text": "identified"
+      },
+      {
+        "author": "58558794@N07",
+        "authorname": "Provenance Online Project",
+        "id": "58537464-15019795936-142728",
+        "machine_tag": 0,
+        "raw": "Paris (France)",
+        "text": "parisfrance"
+      }
+    ]
+  },
+  "title": "Inscription from the Jesuit College in Paris",
+  "urls": {
+    "url": [
+      {
+        "text": "https://www.flickr.com/photos/58558794@N07/15019795936/",
+        "type": "photopage"
+      }
+    ]
+  },
+  "usage": {
+    "canblog": 0,
+    "candownload": 1,
+    "canprint": 0,
+    "canshare": 1
+  },
+  "views": "185",
+  "visibility": {
+    "isfamily": 0,
+    "isfriend": 0,
+    "ispublic": 1
+  }
+}
