@@ -30,17 +30,17 @@ module Flickr
 
     context "formatting" do
       it "leaves raw tags without spaces unchanged" do
-        expect(Tag.new("mytag").flickr_format).to eq("mytag")
+        expect(Tag.new("tagstring").flickr_format).to eq("tagstring")
       end
 
       it "quote raw tags with spaces" do
-        expect(Tag.new("my tag").flickr_format).to eq('"my tag"')
+        expect(Tag.new("tag string").flickr_format).to eq('"tag string"')
       end
     end
 
     context "normalize" do
       it "removes spaces" do
-        expect(Tag.new("tag string").normalize).to eq("tagstring")
+        expect(Tag.new("tag string  ").normalize).to eq("tagstring")
       end
 
       it "respects diacritics" do
