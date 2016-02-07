@@ -46,6 +46,6 @@ TODO: Add all images from this book URL
 TODO: Handle citation?
 
 <b>FIND IN POP</b>
-TODO: Add tag URLs
-
-TODO: Add tags
+<% item.tags.each do |tag| -%>
+<a href="<%= item.tag_url tag -%>"><%= tag -%></a>
+<% end -%>
