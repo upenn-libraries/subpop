@@ -7,9 +7,16 @@ class Book < ActiveRecord::Base
   accepts_nested_attributes_for :title_pages
 
   def full_name
-    [ repository, call_number, vol_number ].flat_map { |s|
+    [ repository, call_number, volume_name ].flat_map { |s|
       s.present? ? s : []
     }.join ', '
+  end
+  alias :full_call_number :full_name
+
+  def volume_name
+    return nil unless vol_number.present?
+    return vol_number if vol_number =~ /v\.|vol/i
+    "Vol. #{vol_number}"
   end
 
   def full_title
