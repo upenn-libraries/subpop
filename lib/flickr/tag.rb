@@ -1,10 +1,14 @@
 module Flickr
   class Tag
-    attr_reader :raw
+    attr_reader :raw, :author, :authorname, :id, :_content, :machine_tag
 
-    def initialize str
-      # be sure to remove white space
-      @raw = str.strip
+    ALLOWABLE_OPTIONS = [ :raw, :author, :authorname, :id, :_content, :machine_tag ]
+
+    def initialize options
+      options.each do |k,v|
+        var = "@#{k}".to_sym
+        instance_variable_set var, v
+      end
     end
 
     # Return the raw tag string formatted for submission to Flickr. Tags with
@@ -48,10 +52,10 @@ module Flickr
     # Strip out non-alphanumeric characters and downcase to return valid
     # Flickr tag 'text'.
     #
-    #    Tag.new('My tag').normalize     # => "mytag"
-    #    Tag.new('my täg').normalize     # => "mytäg"
-    #    Tag.new("Mike's tag").normalize # => "mikestag"
-    #    Tag.new('my_tag').normalize     # => "mytag"
+    #    Tag.new(raw: 'My tag').normalize     # => "mytag"
+    #    Tag.new(raw: 'my täg').normalize     # => "mytäg"
+    #    Tag.new(raw: "Mike's tag").normalize # => "mikestag"
+    #    Tag.new(raw: 'my_tag').normalize     # => "mytag"
     def normalize
       raw && raw.downcase.gsub(/[^\p{Alnum}]+/, '')
     end
@@ -60,5 +64,32 @@ module Flickr
     def to_s
       raw
     end
+
+    def <=> o
+      s.downcase_raw <=> o.downcase_raw
+    end
+
+    def == o
+      o.class == self.class && o.downcase_raw == downcase_raw
+    end
+    alias_method :eql?, :==
+
+    def hash
+      downcase_raw.hash
+    end
+
+    protected
+    def downcase_raw
+      @raw and @raw.downcase or ''
+    end
+
+    private
+    def validate_options options
+      bad_opts = options.flat_map { |k,v|
+        ALLOWABLE_OPTIONS.include?(k.to_sym) ? [] : k
+      }
+      raise "Illegal option(s): #{bad_opts.join ' '}" unless bad_opts.empty?
+    end
+
   end
 end

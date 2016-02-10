@@ -57,7 +57,7 @@ module FlickrMetadata
       extract_tag(self, attr_chain) || []
     }
 
-    tag_strings.uniq.map { |s| Flickr::Tag.new(s) }
+    tag_strings.uniq.map { |s| Flickr::Tag.new(raw: s) }
   end
 
   # Recursively extract the tag value(s) from ++obj++ using the
