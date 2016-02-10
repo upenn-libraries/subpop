@@ -1,6 +1,6 @@
-# FlickrClient uses FlickRaw for accessing Flickr.
-module Subpop
-  class FlickrClient
+# Flickr::Client uses FlickRaw for accessing Flickr.
+module Flickr
+  class Client
 
     # url_s : Square
     # url_q : Large Square
@@ -69,8 +69,8 @@ module Subpop
 
       unless missing_attributes.empty?
         raise <<-ERROR
-Required FlickrClient configuration variable(s) not set. Please set these in
-the FlickrClient initializer:
+Required Flickr::Client configuration variable(s) not set. Please set these in
+the Flickr::Client initializer:
 
   #{missing_attributes.join "\n  "}
 
@@ -81,18 +81,18 @@ ERROR
 
     def connect! options={}
       validate
-      client                = FlickrClient.new
+      client                = Flickr::Client.new
       client.connect
       client
     end
   end
 
     def connect
-      FlickRaw.api_key       = FlickrClient.flickr_api_key
-      FlickRaw.shared_secret = FlickrClient.flickr_shared_secret
+      FlickRaw.api_key       = Flickr::Client.flickr_api_key
+      FlickRaw.shared_secret = Flickr::Client.flickr_shared_secret
       @flickr                = FlickRaw::Flickr.new
-      @flickr.access_token   = FlickrClient.flickr_access_token
-      @flickr.access_secret  = FlickrClient.flickr_access_secret
+      @flickr.access_token   = Flickr::Client.flickr_access_token
+      @flickr.access_secret  = Flickr::Client.flickr_access_secret
       @login                 = @flickr.test.login
     end
 

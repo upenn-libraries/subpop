@@ -3,7 +3,16 @@ module Publishable
   include FlickrMetadata
 
   def publish!
-    client = Subpop::FlickrClient.connect!
+    if flickr_id.present?
+      republish!
+    else
+      publish_new!
+    end
+  end
+  handle_asynchronously :publish!
+
+  def publish_new!
+    client = Flickr::Client.connect!
 
     id     = client.upload(photo.image_data, metadata)
     info   = client.get_info id
@@ -11,6 +20,13 @@ module Publishable
 
     client = nil
   end
-  handle_asynchronously :publish!
+
+  def republish!
+    client = Flickr::Client.connect!
+
+    client.setTags flickr_id, flickrize_tags
+
+    client = nil
+  end
 
 end
