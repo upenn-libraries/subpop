@@ -132,6 +132,10 @@ ERROR
       @flickr.photos.getInfo photo_id: photo_id
     end
 
+    def set_tags photo_id, tags
+      @flickr.photos.setTags photo_id: photo_id, tags: tags
+    end
+
     def url info, url_type
       FlickRaw.send url_type, info
     end

@@ -24,7 +24,7 @@ module Publishable
   def republish!
     client = Flickr::Client.connect!
 
-    client.setTags flickr_id, flickrize_tags
+    client.set_tags flickr_id, flickrize_tags
 
     client = nil
   end
