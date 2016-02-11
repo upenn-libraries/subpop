@@ -1,14 +1,14 @@
 {
-  "id": "24512188721",
-  "secret": "579b82df00",
-  "server": "1455",
+  "id": "24810167602",
+  "secret": "f87055eff0",
+  "server": "1459",
   "farm": 2,
-  "dateuploaded": "1453686832",
+  "dateuploaded": "1455070889",
   "isfavorite": 0,
   "license": "0",
   "safety_level": "0",
   "rotation": 0,
-  "originalsecret": "86d502e6c7",
+  "originalsecret": "39bb52f97a",
   "originalformat": "jpg",
   "owner": {
     "nsid": "130616888@N02",
@@ -19,19 +19,19 @@
     "iconfarm": 0,
     "path_alias": null
   },
-  "title": "The title",
-  "description": "The description",
+  "title": "Penn Libraries BK 123: Bookplate/Label",
+  "description": "<a href=\"https://www.flickr.com/photos/130616888@N02/tags/pennlibrariesbk123\">All images from this book.</a>\n\n<b>EVIDENCE</b>\n<b>Provenance evidence</b>: Bookplate/Label, Armorial, Monogram\n<b>Location in book</b>: Front Endleaf\n<b>Transcription</b>: George Clifford Thomas ... etc.\n<b>Date</b>: 1902\n<b>Geographic location:</b>: Philadelphia, Pennsylvania\n\n<b>COPY</b>\n<b>Repository</b>: Penn Libraries\n<b>Call number</b>: BK 123\n<b>Volume</b>: 1\n<b>Collection</b>: Bible collection\n<b>Copy title</b>: Holy Bible\n<b>Author(s)</b>: Catholic Church\n<b>Published</b>: Aitken, Philadelphia, 1782\n\n<b>CITATION</b>\nTODO: Handle citation?\n\n<b>FIND IN POP</b>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/pennlibraries\">Penn Libraries</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/pennlibrariesbk123\">Penn Libraries BK 123</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/privatecollector\">Private Collector</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/biblecollection\">Bible collection</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/catholicchurch\">Catholic Church</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/holybible\">Holy Bible</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/philadelphia\">Philadelphia</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/1782\">1782</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/aitken\">Aitken</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/bookplatelabel\">Bookplate/Label</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/armorial\">Armorial</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/monogram\">Monogram</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/frontendleaf\">Front Endleaf</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/1902\">1902</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/philadelphiapennsylvania\">Philadelphia, Pennsylvania</a>\n<a href=\"https://www.flickr.com/photos/130616888@N02/tags/thomasgeorgeclifford18731932\">Thomas, George Clifford, 1873-1932</a>\n",
   "visibility": {
-    "ispublic": 1,
-    "isfriend": 0,
+    "ispublic": 0,
+    "isfriend": 1,
     "isfamily": 0
   },
   "dates": {
-    "posted": "1453686832",
-    "taken": "2015-09-02 11:58:53",
+    "posted": "1455070889",
+    "taken": "2015-09-02 12:00:00",
     "takengranularity": "0",
     "takenunknown": "0",
-    "lastupdate": "1453686836"
+    "lastupdate": "1455070893"
   },
   "permissions": {
     "permcomment": 0,
@@ -57,11 +57,140 @@
   "people": {
     "haspeople": 0
   },
-  "tags": [],
+  "tags": [
+    {
+      "id": "130596540-24810167602-37659184",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Penn Libraries",
+      "_content": "pennlibraries",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-278191489",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Penn Libraries BK 123",
+      "_content": "pennlibrariesbk123",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-11577427",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Private Collector",
+      "_content": "privatecollector",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-18821863",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Bible collection",
+      "_content": "biblecollection",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-19549",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Catholic Church",
+      "_content": "catholicchurch",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-236270",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Holy Bible",
+      "_content": "holybible",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-693",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Philadelphia",
+      "_content": "philadelphia",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-1618777",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "1782",
+      "_content": "1782",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-899524",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Aitken",
+      "_content": "aitken",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-238104414",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Bookplate/Label",
+      "_content": "bookplatelabel",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-578593",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Armorial",
+      "_content": "armorial",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-5169",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Monogram",
+      "_content": "monogram",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-278191499",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Front Endleaf",
+      "_content": "frontendleaf",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-304090",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "1902",
+      "_content": "1902",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-783721",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Philadelphia, Pennsylvania",
+      "_content": "philadelphiapennsylvania",
+      "machine_tag": 0
+    },
+    {
+      "id": "130596540-24810167602-278191509",
+      "author": "130616888@N02",
+      "authorname": "popdevelopment",
+      "raw": "Thomas, George Clifford, 1873-1932",
+      "_content": "thomasgeorgeclifford18731932",
+      "machine_tag": 0
+    }
+  ],
   "urls": [
     {
       "type": "photopage",
-      "_content": "https://www.flickr.com/photos/130616888@N02/24512188721/"
+      "_content": "https://www.flickr.com/photos/130616888@N02/24810167602/"
     }
   ],
   "media": "photo"
