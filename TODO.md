@@ -5,11 +5,12 @@
 
 Pushing to Flickr:
  - Subsequent publishing, doesn't create new Flickr image
+ - Add published_at to Photo
  - Publish whole book
  - Online republish if changed
  - Collect and publish metadata
  - Ability to remove image from Flickr
- - Display Flickr URL
+ X - Display Flickr URL
 
 ### Unordered list of stuff
 
@@ -22,11 +23,15 @@ Clean up pages; improve layout
 Evidence:
 
 - Add format_other; for when user selects "other" format type
-- Have `location_in_book_page` show up when user selects page number for
+- Add citation
+X - Have `location_in_book_page` show up when user selects page number for
 location
 
 Names:
 - Copy "Create name" to top of index page
+
+Book:
+- Copy edit button to top of show page
 
 Double check fields:
 
