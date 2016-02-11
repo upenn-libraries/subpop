@@ -21,14 +21,14 @@ module FlickrMetadata
     location_name
     year_when
     where
+    provenance_agents.name.full_name
     )
 
   def metadata
     {
       title: flickr_title,
       description: description,
-      tags: flickrize_tags,
-      is_public: FLICKR_YES
+      tags: flickrize_tags
     }
   end
 
