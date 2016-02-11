@@ -1,4 +1,4 @@
-TODO: Add all images from this book URL
+<a href="<%= item.tag_url book.full_name -%>">All images from this book.</a>
 
 <% if item.kind_of? Evidence -%>
 <b>EVIDENCE</b>
@@ -25,6 +25,9 @@ TODO: Add all images from this book URL
 <% else -%>
 <b>Call number</b>: <%= book.call_number %>
 <% end -%>
+<% end -%>
+<% if book.volume_name.present? -%>
+<b>Volume</b>: <%= book.vol_number %>
 <% end -%>
 <% if book.collection.present? -%>
 <b>Collection</b>: <%= book.collection %>
