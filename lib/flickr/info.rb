@@ -35,11 +35,11 @@ module Flickr
     end
 
     def nsid
-      owner_data and owner_data['nsid']
+      Flickr::Client.flickr_userid
     end
 
     def owner_data
-      @info['owner']
+      @info and @info['owner']
     end
   end
 end
