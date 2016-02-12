@@ -8,7 +8,7 @@ module Flickr
       validate_options options
       options.each do |k,v|
         var = "@#{k}".to_sym
-        instance_variable_set var, v
+        instance_variable_set var, (v.to_s.strip)
       end
     end
 
