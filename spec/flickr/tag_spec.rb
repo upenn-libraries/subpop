@@ -44,6 +44,12 @@ module Flickr
       it 'creates a tag from hash' do
         expect(Tag.new tag_data).to be_a Tag
       end
+
+      it 'raises an error for bad options' do
+        expect {
+          Tag.new "not_an_option" => "Not an option", "_contentx" => "Content x"
+        }.to raise_error ArgumentError
+      end
     end
 
     context "quoting" do

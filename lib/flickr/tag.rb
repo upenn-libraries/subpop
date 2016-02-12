@@ -5,6 +5,7 @@ module Flickr
     ALLOWABLE_OPTIONS = [ :raw, :author, :authorname, :id, :_content, :machine_tag ]
 
     def initialize options
+      validate_options options
       options.each do |k,v|
         var = "@#{k}".to_sym
         instance_variable_set var, v
@@ -88,7 +89,10 @@ module Flickr
       bad_opts = options.flat_map { |k,v|
         ALLOWABLE_OPTIONS.include?(k.to_sym) ? [] : k
       }
-      raise "Illegal option(s): #{bad_opts.join ' '}" unless bad_opts.empty?
+      unless bad_opts.empty?
+        msg = "Illegal option(s): #{bad_opts.join ' '}"
+        raise ArgumentError.new(msg)
+      end
     end
 
   end
