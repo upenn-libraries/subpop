@@ -85,6 +85,10 @@ module Flickr
     end
 
     private
+    # Make sure the options to Tag::new are valid.
+    #
+    # NB: This will break if Flickr changes the content of the tag information
+    # section.
     def validate_options options
       bad_opts = options.flat_map { |k,v|
         ALLOWABLE_OPTIONS.include?(k.to_sym) ? [] : k
