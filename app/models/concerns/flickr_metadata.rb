@@ -41,7 +41,6 @@ module FlickrMetadata
     [ book.full_name, what ].join ': '
   end
 
-
   def description
    ac = ActionController::Base.new()
    ac.render_to_string('/flickr/description',
@@ -49,10 +48,10 @@ module FlickrMetadata
   end
 
   def flickrize_tags
-    tags.map { |s| "\"#{s}\"" }.join ' '
+    tags_from_object.map { |s| "\"#{s}\"" }.join ' '
   end
 
-  def tags
+  def tags_from_object
     tag_strings = TAG_ATTRS.flat_map { |attr_chain|
       extract_tag(self, attr_chain) || []
     }

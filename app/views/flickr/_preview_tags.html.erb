@@ -1,6 +1,6 @@
 
 <ul>
-<% item.tags.each do |tag| -%>
+<% item.tags_from_object.each do |tag| -%>
     <li><%= tag -%>: <%= tag.normalize -%>
 <% end -%>
 </ul>
