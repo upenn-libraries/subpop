@@ -1,8 +1,6 @@
 module Publishable
   extend ActiveSupport::Concern
   include FlickrMetadata
-  include FlickrData
-
 
   def publish!
     if flickr_id.present?
@@ -30,5 +28,4 @@ module Publishable
 
     client = nil
   end
-
 end

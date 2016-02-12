@@ -2,6 +2,7 @@
 # for publication to Flickr.
 module FlickrMetadata
   extend ActiveSupport::Concern
+  include FlickrData
 
   FLICKR_YES = 1
   FLICKR_NO  = 0
