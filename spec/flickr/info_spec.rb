@@ -28,26 +28,26 @@ module Flickr
 
     context "accessor methods" do
       it "has a photo ID" do
-        expect(subject.photo_id).to eq("15019795936")
+        expect(subject.photo_id).to eq("24810167602")
       end
 
       it 'has an nsid' do
-        expect(subject.nsid).to eq('58558794@N07')
+        expect(subject.nsid).to eq('130616888@N02')
       end
     end
 
     context "urls" do
       it "creates a photostream URL" do
         # "#{PHOTOS_URL}#{nsid}"
-        expect(info.photostream_url).to eq('https://www.flickr.com/photos/58558794@N07')
+        expect(info.photostream_url).to eq('https://www.flickr.com/photos/130616888@N02')
       end
 
       it "creates a photopage URL" do
-        expect(subject.photopage_url).to eq('https://www.flickr.com/photos/58558794@N07/15019795936')
+        expect(subject.photopage_url).to eq('https://www.flickr.com/photos/130616888@N02/24810167602')
       end
 
       it 'creates a tag URL' do
-        expect(subject.tag_url("tag value")).to eq('https://www.flickr.com/photos/58558794@N07/tag/tagvalue')
+        expect(subject.tag_url("tag value")).to eq('https://www.flickr.com/photos/130616888@N02/tags/tagvalue')
       end
     end
   end

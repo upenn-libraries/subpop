@@ -19,7 +19,11 @@ module Flickr
     def tag_url flickr_tag
       tag = flickr_tag.is_a?(Tag) ? flickr_tag : Tag.new(raw: flickr_tag)
 
-      "#{photostream_url}/tag/#{tag.normalize}"
+      "#{photostream_url}/tags/#{tag.normalize}"
+    end
+
+    def tags_from_flickr
+      @info['tags'].map { |data| Tag.new data }
     end
 
     def photostream_url
