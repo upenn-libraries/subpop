@@ -60,10 +60,13 @@ module Flickr
     def normalize
       raw && raw.downcase.gsub(/[^\p{Alnum}]+/, '')
     end
-    alias :text :normalize
 
     def to_s
       raw
+    end
+
+    def text
+      @_content || normalize
     end
 
     def <=> o

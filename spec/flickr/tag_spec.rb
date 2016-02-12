@@ -97,5 +97,16 @@ module Flickr
         expect(Tag.new(raw: "tag,;@!'\"?.string").normalize).to eq("tagstring")
       end
     end
+
+    context 'text' do
+      it "returns normalize if _content not defined" do
+        expect(Tag.new(raw: "my tag").text).to eq("mytag")
+      end
+
+      it 'returns _content if it is defined' do
+        expect(Tag.new(raw: "my tag", _content: "othervalue").text).to eq("othervalue")
+      end
+    end
+
   end
 end
