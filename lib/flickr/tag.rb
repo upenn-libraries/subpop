@@ -8,7 +8,8 @@ module Flickr
       validate_options options
       options.each do |k,v|
         var = "@#{k}".to_sym
-        instance_variable_set var, (v.to_s.strip)
+        val = v.kind_of?(String) ? v.strip : v
+        instance_variable_set var, val
       end
     end
 
