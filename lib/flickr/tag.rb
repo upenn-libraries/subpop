@@ -67,6 +67,8 @@ module Flickr
     end
 
     def text
+      # if the flickr tag _content value is present return that; otherwise,
+      # generate a _content value using  #normalize
       @_content || normalize
     end
 
@@ -75,7 +77,8 @@ module Flickr
     end
 
     def == o
-      o.class == self.class && o.downcase_raw == downcase_raw
+      # compare the text values; this is a more accurate comparison of tags
+      o.class == self.class && o.text == text
     end
     alias_method :eql?, :==
 
