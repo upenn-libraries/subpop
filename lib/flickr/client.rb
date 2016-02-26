@@ -49,43 +49,41 @@ module Flickr
      :@@flickr_access_secret,
      :@@flickr_userid,
      :@@flickr_username
-   ]
+    ]
 
-   # Not going to use rails cattr for this, so we create the getters and setters.
+    class << self
+      def setup
+        yield self
+      end # setup
 
-   class << self
-    def setup
-      yield self
-    end
+      def validate
+        missing_attributes = []
+        @@flickr_required_vars.each do |var|
+          unless class_variable_get(var)
+            name = var.to_s.sub(/^@@/, '')
+            missing_attributes << "config.#{name} = ENV['#{name.upcase}']"
+          end # unless
+        end # @@flickr_required_vars.each
 
-    def validate
-      missing_attributes = []
-      @@flickr_required_vars.each do |var|
-        unless class_variable_get(var)
-          name = var.to_s.sub(/^@@/, '')
-          missing_attributes << "config.#{name} = ENV['#{name.upcase}']"
-        end
-      end
+        unless missing_attributes.empty?
+          raise <<-ERROR
+          Required Flickr::Client configuration variable(s) not set. Please set these
+          in the Flickr::Client initializer:
 
-      unless missing_attributes.empty?
-        raise <<-ERROR
-Required Flickr::Client configuration variable(s) not set. Please set these in
-the Flickr::Client initializer:
+            #{missing_attributes.join "\n  "}
 
-  #{missing_attributes.join "\n  "}
+          Please ensure you restarted your application after setting the variables.
+          ERROR
+        end # unless
+      end # validate
 
-Please ensure you restarted your application after setting the variables.
-ERROR
-      end
-    end
-
-    def connect! options={}
-      validate
-      client                = Flickr::Client.new
-      client.connect
-      client
-    end
-  end
+      def connect! options={}
+        validate
+        client                = Flickr::Client.new
+        client.connect
+        client
+      end # connect!
+    end # class << self
 
     def connect
       FlickRaw.api_key       = Flickr::Client.flickr_api_key
