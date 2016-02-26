@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
@@ -71,6 +71,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'dotenv-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 # Access an IRB console on exception pages or by using <%= console %> in views

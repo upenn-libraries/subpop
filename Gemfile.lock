@@ -61,6 +61,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.0)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
@@ -83,6 +84,11 @@ GEM
       railties (>= 4.0, < 5.1)
     erubis (2.7.0)
     execjs (2.6.0)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.6.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     ffi (1.9.10)
     flickraw (0.9.8)
     flickraw-cached (20120701)
@@ -267,10 +273,12 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   byebug
   coffee-rails (~> 4.1.0)
+  database_cleaner
   delayed_job_active_record
   delayed_paperclip
   devise
   dotenv-rails
+  factory_girl_rails
   flickraw-cached
   guard-rspec
   jbuilder (~> 2.0)
