@@ -108,5 +108,32 @@ module Flickr
       end
     end
 
+    context 'equals' do
+      it 'says two tags are equal if the raw is the same' do
+        expect(Tag.new raw: 'a').to eq(Tag.new(raw: 'a'))
+      end
+
+      it 'says two tags are equal if the content equals the text' do
+        expect(Tag.new _content: 'a').to eq(Tag.new raw: 'a')
+      end
+
+      it 'says a flickr tag equals an ad hoc tag' do
+        expect(subject).to eq(Tag.new raw: 'Penn Libraries')
+      end
+    end
+
+    context 'tag sets' do
+      it 'subtracts one set from another' do
+        a  = Tag.new raw: 'a'
+        b  = Tag.new raw: 'b'
+        # We want two distinct tags that are equivalent
+        c1 = Tag.new raw: 'c'
+        c2 = Tag.new raw: 'c'
+        d  = Tag.new raw: 'd'
+        set1 = [ a, b, c1 ]
+        set2 = [ c2, d ]
+        expect(set1 - set2).to eq([ a, b ])
+      end
+    end
   end
 end
