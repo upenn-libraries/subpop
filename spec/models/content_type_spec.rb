@@ -1,5 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ContentType, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject(:subject) { ContentType.create! }
+
+  context 'initialize' do
+    it 'creates a ContentType' do
+      expect(subject).to be_a ContentType
+    end
+  end
 end
