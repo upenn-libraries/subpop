@@ -49,4 +49,6 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+  Dir[Rails.root.join("spec/models/shared_examples/**/*.rb")].each {|f| require f}
+  Dir[Rails.root.join("spec/controllers/shared_examples/**/*.rb")].each {|f| require f}
 end
