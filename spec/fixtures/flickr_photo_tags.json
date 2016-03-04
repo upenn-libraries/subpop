@@ -59,15 +59,7 @@
   },
   "tags": [
     {
-      "id": "130596540-25425808545-282907696",
-      "author": "130616888@N02",
-      "authorname": "popdevelopment",
-      "raw": "Penn Libraries Folio DA670.C8 G55 1817",
-      "_content": "pennlibrariesfolioda670c8g551817",
-      "machine_tag": 0
-    },
-    {
-      "id": "130596540-25425808545-37659184",
+      "id": "130596540-24810167602-37659184",
       "author": "130616888@N02",
       "authorname": "popdevelopment",
       "raw": "Penn Libraries",
@@ -75,59 +67,27 @@
       "machine_tag": 0
     },
     {
-      "id": "130596540-25425808545-276598",
+      "id": "130596540-24810167602-278191489",
       "author": "130616888@N02",
       "authorname": "popdevelopment",
-      "raw": "RBC",
-      "_content": "rbc",
+      "raw": "Penn Libraries BK 123",
+      "_content": "pennlibrariesbk123",
       "machine_tag": 0
     },
     {
-      "id": "130596540-25425808545-282923871",
+      "id": "130596540-24810167602-236270",
       "author": "130616888@N02",
       "authorname": "popdevelopment",
-      "raw": "Gilbert, C. S. (Charles Sandoe), 1760-1831",
-      "_content": "gilbertcscharlessandoe17601831",
+      "raw": "My book title",
+      "_content": "mybooktitle",
       "machine_tag": 0
     },
     {
-      "id": "130596540-25425808545-14969117",
+      "id": "130596540-24810167602-1618777",
       "author": "130616888@N02",
       "authorname": "popdevelopment",
-      "raw": "Plymouth-Dock",
-      "_content": "plymouthdock",
-      "machine_tag": 0
-    },
-    {
-      "id": "130596540-25425808545-223991220",
-      "author": "130616888@N02",
-      "authorname": "popdevelopment",
-      "raw": "1817-1820",
-      "_content": "18171820",
-      "machine_tag": 0
-    },
-    {
-      "id": "130596540-25425808545-282923881",
-      "author": "130616888@N02",
-      "authorname": "popdevelopment",
-      "raw": "J. Cogdon",
-      "_content": "jcogdon",
-      "machine_tag": 0
-    },
-    {
-      "id": "130596540-25425808545-103837",
-      "author": "130616888@N02",
-      "authorname": "popdevelopment",
-      "raw": "Inscription",
-      "_content": "inscription",
-      "machine_tag": 0
-    },
-    {
-      "id": "130596540-25425808545-83725966",
-      "author": "130616888@N02",
-      "authorname": "popdevelopment",
-      "raw": "Bernard Quaritch (Firm)",
-      "_content": "bernardquaritchfirm",
+      "raw": "Not in object",
+      "_content": "notinobject",
       "machine_tag": 0
     }
   ],

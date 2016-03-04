@@ -1,7 +1,9 @@
 # This will guess the User class
 FactoryGirl.define do
   factory :book do
-    title "My book title"
+    repository 'Penn Libraries'
+    call_number 'BK 123'
+    title 'My book title'
   end
 
   # This will use the User class (Admin would have been guessed)

@@ -50,5 +50,5 @@ TODO: Handle citation?
 
 <b>FIND IN POP</b>
 <% item.tags_from_object.each do |tag| -%>
-<a href="<%= item.tag_url tag -%>"><%= tag -%></a>
+<a href="<%= item.tag_url tag.text -%>"><%= tag.raw -%></a>
 <% end -%>

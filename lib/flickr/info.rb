@@ -22,7 +22,9 @@ module Flickr
       "#{photostream_url}/tags/#{tag.normalize}"
     end
 
-    def tags_from_flickr
+    def tags_on_flickr
+      return [] if @info.nil?
+      return [] if @info['tags'].nil?
       @info['tags'].map { |data| Tag.new data }
     end
 

@@ -95,7 +95,7 @@ module Flickr
     end
 
     # Upload file to Flickr with provided metadata and return the
-    # Flickr ID of the new photo. Metadata is hash containing any of
+    # Flickr ID of the new photo. Data is hash containing any of
     # the allowed Flickr upload arguments (see
     # https://www.flickr.com/services/api/upload.api.html):
     #
@@ -122,8 +122,8 @@ module Flickr
     #   from public searches.
     #
     #
-    def upload file, metadata={}
-      @flickr.upload_photo file, metadata
+    def upload file, data={}
+      @flickr.upload_photo file, data
     end
 
     def get_info photo_id
@@ -134,8 +134,26 @@ module Flickr
       @flickr.photos.setTags photo_id: photo_id, tags: tags
     end
 
+    def set_meta photo_id, metadata
+      @flickr.photos.setMeta({ photo_id: photo_id }.merge(metadata))
+    end
+
     def url info, url_type
       FlickRaw.send url_type, info
+    end
+
+    def remove_tag tag
+      @flickr.photos.removeTag tag_id: tag.id
+    end
+
+    def add_tags tags
+      tags.each do |tag|
+
+      end
+    end
+
+    def flickr
+      @flickr
     end
 
     # photo_id (Required)

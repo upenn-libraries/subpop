@@ -36,5 +36,6 @@ module Subpop
 
     # Make sure the lib dir is autoloaded
     config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{Rails.root}app/jobs)
   end
 end

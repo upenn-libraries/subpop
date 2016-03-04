@@ -86,6 +86,10 @@ module Flickr
       downcase_raw.hash
     end
 
+    def to_s
+      inspect
+    end
+
     protected
     def downcase_raw
       @raw and @raw.downcase or ''
