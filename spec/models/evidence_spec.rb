@@ -35,5 +35,15 @@ RSpec.describe Evidence, type: :model do
       evidence.valid?
       expect(evidence.errors[:format_other].size).to eq 1
     end
+
+    it "is not valid if location is 'page_number' and location_in_book_page is blank" do
+      expect(build(:evidence, location_in_book: 'page_number', location_in_book_page: nil)).not_to be_valid
+    end
+
+    it "has an error on location_in_book_page if it is blank and location is 'page_number'" do
+      evidence = build(:evidence, location_in_book: 'page_number', location_in_book_page: nil)
+      evidence.valid?
+      expect(evidence.errors[:location_in_book_page].size).to eq 1
+    end
   end
 end

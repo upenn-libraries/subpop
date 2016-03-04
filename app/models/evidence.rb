@@ -15,6 +15,7 @@ class Evidence < ActiveRecord::Base
 
   validates_presence_of :book
   validates_presence_of :format_other, if: :has_other_format?
+  validates_presence_of :location_in_book_page, if: :located_on_page?
 
   FORMATS = [
              [ 'Binding',                      'binding' ],
@@ -80,6 +81,10 @@ class Evidence < ActiveRecord::Base
 
   def has_other_format?
     format == 'other'
+  end
+
+  def located_on_page?
+    location_in_book == 'page_number'
   end
 
   def date_string
