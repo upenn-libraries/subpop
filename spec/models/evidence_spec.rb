@@ -53,5 +53,13 @@ RSpec.describe Evidence, type: :model do
       evidence.valid?
       expect(evidence.errors[:location_in_book_page].size).to eq 1
     end
+
+    it "is not valid if location is not 'page_number' but location_in_book_page has a value" do
+      expect(build(:evidence, location_in_book: 'front_cover', location_in_book_page: 'some page')).not_to be_valid
+    end
+
+    it 'is valid if location_in_book_page is present and location is "page_number"' do
+      expect(build(:evidence, location_in_book: 'page_number', location_in_book_page: 'page 6')).to be_valid
+    end
   end
 end
