@@ -13,9 +13,9 @@ class Evidence < ActiveRecord::Base
   accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
     reject_if: proc { |attributes| attributes['name_id'].blank? }
 
-  validates_presence_of :book
-  validates_presence_of :format_other, if: :has_other_format?
-  validates_presence_of :location_in_book_page, if: :located_on_page?
+  validates :book,                  presence: true
+  validates :format_other,          presence: true, if: :has_other_format?
+  validates :location_in_book_page, presence: true, if: :located_on_page?
 
   validates :format_other,          absence: true, unless: :has_other_format?
   validates :location_in_book_page, absence: true, unless: :located_on_page?
