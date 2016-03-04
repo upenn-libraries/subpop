@@ -17,6 +17,8 @@ class Evidence < ActiveRecord::Base
   validates_presence_of :format_other, if: :has_other_format?
   validates_presence_of :location_in_book_page, if: :located_on_page?
 
+  validates :format_other, absence: true, unless: :has_other_format?
+
   FORMATS = [
              [ 'Binding',                      'binding' ],
              [ 'Binding Waste',                'binding_waste' ],
