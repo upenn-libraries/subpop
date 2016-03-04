@@ -14,6 +14,7 @@ class Evidence < ActiveRecord::Base
     reject_if: proc { |attributes| attributes['name_id'].blank? }
 
   validates_presence_of :book
+  validates_presence_of :format_other, if: :has_other_format?
 
   FORMATS = [
              [ 'Binding',                      'binding' ],
@@ -75,6 +76,10 @@ class Evidence < ActiveRecord::Base
 
   def has_date?
     [ year_when, year_start, year_end ].any? &:present?
+  end
+
+  def has_other_format?
+    format == 'other'
   end
 
   def date_string
