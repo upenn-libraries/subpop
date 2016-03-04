@@ -15,6 +15,11 @@ ready = ->
             else
                 $('#evidence_format_other').closest('div.form-group').hide()
 
+    manage_other_format = ->
+        # if needed, clear format_other
+        unless $('#evidence_format').val() == 'other'
+            $('#evidence_format_other').val('')
+
     $('#evidence_location_in_book').change ->
         show_hide_page_number()
 
@@ -31,6 +36,9 @@ ready = ->
         regexp = new RegExp($(this).data('id'), 'g')
         $(this).before($(this).data('fields').replace(regexp, time))
         event.preventDefault()
+
+    $('form').on 'submit', (event) ->
+        manage_other_format()
 
     show_hide_page_number()
     show_hide_format_other()
