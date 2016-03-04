@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126191738) do
+ActiveRecord::Schema.define(version: 20160304142157) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20160126191738) do
     t.integer  "photo_id",              limit: 4
     t.string   "flickr_id",             limit: 255
     t.text     "flickr_info",           limit: 65535
+    t.string   "format_other",          limit: 255
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree

@@ -6,7 +6,9 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-bin/rails g migration drop_table_book_photos
+bin/rails g migration add_format_other_to_evidence format_other:string
+
+# bin/rails g migration drop_table_book_photos
 
 # bin/rails g migration drop_table_evidence_photos
 

@@ -9,6 +9,10 @@ RSpec.describe Evidence, type: :model do
     it "creates evidence that's on flickr" do
       expect(create(:evidence_on_flickr)).to be_a Evidence
     end
+
+    it 'creates a complete evidence instance' do
+      expect(create(:evidence_complete)).to be_a Evidence
+    end
   end
 
   context 'flickr_metadata' do
