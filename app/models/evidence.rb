@@ -39,7 +39,7 @@ class Evidence < ActiveRecord::Base
     [ 'Front Endleaf',              'front_endleaf' ],
     [ 'Title Page',                 'title_page' ],
     [ 'Title Page, Verso',          'title_page_verso' ],
-    [ 'Page, Folio, or Signature Number (Type In Manually)',
+    [ 'Page, Folio, or Signature Number',
                                     'page_number' ],
     [ 'Insertion',                  'insertion' ],
     [ 'Back Endleaf',               'back_endleaf' ],
