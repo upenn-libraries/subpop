@@ -8,7 +8,7 @@ FactoryGirl.define do
 
   factory :evidence_complete, class: Evidence do
     book
-    format                'other_format'
+    format                'other'
     format_other          'Ribbon'
     content_types         [ FactoryGirl.create(:content_type) ]
     location_in_book      'page_number'

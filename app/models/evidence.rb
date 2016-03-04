@@ -26,7 +26,7 @@ class Evidence < ActiveRecord::Base
              [ 'Stamp -- blind or embossed',   'stamp_blind_or_embossed' ],
              [ 'Stamp -- perforated',          'stamp_perforated' ],
              [ 'Wax Seal',                     'wax_seal' ],
-             [ 'Other Format',                 'other_format' ],
+             [ 'Other Format',                 'other' ],
             ]
 
   FORMATS_BY_CODE = FORMATS.inject({}) { |hash, pair|

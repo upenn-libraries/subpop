@@ -9,8 +9,8 @@ ready = ->
 
     show_hide_format_other = ->
         if $('select#evidence_format')
-            location_code = $('select#evidence_format').val()
-            if location_code == 'other_format'
+            format_code = $('select#evidence_format').val()
+            if format_code == 'other'
                 $('#evidence_format_other').closest('div.form-group').show(1000)
             else
                 $('#evidence_format_other').closest('div.form-group').hide()
