@@ -40,6 +40,10 @@ RSpec.describe Evidence, type: :model do
       expect(build(:evidence, format: 'binding', format_other: 'ribbon')).not_to be_valid
     end
 
+    it 'is valid if format_other is present and format is "other"' do
+      expect(build(:evidence, format: 'other', format_other: 'ribbon')).to be_valid
+    end
+
     it "is not valid if location is 'page_number' and location_in_book_page is blank" do
       expect(build(:evidence, location_in_book: 'page_number', location_in_book_page: nil)).not_to be_valid
     end
