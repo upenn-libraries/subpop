@@ -20,6 +20,11 @@ ready = ->
         unless $('#evidence_format').val() == 'other'
             $('#evidence_format_other').val('')
 
+    manage_location_in_book_page = ->
+        # if needed, clear location_in_book_page
+        unless $('#evidence_location_in_book').val() == 'page_number'
+            $('#evidence_location_in_book_page').val('')
+
     $('#evidence_location_in_book').change ->
         show_hide_page_number()
 
@@ -39,6 +44,7 @@ ready = ->
 
     $('form').on 'submit', (event) ->
         manage_other_format()
+        manage_location_in_book_page()
 
     show_hide_page_number()
     show_hide_format_other()
