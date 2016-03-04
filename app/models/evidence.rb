@@ -54,6 +54,7 @@ class Evidence < ActiveRecord::Base
   }
 
   def format_name
+    return format_other if self.format == 'other_format'
     FORMATS_BY_CODE[self.format]
   end
 
