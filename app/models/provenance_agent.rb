@@ -3,11 +3,12 @@ class ProvenanceAgent < ActiveRecord::Base
   belongs_to :name
 
   ROLES = [
-    [ "Owner",                      "owner" ],
-    [ "Binder",                     "binder" ],
-    [ "Annotator",                  "annotator" ],
-    [ "Bookseller/Auction House",   "bookseller" ],
-    [ "Librarian",                  "librarian" ],
+    [ "Owner",                        "owner"      ],
+    [ "Binder",                       "binder"     ],
+    [ "Annotator",                    "annotator"  ],
+    [ "Bookseller/Auction House",     "bookseller" ],
+    [ "Librarian",                    "librarian"  ],
+    [ "Unknown role",                 "unknown"    ],
   ]
 
   ROLES_BY_CODE = ROLES.inject({}) { |hash, pair|
