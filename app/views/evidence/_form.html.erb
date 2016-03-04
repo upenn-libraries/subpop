@@ -1,4 +1,4 @@
-<%= form_for [ @book, @evidence ], html: { class: 'form-horizontal' } do |f| %>
+<%= form_for [ @book, @evidence ], id: 'evidence-form', html: { class: 'form-horizontal' } do |f| %>
   <% if @evidence.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-danger">
@@ -25,6 +25,13 @@
     <%= f.label :format, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.select :format, Evidence::FORMATS, { include_blank: true }, { class: "form-control" } %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :format_other, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :format_other, class: "form-control" %>
+      <span class="help-block"><%= t 'activerecord.hints.evidence.format_other' %></span>
     </div>
   </div>
   <div class="form-group">

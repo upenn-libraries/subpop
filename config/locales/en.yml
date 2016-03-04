@@ -43,6 +43,7 @@ en:
         other_id: Other ID
       evidence:
         format: Mark format
+        format_other: Other format
         content_type: Content type
         location_in_book: Location in book
         location_in_book_page: Page, folio, signature
@@ -57,6 +58,7 @@ en:
       book:
         owner: If different from current repository
       evidence:
+        format_other: Enter name of other format type
         location_in_book_page: Enter the page, folio, or signature number
         year_when: Exact year of evidence; e.g., 1876
         year_start: Beginning of a date range; e.g., 1870

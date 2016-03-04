@@ -15,10 +15,18 @@
   <div class="col-sm-4 field-label"><%= human_name @evidence, :location_in_book %></div>
   <div class="col-sm-6 field-value"><%= @evidence.location_name %></div>
 </div>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :location_in_book_page %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.location_in_book_page %></div>
+</div>
 
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @evidence, :format %></div>
   <div class="col-sm-6 field-value"><%= @evidence.format_name %></div>
+</div>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :format_other %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.format_other %></div>
 </div>
 
 <div class="row field-group">
@@ -32,11 +40,6 @@
       </ul>
     <% end %>
   </div>
-</div>
-
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @evidence, :location_in_book_page %></div>
-  <div class="col-sm-6 field-value"><%= @evidence.location_in_book_page %></div>
 </div>
 
 <div class="row field-group">

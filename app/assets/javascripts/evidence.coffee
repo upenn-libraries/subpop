@@ -7,8 +7,19 @@ ready = ->
             else
                 $('#evidence_location_in_book_page').closest('div.form-group').hide()
 
+    show_hide_format_other = ->
+        if $('select#evidence_format')
+            location_code = $('select#evidence_format').val()
+            if location_code == 'other_format'
+                $('#evidence_format_other').closest('div.form-group').show(1000)
+            else
+                $('#evidence_format_other').closest('div.form-group').hide()
+
     $('#evidence_location_in_book').change ->
         show_hide_page_number()
+
+    $('#evidence_format').change ->
+        show_hide_format_other()
 
     $(document.body).on 'click', '.remove_fields', (event) ->
         $(this).prev('input[type=hidden]').val('1')
@@ -22,5 +33,6 @@ ready = ->
         event.preventDefault()
 
     show_hide_page_number()
+    show_hide_format_other()
 
 $(document).ready(ready)
