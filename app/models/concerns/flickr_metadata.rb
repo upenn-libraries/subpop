@@ -25,8 +25,9 @@ module FlickrMetadata
     provenance_agents.name.full_name
   )
 
-  # Flickr's API method ++flickr.photos.setMeta++ accepts the title and
-  # description. ++metadata++ returns a hash of these  values.
+  ##
+  # Flickr's API method `flickr.photos.setMeta` accepts the title and
+  # description. `metadata` returns a hash of these  values.
   def metadata
     {
       title: flickr_title,
@@ -34,13 +35,14 @@ module FlickrMetadata
     }
   end
 
-  # Return hash with values suitable for the Fickr ++upload++ call; by default
-  # ++metadatata++ and the tags from the object. Values passed into
-  # ++options++ will be merged into the resulting hash. If present, the keys
-  # ++:title++, ++:description++, and ++:tags++ will override the default
+  ##
+  # Return hash with values suitable for the Fickr `upload` call; by default
+  # `metadatata` and the tags from the object. Values passed into
+  # `options` will be merged into the resulting hash. If present, the keys
+  # `:title`, `:description`, and `:tags` will override the default
   # values.
   #
-  # See documentation of ++Flickr::Client#upload++ for valid options.
+  # See documentation of `Flickr::Client#upload` for valid options.
   def upload_data options={}
     metadata.merge({ tags: flickrize_tags(tags_from_object) }).merge(options)
   end
@@ -82,16 +84,17 @@ module FlickrMetadata
     tag_strings.uniq.map { |s| Flickr::Tag.new(raw: s) }
   end
 
-  # Recursively extract the tag value(s) from ++obj++ using the
-  # string of chained attributes ++attrs++:
+  ##
+  # Recursively extract the tag value(s) from `obj` using the
+  # string of chained attributes `attrs`:
   #
   #   book.author         # => "Dickens, Charles"
   #   format_name         # => "Bookplate/Label"
   #   content_types.name  # => [ "Armorial", "Forgery" ]
   #
-  # Returns ++nil++ when obj does not respond to the next attr in the chain;
-  # that is, if ++obj++ does not have a method ++foo++ then processing
-  # stops and ++nil++ is returned.
+  # Returns `nil` when obj does not respond to the next attr in the chain;
+  # that is, if `obj` does not have a method `foo` then processing
+  # stops and `nil` is returned.
   def extract_tag obj, attrs
     # if there are no more attributes, return obj
     return obj                              if attrs.blank?

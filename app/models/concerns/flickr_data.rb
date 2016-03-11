@@ -6,7 +6,7 @@ module FlickrData
   end
 
   def info_obj
-    # don't keep @info_obj if flickr_info is empty?
+    # don't cache @info_obj if flickr_info is empty
     return Flickr::Info.new if flickr_info.blank?
     @info_obj ||= Flickr::Info.new(flickr_info)
   end

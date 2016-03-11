@@ -6,11 +6,13 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-bin/rails g migration remove_paperclip_columns_from_title_pages \
-  image_file_name:string \
-  image_content_type:string \
-  image_file_size:integer \
-  image_updated_at:datetime
+bin/rails g migration add_published_at_to_evidence published_at:datetime
+
+# bin/rails g migration remove_paperclip_columns_from_title_pages \
+#   image_file_name:string \
+#   image_content_type:string \
+#   image_file_size:integer \
+#   image_updated_at:datetime
 
 # bin/rails g migration add_format_other_to_evidence format_other:string
 
