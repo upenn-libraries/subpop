@@ -5,13 +5,13 @@
 
 Pushing to Flickr:
  X - Subsequent publishing
-- doesn't create new Flickr image
- - Add published_at to Evidence
-- TitlePage
-- Context Image
+ X - doesn't create new Flickr image
+ X  - Add published_at to Evidence
+ - TitlePage
+ - Context Image
  - Publish whole book
- - Online republish if changed
- - Collect and publish metadata
+ X - Online republish if changed
+ X - Collect and publish metadata
  - Ability to remove image from Flickr
  X - Display Flickr URL
 
