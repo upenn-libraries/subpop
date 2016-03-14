@@ -1,5 +1,7 @@
 class ContentType < ActiveRecord::Base
 
+  validates :name, uniqueness: true
+
   def <=> other
     self.sort_name <=> other.sort_name
   end

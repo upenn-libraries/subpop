@@ -10,7 +10,7 @@ FactoryGirl.define do
     book
     format                'other'
     format_other          'Ribbon'
-    content_types         [ FactoryGirl.create(:content_type) ]
+    content_types         [ ContentType.find_or_create_by(name: 'Armorial') ]
     location_in_book      'page_number'
     location_in_book_page '5'
     transcription         'Text of transcription'
