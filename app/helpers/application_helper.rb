@@ -20,6 +20,12 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
+  ##
+  # Returns a dasherized tag to add HTML id elements. For example, for an TitlePage object with `id` 6
+  def html_id_tag obj
+    "#{obj.class.name.underscore.dasherize}-#{obj.id}"
+  end
+
   def bootstrap_class_for(flash_type)
     case flash_type
     when "success"
@@ -33,5 +39,18 @@ module ApplicationHelper
     else
       flash_type.to_s
     end
+  end
+
+  ##
+  # Using format the datetime string, by default output looks like this:
+  #
+  #   Mon 14 Mar 2016 4:00PM EDT
+  #
+  # Not really much use unless you're using the default format.
+  #
+  # TODO: If need, add options for canned date formats like `:long`, `:short`,
+  # `:w3c`, etc.
+  def format_datetime datetime, fmt="%a %d %b %Y %-l:%M%p %Z"
+    datetime.strftime fmt
   end
 end
