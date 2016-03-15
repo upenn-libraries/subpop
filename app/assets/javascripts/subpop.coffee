@@ -3,4 +3,9 @@ ready = ->
         event.preventDefault()
         return false
 
+    $('.modal-link').on 'click', (event) ->
+        $.get $(this).attr("href"), (data) ->
+            $('#preview-modal-body').html($(data))
+            $('#preview-modal').modal('show')
+
 $(document).ready(ready)

@@ -8,9 +8,7 @@
 
 <%# create the modals, we'll refer to them below -%>
 <% content_for :modals do -%>
-<% @book.publishables.each do |item| -%>
-<%= render '/flickr/preview_modal', book: @book, item: item, modal_tag: html_id_tag(item) -%>
-<% end -%>
+  <%= render '/flickr/preview_modal' -%>
 <% end -%>
 
 <h3>Who has it?</h3>
@@ -120,7 +118,7 @@
       <% end -%>
     </td>
     <td>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#preview-<%= html_id_tag(item) -%>">Preview</button>
+      <%= link_to 'Preview', preview_path({ book_id: @book, item_type: item.class, id: item }), remote: true, class: 'btn btn-default modal-link' -%>
     </td>
   </tr>
   <% end -%>

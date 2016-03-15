@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'flickr/books/:book_id/preview/:item_type/:id', to: 'flickr#show', as: 'preview'
+
   resources :books do
     resources :evidence, except: :index do
       get :autocomplete_name_name, :on => :collection
