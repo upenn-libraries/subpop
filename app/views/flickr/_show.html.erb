@@ -1,0 +1,17 @@
+<div class="container" id="modals"></div>
+<div class="row">
+  <div class="col-md-5">
+    <%= render '/photos/small_photo', item: item %>
+  </div>
+  <div class="col-md-6">
+    <h1>Title</h1>
+    <%= render '/flickr/preview_title', item: item -%>
+
+    <h1>Description</h1>
+    <%= render 'flickr/description', item: item, book: book -%>
+
+    <h1>Tags</h1>
+    <%= render 'flickr/preview_tags', item: item -%>
+  </div>
+</div>
+</div>

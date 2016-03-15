@@ -1,8 +1,16 @@
 <p id="notice"><%= notice %></p>
+
 <h2><%= @book.full_name %></h3>
 
 <% content_for :sidebar do -%>
   <%= render '/books/small_title_page_photos', book: @book -%>
+<% end -%>
+
+<%# create the modals, we'll refer to them below -%>
+<% content_for :modals do -%>
+<% @book.publishables.each do |item| -%>
+<%= render '/flickr/preview_modal', book: @book, item: item, modal_tag: html_id_tag(item) -%>
+<% end -%>
 <% end -%>
 
 <h3>Who has it?</h3>
@@ -89,7 +97,34 @@
 </div>
 
 
-<h3>Evidence</h3>
+<h3>Title page, evidence images</h3>
+<table class="table">
+  <tr>
+    <th>Image</th>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @book.publishables.each do |item| -%>
+  <tr>
+    <td>
+    <%= link_to image_tag(item.photo.image.url(:thumb),
+        class: 'img-thumbnail'), item.photo.image.url(:original),
+        target: '_blank', 'data-toggle' => 'tooltip',
+        title: 'Click to open in new window.' -%>
+    </td>
+    <td><%= item.flickr_title -%></td>
+    <td>
+      <% if item.is_a? Evidence -%>
+      <%= link_to 'Details', book_evidence_path(@book, item), class: 'btn btn-default' %>
+      <% end -%>
+    </td>
+    <td>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#preview-<%= html_id_tag(item) -%>">Preview</button>
+    </td>
+  </tr>
+  <% end -%>
+</table>
 <% if @book.evidence.present? %>
   <ul class="list-inline">
     <% @book.evidence.each do |evidence| -%>
@@ -120,7 +155,12 @@
             <%= submit_tag 'Go', class: "btn btn-default" %>
             </div>
           </div>
-          <%= image_tag photo.image.url(:thumb), class: "center-block" %><br/>
+          <%= link_to image_tag(photo.image.url(:thumb),
+            class: 'center-block'), photo.image.url(:original),
+            target: '_blank', 'data-toggle' => 'tooltip',
+            title: 'Click to open in new window.' -%>
+
+          <br/>
         <% end %> <%# form_tag %>
       </div>
     </div>

@@ -1,3 +1,4 @@
+<pre>
 <a href="<%= item.tag_url book.full_name -%>">All images from this book.</a>
 
 <% if item.kind_of? Evidence -%>
@@ -52,3 +53,4 @@ TODO: Handle citation?
 <% item.tags_from_object.each do |tag| -%>
 <a href="<%= item.tag_url tag.text -%>"><%= tag.raw -%></a>
 <% end -%>
+</pre>

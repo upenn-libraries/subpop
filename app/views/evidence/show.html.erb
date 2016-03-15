@@ -1,5 +1,10 @@
+
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', evidence: @evidence %>
+<% end -%>
+
+<% content_for :modals do -%>
+  <%= render '/flickr/preview_modal', book: @book, item: @evidence, modal_tag: html_id_tag(@evidence) -%>
 <% end -%>
 
 <h3>Book</h3>
@@ -69,22 +74,51 @@
   <div class="col-sm-6 field-value"><%= @evidence.comments %></div>
 </div>
 
-  <h3>Provenance</h3>
+<h3>Provenance</h3>
 
-  <% if @evidence.provenance_agents.present? %>
-    <ul class="list-unstyled">
-    <% @evidence.provenance_agents.each do |agent| %>
-      <div class="row field-group">
-        <div class="col-sm-4 field-label"><%= ProvenanceAgent.role_name agent.role %></div>
-        <div class="col-sm-6 field-value"><%= agent.name.full_name %></div>
-      </div>
-    <% end %>
-    </ul>
-  <% else %>
-    <p>No provenance agents associated with this evidence.</p>
+<% if @evidence.provenance_agents.present? %>
+  <% @evidence.provenance_agents.each do |agent| %>
+    <div class="row field-group">
+      <div class="col-sm-4 field-label"><%= ProvenanceAgent.role_name agent.role %></div>
+      <div class="col-sm-6 field-value"><%= agent.name.full_name %></div>
+    </div>
   <% end %>
+<% else %>
+  <p>No provenance agents associated with this evidence.</p>
+<% end %>
 
-<%= link_to 'Back', book_path(@book), class: 'btn btn-default' %>
+<h3>Flickr</h3>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :on_flickr? %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.on_flickr? ? 'Yes' : 'No' %></div>
+</div>
+<% if @evidence.on_flickr? -%>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :published_at %></div>
+  <div class="col-sm-6 field-value"><%= format_datetime @evidence.published_at %></div>
+</div>
+<% end -%>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :last_updated %></div>
+  <div class="col-sm-6 field-value"><%= format_datetime @evidence.last_updated %></div>
+</div>
+<div class="row field-group">
+  <div class="col-sm-4 field-label">Preview</div>
+  <div class="col-sm-6 field-value">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#preview-<%= html_id_tag(@evidence) -%>">Preview</button>
+  </div>
+</div>
+<div class="row field-group">
+  <div class="col-sm-4 field-label">Publish</div>
+  <div class="col-sm-6 field-value">
+    <%= link_to 'Publish', publish_book_evidence_path(@book, @evidence), method: :put, class: 'btn btn-primary', disabled: !@evidence.changed_since_publication? %>
+    <!-- Button trigger modal -->
+  </div>
+</div>
+  <div class="row top-buffer">
+ <%= link_to 'Back', book_path(@book), class: 'btn btn-default' %>
 <%= link_to 'Edit', edit_book_evidence_path(@book, @evidence), class: 'btn btn-primary' %>
-<%= link_to 'Publish', publish_book_evidence_path(@book, @evidence), method: :put, class: 'btn btn-primary', disabled: !@evidence.changed_since_publication? %>
-<%= link_to 'Preview', preview_book_evidence_path(@book, @evidence), class: 'btn btn-primary' %>
+
+  </div>
