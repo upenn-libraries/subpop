@@ -51,7 +51,7 @@ module FlickrMetadata
     what = if self.respond_to? :format_name
       format_name
     else
-      "#{self.class.underscore.humanize} image"
+      "#{self.class.name.underscore.humanize} image"
     end
     [ book.full_name, what ].join ': '
   end
