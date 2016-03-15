@@ -6,6 +6,10 @@ class Book < ActiveRecord::Base
   validates_presence_of :title
   accepts_nested_attributes_for :title_pages
 
+  def publishables
+    title_pages + evidence
+  end
+
   def full_name
     [ repository, call_number ].flat_map { |s|
       s.present? ? s : []
