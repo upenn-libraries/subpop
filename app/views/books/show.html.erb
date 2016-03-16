@@ -123,17 +123,6 @@
   </tr>
   <% end -%>
 </table>
-<% if @book.evidence.present? %>
-  <ul class="list-inline">
-    <% @book.evidence.each do |evidence| -%>
-    <% if evidence.photo.present? && evidence.photo.image? %>
-    <li><%= image_tag evidence.photo.image.url(:thumb), class: "center-block" %><br/>
-      <%= link_to evidence.format_name, book_evidence_path(@book,evidence) %>
-    </li>
-    <% end -%>
-    <% end -%>
-    </ul>
-<% end %>
 
 <div class="row field-group">
   <h3>Photo queue</h3>
