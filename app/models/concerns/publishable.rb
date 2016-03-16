@@ -11,12 +11,24 @@ module Publishable
   extend ActiveSupport::Concern
   include FlickrMetadata
 
+  UNPUBLISHED = "unpublished"
+  UP_TO_DATE  = "up-to-date"
+  OUT_OF_DATE = "out-of-date"
+  IN_PROCESS  = "in-process"
+
   included do
     before_destroy :delete_from_flickr
     delegate :updated_at, to: :book, prefix: true, allow_nil: true
   end
 
+  # Placeholder method. This will be replaced by a boolean attribute on the
+  # model.
+  def in_process?
+    return false
+  end
+
   def publish!
+    # TODO: Change to `if publishable?`
     if flickr_id.blank?
       publish_new!
     elsif changed_since_publication?
@@ -49,6 +61,29 @@ module Publishable
     update_attributes! flickr_info: info.to_json, published_at: DateTime.now
   end
   handle_asynchronously :republish!
+
+  ##
+  # Returns `true` if the flickr status of the model is UNPUBLISHED or
+  # OUT_OF_DATE.
+  #
+  def publishable?
+    [ UNPUBLISHED, OUT_OF_DATE ].include? flickr_status
+  end
+
+  ##
+  # Returns the current flickr status of the model, one of:
+  #
+  # - Publishable::UNPUBLISHED
+  # - Publishable::UP_TO_DATE
+  # - Publishable::OUT_OF_DATE
+  # - Publishable::IN_PROCESS
+  def flickr_status
+    return IN_PROCESS  if in_process?
+    return UNPUBLISHED unless on_flickr?
+    return OUT_OF_DATE if changed_since_publication?
+
+    UP_TO_DATE
+  end
 
   ##
   # Delete the photo from flickr and nullify the Flickr attributes

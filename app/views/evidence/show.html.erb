@@ -90,8 +90,14 @@
 <h3>Flickr</h3>
 
 <div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @evidence, :on_flickr? %></div>
-  <div class="col-sm-6 field-value"><%= @evidence.on_flickr? ? 'Yes' : 'No' %></div>
+  <div class="col-sm-4 field-label">
+    <%= human_name @evidence, :flickr_status %>
+  </div>
+  <div class="col-sm-6 field-value">
+    <span class="label <%= flickr_label_class @evidence.flickr_status -%>">
+      <%= @evidence.flickr_status %>
+    </span>
+  </div>
 </div>
 <% if @evidence.on_flickr? -%>
 <div class="row field-group">
@@ -107,13 +113,13 @@
 <div class="row field-group">
   <div class="col-sm-4 field-label">Preview</div>
   <div class="col-sm-6 field-value">
-    <%= link_to 'Preview', preview_path({ book_id: @book, item_type: @evidence.class, id: @evidence }), remote: true, class: 'btn btn-default modal-link' -%>
+    <%= link_to 'Preview', preview_path({ book_id: @book, item_type: @evidence.class, id: @evidence }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
   </div>
 </div>
 <div class="row field-group">
   <div class="col-sm-4 field-label">Publish</div>
   <div class="col-sm-6 field-value">
-    <%= link_to 'Publish', publish_book_evidence_path(@book, @evidence), method: :put, class: 'btn btn-primary', disabled: !@evidence.changed_since_publication? %>
+    <%= link_to 'Publish', publish_book_evidence_path(@book, @evidence), method: :put, class: 'btn btn-primary btn-sm', disabled: !@evidence.changed_since_publication? %>
   </div>
 </div>
   <div class="row top-buffer">

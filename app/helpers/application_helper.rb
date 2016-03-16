@@ -11,6 +11,13 @@ module ApplicationHelper
 
   PHOTO_ASSIGNMENTS = NON_EVIDENCE_PHOTOS + Evidence::FORMATS
 
+  FLICKR_STATUS_LABEL_CLASSES = {
+    Publishable::UNPUBLISHED => "label-warning",
+    Publishable::UP_TO_DATE  => "label-success",
+    Publishable::OUT_OF_DATE => "label-danger",
+    Publishable::IN_PROCESS  => "label-info"
+  }
+
   def link_to_add_fields(name, f, association)
     new_object = f.object.send(association).klass.new
     id = new_object.object_id
@@ -24,6 +31,10 @@ module ApplicationHelper
   # Returns a dasherized tag to add HTML id elements. For example, for an TitlePage object with `id` 6
   def html_id_tag obj
     "#{obj.class.name.underscore.dasherize}-#{obj.id}"
+  end
+
+  def flickr_label_class flickr_status
+    FLICKR_STATUS_LABEL_CLASSES[flickr_status] || "label-default"
   end
 
   def bootstrap_class_for(flash_type)
