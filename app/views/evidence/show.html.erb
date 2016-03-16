@@ -89,39 +89,15 @@
 
 <h3>Flickr</h3>
 
-<div class="row field-group">
-  <div class="col-sm-4 field-label">
-    <%= human_name @evidence, :flickr_status %>
+  <%= render '/flickr/status', item: @evidence -%>
+  <div class="row field-group top-buffer">
+    <div class="col-sm-4 field-label"></div>
+    <div class="col-sm-6 field-value">
+      <%= link_to 'Preview', preview_path({ book_id: @book, item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
+      <%= link_to 'Publish', publish_book_evidence_path(@book, item), method: :put, class: 'btn btn-primary btn-sm', disabled: !item.changed_since_publication? %>
+    </div>
   </div>
-  <div class="col-sm-6 field-value">
-    <span class="label <%= flickr_label_class @evidence.flickr_status -%>">
-      <%= @evidence.flickr_status %>
-    </span>
-  </div>
-</div>
-<% if @evidence.on_flickr? -%>
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @evidence, :published_at %></div>
-  <div class="col-sm-6 field-value"><%= format_datetime @evidence.published_at %></div>
-</div>
-<% end -%>
 
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @evidence, :last_updated %></div>
-  <div class="col-sm-6 field-value"><%= format_datetime @evidence.last_updated %></div>
-</div>
-<div class="row field-group">
-  <div class="col-sm-4 field-label">Preview</div>
-  <div class="col-sm-6 field-value">
-    <%= link_to 'Preview', preview_path({ book_id: @book, item_type: @evidence.class, id: @evidence }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
-  </div>
-</div>
-<div class="row field-group">
-  <div class="col-sm-4 field-label">Publish</div>
-  <div class="col-sm-6 field-value">
-    <%= link_to 'Publish', publish_book_evidence_path(@book, @evidence), method: :put, class: 'btn btn-primary btn-sm', disabled: !@evidence.changed_since_publication? %>
-  </div>
-</div>
   <div class="row top-buffer">
  <%= link_to 'Back', book_path(@book), class: 'btn btn-default' %>
 <%= link_to 'Edit', edit_book_evidence_path(@book, @evidence), class: 'btn btn-primary' %>

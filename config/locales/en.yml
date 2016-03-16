@@ -41,6 +41,8 @@ en:
         publisher: Publisher / Printer / Scribe
         other_id_type: Other ID type
         other_id: Other ID
+        created_at: Created
+        updated_at: Updated
       evidence:
         format: Mark format
         format_other: Other format
@@ -54,6 +56,17 @@ en:
         date_narrative: Date narrative
         where: ""
         comments: ""
+        flickr_status: Flickr status
+        published_at: Published
+        last_updated: Last updated
+        created_at: Created
+        updated_at: Updated
+      title_page:
+        flickr_status: Flickr status
+        published_at: Published
+        last_updated: Last updated
+        created_at: Created
+        updated_at: Updated
     hints:
       book:
         owner: If different from current repository

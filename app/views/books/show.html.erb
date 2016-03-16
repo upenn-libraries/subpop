@@ -101,7 +101,6 @@
     <th>Image</th>
     <th>Name</th>
     <th></th>
-    <th></th>
   </tr>
   <% @book.publishables.each do |item| -%>
   <tr>
@@ -111,14 +110,15 @@
         target: '_blank', 'data-toggle' => 'tooltip',
         title: 'Click to open in new window.' -%>
     </td>
-    <td><%= item.flickr_title -%></td>
     <td>
-      <% if item.is_a? Evidence -%>
-      <%= link_to 'Details', book_evidence_path(@book, item), class: 'btn btn-default' %>
-      <% end -%>
+      <h4><%= item.flickr_title -%></h4>
+      <%= render '/flickr/status', item: item -%>
     </td>
     <td>
       <%= link_to 'Preview', preview_path({ book_id: @book, item_type: item.class, id: item }), remote: true, class: 'btn btn-default modal-link' -%>
+      <% if item.is_a? Evidence -%>
+      <%= link_to 'Details', book_evidence_path(@book, item), class: 'btn btn-default' %>
+      <% end -%>
     </td>
   </tr>
   <% end -%>
