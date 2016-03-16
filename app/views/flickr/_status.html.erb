@@ -2,14 +2,11 @@
   <div class="col-sm-4 field-label"><%= human_name item, :flickr_status %></div>
   <div class="col-sm-6 field-value"><span class="label <%= flickr_label_class item.flickr_status -%>"><%= item.flickr_status %></span></div>
 </div>
-<% if item.on_flickr? -%>
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name item, :published_at %></div>
-  <div class="col-sm-6 field-value"><%= format_datetime item.published_at %></div>
-</div>
-<% end -%>
-
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name item, :last_updated %></div>
   <div class="col-sm-6 field-value"><%= format_datetime item.last_updated %></div>
+</div>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name item, :published_at %></div>
+  <div class="col-sm-6 field-value"><%= format_datetime(item.published_at) || 'N/A' %></div>
 </div>

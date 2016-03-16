@@ -61,8 +61,7 @@ module ApplicationHelper
   #
   # TODO: If need, add options for canned date formats like `:long`, `:short`,
   # `:w3c`, etc.
-  # fmt="%a %d %b %Y %-l:%M %p %Z"
   def format_datetime datetime, fmt="%a %F %H:%M %Z"
-    datetime.strftime fmt
+    datetime.strftime fmt if datetime
   end
 end

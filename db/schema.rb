@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311145104) do
+ActiveRecord::Schema.define(version: 20160316220730) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -131,12 +131,13 @@ ActiveRecord::Schema.define(version: 20160311145104) do
   end
 
   create_table "title_pages", force: :cascade do |t|
-    t.integer  "book_id",     limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "photo_id",    limit: 4
-    t.string   "flickr_id",   limit: 255
-    t.text     "flickr_info", limit: 65535
+    t.integer  "book_id",      limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "photo_id",     limit: 4
+    t.string   "flickr_id",    limit: 255
+    t.text     "flickr_info",  limit: 65535
+    t.datetime "published_at"
   end
 
   add_index "title_pages", ["book_id"], name: "index_title_pages_on_book_id", using: :btree
