@@ -6,7 +6,11 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-bin/rails g migration add_published_at_to_title_pages published_at:datetime
+bin/rails g migration add_publishing_to_title_pages publishing_to_flickr:boolean
+
+# bin/rails g migration add_publishing_to_evidence publishing_to_flickr:boolean
+
+# bin/rails g migration add_published_at_to_title_pages published_at:datetime
 
 # bin/rails g controller flickr preview $generator_options
 
