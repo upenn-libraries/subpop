@@ -123,6 +123,15 @@
   </tr>
   <% end -%>
 </table>
+<div class="row">
+<% if @book.publishable? -%>
+<% if @book.on_flickr? -%>
+<%= link_to 'Publish book', update_flickr_path({ item_type: @book.class, id: @book }), method: :put, class: 'btn btn-primary' -%>
+<% else -%>
+<%= link_to 'Publish book', create_flickr_path({ item_type: @book.class, id: @book }), method: :post, class: 'btn btn-primary' -%>
+<% end -%>
+<% end -%>
+</div>
 
 <div class="row field-group">
   <h3>Photo queue</h3>

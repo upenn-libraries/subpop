@@ -1,5 +1,5 @@
 class FlickrController < ApplicationController
-  before_action :get_book
+  before_action :get_book, only: :show
   before_action :get_item
 
   def show
@@ -8,7 +8,22 @@ class FlickrController < ApplicationController
     end
   end
 
+  def create
+    handle_publication
+    redirect_to @item
+  end
+
+  def update
+    handle_publication
+    redirect_to @item
+  end
+
   private
+  def handle_publication
+    get_item
+    @item.publish!
+  end
+
   def get_book
     @book = Book.find params[:book_id]
   end

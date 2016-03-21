@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   get 'flickr/books/:book_id/preview/:item_type/:id', to: 'flickr#show', as: 'preview'
+  post 'flickr/:item_type/:id', to: 'flckr#create', as: 'create_flickr'
+  put 'flickr/:item_type/:id', to: 'flickr#update', as: 'update_flickr'
 
   resources :books do
     resources :evidence, except: :index do
