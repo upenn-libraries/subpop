@@ -93,7 +93,7 @@
   <div class="row field-group top-buffer">
     <div class="col-sm-4 field-label"></div>
     <div class="col-sm-6 field-value">
-      <%= link_to 'Preview', preview_path({ book_id: @evidence.book, item_type: @evidence.class, id: @evidence }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
+      <%= link_to 'Preview', preview_path({ item_type: @evidence.class, id: @evidence }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
       <% if @evidence.publishable? -%>
       <% if @evidence.on_flickr? -%>
       <%= link_to 'Publish', update_flickr_path(item_type: @evidence.class, id: @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>

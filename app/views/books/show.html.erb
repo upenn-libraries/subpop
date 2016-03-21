@@ -115,7 +115,7 @@
       <%= render '/flickr/status', item: item -%>
     </td>
     <td>
-      <%= link_to 'Preview', preview_path({ book_id: @book, item_type: item.class, id: item }), remote: true, class: 'btn btn-default modal-link' -%>
+      <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default modal-link' -%>
       <% if item.is_a? Evidence -%>
       <%= link_to 'Details', item, class: 'btn btn-default' %>
       <% end -%>

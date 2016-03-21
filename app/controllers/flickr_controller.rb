@@ -1,5 +1,4 @@
 class FlickrController < ApplicationController
-  before_action :get_book, only: :show
   before_action :get_item
 
   def show
@@ -26,10 +25,6 @@ class FlickrController < ApplicationController
       notice = "#{@item.class} up-to-date or already being published to Flickr"
     end
     redirect_to @item, notice: notice
-  end
-
-  def get_book
-    @book = Book.find params[:book_id]
   end
 
   def get_item

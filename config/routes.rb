@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
 
-  get 'flickr/books/:book_id/preview/:item_type/:id', to: 'flickr#show', as: 'preview'
+  get 'flickr/show/:item_type/:id', to: 'flickr#show', as: 'preview'
   post 'flickr/:item_type/:id', to: 'flckr#create', as: 'create_flickr'
   put 'flickr/:item_type/:id', to: 'flickr#update', as: 'update_flickr'
 
   resources :books do
-    resources :evidence, only: [ :create, :new ] do
-      put :publish, on: :member
-      get :preview, on: :member
-    end
+    resources :evidence, only: [ :create, :new ]
   end
 
   resources :evidence, only: [ :show, :update, :edit ] do
