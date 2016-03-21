@@ -8,4 +8,6 @@ ready = ->
             $('#preview-modal-body').html($(data))
             $('#preview-modal').modal('show')
 
+    $('[data-toggle="tooltip"]').tooltip()
+
 $(document).ready(ready)
