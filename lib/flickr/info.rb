@@ -83,11 +83,9 @@ module Flickr
       id = id.to_i
       alphabet = BASE58_ALPHABET.split(//)
       base = alphabet.length
-      puts id
       begin
         id, m = id.divmod(base)
         r = alphabet[m] + (r || '')
-        puts "#{r} <= #{id}, #{m}"
       end while id > 0
       r
     end
