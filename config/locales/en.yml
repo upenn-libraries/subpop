@@ -61,12 +61,14 @@ en:
         last_updated: Last updated
         created_at: Created
         updated_at: Updated
+        short_url: Flickr URL
       title_page:
         flickr_status: Flickr status
         published_at: Published
         last_updated: Last updated
         created_at: Created
         updated_at: Updated
+        short_url: Flickr URL
     hints:
       book:
         owner: If different from current repository
