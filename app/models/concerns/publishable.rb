@@ -6,7 +6,13 @@
 # - deletion of the photo from Flickr.
 #
 # Including models should belong to a Photo and have these attributes:
-# `book_id`, `book` `flickr_id`, `flickr_info`, and `published_at`.
+# `book_id`, `book` `flickr_id`, `flickr_info`, `published_at`, and
+# `publishing_to_flickr`.
+#
+# TODO: Consider creating a model PhotoInfo for connecting the photo to the
+# model and contain Flickr information shared by Evidence, TitlePage, and
+# Context (if it ever exists). This model would be then be managed by the
+# Publishable Concern.
 module Publishable
   extend ActiveSupport::Concern
   include FlickrMetadata
@@ -21,44 +27,45 @@ module Publishable
     delegate :updated_at, to: :book, prefix: true, allow_nil: true
   end
 
-  # Placeholder method. This will be replaced by a boolean attribute on the
-  # model.
-  def in_process?
-    return false
-  end
-
   def publish!
-    # TODO: Change to `if publishable?`
-    if flickr_id.blank?
-      publish_new!
-    elsif changed_since_publication?
-      republish!
-    end
+    return unless publishable?
+
+    update_attributes! publishing_to_flickr: true
+    return republish! if flickr_status == OUT_OF_DATE
+    publish_new!
   end
 
   def publish_new!
-    client = Flickr::Client.connect!
+    begin
+      client = Flickr::Client.connect!
 
-    id     = client.upload(photo.image_data, upload_data)
-    info   = client.get_info id
-    update_attributes! flickr_id: id, flickr_info: info.to_json,
+      id     = client.upload(photo.image_data, upload_data)
+      info   = client.get_info id
+      update_attributes! flickr_id: id, flickr_info: info.to_json,
       published_at: DateTime.now
+    ensure
+      update_attributes publishing_to_flickr: false
+    end
   end
   handle_asynchronously :publish_new!
 
   def republish!
-    client = Flickr::Client.connect!
-    tags_to_remove.each do |tag|
-      begin
-        client.remove_tag tag
-      rescue FlickRaw::FailedResponse => ex
-        Rails.logger.warn "Unable to delete tag: #{tag}; reason #{ex}"
+    begin
+      client = Flickr::Client.connect!
+      tags_to_remove.each do |tag|
+        begin
+          client.remove_tag tag
+        rescue FlickRaw::FailedResponse => ex
+          Rails.logger.warn "Unable to delete tag: #{tag}; reason #{ex}"
+        end
       end
+      client.set_tags flickr_id, flickrize_tags(tags_from_object)
+      client.set_meta flickr_id, metadata
+      info = client.get_info flickr_id
+      update_attributes! flickr_info: info.to_json, published_at: DateTime.now
+    ensure
+      update_attributes publishing_to_flickr: false
     end
-    client.set_tags flickr_id, flickrize_tags(tags_from_object)
-    client.set_meta flickr_id, metadata
-    info = client.get_info flickr_id
-    update_attributes! flickr_info: info.to_json, published_at: DateTime.now
   end
   handle_asynchronously :republish!
 
@@ -78,7 +85,7 @@ module Publishable
   # - Publishable::OUT_OF_DATE
   # - Publishable::IN_PROCESS
   def flickr_status
-    return IN_PROCESS  if in_process?
+    return IN_PROCESS  if publishing_to_flickr?
     return UNPUBLISHED unless on_flickr?
     return OUT_OF_DATE if changed_since_publication?
 
