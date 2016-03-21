@@ -4,4 +4,12 @@
   <%= render 'small_evidence_photo', evidence: @evidence %>
 <% end -%>
 
-<%= render 'form' %>
+<%= form_for [ @book, @evidence ], id: 'evidence-form', html: { class: 'form-horizontal' } do |f| %>
+  <%= render 'form', f: f %>
+
+  <div class="actions">
+    <%= link_to 'Cancel', @book, class: "btn btn-default" %>
+    <%= f.submit class: "btn btn-success" %>
+  </div>
+
+<% end -%>

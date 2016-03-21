@@ -117,7 +117,7 @@
     <td>
       <%= link_to 'Preview', preview_path({ book_id: @book, item_type: item.class, id: item }), remote: true, class: 'btn btn-default modal-link' -%>
       <% if item.is_a? Evidence -%>
-      <%= link_to 'Details', book_evidence_path(@book, item), class: 'btn btn-default' %>
+      <%= link_to 'Details', item, class: 'btn btn-default' %>
       <% end -%>
     </td>
   </tr>

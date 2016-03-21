@@ -5,11 +5,14 @@ Rails.application.routes.draw do
   put 'flickr/:item_type/:id', to: 'flickr#update', as: 'update_flickr'
 
   resources :books do
-    resources :evidence, except: :index do
-      get :autocomplete_name_name, :on => :collection
+    resources :evidence, only: [ :create, :new ] do
       put :publish, on: :member
       get :preview, on: :member
     end
+  end
+
+  resources :evidence, only: [ :show, :update, :edit ] do
+    get :autocomplete_name_name, :on => :collection
   end
 
   resources :names, except: :destroy do

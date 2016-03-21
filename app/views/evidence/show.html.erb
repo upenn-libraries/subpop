@@ -10,8 +10,8 @@
 <h3>Book</h3>
 
 <div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @book, :full_name %></div>
-  <div class="col-sm-6 field-value"><%= @book.full_name %></div>
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :book_full_name %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.book_full_name %></div>
 </div>
 
 <h3>What is it?</h3>
@@ -93,9 +93,13 @@
   <div class="row field-group top-buffer">
     <div class="col-sm-4 field-label"></div>
     <div class="col-sm-6 field-value">
-      <%= link_to 'Preview', preview_path({ book_id: @book, item_type: @evidence.class, id: @evidence }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
+      <%= link_to 'Preview', preview_path({ book_id: @evidence.book, item_type: @evidence.class, id: @evidence }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
       <% if @evidence.publishable? -%>
-      <%= link_to 'Publish', publish_book_evidence_path(@book, @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publishing" %>
+      <% if @evidence.on_flickr? -%>
+      <%= link_to 'Publish', update_flickr_path(item_type: @evidence.class, id: @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
+      <% else -%>
+      <%= link_to 'Publish', create_flickr_path(item_type: @evidence.class, id: @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
+      <% end -%>
       <% else -%>
       <%= link_to 'Publish', '#', class: 'btn btn-primary btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "right", title: unpublishable_reason(@evidence.flickr_status) %>
       <% end -%>
@@ -103,7 +107,7 @@
   </div>
 
   <div class="row top-buffer">
- <%= link_to 'Back', book_path(@book), class: 'btn btn-default' %>
-<%= link_to 'Edit', edit_book_evidence_path(@book, @evidence), class: 'btn btn-primary' %>
+ <%= link_to 'Back', @evidence.book, class: 'btn btn-default' %>
+<%= link_to 'Edit', edit_evidence_path(@evidence), class: 'btn btn-primary' %>
 
   </div>

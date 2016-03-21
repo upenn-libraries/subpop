@@ -20,6 +20,8 @@ class Evidence < ActiveRecord::Base
   validates :format_other,          absence: true, unless: :has_other_format?
   validates :location_in_book_page, absence: true, unless: :located_on_page?
 
+  delegate :full_name, to: :book, prefix: true, allow_nil: true
+
   FORMATS = [
              [ 'Binding',                      'binding' ],
              [ 'Binding Waste',                'binding_waste' ],

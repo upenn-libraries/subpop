@@ -1,6 +1,6 @@
 class EvidenceController < ApplicationController
   before_action :set_evidence, only: [:show, :edit, :update, :publish, :destroy, :preview ]
-  before_action :set_book
+  before_action :set_book, only: [ :new, :create ]
 
   autocomplete :name, :name, full: true
 
@@ -33,7 +33,7 @@ class EvidenceController < ApplicationController
     respond_to do |format|
       if @evidence.save
         format.html {
-          redirect_to [@book, @evidence], notice: 'Evidence was successfully created.'
+          redirect_to @evidence, notice: 'Evidence was successfully created.'
         }
         format.json { render :show, status: :created, location: @evidence }
       else
@@ -48,7 +48,7 @@ class EvidenceController < ApplicationController
   def update
     respond_to do |format|
       if @evidence.update(evidence_params)
-        format.html { redirect_to [@book, @evidence], notice: 'Evidence was successfully updated.' }
+        format.html { redirect_to [@evidence], notice: 'Evidence was successfully updated.' }
         format.json { render :show, status: :ok, location: @evidence }
       else
         format.html { render :edit }
@@ -70,7 +70,7 @@ class EvidenceController < ApplicationController
   def publish
     @evidence.publish!
     respond_to do |format|
-      format.html { redirect_to [@book, @evidence], notice: 'Evidence queued for publication.' }
+      format.html { redirect_to @evidence, notice: 'Evidence queued for publication.' }
     end
   end
 
