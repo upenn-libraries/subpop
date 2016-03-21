@@ -10,18 +10,22 @@ class FlickrController < ApplicationController
 
   def create
     handle_publication
-    redirect_to @item
   end
 
   def update
     handle_publication
-    redirect_to @item
   end
 
   private
   def handle_publication
     get_item
-    @item.publish!
+    if @item.publishable?
+      notice = "Publishing #{@item.class} to Flickr"
+      @item.publish!
+    else
+      notice = "#{@item.class} up-to-date or already being published to Flickr"
+    end
+    redirect_to @item, notice: notice
   end
 
   def get_book
