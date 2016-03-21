@@ -37,4 +37,16 @@ class Book < ActiveRecord::Base
       s.present? ? s : []
     }.join ', '
   end
+
+  def publishable?
+    publishables.any? &:publishable?
+  end
+
+  def on_flickr?
+    publishables.any? &:on_flickr?
+  end
+
+  def publish!
+    publishables.each { |item| item.publish! }
+  end
 end
