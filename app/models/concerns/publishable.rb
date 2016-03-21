@@ -28,15 +28,15 @@ module Publishable
   end
 
   def publish!
-    return unless publishable?
+    return              unless publishable?
+    return publish_new! if flickr_status == UNPUBLISHED
 
-    update_attributes! publishing_to_flickr: true
-    return republish! if flickr_status == OUT_OF_DATE
-    publish_new!
+    republish!
   end
 
   def publish_new!
     begin
+      update_attributes! publishing_to_flickr: true
       client = Flickr::Client.connect!
 
       id     = client.upload(photo.image_data, upload_data)
@@ -51,6 +51,7 @@ module Publishable
 
   def republish!
     begin
+      update_attributes! publishing_to_flickr: true
       client = Flickr::Client.connect!
       tags_to_remove.each do |tag|
         begin
