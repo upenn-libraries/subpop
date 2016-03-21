@@ -29,6 +29,11 @@ module Publishable
 
   def publish!
     return              unless publishable?
+
+    # TODO: Changing to update_columns as a kludge in order to prevent
+    # changing the timestamp. Need to locking/in_process tracking to different
+    # object.
+    update_columns publishing_to_flickr: true
     return publish_new! if flickr_status == UNPUBLISHED
 
     republish!
@@ -36,7 +41,6 @@ module Publishable
 
   def publish_new!
     begin
-      update_attributes! publishing_to_flickr: true
       client = Flickr::Client.connect!
 
       id     = client.upload(photo.image_data, upload_data)
@@ -44,14 +48,13 @@ module Publishable
       update_attributes! flickr_id: id, flickr_info: info.to_json,
       published_at: DateTime.now
     ensure
-      update_attributes publishing_to_flickr: false
+      update_columns publishing_to_flickr: false
     end
   end
   handle_asynchronously :publish_new!
 
   def republish!
     begin
-      update_attributes! publishing_to_flickr: true
       client = Flickr::Client.connect!
       tags_to_remove.each do |tag|
         begin
@@ -65,7 +68,7 @@ module Publishable
       info = client.get_info flickr_id
       update_attributes! flickr_info: info.to_json, published_at: DateTime.now
     ensure
-      update_attributes publishing_to_flickr: false
+      update_columns publishing_to_flickr: false
     end
   end
   handle_asynchronously :republish!
