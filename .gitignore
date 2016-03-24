@@ -39,3 +39,4 @@ bower.json
 .env
 .docker-environment
 .ruby-version
+.\#*
