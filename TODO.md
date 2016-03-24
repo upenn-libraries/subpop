@@ -13,8 +13,6 @@ Pushing to Flickr:
 
 Validations:
 
-- unique
-- Evidence - ?
 - Book - ?
 - Name - require name
 - unique
@@ -99,3 +97,6 @@ X Table evidence, remove columns:
 X - content_type
 
 X - ContentType validattions - require name, - name unique
+X- Evidence
+X  - format
+X  - location in book

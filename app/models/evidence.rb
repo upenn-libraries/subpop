@@ -13,15 +13,6 @@ class Evidence < ActiveRecord::Base
   accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
     reject_if: proc { |attributes| attributes['name_id'].blank? }
 
-  validates :book,                  presence: true
-  validates :format_other,          presence: true, if: :has_other_format?
-  validates :location_in_book_page, presence: true, if: :located_on_page?
-
-  validates :format_other,          absence: true, unless: :has_other_format?
-  validates :location_in_book_page, absence: true, unless: :located_on_page?
-
-  delegate :full_name, to: :book, prefix: true, allow_nil: true
-
   FORMATS = [
              [ 'Binding',                      'binding' ],
              [ 'Binding Waste',                'binding_waste' ],
@@ -59,6 +50,20 @@ class Evidence < ActiveRecord::Base
   LOCATIONS_BY_CODE = LOCATIONS.inject({}) { |hash, pair|
     hash.merge(pair.last => pair.first)
   }
+
+  validates :format, inclusion: { in: FORMATS.map(&:last), message: "'%{value}' is not in list" }
+  validates :book,                  presence: true
+  validates :format_other,          presence: true, if: :has_other_format?
+
+  validates :location_in_book, inclusion: { in: LOCATIONS.map(&:last), message: "'%{value}' is not in list", allow_blank: true }
+  validates :location_in_book_page, presence: true, if: :located_on_page?
+
+  validates :format_other,          absence: true, unless: :has_other_format?
+  validates :location_in_book_page, absence: true, unless: :located_on_page?
+
+  delegate :full_name, to: :book, prefix: true, allow_nil: true
+
+
 
   def format_name
     return format_other if self.format == 'other_format'

@@ -26,6 +26,18 @@ RSpec.describe Evidence, type: :model do
       expect(subject).to be_valid
     end
 
+    it "is not valid if format is blank" do
+      expect(build(:evidence, format: nil)).not_to be_valid
+    end
+
+    it "is valid if format is a valid value" do
+      expect(build(:evidence, format: 'drawing_illumination')).to be_valid
+    end
+
+    it "it not valid if format is not in formats list" do
+      expect(build(:evidence, format: 'drawing_illuminationxxxx')).not_to be_valid
+    end
+
     it "is not valid if format is 'other' and format_other is blank" do
       expect(build(:evidence, format: 'other', format_other: nil)).not_to be_valid
     end
@@ -42,6 +54,18 @@ RSpec.describe Evidence, type: :model do
 
     it 'is valid if format_other is present and format is "other"' do
       expect(build(:evidence, format: 'other', format_other: 'ribbon')).to be_valid
+    end
+
+    it "is valid if location is blank" do
+      expect(build(:evidence, location_in_book: nil)).to be_valid
+    end
+
+    it "is valid if location is in list" do
+      expect(build(:evidence, location_in_book: 'inside_front_cover')).to be_valid
+    end
+
+    it "is not valid if location is not in list" do
+      expect(build(:evidence, location_in_book: 'inside_front_coverxxxx')).not_to be_valid
     end
 
     it "is not valid if location is 'page_number' and location_in_book_page is blank" do
