@@ -97,6 +97,7 @@ class EvidenceController < ApplicationController
         :date_narrative,
         :where,
         :comments,
+        :citations,
         :photo,
         :photo_id,
         content_type_ids: [],

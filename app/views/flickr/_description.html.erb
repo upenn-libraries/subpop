@@ -45,9 +45,12 @@
 <b>COMMENT</b>
 <%= item.comments %>
 <% end -%>
+<% if item.respond_to?(:citations) && item.citations.present? -%>
 
-<b>CITATION</b>
-TODO: Handle citation?
+<b>CITATIONS</b>
+<%= item.citations -%>
+
+<% end %>
 
 <b>FIND IN POP</b>
 <% item.tags_from_object.each do |tag| -%>

@@ -1,6 +1,5 @@
 # To-do items
 
-
 ### Work plan
 
 Pushing to Flickr:
@@ -16,8 +15,6 @@ Set up permanent servers:
 - Production
 
 Clean up pages; improve layout
-
-- Add citation
 
 Names:
 - Copy "Create name" to top of index page
@@ -99,3 +96,4 @@ X - Book - ?
 X- Name
 X  - require name
 X  - name is unique unique
+X - Add citation

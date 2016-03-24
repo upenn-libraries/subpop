@@ -74,6 +74,12 @@
   <div class="col-sm-6 field-value"><%= @evidence.comments %></div>
 </div>
 
+<h3>Citations</h3>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :citations -%></div>
+  <div class="col-sm-6 field-value"><%= @evidence.citations -%></div>
+</div>
+
 <h3>Provenance</h3>
 
 <% if @evidence.provenance_agents.present? %>

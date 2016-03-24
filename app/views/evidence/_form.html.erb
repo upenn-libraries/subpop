@@ -108,6 +108,13 @@
     <div class="col-sm-8"><%= f.text_area :comments, class: "form-control" %></div>
   </div>
 
+  <h3>Citations</h3>
+  <div class="form-group">
+    <%= f.label :citations, '', class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_area :citations, class: "form-control" %></div>
+  </div>
+
+
   <h3>Provenance</h3>
   <%= f.fields_for :provenance_agents do |agent| %>
     <%= render 'provenance_agent_fields', f: agent %>
