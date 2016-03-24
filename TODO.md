@@ -12,7 +12,7 @@ Pushing to Flickr:
 - image upload spinner
 
 Validations:
-- ContentType - require name
+
 - unique
 - Evidence - ?
 - Book - ?
@@ -97,3 +97,5 @@ X - Copy edit button to top of show page
 
 X Table evidence, remove columns:
 X - content_type
+
+X - ContentType validattions - require name, - name unique
