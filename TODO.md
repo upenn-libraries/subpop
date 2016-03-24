@@ -9,9 +9,6 @@ Pushing to Flickr:
 
 ### Unordered list of stuff
 
-Table evidence, remove columns:
-- content_type
-
 - image upload spinner
 
 Validations:
@@ -97,3 +94,6 @@ X - image_updated_at
 
 X Book:
 X - Copy edit button to top of show page
+
+X Table evidence, remove columns:
+X - content_type
