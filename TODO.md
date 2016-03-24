@@ -4,16 +4,15 @@
 ### Work plan
 
 Pushing to Flickr:
- - TitlePage
- - Context Image
- - Publish whole book
  - Ability to remove image from Flickr
+ - Spinner while publishing
 
 ### Unordered list of stuff
 
 Table evidence, remove columns:
 - content_type
 
+- image upload spinner
 
 Validations:
 - ContentType - require name
@@ -33,9 +32,6 @@ Clean up pages; improve layout
 
 Names:
 - Copy "Create name" to top of index page
-
-Book:
-- Copy edit button to top of show page
 
 Double check fields:
 
@@ -98,3 +94,6 @@ X - image_file_name
 X - image_content_type
 X - image_file_size
 X - image_updated_at
+
+X Book:
+X - Copy edit button to top of show page
