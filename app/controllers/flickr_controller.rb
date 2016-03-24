@@ -28,8 +28,8 @@ class FlickrController < ApplicationController
   end
 
   def get_item
-    @item_type = params[:item_type]
-    klass      = @item_type.camelize.constantize
-    @item      = klass.find params[:id]
+    item_type = params[:item_type]
+    klass     = item_type.camelize.constantize
+    @item     = klass.find params[:id]
   end
 end
