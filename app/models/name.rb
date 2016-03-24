@@ -1,5 +1,8 @@
 class Name < ActiveRecord::Base
 
+  validates :name, presence: true
+  validates :name, uniqueness: true
+
   validates_numericality_of :viaf_id, allow_nil: true
 
   scope :name_like, -> (name) { where("name like ?", name)}

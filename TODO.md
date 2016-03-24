@@ -11,12 +11,6 @@ Pushing to Flickr:
 
 - image upload spinner
 
-Validations:
-
-- Book - ?
-- Name - require name
-- unique
-
 Set up permanent servers:
 - Staging
 - Production
@@ -96,7 +90,12 @@ X - Copy edit button to top of show page
 X Table evidence, remove columns:
 X - content_type
 
+X Validations:
 X - ContentType validattions - require name, - name unique
 X- Evidence
 X  - format
 X  - location in book
+X - Book - ?
+X- Name
+X  - require name
+X  - name is unique unique
