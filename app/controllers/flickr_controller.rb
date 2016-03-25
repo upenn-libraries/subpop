@@ -15,6 +15,19 @@ class FlickrController < ApplicationController
     handle_publication
   end
 
+  def destroy
+    if @item.unpublishable?
+      @item.unpublish
+      respond_to do |format|
+        format.html { redirect_to @item, notice: 'Removing photo from Flickr.' }
+        format.json { head :no_content }
+      end
+    else
+      format.html { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
+      format.json { render json: [ 'Item cannot be remove from Flickr.' ], status: :unprocessable_entity }
+   end
+  end
+
   private
   def handle_publication
     get_item

@@ -34,7 +34,7 @@ module Publishable
     # changing the timestamp. Need to locking/in_process tracking to different
     # object.
     update_columns publishing_to_flickr: true
-    return publish_new! if flickr_status == UNPUBLISHED
+    return publish_new! unless on_flickr?
 
     republish!
   end
@@ -74,8 +74,24 @@ module Publishable
   handle_asynchronously :republish!
 
   ##
-  # Returns `true` if the flickr status of the model is UNPUBLISHED or
-  # OUT_OF_DATE.
+  # Remove the image from Flickr.
+  def unpublish
+    delete_from_flickr
+    save!
+  end
+  handle_asynchronously :unpublish
+
+  ##
+  # Returns `true` if the item can be removed from Flickr; specifically if the
+  # item's Flickr status is `UP_TO_DATE` or `OUT_OF_DATE`.  Items with status
+  # `IN_PROCESS` and `UNPUBLISHED` cannot be removed from Flickr.
+  def unpublishable?
+    [ UP_TO_DATE, OUT_OF_DATE ].include? flickr_status
+  end
+
+  ##
+  # Returns `true` if the Flickr status of the model is `UNPUBLISHED` or
+  # `OUT_OF_DATE`.
   #
   def publishable?
     [ UNPUBLISHED, OUT_OF_DATE ].include? flickr_status
