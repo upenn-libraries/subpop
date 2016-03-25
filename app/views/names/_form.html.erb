@@ -16,6 +16,7 @@
     <%= f.label :name, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_field :name, class: "form-control" %>
+      <%= hint_text @name, :name -%>
     </div>
   </div>
 
@@ -23,6 +24,7 @@
     <%= f.label :year_start, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_field :year_start, class: "form-control" %>
+      <%= hint_text @name, :year_start -%>
     </div>
   </div>
 
@@ -30,6 +32,7 @@
     <%= f.label :year_end, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_field :year_end, class: "form-control" %>
+      <%= hint_text @name, :year_end -%>
     </div>
   </div>
 
@@ -37,6 +40,7 @@
     <%= f.label :viaf_id, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_field :viaf_id, class: "form-control" %>
+      <%= hint_text @name, :viaf_id -%>
     </div>
   </div>
 
@@ -44,6 +48,7 @@
     <%= f.label :comment, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_area :comment, class: "form-control" %>
+      <%= hint_text @name, :comment -%>
     </div>
   </div>
 
