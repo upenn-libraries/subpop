@@ -16,9 +16,6 @@ Set up permanent servers:
 
 Clean up pages; improve layout
 
-Names:
-- Copy "Create name" to top of index page
-
 Double check fields:
 
 - Books
@@ -97,3 +94,5 @@ X- Name
 X  - require name
 X  - name is unique unique
 X - Add citation
+X Names:
+X - Copy "Create name" to top of index page
