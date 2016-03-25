@@ -57,6 +57,14 @@ module ApplicationHelper
     end
   end
 
+  def hint_text obj, attribute
+    key = "activerecord.hints.#{obj.class.name.underscore}.#{attribute.to_s}"
+    val = t key, default: ''
+    return if val == ''
+
+    raw "<span class=\"help-block\">#{val}</span>"
+  end
+
   ##
   # Using format the datetime string, by default output looks like this:
   #
