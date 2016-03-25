@@ -8,7 +8,16 @@ class FlickrController < ApplicationController
   end
 
   def create
-    handle_publication
+    if @item.publishable?
+      AddToFlickrJob.perform_later @item
+      respond_to do |format|
+        format.html { redirect_to @item, notice: "Publishing #{item} to Flickr" }
+        format.json { render :show, status: :created, location: @item }
+      end
+    else
+      format.html { redirect_to @item, notice: "#{@item} is up-to-date or already being published to Flickr" }
+      format.json { render json: [ "#{@item} is up-to-date or already being published to Flickr" ], status: :unprocessable_entity }
+    end
   end
 
   def update
@@ -24,7 +33,7 @@ class FlickrController < ApplicationController
       end
     else
       format.html { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
-      format.json { render json: [ 'Item cannot be remove from Flickr.' ], status: :unprocessable_entity }
+      format.json { render json: [ 'Item cannot be removed from Flickr.' ], status: :unprocessable_entity }
    end
   end
 
@@ -32,7 +41,7 @@ class FlickrController < ApplicationController
   def handle_publication
     get_item
     if @item.publishable?
-      notice = "Publishing #{@item.class} to Flickr"
+      notice = "Publishing #{@item} to Flickr"
       @item.publish!
     else
       notice = "#{@item.class} up-to-date or already being published to Flickr"

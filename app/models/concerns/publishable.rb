@@ -46,7 +46,7 @@ module Publishable
       id     = client.upload(photo.image_data, upload_data)
       info   = client.get_info id
       update_attributes! flickr_id: id, flickr_info: info.to_json,
-      published_at: DateTime.now
+        published_at: DateTime.now
     ensure
       update_columns publishing_to_flickr: false
     end
