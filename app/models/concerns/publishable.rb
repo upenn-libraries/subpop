@@ -95,6 +95,14 @@ module Publishable
     [ UNPUBLISHED, OUT_OF_DATE ].include? flickr_status
   end
 
+  def mark_in_process
+    update_columns publishing_to_flickr: true unless publishing_to_flickr?
+  end
+
+  def unmark_in_process
+    update_columns publishing_to_flickr: false if publishing_to_flickr?
+  end
+
   ##
   # Returns the current flickr status of the model, one of:
   #
