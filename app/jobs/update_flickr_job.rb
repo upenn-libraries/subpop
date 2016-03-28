@@ -1,4 +1,4 @@
-class AddToFlickrJob < ActiveJob::Base
+class UpdateFlickrJob < ActiveJob::Base
   queue_as :default
 
   before_perform do |job|
@@ -10,6 +10,6 @@ class AddToFlickrJob < ActiveJob::Base
   end
 
   def perform publishable
-    publishable.publish_new!
+    publishable.republish!
   end
 end

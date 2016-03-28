@@ -9,9 +9,9 @@ class FlickrController < ApplicationController
 
   def create
     if @item.publishable?
-      AddToFlickrJob.perform_later @item
+      create_jobs
       respond_to do |format|
-        format.html { redirect_to @item, notice: "Publishing #{item} to Flickr" }
+        format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
         format.json { render :show, status: :created, location: @item }
       end
     else
@@ -21,7 +21,16 @@ class FlickrController < ApplicationController
   end
 
   def update
-    handle_publication
+    if @item.publishable?
+      create_jobs
+      respond_to do |format|
+        format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
+        format.json { render :show, status: :created, location: @item }
+      end
+    else
+      format.html { redirect_to @item, notice: "#{@item} is up-to-date or already being published to Flickr" }
+      format.json { render json: [ "#{@item} is up-to-date or already being published to Flickr" ], status: :unprocessable_entity }
+    end
   end
 
   def destroy
@@ -38,15 +47,18 @@ class FlickrController < ApplicationController
   end
 
   private
-  def handle_publication
-    get_item
-    if @item.publishable?
-      notice = "Publishing #{@item} to Flickr"
-      @item.publish!
-    else
-      notice = "#{@item.class} up-to-date or already being published to Flickr"
-    end
-    redirect_to @item, notice: notice
+  def create_jobs
+    return enqueue @item unless @item.is_a?(Book)
+
+    # item is a book; enqueue each publishable
+    @item.publishables.each { |item| enqueue item }
+  end
+
+  def enqueue item
+    return unless item.publishable?
+
+    return UpdateFlickrJob.perform_later item if item.on_flickr?
+    AddToFlickrJob.perform_later item
   end
 
   def get_item

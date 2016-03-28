@@ -51,7 +51,6 @@ module Publishable
       update_columns publishing_to_flickr: false
     end
   end
-  handle_asynchronously :publish_new!
 
   def republish!
     begin
@@ -71,7 +70,6 @@ module Publishable
       update_columns publishing_to_flickr: false
     end
   end
-  handle_asynchronously :republish!
 
   ##
   # Remove the image from Flickr.
