@@ -72,14 +72,6 @@ module Publishable
   end
 
   ##
-  # Remove the image from Flickr.
-  def unpublish
-    delete_from_flickr
-    save!
-  end
-  handle_asynchronously :unpublish
-
-  ##
   # Returns `true` if the item can be removed from Flickr; specifically if the
   # item's Flickr status is `UP_TO_DATE` or `OUT_OF_DATE`.  Items with status
   # `IN_PROCESS` and `UNPUBLISHED` cannot be removed from Flickr.

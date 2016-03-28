@@ -35,7 +35,8 @@ class FlickrController < ApplicationController
 
   def destroy
     if @item.unpublishable?
-      @item.unpublish
+      @item.mark_in_process
+      RemoveFromFlickrJob.perform_later @item
       respond_to do |format|
         format.html { redirect_to @item, notice: 'Removing photo from Flickr.' }
         format.json { head :no_content }
@@ -57,6 +58,7 @@ class FlickrController < ApplicationController
   def enqueue item
     return unless item.publishable?
 
+    item.mark_in_process
     return UpdateFlickrJob.perform_later item if item.on_flickr?
     AddToFlickrJob.perform_later item
   end
