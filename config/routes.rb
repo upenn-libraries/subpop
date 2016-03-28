@@ -1,12 +1,17 @@
 Rails.application.routes.draw do
 
-  get 'flickr/show/:item_type/:id', to: 'flickr#show', as: 'preview'
-  post 'flickr/:item_type/:id', to: 'flckr#create', as: 'create_flickr'
-  put 'flickr/:item_type/:id', to: 'flickr#update', as: 'update_flickr'
+  get 'title_pages/show'
+
+  get    'flickr/show/:item_type/:id',  to: 'flickr#show',    as: 'preview'
+  post   'flickr/:item_type/:id',       to: 'flickr#create',  as: 'create_flickr'
+  put    'flickr/:item_type/:id',       to: 'flickr#update',  as: 'update_flickr'
+  delete 'flickr/:item_type/:id',       to: 'flickr#destroy', as: 'delete_flickr'
 
   resources :books do
     resources :evidence, only: [ :create, :new ]
   end
+
+  resources :title_pages, only: :show
 
   resources :evidence, only: [ :show, :update, :edit ] do
     get :autocomplete_name_name, :on => :collection

@@ -49,4 +49,8 @@ class Book < ActiveRecord::Base
   def publish!
     publishables.each { |item| item.publish! }
   end
+
+  def to_s
+    full_call_number
+  end
 end

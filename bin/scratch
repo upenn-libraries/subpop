@@ -6,7 +6,9 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-bin/rails g migration add_citations_to_evidence citations:text
+bin/rails g controller title_pages show $generator_options
+
+# bin/rails g migration add_citations_to_evidence citations:text
 
 # bin/rails g migration add_publishing_to_title_pages publishing_to_flickr:boolean
 
