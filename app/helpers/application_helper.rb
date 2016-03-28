@@ -57,7 +57,8 @@ module ApplicationHelper
     end
   end
 
-  def hint_text obj, attribute
+  def hint_text_tag obj, attribute
+    obj  = obj.object if obj.kind_of? ActionView::Helpers::FormBuilder
     key = "activerecord.hints.#{obj.class.name.underscore}.#{attribute.to_s}"
     val = t key, default: ''
     return if val == ''

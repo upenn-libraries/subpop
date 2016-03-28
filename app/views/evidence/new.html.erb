@@ -4,7 +4,7 @@
   <%= render 'small_evidence_photo', evidence: @evidence %>
 <% end -%>
 
-<%= form_for [ @book, @evidence ], id: 'evidence-form', html: { class: 'form-horizontal' } do |f| %>
+<%= form_for [ @book, @evidence ], builder: SubpopFormbuilder, id: 'evidence-form', html: { class: 'form-horizontal' } do |f| %>
   <%= render 'form', f: f %>
 
   <div class="actions">
