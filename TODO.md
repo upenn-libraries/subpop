@@ -3,7 +3,6 @@
 ### Work plan
 
 Pushing to Flickr:
- - Ability to remove image from Flickr
  - Spinner while publishing
 
 ### Unordered list of stuff
@@ -21,8 +20,6 @@ Double check fields:
 - Books
 - Evidence
 
-Add hints to fields:
-- New name -- preferred name format
 
 Create context images
 
@@ -96,3 +93,6 @@ X  - name is unique unique
 X - Add citation
 X Names:
 X - Copy "Create name" to top of index page
+X - Ability to remove image from Flickr
+X Add hints to fields:
+X - New name -- preferred name format
