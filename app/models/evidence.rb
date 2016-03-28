@@ -102,4 +102,8 @@ class Evidence < ActiveRecord::Base
     return year_when.to_s if year_when.present?
     [ year_start, year_end ].join '-'
   end
+
+  def to_s
+    format_name
+  end
 end
