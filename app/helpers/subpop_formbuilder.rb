@@ -20,6 +20,74 @@ class SubpopFormbuilder < ActionView::Helpers::FormBuilder
     super + hint(attribute, options)
   end
 
+  def check_box, attribute, options={}, checked_value = "1", unchecked_value = "0"
+    super + hint(attribute, options)
+  end
+
+  def color_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def date_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def datetime_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def datetime_local_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def email_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def file_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def month_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def password_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def phone_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def radio_button, attribute, tag_value, options={}
+    super + hint(attribute, options)
+  end
+
+  def range_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def search_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def telephone_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def time_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def url_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
+  def week_field, attribute, options={}
+    super + hint(attribute, options)
+  end
+
   def hint attribute, options={}
     val        = options[:hint_text]  || hint_text(attribute, options)
     return unless val.present?
