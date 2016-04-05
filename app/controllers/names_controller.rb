@@ -6,21 +6,38 @@ class NamesController < ApplicationController
   # GET /names
   # GET /names.json
   def index
-    if params[:search]
-      @names = Name.name_like("%#{params[:search]}%").order('name').page(params[:page])
-    else
-      @names = Name.order(:name).page params[:page]
+    respond_to do |format|
+      format.html {
+        @search ||= params[:search]
+        if @search.present?
+          @names = Name.name_like("%#{params[:search]}%").order('name').page(params[:page])
+        else
+          @names = Name.order(:name).page params[:page]
+        end
+      }
+      format.json { @names = Name.name_like("%#{params[:term]}%").order('name').limit(20) }
     end
   end
 
   # GET /names/1
   # GET /names/1.json
   def show
+    raise "Break!"
   end
 
   # GET /names/new
   def new
     @name = Name.new
+    respond_to do |format|
+      if request.xhr?
+        format.html {
+          @modal = true
+          render layout: false
+        }
+      else
+        format.html
+      end
+    end
   end
 
   # GET /names/1/edit
@@ -36,9 +53,11 @@ class NamesController < ApplicationController
       if @name.save
         format.html { redirect_to @name, notice: 'Name was successfully created.' }
         format.json { render :show, status: :created, location: @name }
+        format.js   { render :show, status: :created, location: @name }
       else
         format.html { render :new }
-        format.json { render json: @name.errors, status: :unprocessable_entity }
+        format.json { render status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -52,7 +71,7 @@ class NamesController < ApplicationController
         format.json { render :show, status: :ok, location: @name }
       else
         format.html { render :edit }
-        format.json { render json: @name.errors, status: :unprocessable_entity }
+        format.json { render status: :unprocessable_entity }
       end
     end
   end

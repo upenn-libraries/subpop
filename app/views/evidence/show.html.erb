@@ -1,4 +1,3 @@
-
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', evidence: @evidence %>
 <% end -%>
@@ -86,7 +85,7 @@
   <% @evidence.provenance_agents.each do |agent| %>
     <div class="row field-group">
       <div class="col-sm-4 field-label"><%= ProvenanceAgent.role_name agent.role %></div>
-      <div class="col-sm-6 field-value"><%= agent.name.full_name %></div>
+      <div class="col-sm-6 field-value"><%= agent.full_name %></div>
     </div>
   <% end %>
 <% else %>

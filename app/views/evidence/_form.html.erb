@@ -1,3 +1,7 @@
+<% content_for :modals do -%>
+<%= render '/names/name_modal' -%>
+<% end -%>
+
   <% if @evidence.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-danger">

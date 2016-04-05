@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'flash/show'
+
   get 'title_pages/show'
 
   get    'flickr/show/:item_type/:id',  to: 'flickr#show',    as: 'preview'

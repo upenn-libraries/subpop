@@ -2,6 +2,8 @@ class ProvenanceAgent < ActiveRecord::Base
   belongs_to :evidence
   belongs_to :name
 
+  delegate :full_name, to: :name, prefix: false, allow_nil: true
+
   ROLES = [
     [ "Owner",                        "owner"      ],
     [ "Binder",                       "binder"     ],

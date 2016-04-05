@@ -40,3 +40,4 @@ bower.json
 .docker-environment
 .ruby-version
 .\#*
+.byebug_history

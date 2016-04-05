@@ -1,19 +1,21 @@
+<% content_for :modals do -%>
+<%= render 'name_modal' -%>
+<% end -%>
+
 <h2>Names</h2>
 
 <div class="row">
 <%= form_tag names_path, :method => "get", id: "search-form", class: "form form-inline" do %>
 <!-- text field tag=action,args,identifier,placeholdertext... -->
 <div class="form-group">
-<%= autocomplete_field_tag 'search', params[:search], autocomplete_name_name_names_path, class: "form-control", placeholder: "Search by name", type: "search" %>
+  <%= text_field_tag 'search', nil, class: 'form-control name-search', placeholder: "Search by name", type: "search", value: @search-%>
   <%= submit_tag "Search", class: "btn btn-default" %>
 </div>
 <%end%>
 </div>
 
-<div class="row top-buffer">
-<%= link_to 'New Name', new_name_path, class: 'btn btn-primary' %>
-<br>
-<%= paginate @names %>
+<div class="top-buffer">
+<%= page_entries_info @names, :entry_name => 'name' %>
 </div>
 
 <div class="row">

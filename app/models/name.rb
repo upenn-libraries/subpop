@@ -3,12 +3,12 @@ class Name < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  validates_numericality_of :viaf_id, allow_nil: true
+  validates_numericality_of :viaf_id, allow_nil: true, allow_blank: true
 
-  scope :name_like, -> (name) { where("name like ?", name)}
+  scope :name_like, -> (name) { where("lower(name) like ?", name.downcase)}
 
   def full_name
-    [ name, date_string ].flat_map { |x| x.blank? ? nil : x }.join ', '
+    [ name, date_string ].flat_map { |x| x.present? ? x : [] }.join ', '
   end
 
   def date_string

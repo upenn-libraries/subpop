@@ -1,21 +1,17 @@
-<%= form_for @name, builder: SubpopFormbuilder, html: { class: 'form-horizontal' }  do |f| %>
-  <% if @name.errors.any? %>
-    <div id="error_explanation">
-      <div class="alert alert-danger">
-        The form contains <%= pluralize(@name.errors.count, "error") %>.
-      </div>
-      <ul>
-      <% @name.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%# Conditionally set remote: true. %>
+<% modal ||= @modal %>
+<!-- modal is <%= modal -%> -->
+<% remote = modal ? true : false %>
+<%= form_for @name, builder: SubpopFormbuilder, remote: remote, html: { class: 'form-horizontal' }  do |f| %>
+
+<div class="error-div">
+  <%= render 'error_messages', object: @name %>
+</div>
 
   <div class="form-group">
     <%= f.label :name, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <%= f.text_field :name, class: "form-control" %>
+      <%= f.text_field :name, class: "form-control", autofocus: true %>
     </div>
   </div>
 
@@ -49,7 +45,11 @@
 
 
   <div class="actions">
+    <% if modal -%>
+    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</span></button>
+    <% else -%>
     <%= link_to 'Cancel', names_path, class: "btn btn-default" %>
+    <% end -%>
     <%= f.submit class: "btn btn-success" %>
   </div>
 <% end %>
