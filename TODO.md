@@ -1,5 +1,17 @@
 # To-do items
 
+### For discussion
+
+- Dates associated with names
+    + We want LC-style name entries, but we also want to have separate dates;
+      this is contradictory. How do we proceed? What about legacy data -- how
+      are those names formatted?
+
+- Format Other, and Other format field
+    + This has been added, but it is almost certainly bad. Users will likely
+      reject our categories and create their own, resulting in, for example,
+      variations on stamp and bookplate that are arbitrary and unsearchable.
+
 ### Work plan
 
 Pushing to Flickr:
@@ -14,16 +26,16 @@ Set up permanent servers:
 - Production
 
 Clean up pages; improve layout
+  - Handle menu changes
 
 Double check fields:
 
 - Books
 - Evidence
 
-
 Create context images
 
-Show names -- show dates too when available
+Add counter cache to names
 
 Add ability to remove images from queue when done
 
@@ -37,6 +49,7 @@ Evidence show page:
 
 User support:
     - Login
+    - Add use to books and evidence: `created_by`, `updated_by`
     - Show user's books
     - Push to Flickr workflow
     - Administration of users
@@ -96,3 +109,4 @@ X - Copy "Create name" to top of index page
 X - Ability to remove image from Flickr
 X Add hints to fields:
 X - New name -- preferred name format
+x Show names -- show dates too when available
