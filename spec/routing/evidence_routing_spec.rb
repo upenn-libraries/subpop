@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe EvidenceController, type: :routing do
+
   describe "routing" do
 
     it "routes to #index" do
@@ -8,7 +9,7 @@ RSpec.describe EvidenceController, type: :routing do
     end
 
     it "routes to #new" do
-      expect(:get => "/evidence/new").to route_to("evidence#new")
+      expect(:get => "/books/1/evidence/new").to route_to("evidence#new", book_id: "1")
     end
 
     it "routes to #show" do
@@ -20,7 +21,7 @@ RSpec.describe EvidenceController, type: :routing do
     end
 
     it "routes to #create" do
-      expect(:post => "/evidence").to route_to("evidence#create")
+      expect(:post => "/books/1/evidence").to route_to("evidence#create", book_id: "1")
     end
 
     it "routes to #update via PUT" do

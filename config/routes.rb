@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :title_pages, only: :show
 
-  resources :evidence, only: [ :show, :update, :edit ] do
+  resources :evidence, only: [ :show, :update, :edit, :index, :destroy ] do
     get :autocomplete_name_name, :on => :collection
   end
 
