@@ -22,7 +22,6 @@ class NamesController < ApplicationController
   # GET /names/1
   # GET /names/1.json
   def show
-    raise "Break!"
   end
 
   # GET /names/new
