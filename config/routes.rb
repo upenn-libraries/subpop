@@ -19,9 +19,7 @@ Rails.application.routes.draw do
     get :autocomplete_name_name, :on => :collection
   end
 
-  resources :names, except: :destroy do
-    get :autocomplete_name_name, on: :collection
-  end
+  resources :names
 
   devise_for :users
   get 'welcome/index'
