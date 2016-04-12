@@ -1,6 +1,6 @@
 class ProvenanceAgent < ActiveRecord::Base
-  belongs_to :evidence
-  belongs_to :name
+  belongs_to :evidence, required: true
+  belongs_to :name, required: true
 
   delegate :full_name, to: :name, prefix: false, allow_nil: true
 
@@ -16,6 +16,8 @@ class ProvenanceAgent < ActiveRecord::Base
   ROLES_BY_CODE = ROLES.inject({}) { |hash, pair|
     hash.merge(pair.last => pair.first)
   }
+
+  validates :role, inclusion: ROLES.map(&:last)
 
   class << self
     def role_name code

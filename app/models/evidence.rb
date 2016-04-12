@@ -1,7 +1,7 @@
 class Evidence < ActiveRecord::Base
   include Publishable
 
-  belongs_to :book
+  belongs_to :book, required: true
   belongs_to :photo
 
   has_many :evidence_content_types, dependent: :destroy
@@ -52,7 +52,7 @@ class Evidence < ActiveRecord::Base
   }
 
   validates :format, inclusion: { in: FORMATS.map(&:last), message: "'%{value}' is not in list" }
-  validates :book,                  presence: true
+  # validates :book,                  presence: true
   validates :format_other,          presence: true, if: :has_other_format?
 
   validates :location_in_book, inclusion: { in: LOCATIONS.map(&:last), message: "'%{value}' is not in list", allow_blank: true }

@@ -24,11 +24,11 @@ RSpec.describe BooksController, type: :controller do
   # Book. As you add validations to Book, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+     { title: "Holy Bible" }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { title: nil }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,14 +103,16 @@ RSpec.describe BooksController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          publisher: 'Knopf'
+        }
       }
 
       it "updates the requested book" do
         book = Book.create! valid_attributes
         put :update, {:id => book.to_param, :book => new_attributes}, valid_session
         book.reload
-        skip("Add assertions for updated state")
+        expect(book.publisher).to eq('Knopf')
       end
 
       it "assigns the requested book as @book" do

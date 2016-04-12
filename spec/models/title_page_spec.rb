@@ -1,5 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe TitlePage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'factory' do
+    it 'creates a TitlePage' do
+      expect(create(:title_page)).to be_a(TitlePage)
+    end
+  end
+
+  context 'initialization' do
+    it 'creates a TitlePage' do
+      expect(TitlePage.new).to be_a(TitlePage)
+    end
+  end
+
+  context 'validations:' do
+    it 'is valid' do
+      expect(build(:title_page)).to be_valid
+    end
+
+    it 'is invalid without a book' do
+      expect(build(:title_page, book: nil)).not_to be_valid
+    end
+
+  end
 end
