@@ -54,7 +54,7 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new evidence as @evidence" do
-      get :new, {}, valid_session
+      get :new, { book_id: create(:book).id }, valid_session
       expect(assigns(:evidence)).to be_a_new(Evidence)
     end
   end
