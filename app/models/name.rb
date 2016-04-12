@@ -3,17 +3,26 @@ class Name < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  validates_numericality_of :viaf_id, allow_nil: true, allow_blank: true
+  validates_numericality_of :viaf_id,    allow_nil: true, allow_blank: true
+  validates_numericality_of :year_start, allow_nil: true, allow_blank: true
+  validates_numericality_of :year_end,   allow_nil: true, allow_blank: true
 
-  scope :name_like, -> (name) { where("lower(name) like ?", name.downcase)}
+  scope :name_like, -> (name) { where("lower(name) like ?", name.downcase) }
 
   def full_name
-    [ name, date_string ].flat_map { |x| x.present? ? x : [] }.join ', '
+    return name if name_has_date?
+    return name unless date_string.present?
+
+    [ name, date_string ].flat_map { |x| x.present? ? x.strip : [] }.join ', '
   end
 
   def date_string
     years = [ year_start, year_end ]
     years.all?(&:blank?) ? nil : years.join('-')
+  end
+
+  def name_has_date?
+    name =~ /^[[:alnum:]]+.*\d{4}/
   end
 
   def to_s
