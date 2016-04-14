@@ -2,7 +2,7 @@ class UpdateFlickrJob < ActiveJob::Base
   queue_as :default
 
   before_perform do |job|
-    job.arguments.first.item.mark_in_process
+    job.arguments.first.mark_in_process
   end
 
   after_perform do |job|
