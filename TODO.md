@@ -26,7 +26,6 @@ Set up permanent servers:
 - Production
 
 Clean up pages; improve layout
-  - Handle menu changes
 
 Double check fields:
 
@@ -112,3 +111,4 @@ X - Ability to remove image from Flickr
 X Add hints to fields:
 X - New name -- preferred name format
 x Show names -- show dates too when available
+X  - Handle menu changes
