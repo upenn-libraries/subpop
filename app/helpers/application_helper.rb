@@ -5,11 +5,14 @@ module ApplicationHelper
   end
 
   NON_EVIDENCE_PHOTOS = [
-                         [ 'Title page (not provenance evidence)', 'title_page' ],
-                         [ 'Context image (not provenance evidence)', 'context_image' ]
-                        ]
+                         [ 'Title page',    'title_page'    ],
+                         [ 'Hide photo',    'hide'          ],
+                       ]
 
-  PHOTO_ASSIGNMENTS = NON_EVIDENCE_PHOTOS + Evidence::FORMATS
+  PHOTO_ASSIGNMENTS = [
+    [ 'Evidence format', Evidence::FORMATS   ],
+    [ 'Non-evidence',    NON_EVIDENCE_PHOTOS ],
+  ]
 
   FLICKR_STATUS_LABEL_CLASSES = {
     Publishable::UNPUBLISHED => "label-warning",
