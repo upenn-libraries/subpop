@@ -1,5 +1,7 @@
 class Name < ActiveRecord::Base
 
+  before_destroy :check_counter_cache
+
   has_many :provenance_agents
 
   validates :name, presence: true
@@ -29,5 +31,14 @@ class Name < ActiveRecord::Base
 
   def to_s
     name
+  end
+
+  private
+  def check_counter_cache
+    # proceed with destroy if provenance_agents is 0
+    return true if provenance_agents.size == 0
+    # otherwise, there's a problem
+    errors[:base] << "Cannot delete name with provenance agents"
+    false
   end
 end

@@ -74,5 +74,21 @@ RSpec.describe Name, type: :model do
       }.to change { name.provenance_agents_count
       }.by 1
     end
+
+    it 'prevents destruction if counter cache is more than 0' do
+      create(:provenance_agent, name: name)
+      expect { name.destroy }.not_to change { Name.count }
+    end
+
+    it 'generates an error is counter cache is more than 0' do
+      create(:provenance_agent, name: name)
+      expect(name.destroy).to eq(false)
+      expect(name.errors.size).to eq(1)
+    end
+
+    it 'allows destruction if counter cache is 0' do
+      name = create(:name)
+      expect { name.destroy }.to change { Name.count }.by -1
+    end
   end
 end
