@@ -69,10 +69,10 @@ RSpec.describe Name, type: :model do
 
   context 'counter cache' do
     it 'adds a new provenance agent' do
-      name = create :name
       expect {
         create(:provenance_agent, name: name)
-      }.to change { name.provenance_agents_count }.by 1
+      }.to change { name.provenance_agents_count
+      }.by 1
     end
   end
 end
