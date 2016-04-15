@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324210741) do
+ActiveRecord::Schema.define(version: 20160415002637) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -94,13 +94,14 @@ ActiveRecord::Schema.define(version: 20160324210741) do
   add_index "evidence_content_types", ["evidence_id"], name: "index_evidence_content_types_on_evidence_id", using: :btree
 
   create_table "names", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.integer  "year_start", limit: 4
-    t.integer  "year_end",   limit: 4
-    t.string   "viaf_id",    limit: 255
-    t.string   "comment",    limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",                    limit: 255,             null: false
+    t.integer  "year_start",              limit: 4
+    t.integer  "year_end",                limit: 4
+    t.string   "viaf_id",                 limit: 255
+    t.string   "comment",                 limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "provenance_agents_count", limit: 4,   default: 0
   end
 
   add_index "names", ["name"], name: "index_names_on_name", unique: true, using: :btree

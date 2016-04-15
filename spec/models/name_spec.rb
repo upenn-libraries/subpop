@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Name, type: :model do
-  subject(:subject) { create(:name) }
+  subject(:name) { create(:name) }
 
   context 'initialization' do
     it 'creates  new name' do
@@ -19,7 +19,7 @@ RSpec.describe Name, type: :model do
     end
 
     it "isn't valid is name is not unique" do
-      expect(build(:name, name: subject.name)).not_to be_valid
+      expect(build(:name, name: name.name)).not_to be_valid
     end
 
     it "is valid if VIAF ID is numerical" do
@@ -64,6 +64,15 @@ RSpec.describe Name, type: :model do
 
     it 'returns a name with a date and a date string' do
       expect(build(:name, name: "Smith, Jane, -1902", year_start: 1820, year_end: 1902).full_name).to eq("Smith, Jane, -1902")
+    end
+  end
+
+  context 'counter cache' do
+    it 'adds a new provenance agent' do
+      name = create :name
+      expect {
+        create(:provenance_agent, name: name)
+      }.to change { name.provenance_agents_count }.by 1
     end
   end
 end

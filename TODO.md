@@ -34,8 +34,6 @@ Double check fields:
 
 Create context images
 
-Add counter cache to names
-
 Add exception to names#detroy to prevent deletion used names
 
 Add ability to remove images from queue when done

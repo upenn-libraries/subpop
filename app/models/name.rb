@@ -1,5 +1,7 @@
 class Name < ActiveRecord::Base
 
+  has_many :provenance_agents
+
   validates :name, presence: true
   validates :name, uniqueness: true
 
