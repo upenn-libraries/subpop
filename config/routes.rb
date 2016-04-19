@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'photos/update'
+
   get 'flash/show'
 
   get 'title_pages/show'
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :books do
     resources :evidence, only: [ :create, :new ]
+    resources :photos, only: [ :update ]
   end
 
   resources :title_pages, only: :show

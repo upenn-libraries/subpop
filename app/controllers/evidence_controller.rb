@@ -17,8 +17,7 @@ class EvidenceController < ApplicationController
 
   # GET /evidence/new
   def new
-    @evidence = Evidence.new book: @book, format: params[:format],
-      photo: get_photo
+    @evidence = Evidence.new evidence_params
   end
 
   # GET /evidence/1/edit

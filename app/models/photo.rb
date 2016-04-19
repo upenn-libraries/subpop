@@ -16,6 +16,8 @@ class Photo < ActiveRecord::Base
 
   process_in_background :image, processing_image_url: "/images/:style/processing.png"
 
+  scope :queued, -> { where in_queue: true }
+
   def image_data
     Paperclip.io_adapters.for(image)
   end

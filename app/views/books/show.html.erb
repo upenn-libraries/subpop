@@ -151,7 +151,9 @@
 
 <div class="row field-group">
   <h3>Photo queue</h3>
-  <%= render 'photo_queue', book: @book %>
+  <div id="photo-queue">
+    <%= render 'photos/index', book: @book, photos: @book.photos.queued %>
+  </div> <!-- /photo-queue -->
 </div> <!-- /row field-group -->
 
 

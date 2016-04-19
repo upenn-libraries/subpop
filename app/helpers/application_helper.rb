@@ -5,8 +5,8 @@ module ApplicationHelper
   end
 
   NON_EVIDENCE_PHOTOS = [
-                         [ 'Title page',    'title_page'    ],
-                         [ 'Hide photo',    'hide'          ],
+                         [ 'Title page',        'title_page' ],
+                         [ 'Remove from queue', 'unqueue'    ],
                        ]
 
   PHOTO_ASSIGNMENTS = [

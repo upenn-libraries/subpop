@@ -1,10 +1,10 @@
 <ul class="list-inline image-queue">
-  <% photos.each do |photo| %>
+  <% book.photos.queued.each do |photo| %>
   <li>
     <div class="panel panel-default">
       <div class="panel-body">
         <%= form_tag "", method: :patch, class: "form form-inline" do %>
-        <%= hidden_field_tag "evidence[format]", id: "evidence_format_#{book.id}_#{photo.id}" %>
+        <%# hidden_field_tag "evidence[format]", '', id: "evidence_format_#{book.id}_#{photo.id}" %>
         <%= hidden_field_tag "photo_id", photo.id, id: "photo-#{photo.id}" %>
         <%= hidden_field_tag "book_id", book.id, id: "photo-#{photo.id}-book-#{book.id}" %>
         <div class="form-group">

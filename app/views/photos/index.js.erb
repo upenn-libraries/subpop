@@ -1,0 +1,1 @@
+$('#photo-queue').html("<%= j render partial: 'photos/index', locals: { book: @book, photos: @book.photos.queued } %>")

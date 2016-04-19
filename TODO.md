@@ -14,6 +14,8 @@
 
 ### Work plan
 
+Name search autocomplete: prevent dates' appearing in search field on select
+
 Pushing to Flickr:
  - Spinner while publishing
 
@@ -25,6 +27,8 @@ Set up permanent servers:
 - Staging
 - Production
 
+Fix title page sidebar to show more than one image
+
 Clean up pages; improve layout
 
 Double check fields:
@@ -33,8 +37,6 @@ Double check fields:
 - Evidence
 
 Create context images
-
-Add exception to names#detroy to prevent deletion used names
 
 Add ability to remove images from queue when done
 
@@ -55,6 +57,10 @@ User support:
     - Administration of workflow for "probation" users
 
 Migrate current spreadsheets to app
+
+Add Blacklight to application
+
+Deal with single images for multiple pieces of provenance
 
 # DONE
 
@@ -110,3 +116,4 @@ X Add hints to fields:
 X - New name -- preferred name format
 x Show names -- show dates too when available
 X  - Handle menu changes
+X Add exception to names#detroy to prevent deletion used names

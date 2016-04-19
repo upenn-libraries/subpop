@@ -6,7 +6,11 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-bin/rails g migration add_provenance_agents_count_to_names provenance_agents_count:integer
+bin/rails g migration add_in_queue_to_photos in_queue:boolean
+
+# bin/rails g controller photos update $generator_options
+
+# bin/rails g migration add_hidden_to_photos hidden:boolean
 
 # bin/rails g controller flash show $generator_options
 
