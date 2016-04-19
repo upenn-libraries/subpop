@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy, :add_title_page ]
+  before_action :set_book, except: [ :new ]
 
   # GET /books
   # GET /books.json

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'photos/update'
-
   get 'flash/show'
 
   get 'title_pages/show'
@@ -13,7 +11,9 @@ Rails.application.routes.draw do
 
   resources :books do
     resources :evidence, only: [ :create, :new ]
-    resources :photos, only: [ :update ]
+    resources :photos, only: [ :update, :index ] do
+      patch 'restore_queue', on: :collection
+    end
   end
 
   resources :title_pages, only: :show
@@ -31,7 +31,8 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  put 'books/:id/add_title_page/:photo_id' => 'books#add_title_page', as: :add_title_page, defaults: { format: :html }
+  post 'books/:id/add_title_page/:photo_id' => 'books#add_title_page', as: :add_title_page, defaults: { format: :html }
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

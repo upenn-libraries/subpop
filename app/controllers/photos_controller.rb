@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
   before_action :set_book
-  before_action :set_photo, except: [:index]
+  before_action :set_photo, only: [ :update ]
 
   def index
     @photos = @book.photos.queued
@@ -23,6 +23,14 @@ class PhotosController < ApplicationController
         format.json { render status: :unprocessable_entity }
         format.js   { }
       end
+    end
+  end
+
+  def restore_queue
+    @book.photos.update_all(in_queue: true)
+    respond_to do |format|
+      format.html { redirect_to @book }
+      format.js   { render action: 'index' }
     end
   end
 

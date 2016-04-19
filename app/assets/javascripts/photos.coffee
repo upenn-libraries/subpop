@@ -16,14 +16,17 @@ jQuery ->
         if $(this).val() == 'title_page'
             # /books/4/add_title_page/9
             $(this.form).attr('action', '/books/' + book_id + '/add_title_page/' + photo_id)
+            $(this.form).attr('method', 'post')
+            $(this.form).attr('data-remote', false)
         else if $(this).val() == 'unqueue'
             $(this.form).attr('action', '/books/' + book_id + '/photos/' + photo_id)
-            $(this.form).append('<input type="hidden" name="photo[in_queue]" value="' + false + '">')
             $(this.form).attr('data-remote', true)
+            $(this.form).attr('method', 'patch')
+            $(this.form).append('<input type="hidden" name="photo[in_queue]" value="' + false + '">')
         else
+            $(this.form).attr('action', '/books/' + book_id + '/evidence/new')
+            $(this.form).attr('method', 'get')
+            $(this.form).attr('data-remote', false)
             $(this.form).append('<input type="hidden" name="evidence[photo_id]" value="' + photo_id + '">')
             $(this.form).append('<input type="hidden" name="evidence[book_id]" value="' + book_id + '">')
             $(this.form).append('<input type="hidden" name="evidence[format]" value="' + $(this).val() + '">')
-            # $(this.form).find("input[name='evidence[format]']").val($(this).val())
-            $(this.form).attr('action', '/books/' + book_id + '/evidence/new')
-            $(this.form).attr('method', 'get')
