@@ -1,3 +1,12 @@
+<p><%= book.photos.count -%> photos (queued:  <%= book.photos_queued -%>; hidden: <%= book.photos_hidden -%>)</p>
+<p>
+<% if book.all_queued? -%>
+<%= link_to 'Restore queue', '#', class: 'btn btn-default btn-sm', disabled: true -%>
+<% else -%>
+<%= link_to 'Restore queue', restore_queue_book_photos_path(@book), method: :patch, class: 'btn btn-default btn-sm', remote: true -%>
+<% end -%>
+</p>
+
 <ul class="list-inline image-queue">
   <% book.photos.queued.each do |photo| %>
   <li>

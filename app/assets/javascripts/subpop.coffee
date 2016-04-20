@@ -1,9 +1,9 @@
 ready = ->
-    $('a[disabled=disabled]').on 'click', (event) =>
-        event.preventDefault()
-        return false
 
-    $('.modal-link').on 'click', (event) ->
+    $(document).on 'click', 'a[disabled="disabled"]', (event) ->
+        event.preventDefault()
+
+    $(document).on 'click', '.modal-link', (event) ->
         $.get $(this).attr("href"), (data) ->
             $('#preview-modal-body').html($(data))
             $('#preview-modal').modal('show')

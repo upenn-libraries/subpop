@@ -1,10 +1,10 @@
 jQuery ->
-    $('select.image-use').closest('form').submit ->
+    $(document).on 'submit', 'form:has(select.image-use)', (event) ->
         if $(this).find('select.image-use').val() is ''
             alert('Please select a use for the image')
             false
 
-    $('select.image-use').change ->
+    $(document).on 'change', 'select.image-use', (event) ->
         book_id = $(this.form).find("input[name='book_id']").val()
         photo_id = $(this.form).find("input[name='photo_id']").val()
 

@@ -6,6 +6,18 @@ class Book < ActiveRecord::Base
   validates_presence_of :title
   accepts_nested_attributes_for :title_pages
 
+  def photos_queued
+    photos.queued.count
+  end
+
+  def photos_hidden
+    photos.unqueued.count
+  end
+
+  def all_queued?
+    photos_hidden == 0
+  end
+
   def publishables
     title_pages + evidence
   end

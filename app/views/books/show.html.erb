@@ -151,7 +151,6 @@
 
 <div class="row field-group">
   <h3>Photo queue</h3>
-  <p><%= link_to 'Restore queue', restore_queue_book_photos_path(@book), method: :patch, class: 'btn btn-default btn-sm', remote: true -%></p>
   <div id="photo-queue">
     <%= render 'photos/index', book: @book, photos: @book.photos.queued %>
   </div> <!-- /photo-queue -->
