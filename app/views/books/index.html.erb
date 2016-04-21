@@ -1,5 +1,9 @@
 <h1>Books</h1>
 
+<div class="top-buffer">
+<%= page_entries_info @books, :entry_name => 'book' %>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -25,6 +29,8 @@
   </tbody>
 </table>
 
+<div>
+<%= paginate @books %>
 <br>
-
 <%= link_to 'New Book', new_book_path, class: 'btn btn-primary' %>
+</div>

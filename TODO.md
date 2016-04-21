@@ -44,6 +44,9 @@ Evidence show page:
 
 - Add name window from Add name list
 
+Evidence form:
+  - Provenance agents hide/delete button instead of checkbox
+
 User support:
     - Login
     - Add use to books and evidence: `created_by`, `updated_by`
@@ -115,3 +118,4 @@ X  - Handle menu changes
 X Add exception to names#detroy to prevent deletion used names
 X Add ability to remove images from queue when done
 X Fix title page sidebar to show more than one image
+X Add pagination to Books index
