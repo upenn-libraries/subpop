@@ -8,7 +8,7 @@
 <%= form_tag names_path, :method => "get", id: "search-form", class: "form form-inline" do %>
 <!-- text field tag=action,args,identifier,placeholdertext... -->
 <div class="form-group">
-  <%= text_field_tag 'search', nil, class: 'form-control name-search', placeholder: "Search by name", type: "search", value: @search-%>
+  <%= autocomplete_field_tag 'search', nil, autocomplete_name_names_path, class: 'form-control name-search', placeholder: "Search by name", type: "search", value: @search-%>
   <%= submit_tag "Search", class: "btn btn-default" %>
 </div>
 <%end%>

@@ -18,11 +18,11 @@ Rails.application.routes.draw do
 
   resources :title_pages, only: :show
 
-  resources :evidence, only: [ :show, :update, :edit, :index, :destroy ] do
-    get :autocomplete_name_name, :on => :collection
-  end
+  resources :evidence, only: [ :show, :update, :edit, :index, :destroy ]
 
-  resources :names
+  resources :names do
+    get :autocomplete_name, on: :collection
+  end
 
   devise_for :users
   get 'welcome/index'
