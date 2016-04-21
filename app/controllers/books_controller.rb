@@ -1,10 +1,10 @@
 class BooksController < ApplicationController
-  before_action :set_book, except: [ :new, :index ]
+  before_action :set_book, except: [ :new, :index, :create ]
 
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = Book.order("coalesce(repository, owner)")
   end
 
   # GET /books/1

@@ -6,6 +6,11 @@ class Book < ActiveRecord::Base
   validates_presence_of :title
   accepts_nested_attributes_for :title_pages
 
+  def holder
+    return repository if repository.present?
+    owner
+  end
+
   def photos_queued
     photos.queued.count
   end

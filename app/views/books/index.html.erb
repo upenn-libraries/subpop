@@ -3,7 +3,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Repository</th>
+      <th>Repository/Owner</th>
       <th>Call number</th>
       <th>Title</th>
       <th></th>
@@ -13,7 +13,7 @@
   <tbody>
     <% @books.each do |book| %>
       <tr>
-        <td><%= book.repository %></td>
+        <td><%= book.holder %></td>
         <td><%= book.call_number %></td>
         <td><%= book.name %></td>
         <td>
