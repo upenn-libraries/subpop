@@ -14,8 +14,6 @@
 
 ### Work plan
 
-Name search autocomplete: prevent dates' appearing in search field on select
-
 Pushing to Flickr:
  - Spinner while publishing
 
@@ -30,7 +28,6 @@ Set up permanent servers:
 Clean up pages; improve layout
 
 Double check fields:
-
 - Books
 - Evidence
 
@@ -119,3 +116,4 @@ X Add exception to names#detroy to prevent deletion used names
 X Add ability to remove images from queue when done
 X Fix title page sidebar to show more than one image
 X Add pagination to Books index
+X Name search autocomplete: prevent dates' appearing in search field on select
