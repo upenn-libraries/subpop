@@ -1,5 +1,5 @@
-<div class="evidence-image thumbnail">
-  <%= link_to image_tag(item.photo.image.url(:small),
+<div class="thumbnail">
+  <%= link_to image_tag(item.photo.image.url(image_size),
     class: 'img-responsive'), item.photo.image.url(:original),
     target: '_blank', 'data-toggle' => 'tooltip',
     title: 'Click to open in new window.' -%>
