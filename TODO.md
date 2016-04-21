@@ -27,8 +27,6 @@ Set up permanent servers:
 - Staging
 - Production
 
-Fix title page sidebar to show more than one image
-
 Clean up pages; improve layout
 
 Double check fields:
@@ -37,8 +35,6 @@ Double check fields:
 - Evidence
 
 Create context images
-
-Add ability to remove images from queue when done
 
 Investigate image cropping
 
@@ -117,3 +113,5 @@ X - New name -- preferred name format
 x Show names -- show dates too when available
 X  - Handle menu changes
 X Add exception to names#detroy to prevent deletion used names
+X Add ability to remove images from queue when done
+X Fix title page sidebar to show more than one image
