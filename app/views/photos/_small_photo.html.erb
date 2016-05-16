@@ -1,3 +1,4 @@
+<% image_size ||= :small %>
 <div class="thumbnail">
   <%= link_to image_tag(item.photo.image.url(image_size),
     class: 'img-responsive'), item.photo.image.url(:original),
