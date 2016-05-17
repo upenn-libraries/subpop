@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+#!/usr/bin/env bash
+
+# docker-tunnel-ctl: docker tunnel control script
+#
+# Description:
+#
+# Requires you configure a docker-tunnel in SSH configuration
+#
+#    Host docker-tunnel
+#       HostName hostname
+#       IdentityFile ~/.ssh/the.key
+#       LocalForward 2375 127.0.0.1:2375
+#       User: user_name
+#
+#   
+
+
+#### USAGE AND ERRORS
+
+usage() {
+   echo "Usage: $0 SSH_HOST {start|stop|restart}"
+   echo ""
+}
+
+### OPTIONS
+while getopts "hp:" opt; do
+  case $opt in
+    h)
+      usage
+      exit 1
+      ;;
+    \?)
+      echo "ERROR Invalid option: -$OPTARG" >&2
+      echo ""
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+#  ssh -f -N tunnel
+
+if [[ "$#" -eq 2 ]]; then
+  :
+else
+  echo "Wrong number of arguments"
+  usage
+  exit 1
+fi
+
+SSH_HOST=$1
+ACTION=$2
+COMMAND="ssh -f -N $SSH_HOST"
+
+PIDFILE=$HOME/var/run/$SSH_HOST.pid
+
+case "$ACTION" in
+  start)
+    printf "%-50s" "Starting $SSH_HOST..."
+    msg=`$COMMAND >/dev/null 2>&1`
+    if [ $? -eq 0 ]; then
+      printf "%s\n" "OK"
+    else
+      printf "%s\n" "ERROR"
+      echo "$msg"
+    fi
+    ;;
+  status)
+    printf "%-50s" "Checking $SSH_HOST..."
+    PID=`ps -ef | grep ssh | grep "\b$SSH_HOST\b" | awk '{ print $2 }'`
+    if [ -z "$PID" ]; then
+      printf "%s\n" "Process not running"
+    else
+      echo "Running"
+    fi
+    ;;
+  stop)
+    printf "%-50s" "Stopping $SSH_HOST"
+    PID=`ps -ef | grep ssh | grep "\b$SSH_HOST\b" | awk '{ print $2 }'`
+    if [ -n "$PID" ]; then
+      kill $PID
+      printf "%s\n" "OK"
+    else
+      printf "%s\n" "PID not found"
+    fi
+    ;;
+
+  restart)
+    $0 $SSH_HOST stop
+    $0 $SSH_HOST start
+    ;;
+
+  *)
+    usage
+    exit 1
+esac

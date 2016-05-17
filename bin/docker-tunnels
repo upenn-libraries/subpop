@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+################################################################################ 
+#
+# Name: docker-tunnels
+#
+# Description: Restart the subpop docker-tunnels using the `docker-tunnel-ctl`
+#              script.
+#
+# There are two tunnels, which should be defined in the $HOME/.ssh/config file:
+# 
+#    Host docker-daemon-tunnel
+#       HostName emeryrdev02
+#       IdentityFile ~/.ssh/id_dsa
+#       LocalForward 2375 127.0.0.1:2375
+#    
+#    Host docker-repo-tunnel
+#       HostName emeryrdev02
+#       IdentityFile ~/.ssh/id_dsa
+#       LocalForward 5000 127.0.0.1:5000
+# 
+
+CMD=`basename $0`
+CTL_CMD=`dirname $0`/docker-tunnel-ctl
+
+TUNNELS="docker-daemon-tunnel docker-repo-tunnel"
+
+PATTERN=
+for tunnel in $TUNNELS
+do
+	echo "[$CMD] Restarting tunnel $tunnel"
+  $CTL_CMD $tunnel restart
+  echo 
+  if [[ -z $PATTERN ]]; then
+    PATTERN="\b${tunnel}\b"
+  else
+    PATTERN="${PATTERN}|\b${tunnel}\b"
+  fi
+done
+
+echo "[$CMD] Running tunnels:"
+ps -ef | egrep "$PATTERN" | grep -v grep
