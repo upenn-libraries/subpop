@@ -12,12 +12,36 @@
       reject our categories and create their own, resulting in, for example,
       variations on stamp and bookplate that are arbitrary and unsearchable.
 
-### Work plan
+### Unordered list of stuff
 
 Pushing to Flickr:
  - Spinner while publishing
 
-### Unordered list of stuff
+Docker -
+  - data volume for database
+  - logs
+
+Format other, examples:
+  - Isaac Newton dog-eared pages
+  - Signed object left in book -- menu, theatre ticket, etc.
+
+Format other:
+  - Isaac Newton dog-eared pages
+  - Signed object left in book -- menu, theatre ticket, etc.
+
+Provenance:
+  - "Provenance"; change text to "Who?" with hint
+  - Add name: better positioning for buttons
+  - Getting error when Creating a new name
+
+All views
+  - Use better back button text;
+  - Evidence back button: allow user to return to book or image queue
+
+Evidence:
+  - Publish button, make text: "Publish image"
+
+Manage position of side image, when resizing to smaller page layout
 
 - image upload spinner
 
