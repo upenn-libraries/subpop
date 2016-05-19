@@ -1,8 +1,8 @@
 class TitlePage < ActiveRecord::Base
   include Publishable
+  include HasPhoto
 
   belongs_to :book, required: true
-  belongs_to :photo
 
   delegate :full_name, to: :book, prefix: true, allow_nil: true
 
