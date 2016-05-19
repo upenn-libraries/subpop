@@ -39,11 +39,23 @@
   <div class="form-group">
     <%= f.label :content_type, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <%= f.collection_check_boxes :content_type_ids, ContentType.all.sort, :id, :name do |c| %>
-        <div class="checkbox">
-          <label><%= c.check_box %> <%= c.text %></label><br>
+      <% total    = ContentType.count -%>
+      <% half_way = (total % 2 == 0) ? total/2 : (total/2 + 1) -%>
+      <% index    = 1 -%>
+      <div class="form-group">
+        <div class="col-sm-6">
+          <%= f.collection_check_boxes :content_type_ids, ContentType.all.sort, :id, :name do |c| %>
+          <% if index == half_way + 1 -%>
+          </div>
+          <div class="col-sm-6">
+          <% end -%>
+          <div class="checkbox">
+            <label class="checkbox"><%= c.check_box %> <%= c.text %></label>
+          </div>
+          <% index += 1 -%>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
   <div class="form-group">
