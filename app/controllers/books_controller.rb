@@ -76,6 +76,7 @@ class BooksController < ApplicationController
     @title_page = TitlePage.new book: @book, photo: photo
     respond_to do |format|
       if @title_page.save
+        @title_page.dequeue_photo
         format.html { redirect_to @book, notice: 'Add title page.' }
         format.json { render :show, status: :ok, location: @book }
       else

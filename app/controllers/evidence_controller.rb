@@ -31,6 +31,7 @@ class EvidenceController < ApplicationController
 
     respond_to do |format|
       if @evidence.save
+        @evidence.dequeue_photo
         format.html {
           redirect_to @evidence, notice: 'Evidence was successfully created.'
         }
