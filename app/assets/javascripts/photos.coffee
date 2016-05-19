@@ -18,11 +18,13 @@ jQuery ->
             $(this.form).attr('action', '/books/' + book_id + '/add_title_page/' + photo_id)
             $(this.form).attr('method', 'post')
             $(this.form).attr('data-remote', false)
+            $(this.form).submit()
         else if $(this).val() == 'unqueue'
             $(this.form).attr('action', '/books/' + book_id + '/photos/' + photo_id)
             $(this.form).attr('data-remote', true)
             $(this.form).attr('method', 'patch')
             $(this.form).append('<input type="hidden" name="photo[in_queue]" value="' + false + '">')
+            $(this.form).submit()
         else
             $(this.form).attr('action', '/books/' + book_id + '/evidence/new')
             $(this.form).attr('method', 'get')
@@ -30,3 +32,4 @@ jQuery ->
             $(this.form).append('<input type="hidden" name="evidence[photo_id]" value="' + photo_id + '">')
             $(this.form).append('<input type="hidden" name="evidence[book_id]" value="' + book_id + '">')
             $(this.form).append('<input type="hidden" name="evidence[format]" value="' + $(this).val() + '">')
+            $(this.form).submit()
