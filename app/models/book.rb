@@ -23,6 +23,10 @@ class Book < ActiveRecord::Base
     photos_hidden == 0
   end
 
+  def queued_photos
+    photos.queued if photos.present?
+  end
+
   def publishables
     title_pages + evidence
   end

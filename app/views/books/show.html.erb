@@ -150,6 +150,7 @@
 </div>
 
 <div class="row field-group">
+  <h3>Photo queue</h3>
 
  <!--
 
@@ -164,10 +165,9 @@
       .at the top of the screen.
 
   -->
-  <a class="anchor" id="photo-queue"></a>
-  <h3>Photo queue</h3>
+  <a class="anchor" id="anchor-photo-queue"></a>
   <div id="photo-queue">
-    <%= render 'photos/index', book: @book, photos: @book.photos.queued %>
+    <%= render 'photos/index', book: @book, photos: @book.queued_photos %>
   </div> <!-- /photo-queue -->
 </div> <!-- /row field-group -->
 

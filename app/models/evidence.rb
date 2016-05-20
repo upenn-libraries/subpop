@@ -63,8 +63,6 @@ class Evidence < ActiveRecord::Base
 
   delegate :full_name, to: :book, prefix: true, allow_nil: true
 
-
-
   def format_name
     return format_other if self.format == 'other_format'
     FORMATS_BY_CODE[self.format]

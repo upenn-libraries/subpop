@@ -33,6 +33,12 @@ Evidence:
   - Publish button, make text: "Publish image"
 
 Manage position of side image, when resizing to smaller page layout
+  - TODO Make image both fixed and responsive, from CSS comments:
+
+        // TOOD: Placeholder for the evidence image div, so we can make it fixed
+        // later. It's hard with bootstrap to fix the image *and* have it be
+        // responsive to window resizing. If fixed, the text floats over and
+        // covers the fixed image upon resizing.
 
 - image upload spinner
 
