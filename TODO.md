@@ -14,6 +14,14 @@
 
 ### Unordered list of stuff
 
+Back buttons:
+  X - Evidence: show back
+  X - Evidence edit cancel
+  X - Evidence new cancel
+  - Book show back
+  - Book edit cancel
+  - Book show cancel
+
 Pushing to Flickr:
  - Spinner while publishing
 

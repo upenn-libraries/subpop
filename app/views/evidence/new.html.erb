@@ -8,7 +8,7 @@
   <%= render 'form', f: f %>
 
   <div class="actions">
-    <%= link_to 'Cancel', @book, class: "btn btn-default" %>
+    <%= link_to 'Cancel', book_path(@book, anchor: 'anchor-photo-queue'), class: "btn btn-default" %>
     <%= f.submit class: "btn btn-success" %>
   </div>
 
