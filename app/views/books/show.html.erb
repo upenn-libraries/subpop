@@ -150,6 +150,21 @@
 </div>
 
 <div class="row field-group">
+
+ <!--
+
+      The anchor below, #photo-queue, doesn't function properly on Safari when
+      a link to the anchor is clicked from another page, but it does work when
+      the page is loaded a second time. When a link is clicked from another
+      page, Safari only scrolls part of the way, showing the h3 tag at near the
+      bottom of the screen. Note that it does work if the anchor is higher up
+      the page, above the list of publishable images.
+
+      .anchor class, offset anchor so it doesn't fall under the fixed border
+      .at the top of the screen.
+
+  -->
+  <a class="anchor" id="photo-queue"></a>
   <h3>Photo queue</h3>
   <div id="photo-queue">
     <%= render 'photos/index', book: @book, photos: @book.photos.queued %>

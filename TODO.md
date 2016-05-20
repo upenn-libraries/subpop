@@ -22,16 +22,14 @@ Docker -
   - logs
 
 Provenance:
-  - "Provenance"; change text to "Who?" with hint
-  - Add name: better positioning for buttons
-  - Getting error when Creating a new name
-
+  - Getting error when Creating a new name; can't reproduce on dev using Safari
 
 All views
   - Use better back button text;
   - Evidence back button: allow user to return to book or image queue
 
 Evidence:
+  - "Back to photo queue" anchor on Safari doesn't scroll down far enough
   - Publish button, make text: "Publish image"
 
 Manage position of side image, when resizing to smaller page layout

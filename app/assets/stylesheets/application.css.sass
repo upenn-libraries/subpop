@@ -52,12 +52,25 @@ label.required:after
 .image-use
   width: 150px
 
+// TOOD: Placeholder for the evidence image div, so we can make it fixed
+// later. It's hard with bootstrap to fix the image *and* have it be
+// responsive to window resizing. If fixed, the text floats over and covers
+// the fixed image upon resizing.
 .evidence-image
   // position: fixed
 
 .top-buffer
   margin-top: 20px
 
+// Make sure anchors stay below the fixed nave bar.
+a.anchor
+  display: block
+  position: relative
+  top: -45px
+  visibility: hidden
+
+
+// Style the autocomplete drop down menue
 .ui-autocomplete
   position: absolute
   top: 100%
