@@ -26,7 +26,6 @@ Provenance:
 
 Evidence:
   - "Back to photo queue" anchor on Safari doesn't scroll down far enough
-  - Publish button, make text: "Publish image"
 
 Manage position of side image, when resizing to smaller page layout
   - TODO Make image both fixed and responsive, from CSS comments:
@@ -152,3 +151,4 @@ X Back buttons:
 X All views
 X   - Use better back button text;
 X   - Evidence back button: allow user to return to book or image queue
+  X - Publish button on evidence page: make text "Publish image"

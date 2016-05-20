@@ -101,17 +101,17 @@
       <%= link_to 'Preview', preview_path({ item_type: @evidence.class.name.underscore, id: @evidence }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
       <% if @evidence.publishable? -%>
       <% if @evidence.on_flickr? -%>
-      <%= link_to 'Publish', update_flickr_path(item_type: @evidence.class.name.underscore, id: @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
+      <%= link_to 'Publish image', update_flickr_path(item_type: @evidence.class.name.underscore, id: @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
       <% else -%>
-      <%= link_to 'Publish', create_flickr_path(item_type: @evidence.class.name.underscore, id: @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
+      <%= link_to 'Publish image', create_flickr_path(item_type: @evidence.class.name.underscore, id: @evidence), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
       <% end -%>
       <% else -%>
-      <%= link_to 'Publish', '#', class: 'btn btn-primary btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "right", title: unpublishable_reason(@evidence.flickr_status) %>
+      <%= link_to 'Publish image', '#', class: 'btn btn-primary btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "right", title: unpublishable_reason(@evidence.flickr_status) %>
       <% end -%>
       <% if @evidence.unpublishable? -%>
-      <%= link_to 'Unpublish', delete_flickr_path(item_type: @evidence.model_name.param_key, id: @evidence), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm', "data-toggle": "tooltip", "data-placement": "bottom", title: "Remove photo from Flickr" %>
+      <%= link_to 'Unpublish image', delete_flickr_path(item_type: @evidence.model_name.param_key, id: @evidence), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm', "data-toggle": "tooltip", "data-placement": "bottom", title: "Remove photo from Flickr" %>
       <% else -%>
-      <%= link_to 'Unpublish', '#', class: 'btn btn-danger btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "bottom", title: "Item cannot be removed from Flickr" %>
+      <%= link_to 'Unpublish image', '#', class: 'btn btn-danger btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "bottom", title: "Item cannot be removed from Flickr" %>
       <% end -%>
     </div>
   </div>
