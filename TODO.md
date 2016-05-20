@@ -14,17 +14,6 @@
 
 ### Unordered list of stuff
 
-Back buttons:
-  X - Evidence: show back
-  X - Evidence edit cancel
-  X - Evidence new cancel
-  X - Book show back
-  X - Book edit cancel
-  X - Book show cancel
-  - Name show back
-  - Name edit cancel
-  - Name show cancel
-
 Pushing to Flickr:
  - Spinner while publishing
 
@@ -34,10 +23,6 @@ Docker -
 
 Provenance:
   - Getting error when Creating a new name; can't reproduce on dev using Safari
-
-All views
-  - Use better back button text;
-  - Evidence back button: allow user to return to book or image queue
 
 Evidence:
   - "Back to photo queue" anchor on Safari doesn't scroll down far enough
@@ -154,3 +139,16 @@ X  - Content Type checkboxes: two columns?
 X Format other:
 X   - Isaac Newton dog-eared pages
 X   - Signed object left in book -- menu, theatre ticket, etc.
+X Back buttons:
+  X - Evidence: show back
+  X - Evidence edit cancel
+  X - Evidence new cancel
+  X - Book show back
+  X - Book edit cancel
+  X - Book show cancel
+  X - Name show back
+  X - Name edit cancel
+  X - Name show cancel
+X All views
+X   - Use better back button text;
+X   - Evidence back button: allow user to return to book or image queue
