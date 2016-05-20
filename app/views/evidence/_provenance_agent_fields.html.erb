@@ -1,24 +1,31 @@
-<fieldset>
-  <div class="form-group">
-    <%= f.label :name, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= f.hidden_field :name_id %>
-      <% object_name = f.object_name.gsub /[\[\]\]]+/, '_' -%>
-      <% update_field = "#{object_name}name_id" %>
-      <%# use autocomplete_field_tag because, we search the names and set the ID.  %>
-      <%# autocomplete_field_tag 'name', f.object.name, autocomplete_name_name_evidence_index_path, class: "form-control", 'data-id-element' => "##{update_field}" %>
-      <%= text_field_tag 'name', f.object.name, class: 'form-control name-search', 'data-id-element': "##{update_field}"  -%>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :name, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.hidden_field :name_id %>
+          <% object_name = f.object_name.gsub /[\[\]\]]+/, '_' -%>
+          <% update_field = "#{object_name}name_id" %>
+          <%# use autocomplete_field_tag because, we search the names and set the ID.  %>
+          <%# autocomplete_field_tag 'name', f.object.name, autocomplete_name_name_evidence_index_path, class: "form-control", 'data-id-element' => "##{update_field}" %>
+          <%= text_field_tag 'name', f.object.name, class: 'form-control name-search', 'data-id-element': "##{update_field}"  -%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :role, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.select :role, ProvenanceAgent::ROLES, { include_blank: true }, { class: "form-control" } -%>
+        </div>
+      </div>
+      <div class="form-group">
+      <span class="col-sm-3 control-label"></span>
+        <div class="col-sm-8">
+          <div class="checkbox">
+            <label class="checkbox"><%= f.check_box :_destroy %> Remove name</label>
+          </div>
+        </div>
+      </div>
+    </fieldset>
   </div>
-  <div class="form-group">
-    <%= f.label :role, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-    <%= f.select :role, ProvenanceAgent::ROLES, { include_blank: true }, { class: "form-control" } -%>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-8">
-    <label><%= f.check_box :_destroy %> Remove name</label>
-    </div>
-  </div>
-</fieldset>
+</div>

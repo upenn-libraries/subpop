@@ -21,18 +21,11 @@ Docker -
   - data volume for database
   - logs
 
-Format other, examples:
-  - Isaac Newton dog-eared pages
-  - Signed object left in book -- menu, theatre ticket, etc.
-
-Format other:
-  - Isaac Newton dog-eared pages
-  - Signed object left in book -- menu, theatre ticket, etc.
-
 Provenance:
   - "Provenance"; change text to "Who?" with hint
   - Add name: better positioning for buttons
   - Getting error when Creating a new name
+
 
 All views
   - Use better back button text;
@@ -141,3 +134,8 @@ X Add ability to remove images from queue when done
 X Fix title page sidebar to show more than one image
 X Add pagination to Books index
 X Name search autocomplete: prevent dates' appearing in search field on select
+X Evidence:
+X  - Content Type checkboxes: two columns?
+X Format other:
+X   - Isaac Newton dog-eared pages
+X   - Signed object left in book -- menu, theatre ticket, etc.

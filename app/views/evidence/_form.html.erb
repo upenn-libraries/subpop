@@ -39,6 +39,7 @@
   <div class="form-group">
     <%= f.label :content_type, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
+      <%# Rigmarole below to split content type checkboxes into two columns  -%>
       <% total    = ContentType.count -%>
       <% half_way = (total % 2 == 0) ? total/2 : (total/2 + 1) -%>
       <% index    = 1 -%>
@@ -112,6 +113,17 @@
     <div class="col-sm-8"><%= f.text_field :where, class: "form-control" %></div>
   </div>
 
+  <h3>Who?</h3>
+
+  <p><span class="help-block">
+  Add names of people and organization identifiable in this provenance mark.
+  </span></p>
+
+  <%= f.fields_for :provenance_agents do |agent| %>
+    <%= render 'provenance_agent_fields', f: agent %>
+  <% end %>
+  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus"></span>', f, :provenance_agents, class: "btn btn-default", title: "Add a name" %>
+
   <h3>Comments</h3>
   <div class="form-group">
     <%= f.label :comments, '', class: "col-sm-3 control-label" %>
@@ -123,12 +135,5 @@
     <%= f.label :citations, '', class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_area :citations, class: "form-control" %></div>
   </div>
-
-
-  <h3>Provenance</h3>
-  <%= f.fields_for :provenance_agents do |agent| %>
-    <%= render 'provenance_agent_fields', f: agent %>
-  <% end %>
-  <%= link_to_add_fields "Add name", f, :provenance_agents %>
 
 

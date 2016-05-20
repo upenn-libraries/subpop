@@ -72,6 +72,9 @@ en:
       name:
         name: Name
         viaf_id: VIAF identifier
+      provenance_agent:
+        name: Name
+        role: Role
     hints:
       book:
         owner: If different from current repository
@@ -83,6 +86,9 @@ en:
         year_end: End of a year range; e.g., 1880
         date_narrative: "Text description of the date; e.g., '22
           August 1876', 'c. 1875'"
+      provenance_agent:
+        name: Search for the name and select it from the list. Personal names are listed last name first.
+        role: Role
       name:
         name:
           "Use Library of Congress name format; e.g., 'Pembroke, Thomas
