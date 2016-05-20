@@ -18,9 +18,12 @@ Back buttons:
   X - Evidence: show back
   X - Evidence edit cancel
   X - Evidence new cancel
-  - Book show back
-  - Book edit cancel
-  - Book show cancel
+  X - Book show back
+  X - Book edit cancel
+  X - Book show cancel
+  - Name show back
+  - Name edit cancel
+  - Name show cancel
 
 Pushing to Flickr:
  - Spinner while publishing
