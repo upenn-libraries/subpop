@@ -12,22 +12,47 @@
       reject our categories and create their own, resulting in, for example,
       variations on stamp and bookplate that are arbitrary and unsearchable.
 
-### Unordered list of stuff
+## Unordered list of stuff
 
-Pushing to Flickr:
- - Spinner while publishing
+### General
 
-Docker -
+Docker
+
   - data volume for database
   - logs
 
-Provenance:
-  - Getting error when Creating a new name; can't reproduce on dev using Safari
+Set up permanent servers:
 
-Evidence:
-  - "Back to photo queue" anchor on Safari doesn't scroll down far enough
+- Staging
+- Production
+
+Double check fields:
+
+- Books
+- Evidence
+
+User support:
+
+  - Login
+  - Add use to books and evidence: `created_by`, `updated_by`
+  - Show user's books
+  - Push to Flickr workflow
+  - Administration of users
+  - Administration of workflow for "probation" users
+
+Migrate current spreadsheets to app
+
+Add Blacklight to application
+
+Deal with single images for multiple pieces of provenance
+
+
+#### All sections:
+
+Clean up pages; improve layout
 
 Manage position of side image, when resizing to smaller page layout
+
   - TODO Make image both fixed and responsive, from CSS comments:
 
         // TOOD: Placeholder for the evidence image div, so we can make it fixed
@@ -35,17 +60,28 @@ Manage position of side image, when resizing to smaller page layout
         // responsive to window resizing. If fixed, the text floats over and
         // covers the fixed image upon resizing.
 
-- image upload spinner
+#### Book:
 
-Set up permanent servers:
-- Staging
-- Production
+On show page:
 
-Clean up pages; improve layout
+  - image processing spinner
+  - Spinner while publishing images to Flickr
 
-Double check fields:
-- Books
-- Evidence
+Title page: need to be able to remove title pages
+
+#### Evidence:
+
+Show page:
+
+  - Spinner while publishing images to Flickr
+
+Edit/New pages
+
+- "Back to photo queue" anchor on Safari doesn't scroll down far enough
+
+Provenance:
+
+  - Getting error when Creating a new name; can't reproduce on dev using Safari
 
 Create context images
 
@@ -58,21 +94,8 @@ Evidence show page:
 - Add name window from Add name list
 
 Evidence form:
-  - Provenance agents hide/delete button instead of checkbox
 
-User support:
-    - Login
-    - Add use to books and evidence: `created_by`, `updated_by`
-    - Show user's books
-    - Push to Flickr workflow
-    - Administration of users
-    - Administration of workflow for "probation" users
-
-Migrate current spreadsheets to app
-
-Add Blacklight to application
-
-Deal with single images for multiple pieces of provenance
+- Provenance agents hide/delete button instead of checkbox
 
 # DONE
 
