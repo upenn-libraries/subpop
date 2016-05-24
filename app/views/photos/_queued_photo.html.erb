@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= form_tag "", class: "form form-inline" do %>
+    <%= hidden_field_tag "photo_id", photo.id, id: "photo-#{photo.id}" %>
+    <%= hidden_field_tag "book_id", book.id, id: "photo-#{photo.id}-book-#{book.id}" %>
+    <div class="form-group">
+      <%= select_tag "use", grouped_options_for_select(ApplicationHelper::PHOTO_ASSIGNMENTS), include_blank: false,
+      prompt: "Use image for", class: "form-control image-use input-small", id: "use-#{photo.id.to_s}", "data-width" => "80%" %>
+    </div> <!-- /form-group -->
+    <%= link_to image_tag(photo.image.url(:thumb),
+      class: 'center-block'), photo.image.url(:original),
+      target: '_blank', 'data-toggle' => 'tooltip',
+      title: 'Click to open in new window.' -%>
+    <br/>
+    <% end %> <%# form_tag %>
+  </div>  <!-- /panel -->
+</div>  <!-- /list-inline image-queue -->
