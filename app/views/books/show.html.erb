@@ -97,48 +97,13 @@
 
 
 <h3>Title page, evidence images</h3>
-<table class="table">
-  <tr>
-    <th>Image</th>
-    <th>Name</th>
-    <th></th>
-  </tr>
-  <% @book.publishables.each do |item| -%>
-  <tr>
-    <td>
-    <%= link_to image_tag(item.photo.image.url(:thumb),
-        class: 'img-thumbnail'), item.photo.image.url(:original),
-        target: '_blank', 'data-toggle' => 'tooltip',
-        title: 'Click to open in new window.' -%>
-    </td>
-    <td>
-      <h4><%= item.flickr_title -%></h4>
-      <%= render '/flickr/status', item: item -%>
-    </td>
-    <td>
-      <% if item.publishable? -%>
-      <% if item.on_flickr? -%>
-      <%= link_to 'Publish', update_flickr_path(item_type: item.class.name.underscore, id: item), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
-      <% else -%>
-      <%= link_to 'Publish', create_flickr_path(item_type: item.class.name.underscore, id: item), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr" %>
-      <% end -%>
-      <% else -%>
-      <%= link_to 'Publish', '#', class: 'btn btn-primary btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "right", title: unpublishable_reason(item.flickr_status) %>
-      <% end -%>
-      <% if item.unpublishable? -%>
-      <%= link_to 'Unpublish', delete_flickr_path(item_type: item.model_name.param_key, id: item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm', "data-toggle": "tooltip", "data-placement": "bottom", title: "Remove photo from Flickr" %>
-      <% else -%>
-      <%= link_to 'Unpublish', '#', class: 'btn btn-danger btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "bottom", title: "Item cannot be removed from Flickr" %>
-      <% end -%>
-      <br>
-      <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
-      <% if item.is_a? Evidence -%>
-      <%= link_to 'Details', item, class: 'btn btn-default btn-sm' %>
-      <% end -%>
-    </td>
-  </tr>
-  <% end -%>
-</table>
+<% @book.publishables.each do |item| -%>
+<div class="row">
+  <%= render '/flickr/status', item: item -%>
+</div>
+<% end -%>
+
+<br>
 <div class="row">
 <% if @book.publishable? -%>
 <% if @book.on_flickr? -%>
