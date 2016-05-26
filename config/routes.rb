@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :books do
     resources :evidence, only: [ :create, :new ]
-    resources :photos, only: [ :update, :index ] do
+    resources :photos, only: [ :update, :index, :show ] do
       patch 'restore_queue', on: :collection
     end
   end

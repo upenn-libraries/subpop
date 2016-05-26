@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= select_tag "use", '', include_blank: false,
+    prompt: "Use image for", class: "form-control image-use input-small", "data-width" => "80%", disabled: true %>
+    <br>
+    <br>
+    <div class="progress" style="width: 90%">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+        <span class="sr-only">Processing...</span>
+      </div> <!-- progress-bar -->
+    </div> <!-- progress -->
+  </div>  <!-- /panel -->
+</div>  <!-- /list-inline image-queue -->

@@ -1,12 +1,19 @@
 class PhotosController < ApplicationController
   before_action :set_book
-  before_action :set_photo, only: [ :update ]
+  before_action :set_photo, only: [ :update, :show ]
 
   def index
     @photos = @book.photos.queued
     respond_to do |format|
       format.html { respond_to @book }
       format.js   { }
+    end
+  end
+
+  def show
+    respond_to do |format|
+      format.js
+      format.json
     end
   end
 

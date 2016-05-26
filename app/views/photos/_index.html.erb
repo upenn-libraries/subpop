@@ -10,7 +10,15 @@
 <ul class="list-inline image-queue">
   <% book.photos.queued.each do |photo| %>
   <li>
-    <%= render 'photos/queued_photo', photo: photo, book: book %>
+    <% if photo.image_processing? -%>
+    <div class="queued-photo processing" data-book="<%= book.id -%>", data-photo="<%= photo.id -%>" id="queued-photo-<%= photo.id -%>">
+      <%= render 'photos/queued_photo_placeholder', photo: photo, book: book -%>
+    </div>
+    <% else -%>
+    <div class="queued-photo" id="queued-photo-<%= photo.id -%>">
+      <%= render 'photos/queued_photo', photo: photo, book: book %>
+    </div>
+    <% end -%>
   </li>
   <% end %> <%# books.photos.each %>
 </ul>
