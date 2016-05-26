@@ -110,6 +110,10 @@ module Publishable
     UP_TO_DATE
   end
 
+  def processing?
+    flickr_status == IN_PROCESS
+  end
+
   ##
   # Delete the photo from flickr and nullify the Flickr attributes
   # `flickr_id`, `flickr_info`, and `published_at`.

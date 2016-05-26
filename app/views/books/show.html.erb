@@ -99,7 +99,9 @@
 <h3>Title page, evidence images</h3>
 <% @book.publishables.each do |item| -%>
 <div class="row">
-  <%= render '/flickr/status', item: item -%>
+<div class="publishable-status<%= item.processing? ? ' processing' : '' -%>" id="publishable-<%= item.id -%>">
+    <%= render '/flickr/status', item: item -%>
+  </div>
 </div>
 <% end -%>
 

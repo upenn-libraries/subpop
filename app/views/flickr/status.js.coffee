@@ -1,0 +1,1 @@
+($ '#publishable-' + <%= @item.id %>).html("<%= j render(partial: 'flickr/status', locals: { item: @item }) %>")

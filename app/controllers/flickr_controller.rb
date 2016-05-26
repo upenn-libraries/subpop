@@ -7,10 +7,18 @@ class FlickrController < ApplicationController
     end
   end
 
+  def status
+    respond_to do |format|
+      format.js
+      format.json
+    end
+  end
+
   def create
     if @item.publishable?
       create_jobs
       respond_to do |format|
+        format.js
         format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
         format.json { render :show, status: :created, location: @item }
       end
@@ -24,6 +32,7 @@ class FlickrController < ApplicationController
     if @item.publishable?
       create_jobs
       respond_to do |format|
+        format.js
         format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
         format.json { render :show, status: :created, location: @item }
       end
@@ -38,10 +47,12 @@ class FlickrController < ApplicationController
       @item.mark_in_process
       RemoveFromFlickrJob.perform_later @item
       respond_to do |format|
+        format.js
         format.html { redirect_to @item, notice: 'Removing photo from Flickr.' }
         format.json { head :no_content }
       end
     else
+      format.js   { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
       format.html { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
       format.json { render json: [ 'Item cannot be removed from Flickr.' ], status: :unprocessable_entity }
    end
