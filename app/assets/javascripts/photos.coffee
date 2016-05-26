@@ -34,37 +34,3 @@ jQuery ->
             $(this.form).append('<input type="hidden" name="evidence[book_id]" value="' + book_id + '">')
             $(this.form).append('<input type="hidden" name="evidence[format]" value="' + $(this).val() + '">')
             $(this.form).submit()
-
-    stop_polling_image = (interval,selector) ->
-        $(selector).removeClass('processing')
-        clearInterval(interval)
-
-    $('.queued-photo.processing').each ->
-        book_id  = $(this).attr('data-book')
-        photo_id = $(this).attr('data-photo')
-        div_id   = '#queued-photo-' + photo_id
-        count = 0
-        url = '/books/' + book_id + '/photos/' + photo_id
-        interval = setInterval(
-            -> (
-                $.ajax (
-                    url: url
-                    dataType: 'json'
-                    success: (data, status, jqXHR) ->
-                        count += 1
-                        if not data.image_processing
-                            $.get(url)
-                            stop_polling_image(interval,div_id)
-                        # break after sixty tries
-                        if count > 60
-                            alert("Image processing never finished for photo: " + photo_id)
-                            stop_polling_image(interval,div_id)
-                        return
-                    error: (jqXHR, status, error) ->
-                        alert("Unexpected error: " + error)
-                        stop_polling_image(interval,div_id)
-                        return
-                    )
-                )
-            1000)
-        undefined
