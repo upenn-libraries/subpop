@@ -53,7 +53,7 @@ $ ->
         interval = setInterval(
             -> (
                 $.ajax (
-                    url: url
+                    url: url + '.json'
                     dataType: 'json'
                     success: (data, status, jqXHR) ->
                         count += 1

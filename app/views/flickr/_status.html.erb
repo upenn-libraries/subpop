@@ -1,59 +1,61 @@
 <%# THUMBNAIL -%>
 <div class="parent-div-id" data-parent-div="<%= publishable_div_id item -%>">
-<div class="col-sm-2">
-<%= link_to image_tag(item.photo.image.url(:thumb),
-  class: 'img-thumbnail'), item.photo.image.url(:original),
-  target: '_blank', 'data-toggle' => 'tooltip',
-  title: 'Click to open in new window.' -%>
-</div>
-
-<%# STATUS -%>
-<div class="col-sm-6">
-  <h4><%= item.flickr_title -%></h4>
-  <div class="row field-group">
-    <div class="col-sm-4 field-label"><%= human_name item, :flickr_status %></div>
-    <div class="col-sm-6 field-value"><span class="label <%= flickr_label_class item.flickr_status -%>"><%= item.flickr_status %></span></div>
+  <div class="col-sm-2">
+    <%= link_to image_tag(item.photo.image.url(:thumb),
+      class: 'img-thumbnail'), item.photo.image.url(:original),
+      target: '_blank', 'data-toggle' => 'tooltip',
+      title: 'Click to open in new window.' -%>
   </div>
-  <div class="row field-group">
-    <div class="col-sm-4 field-label"><%= human_name item, :short_url %></div>
-    <div class="col-sm-6 field-value">
+
+  <%# STATUS -%>
+  <div class="col-sm-6">
+    <h4><%= item.flickr_title -%></h4>
+    <div class="row field-group">
+      <div class="col-sm-4 field-label"><%= human_name item, :flickr_status %></div>
+      <div class="col-sm-6 field-value">
+      <span class="label <%= flickr_label_class item.flickr_status -%>"><%= item.flickr_status %></span>
+      </div>
+    </div>
+    <div class="row field-group">
+      <div class="col-sm-4 field-label"><%= human_name item, :short_url %></div>
+      <div class="col-sm-6 field-value">
+        <% if item.on_flickr? -%>
+        <a target="_blank" href="<%= item.photopage_url -%>"><%= item.short_url -%> <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+        <% else -%>
+        N/A
+        <% end -%>
+      </div>
+    </div>
+    <div class="row field-group">
+      <div class="col-sm-4 field-label"><%= human_name item, :last_updated %></div>
+      <div class="col-sm-6 field-value"><%= format_datetime item.last_updated %></div>
+    </div>
+    <div class="row field-group">
+      <div class="col-sm-4 field-label"><%= human_name item, :published_at %></div>
+      <div class="col-sm-6 field-value"><%= format_datetime(item.published_at) || 'N/A' %></div>
+    </div>
+  </div>
+
+    <%# BUTTONS -%>
+    <div class="col-sm-4">
+      <% if item.publishable? -%>
       <% if item.on_flickr? -%>
-      <a target="_blank" href="<%= item.photopage_url -%>"><%= item.short_url -%> <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+      <%= link_to 'Publish', update_flickr_path(item_type: item.class.name.underscore, id: item), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr", remote: true %>
       <% else -%>
-      N/A
+      <%= link_to 'Publish', create_flickr_path(item_type: item.class.name.underscore, id: item), method: :post, class: 'btn btn-primary btn-sm', title: "Publish to Flickr", remote: true %>
+      <% end -%>
+      <% else -%>
+      <%= link_to 'Publish', '#', class: 'btn btn-primary btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "right", title: unpublishable_reason(item.flickr_status) %>
+      <% end -%>
+      <% if item.unpublishable? -%>
+      <%= link_to 'Unpublish', delete_flickr_path(item_type: item.model_name.param_key, id: item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm', "data-toggle": "tooltip", "data-placement": "bottom", title: "Remove photo from Flickr", remote: true %>
+      <% else -%>
+      <%= link_to 'Unpublish', '#', class: 'btn btn-danger btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "bottom", title: "Item cannot be removed from Flickr" %>
+      <% end -%>
+      <br>
+      <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
+      <% if item.is_a? Evidence -%>
+      <%= link_to 'Details', item, class: 'btn btn-default btn-sm' %>
       <% end -%>
     </div>
   </div>
-  <div class="row field-group">
-    <div class="col-sm-4 field-label"><%= human_name item, :last_updated %></div>
-    <div class="col-sm-6 field-value"><%= format_datetime item.last_updated %></div>
-  </div>
-  <div class="row field-group">
-    <div class="col-sm-4 field-label"><%= human_name item, :published_at %></div>
-    <div class="col-sm-6 field-value"><%= format_datetime(item.published_at) || 'N/A' %></div>
-  </div>
-</div>
-
-<%# BUTTONS -%>
-<div class="col-sm-4">
-  <% if item.publishable? -%>
-  <% if item.on_flickr? -%>
-  <%= link_to 'Publish', update_flickr_path(item_type: item.class.name.underscore, id: item), method: :put, class: 'btn btn-primary btn-sm', title: "Publish to Flickr", remote: true %>
-  <% else -%>
-  <%= link_to 'Publish', create_flickr_path(item_type: item.class.name.underscore, id: item), method: :post, class: 'btn btn-primary btn-sm', title: "Publish to Flickr", remote: true %>
-  <% end -%>
-  <% else -%>
-  <%= link_to 'Publish', '#', class: 'btn btn-primary btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "right", title: unpublishable_reason(item.flickr_status) %>
-  <% end -%>
-  <% if item.unpublishable? -%>
-  <%= link_to 'Unpublish', delete_flickr_path(item_type: item.model_name.param_key, id: item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm', "data-toggle": "tooltip", "data-placement": "bottom", title: "Remove photo from Flickr", remote: true %>
-  <% else -%>
-  <%= link_to 'Unpublish', '#', class: 'btn btn-danger btn-sm', disabled: true, "data-toggle": "tooltip", "data-placement": "bottom", title: "Item cannot be removed from Flickr" %>
-  <% end -%>
-  <br>
-  <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-sm modal-link' -%>
-  <% if item.is_a? Evidence -%>
-  <%= link_to 'Details', item, class: 'btn btn-default btn-sm' %>
-  <% end -%>
-</div>
-</div>
