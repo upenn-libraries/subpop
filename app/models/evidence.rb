@@ -8,7 +8,7 @@ class Evidence < ActiveRecord::Base
   has_many :content_types, through: :evidence_content_types
   accepts_nested_attributes_for :evidence_content_types, allow_destroy: true
 
-  has_many :provenance_agents, dependent: :destroy
+  has_many :provenance_agents, dependent: :destroy, inverse_of: :evidence
   has_many :names, through: :provenance_agents
   accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
     reject_if: proc { |attributes| attributes['name_id'].blank? }

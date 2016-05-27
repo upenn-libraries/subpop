@@ -1,5 +1,5 @@
 class ProvenanceAgent < ActiveRecord::Base
-  belongs_to :evidence, required: true
+  belongs_to :evidence, required: true, inverse_of: :provenance_agents
   belongs_to :name, required: true, counter_cache: true
 
   delegate :full_name, to: :name, prefix: false, allow_nil: true
