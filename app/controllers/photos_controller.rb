@@ -6,7 +6,7 @@ class PhotosController < ApplicationController
     @photos = @book.photos.queued
     respond_to do |format|
       format.html { respond_to @book }
-      format.js   { }
+      format.js
     end
   end
 

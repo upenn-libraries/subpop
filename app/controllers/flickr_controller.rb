@@ -1,4 +1,6 @@
 class FlickrController < ApplicationController
+  include FlickrHelper
+
   before_action :get_item
 
   def show
@@ -15,47 +17,47 @@ class FlickrController < ApplicationController
   end
 
   def create
-    if @item.publishable?
-      create_jobs
-      respond_to do |format|
+    respond_to do |format|
+      if @item.publishable?
+        create_jobs
         format.js
         format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
         format.json { render :show, status: :created, location: @item }
+      else
+        format.html { redirect_to @item, notice: "#{@item} is up-to-date or already being published to Flickr" }
+        format.json { render json: [ "#{@item} is up-to-date or already being published to Flickr" ], status: :unprocessable_entity }
       end
-    else
-      format.html { redirect_to @item, notice: "#{@item} is up-to-date or already being published to Flickr" }
-      format.json { render json: [ "#{@item} is up-to-date or already being published to Flickr" ], status: :unprocessable_entity }
     end
   end
 
   def update
-    if @item.publishable?
-      create_jobs
-      respond_to do |format|
+    respond_to do |format|
+      if @item.publishable?
+        create_jobs
         format.js
         format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
         format.json { render :show, status: :created, location: @item }
+      else
+        format.html { redirect_to @item, notice: "#{@item} is up-to-date or already being published to Flickr" }
+        format.json { render json: [ "#{@item} is up-to-date or already being published to Flickr" ], status: :unprocessable_entity }
       end
-    else
-      format.html { redirect_to @item, notice: "#{@item} is up-to-date or already being published to Flickr" }
-      format.json { render json: [ "#{@item} is up-to-date or already being published to Flickr" ], status: :unprocessable_entity }
     end
   end
 
   def destroy
-    if @item.unpublishable?
-      @item.mark_in_process
-      RemoveFromFlickrJob.perform_later @item
-      respond_to do |format|
+    respond_to do |format|
+      if @item.unpublishable?
+        @item.mark_in_process
+        RemoveFromFlickrJob.perform_later @item
         format.js
         format.html { redirect_to @item, notice: 'Removing photo from Flickr.' }
         format.json { head :no_content }
+      else
+        format.js   { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
+        format.html { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
+        format.json { render json: [ 'Item cannot be removed from Flickr.' ], status: :unprocessable_entity }
       end
-    else
-      format.js   { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
-      format.html { redirect_to @item, notice: 'Cannot remove photo from Flickr.' }
-      format.json { render json: [ 'Item cannot be removed from Flickr.' ], status: :unprocessable_entity }
-   end
+    end
   end
 
   private
@@ -75,8 +77,8 @@ class FlickrController < ApplicationController
   end
 
   def get_item
-    item_type = params[:item_type]
-    klass     = item_type.camelize.constantize
+    @item_type = params[:item_type]
+    klass     = @item_type.camelize.constantize
     @item     = klass.find params[:id]
   end
 end

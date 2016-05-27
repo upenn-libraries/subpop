@@ -1,4 +1,5 @@
 <%# THUMBNAIL -%>
+<div class="parent-div-id" data-parent-div="<%= publishable_div_id item -%>">
 <div class="col-sm-2">
 <%= link_to image_tag(item.photo.image.url(:thumb),
   class: 'img-thumbnail'), item.photo.image.url(:original),
@@ -54,4 +55,5 @@
   <% if item.is_a? Evidence -%>
   <%= link_to 'Details', item, class: 'btn btn-default btn-sm' %>
   <% end -%>
+</div>
 </div>
