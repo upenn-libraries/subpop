@@ -7,7 +7,10 @@ $ ->
             $('#preview-modal-body').html($(data))
             $('#preview-modal').modal('show')
 
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
+
+    $(document).on 'click', 'a', (event) ->
+        $(this).tooltip('hide')
 
     stop_polling_process = (interval,selector) ->
         $(selector).removeClass('processing')
@@ -105,6 +108,12 @@ $ ->
             item_type = $(this).attr('data-item-type')
             div_id    = '#' + $(this).attr('id')
             url       = '/flickr/status/' + item_type + '/' + item_id
+            poll_process(url,div_id)
+
+    $.poll_publish_book_buttons = (div_id) ->
+        if $(div_id).hasClass('processing')
+            book_id = $(div_id).attr('data-book')
+            url = '/flickr/status/' + book_id
             poll_process(url,div_id)
 
     # $(document).ready(ready)

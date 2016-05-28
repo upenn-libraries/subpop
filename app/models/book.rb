@@ -60,15 +60,21 @@ class Book < ActiveRecord::Base
   end
 
   def publishable?
+    return false if processing?
     publishables.any? &:publishable?
   end
 
   def unpublishable?
+    return false if processing?
     on_flickr?
   end
 
   def on_flickr?
     publishables.any? &:on_flickr?
+  end
+
+  def processing?
+    publishables.any? &:processing?
   end
 
   def publish!

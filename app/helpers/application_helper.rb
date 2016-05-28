@@ -45,11 +45,6 @@ module ApplicationHelper
     FLICKR_STATUS_LABEL_CLASSES[flickr_status] || "label-default"
   end
 
-  def unpublishable_reason flickr_status
-    return "Publishing; please wait ..." if flickr_status == Publishable::IN_PROCESS
-    return "Item is up-to-date."         if flickr_status == Publishable::UP_TO_DATE
-  end
-
   def bootstrap_class_for(flash_type)
     case flash_type
     when "success"

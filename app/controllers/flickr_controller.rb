@@ -1,8 +1,8 @@
 class FlickrController < ApplicationController
   include FlickrHelper
 
-  before_action :get_item, except: [ :create_book, :update_book, :destroy_book ]
-  before_action :get_book, only:   [ :create_book, :update_book, :destroy_book ]
+  before_action :get_item, only: [ :create, :show, :status, :create, :update, :destroy ]
+  before_action :get_book, only: [ :create_book, :book_status, :update_book, :destroy_book ]
 
   def show
     respond_to do |format|
@@ -38,6 +38,13 @@ class FlickrController < ApplicationController
       create_unpublish_jobs
       format.js
       format.html
+    end
+  end
+
+  def book_status
+    respond_to do |format|
+      format.js
+      format.json
     end
   end
 

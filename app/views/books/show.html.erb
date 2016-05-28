@@ -103,7 +103,7 @@
 
 <br>
 <div class="row">
-  <div id="publish-book-buttons">
+  <div id="publish-book-buttons" data-book="<%= @book.id -%>">
     <%= render '/flickr/publish_book_buttons', book: @book %>
   </div>
 </div>

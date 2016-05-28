@@ -1,12 +1,4 @@
 <div class="btn-group" role="group">
-<% if book.publishable? -%>
-<%= link_to 'Publish book', update_flickr_book_path(id: @book), method: (@book.on_flickr? ? :put : :post ), remote: true, class: 'btn btn-primary' -%>
-<% else -%>
-<%= link_to 'Publish book', update_flickr_book_path(id: @book), method: (@book.on_flickr? ? :put : :post ), remote: true, class: 'btn btn-primary', disabled: true -%>
-<% end -%>
-<% if book.unpublishable? -%>
-<%= link_to 'Unpublish book', delete_flickr_book_path(id: @book), method: :delete, remote: true, class: 'btn btn-danger' -%>
-<% else -%>
-<%= link_to 'Unpublish book', delete_flickr_book_path(id: @book), method: :delete, remote: true, class: 'btn btn-danger', disabled: true -%>
-<% end -%>
+<%= publish_book_link 'Publish book', book, remote: true -%>
+<%= unpublish_book_link 'Unpublish book', book, remote: true -%>
 </div>
