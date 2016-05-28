@@ -63,6 +63,10 @@ class Book < ActiveRecord::Base
     publishables.any? &:publishable?
   end
 
+  def unpublishable?
+    on_flickr?
+  end
+
   def on_flickr?
     publishables.any? &:on_flickr?
   end

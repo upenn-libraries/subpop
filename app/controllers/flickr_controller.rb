@@ -1,8 +1,8 @@
 class FlickrController < ApplicationController
   include FlickrHelper
 
-  before_action :get_item, except: [ :create_book, :update_book ]
-  before_action :get_book, only:   [ :create_book, :update_book ]
+  before_action :get_item, except: [ :create_book, :update_book, :destroy_book ]
+  before_action :get_book, only:   [ :create_book, :update_book, :destroy_book ]
 
   def show
     respond_to do |format|
@@ -19,7 +19,7 @@ class FlickrController < ApplicationController
 
   def create_book
     respond_to do |format|
-      create_jobs
+      create_publish_jobs
       format.js
       format.html { redirect_to @book, notice: "Publishing all book images" }
     end
@@ -27,16 +27,24 @@ class FlickrController < ApplicationController
 
   def update_book
     respond_to do |format|
-      create_jobs
+      create_publish_jobs
       format.js
       format.html { redirect_to @book, notice: "Publishing all book images" }
+    end
+  end
+
+  def destroy_book
+    respond_to do |format|
+      create_unpublish_jobs
+      format.js
+      format.html
     end
   end
 
   def create
     respond_to do |format|
       if @item.publishable?
-        create_jobs
+        create_publish_jobs
         format.json { render json: @item }
         format.js
         format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
@@ -50,7 +58,7 @@ class FlickrController < ApplicationController
   def update
     respond_to do |format|
       if @item.publishable?
-        create_jobs
+        create_publish_jobs
         format.js
         format.json { render json: @item }
         format.html { redirect_to @item, notice: "Publishing #{@item} to Flickr" }
@@ -64,8 +72,7 @@ class FlickrController < ApplicationController
   def destroy
     respond_to do |format|
       if @item.unpublishable?
-        @item.mark_in_process
-        RemoveFromFlickrJob.perform_later @item
+        create_unpublish_jobs
         format.js
         format.json { render json: @item }
         format.html { redirect_to @item, notice: 'Removing photo from Flickr.' }
@@ -78,23 +85,38 @@ class FlickrController < ApplicationController
   end
 
   private
-  def create_jobs
-    return enqueue @item unless @item.is_a?(Book)
+
+  def create_publish_jobs
+    return enqueue_publish @item unless @item.is_a?(Book)
 
     # item is a book; enqueue each publishable
-    @item.publishables.each { |item| enqueue item }
+    @item.publishables.each { |item| enqueue_publish item }
   end
 
-  def get_book
-    @book = @item = Book.find params[:id]
-  end
-
-  def enqueue item
+  def enqueue_publish item
     return unless item.publishable?
 
     item.mark_in_process
     return UpdateFlickrJob.perform_later item if item.on_flickr?
     AddToFlickrJob.perform_later item
+  end
+
+  def create_unpublish_jobs
+    return enqueue_unpublish @item unless @item.is_a?(Book)
+
+    # item is a book; add all unpublishable items
+    @item.publishables.each { |item| enqueue_unpublish item }
+  end
+
+  def enqueue_unpublish item
+    return unless item.unpublishable?
+
+    item.mark_in_process
+    RemoveFromFlickrJob.perform_later item
+  end
+
+  def get_book
+    @book = @item = Book.find params[:id]
   end
 
   def get_item
