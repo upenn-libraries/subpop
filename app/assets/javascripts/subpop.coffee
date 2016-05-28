@@ -49,6 +49,10 @@ $ ->
     #
     # It replaces the content of the <div> with
     poll_process = (url,selector) ->
+        delay           = 1000 # milliseconds
+        timeout_seconds = 1000
+        max_intervals   = (delay * 1000) / timeout_seconds
+
         count = 0
         interval = setInterval(
             -> (
@@ -61,7 +65,7 @@ $ ->
                             $.get(url)
                             stop_polling_process(interval,selector)
                         # break after sixty tries
-                        if count > 60
+                        if count > max_intervals
                             alert("Image processing never finished for: " + url)
                             stop_polling_process(interval,selector)
                         return
@@ -71,7 +75,7 @@ $ ->
                         return
                     )
                 )
-            1000)
+            delay)
         return
 
     $('.queued-photo.processing').each ->
@@ -85,7 +89,7 @@ $ ->
         item_id   = $(this).attr('data-item')
         item_type = $(this).attr('data-item-type')
         div_id    = '#' + $(this).attr('id')
-        url       = '/flickr/status/' + item_type + '/' + item
+        url       = '/flickr/status/' + item_type + '/' + item_id
         poll_process(url,div_id)
 
     $.poll_publishable = (div_id) ->
@@ -95,5 +99,12 @@ $ ->
         url       = '/flickr/status/' + item_type + '/' + item_id
         poll_process(url,div_id)
 
+    $.poll_all_publishables = ->
+        $('.publishable-status.processing').each ->
+            item_id   = $(this).attr('data-item')
+            item_type = $(this).attr('data-item-type')
+            div_id    = '#' + $(this).attr('id')
+            url       = '/flickr/status/' + item_type + '/' + item_id
+            poll_process(url,div_id)
 
     # $(document).ready(ready)

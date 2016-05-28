@@ -60,7 +60,12 @@ Manage position of side image, when resizing to smaller page layout
         // responsive to window resizing. If fixed, the text floats over and
         // covers the fixed image upon resizing.
 
-#### Book:
+Processing polling -- use longer timeout to accommodate multiple images
+
+> LA uploaded one set of 45 images if 20 seconds to push to Flickr over slow
+> connection: 900 seconds -- 15 minutes
+
+#### Books ####
 
 On show page:
 
@@ -68,8 +73,14 @@ On show page:
   - Spinner while publishing images to Flickr
 
 Title page: need to be able to remove title pages
+Add links to unpublish book
+Always show book publish/unpublish links
 
-#### Evidence:
+#### Flickr ####
+
+Delete book action
+
+#### Evidence
 
 Show page:
 

@@ -97,23 +97,15 @@
 
 
 <h3>Title page, evidence images</h3>
-<% @book.publishables.each do |item| -%>
-<div class="row">
-<div class="publishable-status<%= item.processing? ? ' processing' : '' -%>" id="publishable-<%= item.model_name.element %>-<%= item.id -%>" data-item="<%= item.id -%>" data-item-type="<%= item.class.name.underscore -%>">
-    <%= render '/flickr/status', item: item -%>
-  </div>
+<div id="publishables-list">
+<%= render '/flickr/publishables_list', publishables: @book.publishables %>
 </div>
-<% end -%>
 
 <br>
 <div class="row">
-<% if @book.publishable? -%>
-<% if @book.on_flickr? -%>
-<%= link_to 'Publish book', update_flickr_path({ item_type: @book.class, id: @book }), method: :put, class: 'btn btn-primary' -%>
-<% else -%>
-<%= link_to 'Publish book', create_flickr_path({ item_type: @book.class, id: @book }), method: :post, class: 'btn btn-primary' -%>
-<% end -%>
-<% end -%>
+  <div id="publish-book-buttons">
+    <%= render '/flickr/publish_book_buttons', book: @book %>
+  </div>
 </div>
 
 <div class="row field-group">

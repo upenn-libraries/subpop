@@ -2,11 +2,13 @@ Rails.application.routes.draw do
 
   get 'flash/show'
 
-  get    'flickr/show/:item_type/:id',  to: 'flickr#show',    as: 'preview'
-  post   'flickr/:item_type/:id',       to: 'flickr#create',  as: 'create_flickr'
-  put    'flickr/:item_type/:id',       to: 'flickr#update',  as: 'update_flickr'
-  delete 'flickr/:item_type/:id',       to: 'flickr#destroy', as: 'delete_flickr'
-  get    'flickr/status/:item_type/:id', to: 'flickr#status', as: 'flickr_status'
+  get    'flickr/show/:item_type/:id',   to: 'flickr#show',        as: 'preview'
+  get    'flickr/status/:item_type/:id', to: 'flickr#status',      as: 'flickr_status'
+  post   'flickr/:item_type/:id',        to: 'flickr#create',      as: 'create_flickr_item'
+  put    'flickr/:item_type/:id',        to: 'flickr#update',      as: 'update_flickr_item'
+  delete 'flickr/:item_type/:id',        to: 'flickr#destroy',     as: 'delete_flickr_item'
+  post   'flickr/:id',                   to: 'flickr#create_book', as: 'create_flickr_book'
+  put    'flickr/:id',                   to: 'flickr#update_book', as: 'update_flickr_book'
 
   resources :books do
     resources :evidence, only: [ :create, :new ]

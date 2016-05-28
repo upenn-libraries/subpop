@@ -1,7 +1,8 @@
 class FlickrController < ApplicationController
   include FlickrHelper
 
-  before_action :get_item
+  before_action :get_item, except: [ :create_book, :update_book ]
+  before_action :get_book, only:   [ :create_book, :update_book ]
 
   def show
     respond_to do |format|
@@ -13,6 +14,22 @@ class FlickrController < ApplicationController
     respond_to do |format|
       format.js
       format.json
+    end
+  end
+
+  def create_book
+    respond_to do |format|
+      create_jobs
+      format.js
+      format.html { redirect_to @book, notice: "Publishing all book images" }
+    end
+  end
+
+  def update_book
+    respond_to do |format|
+      create_jobs
+      format.js
+      format.html { redirect_to @book, notice: "Publishing all book images" }
     end
   end
 
@@ -66,6 +83,10 @@ class FlickrController < ApplicationController
 
     # item is a book; enqueue each publishable
     @item.publishables.each { |item| enqueue item }
+  end
+
+  def get_book
+    @book = @item = Book.find params[:id]
   end
 
   def enqueue item
