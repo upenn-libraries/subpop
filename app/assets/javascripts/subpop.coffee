@@ -12,9 +12,18 @@ $ ->
     $(document).on 'click', 'a', (event) ->
         $(this).tooltip('hide')
 
-    stop_polling_process = (interval,selector) ->
+    stop_polling_process = (interval,url,selector) ->
         $(selector).removeClass('processing')
         clearInterval(interval)
+        delete $.polled_urls[url] unless $.polled_urls is undefined
+
+    is_polling_url = (url) ->
+        return false if $.polled_urls is undefined
+        $.polled_urls[url] is true
+
+    mark_url_polled = (url) ->
+        $.polled_urls = {} if $.polled_urls is undefined
+        $.polled_urls[url] = true
 
     # Poll a processing job (image derivative generation, publishing to Flickr,
     # removing from Flickr) until done and then call a get. Arguments:
@@ -52,6 +61,10 @@ $ ->
     #
     # It replaces the content of the <div> with
     poll_process = (url,selector) ->
+        # Don't run if we're already polling this url.
+        return if is_polling_url(url)
+        # mark this url as being polled
+        mark_url_polled url
         delay           = 1000 # milliseconds
         timeout_seconds = 1000
         max_intervals   = (delay * 1000) / timeout_seconds
@@ -66,15 +79,15 @@ $ ->
                         count += 1
                         if not data.processing
                             $.get(url)
-                            stop_polling_process(interval,selector)
+                            stop_polling_process(interval,url,selector)
                         # break after sixty tries
                         if count > max_intervals
                             alert("Image processing never finished for: " + url)
-                            stop_polling_process(interval,selector)
+                            stop_polling_process(interval,url,selector)
                         return
                     error: (jqXHR, status, error) ->
                         alert("Unexpected error: " + error)
-                        stop_polling_process(interval,selector)
+                        stop_polling_process(interval,url,selector)
                         return
                     )
                 )
