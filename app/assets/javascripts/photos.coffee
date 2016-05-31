@@ -13,12 +13,13 @@ jQuery ->
         $(this.form).find('input[name="evidence[format]"]').remove()
         $(this.form).find('input[name="photo[in_queue]"]').remove()
 
-
         if $(this).val() == 'title_page'
             # /books/4/add_title_page/9
-            $(this.form).attr('action', '/books/' + book_id + '/add_title_page/' + photo_id)
+            # /books/:book_id/title_pages
+            $(this.form).attr('action', '/books/' + book_id + '/title_pages')
             $(this.form).attr('method', 'post')
             $(this.form).attr('data-remote', false)
+            $(this.form).append('<input type="hidden" name="evidence[photo_id]" value="' + photo_id + '">')
             $(this.form).submit()
         else if $(this).val() == 'unqueue'
             $(this.form).attr('action', '/books/' + book_id + '/photos/' + photo_id)

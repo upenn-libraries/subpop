@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :photos, only: [ :update, :index, :show ] do
       patch 'restore_queue', on: :collection
     end
+    resources :title_pages, only: [ :create, :destroy ]
   end
 
   resources :title_pages, only: :show

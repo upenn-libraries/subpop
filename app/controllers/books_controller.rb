@@ -71,21 +71,6 @@ class BooksController < ApplicationController
     end
   end
 
-  def add_title_page
-    photo = Photo.find params[:photo_id]
-    @title_page = TitlePage.new book: @book, photo: photo
-    respond_to do |format|
-      if @title_page.save
-        @title_page.dequeue_photo
-        format.html { redirect_to @book, notice: 'Added title page.' }
-        format.json { render :show, status: :ok, location: @book }
-      else
-        format.html { redirect_to @book, notice: 'Error adding title page' }
-        format.json { redirect_to json: @title_page.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
