@@ -1,7 +1,11 @@
+<% if publishables.present? -%>
 <% publishables.each do |item| -%>
 <div class="row">
 <div class="publishable-status<%= item.processing? ? ' processing' : '' -%>" id="publishable-<%= item.model_name.element %>-<%= item.id -%>" data-item="<%= item.id -%>" data-item-type="<%= item.class.name.underscore -%>">
     <%= render '/flickr/status', item: item -%>
   </div>
 </div>
+<% end -%>
+<% else -%>
+<p>No images have been assigned.</p>
 <% end -%>
