@@ -1,7 +1,7 @@
 <div class="col-sm-4">
   <div class="btn-group btn-group-justified" role="group">
-    <%= publish_book_link 'Publish book', book, remote: true -%>
-    <%= unpublish_book_link 'Unpublish book', book, remote: true -%>
+    <%= publish_book_link 'Publish book', book, class: 'btn btn-primary btn-sm', title: 'Publish/Update all book images', data: { toggle: 'tooltip' }, remote: true -%>
+    <%= unpublish_book_link 'Unpublish book', book, class: 'btn btn-danger btn-sm', title: 'Remove all book images from Flickr', data: { toggle: 'tooltip' }, remote: true -%>
   </div>
 </div>
 <div class="col-sm-8"> </div>
