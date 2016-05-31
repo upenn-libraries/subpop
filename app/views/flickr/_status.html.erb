@@ -38,13 +38,10 @@
 
   <%# BUTTONS -%>
   <div class="col-sm-4">
-    <div class="btn-group-vertical" role="group">
+    <div class="btn-group-vertical btn-group-status" role="group">
     <%= publish_item_link 'Publish image', item, remote: true, data: { placement: 'right' } -%>
     <%= unpublish_item_link 'Unpublish image', item, remote: true, data: { placement: 'right' } -%>
     <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-sm modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
-    <%#
-      ==== details button ===
-    -%>
     <% if item.is_a? Evidence -%>
     <%= link_to 'Details', item, class: 'btn btn-default btn-sm', data: { toggle: 'tooltip', placement: 'right' }, title: 'Show mark details' %>
     <% end -%>
