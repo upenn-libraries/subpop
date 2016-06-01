@@ -1,7 +1,7 @@
 class TitlePagesController < ApplicationController
-  before_action :set_title_page, only: :show
-  before_action :set_book, only: :create
-  before_action :set_photo, only: :create
+  before_action :set_title_page,  only: [ :show, :destroy ]
+  before_action :set_book,        only: [ :create, :destroy ]
+  before_action :set_photo,       only: :create
 
   def show
     respond_to do |format|
@@ -21,6 +21,15 @@ class TitlePagesController < ApplicationController
         format.html { redirect_to @book, notice: 'Error adding title page' }
         format.json { redirect_to json: @title_page.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @title_page.requeue_photo
+    @title_page.mark_deleted
+    DeletePublishableJob.perform_later @title_page
+    respond_to do |format|
+      format.html { redirect_to @book, notice: 'Title page was removed.' }
     end
   end
 

@@ -25,6 +25,7 @@ module Publishable
   included do
     before_destroy :delete_from_flickr
     delegate :updated_at, to: :book, prefix: true, allow_nil: true
+    scope :active, -> { where deleted: false }
   end
 
   def publish!
@@ -127,6 +128,14 @@ module Publishable
       # remove all the flickr data
       assign_attributes flickr_id: nil, flickr_info: nil, published_at: nil
     end
+  end
+
+  def mark_deleted
+    update_attributes deleted: true
+  end
+
+  def unmark_deleted
+    update_attributes deleted: false
   end
 
   ##

@@ -1,5 +1,7 @@
 <% content_for :sidebar do -%>
-  <%= render '/books/small_title_page_photos', book: @book -%>
+  <div id="title-pages">
+    <%= render '/books/small_title_page_photos', book: @book -%>
+  </div>
 <% end -%>
 
 <%# create the modals, we'll refer to them below -%>

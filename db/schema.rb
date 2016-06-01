@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415172518) do
+ActiveRecord::Schema.define(version: 20160601130415) do
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "user_id",       limit: 4,   null: false
+    t.string   "user_type",     limit: 255
+    t.string   "document_id",   limit: 255
+    t.string   "title",         limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "document_type", limit: 255
+  end
+
+  add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -68,8 +80,8 @@ ActiveRecord::Schema.define(version: 20160415172518) do
     t.string   "date_narrative",        limit: 255
     t.string   "where",                 limit: 255
     t.text     "comments",              limit: 65535
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.integer  "photo_id",              limit: 4
     t.string   "flickr_id",             limit: 255
     t.text     "flickr_info",           limit: 65535
@@ -77,6 +89,7 @@ ActiveRecord::Schema.define(version: 20160415172518) do
     t.datetime "published_at"
     t.boolean  "publishing_to_flickr"
     t.text     "citations",             limit: 65535
+    t.boolean  "deleted",                             default: false
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree
@@ -130,18 +143,29 @@ ActiveRecord::Schema.define(version: 20160415172518) do
   add_index "provenance_agents", ["evidence_id"], name: "index_provenance_agents_on_evidence_id", using: :btree
   add_index "provenance_agents", ["name_id"], name: "index_provenance_agents_on_name_id", using: :btree
 
+  create_table "searches", force: :cascade do |t|
+    t.text     "query_params", limit: 65535
+    t.integer  "user_id",      limit: 4
+    t.string   "user_type",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
+
   create_table "test_table", primary_key: "field_binary", force: :cascade do |t|
   end
 
   create_table "title_pages", force: :cascade do |t|
     t.integer  "book_id",              limit: 4
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.integer  "photo_id",             limit: 4
     t.string   "flickr_id",            limit: 255
     t.text     "flickr_info",          limit: 65535
     t.datetime "published_at"
     t.boolean  "publishing_to_flickr"
+    t.boolean  "deleted",                            default: false
   end
 
   add_index "title_pages", ["book_id"], name: "index_title_pages_on_book_id", using: :btree

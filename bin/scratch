@@ -6,7 +6,10 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-bin/rails g migration add_in_queue_to_photos in_queue:boolean
+bundle exec rails g migration add_deleted_to_title_pages deleted:boolean
+bundle exec rails g migration add_deleted_to_evidence deleted:boolean
+
+# bin/rails g migration add_in_queue_to_photos in_queue:boolean
 
 # bin/rails g controller photos update $generator_options
 

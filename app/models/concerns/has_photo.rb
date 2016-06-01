@@ -10,8 +10,14 @@ module HasPhoto
   end
 
   def dequeue_photo
-    if photo.present? and photo.in_queue?
+    if photo.present? && photo.in_queue?
       photo.update_attribute 'in_queue', false
+    end
+  end
+
+  def requeue_photo
+    if photo.present? && !photo.in_queue?
+      photo.update_attribute 'in_queue', true
     end
   end
 

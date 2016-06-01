@@ -25,6 +25,8 @@ Docker
   - data volume for database
   - logs
 
+Add exception notification
+
 Set up permanent servers:
 
 - Staging
@@ -66,6 +68,8 @@ Manage position of side image, when resizing to smaller page layout
 #### Books ####
 
 Title page: need to be able to remove title pages
+
+Add pagination
 
 #### Evidence
 

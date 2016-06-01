@@ -3,7 +3,7 @@
 <% items.each do |item| -%>
   <% if item.photo.present? && item.photo.image? -%>
   <div class="row">
-  <%= render '/photos/small_photo', item: item, image_size: image_size -%>
+  <%= render '/photos/small_photo', item: item, image_size: image_size, book: book -%>
   </div>
   <% end -%>
 <% end -%>
