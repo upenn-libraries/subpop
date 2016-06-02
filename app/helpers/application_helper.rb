@@ -35,6 +35,25 @@ module ApplicationHelper
     link_to(raw(name), '#', options)
   end
 
+  def delete_publishable_link book, item, options
+    if item.processing?
+      options[:disabled] = true
+      options[:title]    = "Processing; please wait..."
+      name = "Please wait..."
+      path = '#'
+    else
+      format  = item.publishable_format
+      confirm = "Delete this #{format}?"
+      options[:data] ||= {}
+      options[:data][:confirm] = confirm
+      options[:method]         = :delete
+      name    = 'Delete'
+      path    = [book,item]
+    end
+
+    link_to name, path, options
+  end
+
   ##
   # Returns a dasherized tag to add HTML id elements. For example, for an TitlePage object with `id` 6
   def html_id_tag obj

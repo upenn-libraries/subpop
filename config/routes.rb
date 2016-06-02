@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   delete 'flickr/:id',                   to: 'flickr#destroy_book', as: 'delete_flickr_book'
 
   resources :books do
-    resources :evidence, only: [ :create, :new ]
+    resources :evidence, only: [ :create, :new, :destroy ]
     resources :photos, only: [ :update, :index, :show ] do
       patch 'restore_queue', on: :collection
     end
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :title_pages, only: :show
 
-  resources :evidence, only: [ :show, :update, :edit, :index, :destroy ]
+  resources :evidence, only: [ :show, :update, :edit, :index ]
 
   resources :names do
     get :autocomplete_name, on: :collection

@@ -96,6 +96,14 @@ module Publishable
     update_columns publishing_to_flickr: false if publishing_to_flickr?
   end
 
+  def publishable_format
+    if respond_to? :format_name
+      format_name
+    else
+      "#{model_name.human}"
+    end
+  end
+
   ##
   # Returns the current flickr status of the model, one of:
   #

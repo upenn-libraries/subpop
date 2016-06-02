@@ -1,6 +1,6 @@
 class EvidenceController < ApplicationController
   before_action :set_evidence, only: [:show, :edit, :update, :destroy ]
-  before_action :set_book, only: [ :new, :create ]
+  before_action :set_book, only: [ :new, :create, :destroy ]
 
   autocomplete :name, :name, full: true
 
@@ -60,10 +60,11 @@ class EvidenceController < ApplicationController
   # DELETE /evidence/1
   # DELETE /evidence/1.json
   def destroy
-    @evidence.destroy
+    @evidence.requeue_photo
+    @evidence.mark_deleted
+    DeletePublishableJob.perform_later @evidence
     respond_to do |format|
-      format.html { redirect_to evidence_index_url, notice: 'Evidence was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to @book, notice: 'Evidence was deleted.' }
     end
   end
 
