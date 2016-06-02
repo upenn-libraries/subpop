@@ -1,7 +1,7 @@
 <h1>New Evidence</h1>
 
 <% content_for :sidebar do -%>
-  <%= render 'small_evidence_photo', evidence: @evidence %>
+  <%= render 'small_evidence_photo', book: @book, evidence: @evidence %>
 <% end -%>
 
 <%= form_for [ @book, @evidence ], builder: SubpopFormbuilder, id: 'evidence-form', html: { class: 'form-horizontal' } do |f| %>

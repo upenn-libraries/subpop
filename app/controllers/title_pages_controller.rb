@@ -29,6 +29,7 @@ class TitlePagesController < ApplicationController
     @title_page.mark_deleted
     DeletePublishableJob.perform_later @title_page
     respond_to do |format|
+      format.js
       format.html { redirect_to @book, notice: 'Title page was removed.' }
     end
   end

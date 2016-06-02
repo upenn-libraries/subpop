@@ -42,13 +42,12 @@ module ApplicationHelper
       name = "Please wait..."
       path = '#'
     else
-      format  = item.publishable_format
-      confirm = "Delete this #{format}?"
+      format = item.publishable_format
       options[:data] ||= {}
-      options[:data][:confirm] = confirm
+      options[:data][:confirm] = "Delete this #{format}?"
       options[:method]         = :delete
-      name    = 'Delete'
-      path    = [book,item]
+      name = 'Delete'
+      path = [book,item]
     end
 
     link_to name, path, options

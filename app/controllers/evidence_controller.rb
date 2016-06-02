@@ -64,6 +64,7 @@ class EvidenceController < ApplicationController
     @evidence.mark_deleted
     DeletePublishableJob.perform_later @evidence
     respond_to do |format|
+      format.js
       format.html { redirect_to @book, notice: 'Evidence was deleted.' }
     end
   end
