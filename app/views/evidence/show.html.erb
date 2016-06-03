@@ -101,9 +101,14 @@
 </div>
 <br><br>
 
-  <div class="row top-buffer">
- <%= link_to 'Back to book', @evidence.book, class: 'btn btn-default' %>
- <%= link_to 'Back to photo queue', book_path(@evidence.book, anchor: "anchor-photo-queue"), class: 'btn btn-default' %>
-<%= link_to 'Edit', edit_evidence_path(@evidence), class: 'btn btn-primary' %>
-
-  </div>
+<div class="row top-buffer">
+<div class="col-sm-7">
+  <div class="btn-group btn-group-justified" role="group">
+  <%= link_to 'Book', @evidence.book, class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to the book page" %>
+   <%= link_to 'Photo queue', book_path(@evidence.book, anchor: "anchor-photo-queue"), class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to photo queue on the book page" %>
+   <%= link_to 'Edit', edit_evidence_path(@evidence), class: 'btn btn-primary', data: { toggle: 'tooltip' }, title: "Edit this #{@evidence.format_name}" %>
+   <%= link_to 'Delete', [@evidence.book,@evidence], class: 'btn btn-danger', method: :delete, data: { confirm: "Delete this #{@evidence.format_name}?", toggle: 'tooltip' }, title: "Delete this #{@evidence.format_name}" -%>
+   </div>
+<!--    <div class="col-sm-6"></div> -->
+ </div>
+</div>
