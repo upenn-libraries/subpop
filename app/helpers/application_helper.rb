@@ -35,7 +35,7 @@ module ApplicationHelper
     link_to(raw(name), '#', options)
   end
 
-  def delete_publishable_link book, item, options
+  def link_to_delete_publishable book, item, options
     if item.processing?
       options[:disabled] = true
       options[:title]    = "Processing; please wait..."

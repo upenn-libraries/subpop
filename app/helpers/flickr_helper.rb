@@ -4,7 +4,7 @@ module FlickrHelper
     "publishable-#{item.model_name.element}-#{item.id}"
   end
 
-  def publish_item_link name, item, options={}
+  def link_to_publish_item name, item, options={}
     if ! item.publishable?
       options[:disabled] = true
       options[:title]    = disabled_reason(item.flickr_status)
@@ -24,7 +24,7 @@ module FlickrHelper
     link_to name, path, options
   end
 
-  def publish_book_link name, book, options={}
+  def link_to_publish_book name, book, options={}
     if book.processing?
       options[:disabled] = true
       options[:title]    = 'Processing; please wait...'
@@ -47,7 +47,7 @@ module FlickrHelper
     link_to name, path, options
   end
 
-  def unpublish_item_link name, item, options={}
+  def link_to_unpublish_item name, item, options={}
     if ! item.unpublishable?
       options[:disabled] ||= true
       options[:title]    ||= disabled_reason(item.flickr_status)
@@ -64,7 +64,7 @@ module FlickrHelper
     link_to name, path, options
   end
 
-  def unpublish_book_link name, book, options={}
+  def link_to_unpublish_book name, book, options={}
     if book.processing?
       options[:disabled] = true
       options[:title]    = 'Processing; please wait...'

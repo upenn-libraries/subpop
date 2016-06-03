@@ -39,10 +39,10 @@
   <%# BUTTONS -%>
   <div class="col-sm-4">
     <div class="btn-group-status" role="group">
-    <%= publish_item_link 'Publish image', item, class: 'btn btn-success btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Publish to Flickr' -%>
-    <%= unpublish_item_link 'Unpublish image', item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Remove from Flickr' -%>
-    <% if controller_name == 'books' -%>
-    <%= delete_publishable_link item.book, item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: "Delete #{item.publishable_format}" -%>
+    <%= link_to_publish_item 'Publish image', item, class: 'btn btn-success btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Publish to Flickr' -%>
+    <%= link_to_unpublish_item 'Unpublish image', item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Remove from Flickr' -%>
+    <% unless controller_name == 'evidence' -%>
+    <%= link_to_delete_publishable item.book, item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: "Delete #{item.publishable_format}" -%>
     <% end -%>
     <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
     <% if item.is_a? Evidence -%>
