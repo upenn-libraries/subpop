@@ -65,7 +65,7 @@ RSpec.describe EvidenceController, type: :controller do
     it "assigns all evidence as @evidence" do
       evidence = Evidence.create! valid_attributes
       # evidence = Evidence.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {book: book}, valid_session
       expect(assigns(:evidence)).to eq([evidence])
     end
   end
@@ -80,7 +80,8 @@ RSpec.describe EvidenceController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new evidence as @evidence" do
-      get :new, { book_id: create(:book).id }, valid_session
+      # the new action actually call evidence_params to get :format
+      get :new, { book_id: book.id, evidence: valid_params }, valid_session
       expect(assigns(:evidence)).to be_a_new(Evidence)
     end
   end
@@ -88,7 +89,7 @@ RSpec.describe EvidenceController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested evidence as @evidence" do
       evidence = Evidence.create! valid_attributes
-      get :edit, {id: evidence.to_param}, valid_session
+      get :edit, {id: evidence.id }, valid_session
       expect(assigns(:evidence)).to eq(evidence)
     end
   end
