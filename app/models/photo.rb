@@ -22,4 +22,8 @@ class Photo < ActiveRecord::Base
   def image_data
     Paperclip.io_adapters.for(image)
   end
+
+  def has_image?
+    image.present?
+  end
 end

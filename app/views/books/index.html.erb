@@ -4,30 +4,31 @@
 <%= page_entries_info @books, :entry_name => 'book' %>
 </div>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Repository/Owner</th>
-      <th>Call number</th>
-      <th>Title</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= book.holder %></td>
-        <td><%= book.call_number %></td>
-        <td><%= book.name %></td>
-        <td>
-          <%= link_to 'Show', book, class: 'btn btn-default btn-sm' %>
-          <%= link_to 'Edit', edit_book_path(book), class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% @books.each do |book| -%>
+<div class="row">
+  <div class="col-sm-2">
+    <% if book.title_pages.present? -%>
+    <%= thumnail_link_to book.title_pages.first -%>
+    <% end -%>
+  </div>
+  <div class="col-sm-7">
+    <div class="row field-group">
+      <div class="col-sm-4 field-label">Call number</div>
+      <div class="col-sm-6 field-value"><%= book.holder -%> <%= book.call_number -%></div>
+    </div>
+    <div class="row field-group">
+      <div class="col-sm-4 field-label">Title</div>
+      <div class="col-sm-6 field-value"><%= book.name -%></div>
+    </div>
+  </div>
+  <div class="col-sm-2">
+    <%= link_to 'Details', book, class: 'btn btn-default btn-xs btn-block' %>
+    <%= link_to 'Edit', edit_book_path(book), class: 'btn btn-primary btn-xs btn-block' %>
+    <%= link_to 'Delete', book, method: :delete, data: { confirm: 'Completely delete this book?' }, class: 'btn btn-danger btn-xs btn-block' %>
+  </div>
+</div>
+<hr>
+<% end -%>
 
 <div>
 <%= paginate @books %>

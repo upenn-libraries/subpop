@@ -35,6 +35,17 @@ module ApplicationHelper
     link_to(raw(name), '#', options)
   end
 
+  def thumnail_link_to item,path=nil
+    return unless item.has_image?
+    link_to thumbnail_image_tag(item), item.image.url(:original), target: '_blank',
+      'data-toggle': 'tooltip', title: 'Click to open in new window'
+  end
+
+  def thumbnail_image_tag item
+    return unless item.has_image?
+    image_tag item.image.url(:thumb), class: 'img-thumbnail'
+  end
+
   def link_to_delete_publishable book, item, options
     if item.processing?
       options[:disabled] = true

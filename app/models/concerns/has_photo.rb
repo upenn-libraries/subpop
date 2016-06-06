@@ -7,6 +7,9 @@ module HasPhoto
 
   included do
     belongs_to :photo
+
+    delegate :has_image?, to: :photo, prefix: false, allow_nil: true
+    delegate :image, to: :photo, prefix: false, allow_nil: true
   end
 
   def dequeue_photo
@@ -20,5 +23,6 @@ module HasPhoto
       photo.update_attribute 'in_queue', true
     end
   end
+
 
 end
