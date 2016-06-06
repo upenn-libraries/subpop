@@ -155,7 +155,7 @@ ready = ->
 
     $('form#new_evidence, form[id^=edit_evidence]').on 'submit', (event) ->
         manage_other_format()
-        manage_location_in_evidence_page()
+        manage_location_in_book_page()
 
     show_hide_page_number()
     show_hide_format_other()

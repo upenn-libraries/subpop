@@ -5,7 +5,7 @@ class PhotosController < ApplicationController
   def index
     @photos = @book.photos.queued
     respond_to do |format|
-      format.html { respond_to @book }
+      format.html
       format.js
     end
   end

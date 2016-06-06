@@ -1,7 +1,7 @@
 class Book < ActiveRecord::Base
-  has_many :photos, dependent: :destroy
-  has_many :title_pages, dependent: :destroy
-  has_many :evidence, dependent: :destroy
+  has_many :photos, dependent: :destroy, inverse_of: :book
+  has_many :title_pages, dependent: :destroy, inverse_of: :book
+  has_many :evidence, dependent: :destroy, inverse_of: :book
 
   validates_presence_of :title
   accepts_nested_attributes_for :title_pages

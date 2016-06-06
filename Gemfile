@@ -73,6 +73,11 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_girl_rails', require: false
   gem 'database_cleaner'
+  gem 'poltergeist'
+  gem 'launchy' # save_and_open_page functionality
+  gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'simplecov', :require => false
 end
 
 # Access an IRB console on exception pages or by using <%= console %> in views

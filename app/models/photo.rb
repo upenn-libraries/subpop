@@ -1,5 +1,5 @@
 class Photo < ActiveRecord::Base
-  belongs_to :book
+  belongs_to :book, inverse_of: :photos
 
   has_attached_file :image,
     styles: {

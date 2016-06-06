@@ -2,7 +2,7 @@ class Evidence < ActiveRecord::Base
   include Publishable
   include HasPhoto
 
-  belongs_to :book, required: true
+  belongs_to :book, required: true, inverse_of: :evidence
 
   has_many :evidence_content_types, dependent: :destroy
   has_many :content_types, through: :evidence_content_types
