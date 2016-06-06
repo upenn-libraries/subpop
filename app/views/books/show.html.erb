@@ -11,7 +11,7 @@
 
 <h2><%= @book.full_name %></h3>
 
-<%= link_to 'Back', books_path, class: 'btn btn-default' %>
+<%= link_to 'Book list', books_path, class: 'btn btn-default' %>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
 
 <h3>Who has it?</h3>
@@ -133,5 +133,5 @@
 </div> <!-- /row field-group -->
 
 
-<%= link_to 'Back to book list', books_path, class: 'btn btn-default' %>
+<%= link_to 'Book list', books_path, class: 'btn btn-default' %>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
