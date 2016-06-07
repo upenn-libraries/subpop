@@ -16,6 +16,9 @@
 <% if item.where.present? -%>
 <b>Geographic location:</b>: <%= item.where %>
 <% end -%>
+<% item.provenance_agents.each do |agent| -%>
+<b><%= agent.role_name -%></b>: <%= agent.full_name %>
+<% end -%>
 
 <% end -%>
 <b>COPY</b>

@@ -19,9 +19,9 @@ class ProvenanceAgent < ActiveRecord::Base
 
   validates :role, inclusion: ROLES.map(&:last)
 
-  class << self
-    def role_name code
-      ROLES_BY_CODE[code]
-    end
+  def role_name
+    return if role.blank?
+
+    ROLES_BY_CODE[role]
   end
 end

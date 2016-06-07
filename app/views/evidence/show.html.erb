@@ -84,7 +84,7 @@
 <% if @evidence.provenance_agents.present? %>
   <% @evidence.provenance_agents.each do |agent| %>
     <div class="row field-group">
-      <div class="col-sm-4 field-label"><%= ProvenanceAgent.role_name agent.role %></div>
+      <div class="col-sm-4 field-label"><%= agent.role_name %></div>
       <div class="col-sm-6 field-value"><%= agent.full_name %></div>
     </div>
   <% end %>
