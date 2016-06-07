@@ -92,9 +92,12 @@
   </div>
 
 
-
   <div class="actions">
+    <% if action_name == 'new' -%>
     <%= link_to 'Cancel', books_path, class: "btn btn-default" %>
+    <% else -%>
+    <%= link_to 'Cancel', @book, class: "btn btn-default" %>
+    <% end -%>
     <%= f.submit class: "btn btn-success" %>
   </div>
 <% end %>
