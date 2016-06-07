@@ -20,6 +20,11 @@ Add owner field to description
 
 ### General
 
+Context footer:
+
+- Book pages
+- Evidenc pages
+
 Docker
 
   - data volume for database
@@ -67,15 +72,24 @@ Manage position of side image, when resizing to smaller page layout
 
 #### Books ####
 
-Title page: need to be able to remove title pages
+X Title page: need to be able to remove title pages
 
-Add pagination
+X Add pagination
+
+Book edit cancel should return to book
 
 #### Evidence
 
 Edit/New pages
-
 - "Back to photo queue" anchor on Safari doesn't scroll down far enough
+
+Edit/Show page:
+  - Evidence name at top of page
+
+Edit:
+  - Content type; use select with checkboxes <http://stackoverflow.com/questions/17714705/how-to-use-checkbox-inside-select-option>
+
+Mark format as required
 
 Create context images
 
@@ -88,4 +102,10 @@ Evidence show page:
 Evidence form:
 
 - Provenance agents hide/delete button instead of checkbox
+
+Where?
+
+  - ?? Provenance place?
+  - Hint? <-- Try this one. "Give a place named in the provenance mark or the location of the book at the time the mark was added."
+
 
