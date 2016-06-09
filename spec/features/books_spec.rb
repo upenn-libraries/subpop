@@ -18,7 +18,7 @@ RSpec.feature "Books", type: :feature, js: true do
 
       # Use the image for a bookplate
       select 'Bookplate/Label'
-      expect(page).to have_content 'New Evidence'
+      expect(page).to have_content 'New Bookplate/Label'
       click_button 'Create Evidence'
 
       # Confirm the page exists

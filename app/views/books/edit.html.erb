@@ -4,6 +4,8 @@
   <%= render '/books/small_title_page_photos', book: @book -%>
 <% end -%>
 
+<% content_for :footer, @book.full_name -%>
+
 <%= render 'form' %>
 
 <%= link_to 'Show', @book %> |

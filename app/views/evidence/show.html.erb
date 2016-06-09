@@ -4,6 +4,9 @@
 
 <% content_for :modals do -%>
 <%= render '/flickr/preview_modal' -%>
+
+<% content_for :footer, @evidence.full_name -%>
+
 <% end -%>
 
 <h2><%= @evidence.format_name -%></h2>

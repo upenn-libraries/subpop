@@ -4,6 +4,8 @@
   <%= render 'small_evidence_photo', book: @book, evidence: @evidence %>
 <% end -%>
 
+<% content_for :footer, @evidence.full_name -%>
+
 <%= form_for [ @book, @evidence ], builder: SubpopFormbuilder, id: 'evidence-form', html: { class: 'form-horizontal' } do |f| %>
   <%= render 'form', f: f %>
 
