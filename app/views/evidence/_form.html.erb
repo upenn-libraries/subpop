@@ -25,7 +25,7 @@
   <h3>What is it?</h3>
 
   <div class="form-group">
-    <%= f.label :format, class: "col-sm-3 control-label" %>
+    <%= f.label :format, class: "col-sm-3 control-label required" %>
     <div class="col-sm-8">
       <%= f.select :format, Evidence::FORMATS, { include_blank: true }, { class: "form-control" } %>
     </div>

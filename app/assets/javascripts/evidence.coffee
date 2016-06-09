@@ -155,6 +155,9 @@ ready = ->
 
     $('#evidence_content_type_ids').multiselect()
 
+    $(document).on 'change', '#evidence_format', (event) ->
+        $('#evidence-format-heading').text($('#evidence_format option:selected').text())
+
     $('form#new_evidence, form[id^=edit_evidence]').on 'submit', (event) ->
         manage_other_format()
         manage_location_in_book_page()

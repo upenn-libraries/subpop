@@ -9,7 +9,7 @@
   <%= render '/flickr/preview_modal' -%>
 <% end -%>
 
-<h2><%= @book.full_name %></h3>
+<h2><span id="evidence-format-heading"><%= @book.full_name %></span></h3>
 
 <%= link_to 'Book list', books_path, class: 'btn btn-default' %>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
