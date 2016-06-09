@@ -36,25 +36,12 @@
       <%= f.text_field :format_other, class: "form-control" %>
     </div>
   </div>
-  <div class="form-group">
+    <div class="form-group">
     <%= f.label :content_type, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <%# Rigmarole below to split content type checkboxes into two columns  -%>
-      <% total    = ContentType.count -%>
-      <% half_way = (total % 2 == 0) ? total/2 : (total/2 + 1) -%>
-      <% index    = 1 -%>
       <div class="form-group">
         <div class="col-sm-6">
-          <%= f.collection_check_boxes :content_type_ids, ContentType.all.sort, :id, :name do |c| %>
-          <% if index == half_way + 1 -%>
-          </div>
-          <div class="col-sm-6">
-          <% end -%>
-          <div class="checkbox">
-            <label class="checkbox"><%= c.check_box %> <%= c.text %></label>
-          </div>
-          <% index += 1 -%>
-          <% end %>
+        <%= f.select :content_type_ids, ContentType.all.sort.map { |c| [c.name, c.id] }, { include_blank: false }, { class: "form-control", multiple: "multiple" }  -%>
         </div>
       </div>
     </div>

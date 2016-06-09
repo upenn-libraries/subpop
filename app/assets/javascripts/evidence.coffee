@@ -153,6 +153,8 @@ ready = ->
     $(document.body).on 'shown.bs.modal', '.modal', ->
         $(this).find("[autofocus]:first").focus()
 
+    $('#evidence_content_type_ids').multiselect()
+
     $('form#new_evidence, form[id^=edit_evidence]').on 'submit', (event) ->
         manage_other_format()
         manage_location_in_book_page()
