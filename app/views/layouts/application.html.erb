@@ -50,10 +50,10 @@
 
       <div class="starter-template">
         <div class="row">
-          <div  class="col-md-4" id="sidebar">
+          <div  class="col-md-3" id="sidebar">
             <%= yield :sidebar -%>
           </div>
-          <div  class="col-md-8">
+          <div  class="col-md-9">
             <div id="flash_messages"><%= render "/shared/flash_messages", flash: flash %></div>
             <%= yield %>
           </div>
