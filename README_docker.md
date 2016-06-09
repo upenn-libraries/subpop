@@ -25,7 +25,7 @@ Host docker-tunnel
    User: user_name
 ```
 
-Then you can do: 
+Then you can do:
 
 ```bash
 $ ssh -f -N docker-tunnel
@@ -39,9 +39,9 @@ Set `DOCKER_HOST` environment variable in bash init file:
 export DOCKER_HOST=localhost:2375
 ```
 
-Be sure `DOCKER_HOST` is set the local environment and run `docker-compose`. 
+Be sure `DOCKER_HOST` is set the local environment and run `docker-compose`.
 
-**IMPORTANT**: Note the `: > Gemfile.lock`. If this file is not empty, bundle will 
+**IMPORTANT**: Note the `: > Gemfile.lock`. If this file is not empty, bundle will
 attempt to use conflicting gem versions at runtime.
 
 ```bash
@@ -91,7 +91,7 @@ Removing intermediate container 4396205912df
 Step 7 : ENV RAILS_ENV production
  ---> Running in 828f279c99c3
  ---> faa4ef88d40c
-Removing intermediate container 828f279c99c3 
+Removing intermediate container 828f279c99c3
 Step 8 : RUN SUBPOP_DEVISE_SECRET_KEY=dummy \
     SUBPOP_FLICKR_API_KEY=dummy \
     SUBPOP_FLICKR_API_SECRET=dummy \
@@ -171,4 +171,190 @@ Step 10 : CMD rails server -b 0.0.0.0
  ---> 1248b12cd4c9
 Successfully built 1248b12cd4c9
 ```
+## Tag and push docker-images on remote server
 
+Log in to remote server, e.g., `emeryrdev02`.
+
+Tag the web and delayedjob images:
+
+```
+emeryrdev02[~]$ docker images
+REPOSITORY                           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+subpop_delayedjob                    latest              2b44b46993a4        14 minutes ago      905 MB
+subpop_web                           latest              2b44b46993a4        14 minutes ago      905 MB
+localhost:5000/subpop_web            latest              d82916b4eba2        2 weeks ago         905 MB
+localhost:5000/subpop_delayedjob     latest              d82916b4eba2        2 weeks ago         905 MB
+...
+emeryrdev02[~]$ docker tag -f 2b44b46993a4 localhost:5000/subpop_delayedjob
+emeryrdev02[~]$ docker tag -f 2b44b46993a4 localhost:5000/subpop_web
+```
+
+> Note the `-f` flag to force the reassignment of the tag to a new image.
+
+Push the delayedjob image to the repository:
+
+```
+emeryrdev02[~]$ docker push localhost:5000/subpop_delayedjob
+The push refers to a repository [localhost:5000/subpop_delayedjob] (len: 1)
+Sending image list
+Pushing repository localhost:5000/subpop_delayedjob (1 tags)
+Image 004814f54a9a already pushed, skipping
+Image b6b57a59043e already pushed, skipping
+Image 70e9a6907f10 already pushed, skipping
+Image b478bcf89851 already pushed, skipping
+Image 783fdfa6305f already pushed, skipping
+Image 4786bcc15aac already pushed, skipping
+Image bd7b40057a50 already pushed, skipping
+Image 63136362925b already pushed, skipping
+Image 125a6ca962cf already pushed, skipping
+Image 37ed6f9f3092 already pushed, skipping
+Image 4178b2a91377 already pushed, skipping
+Image 32f2a4cccab8 already pushed, skipping
+Image cc129c95131a already pushed, skipping
+Image 3726859b22df already pushed, skipping
+Image a9e5ef3759ec already pushed, skipping
+Image 9168c99105ac already pushed, skipping
+Image 5fe7a16dfa05 already pushed, skipping
+Image 70959490eb9d already pushed, skipping
+Image a1f7d50bd2cb already pushed, skipping
+Image f0f1a61c2eaf already pushed, skipping
+Image 478c86dcb7bb already pushed, skipping
+Image cf417cfa1d20 already pushed, skipping
+df07c4daad91: Image successfully pushed
+362de763a33e: Image successfully pushed
+4e227afa4ac5: Image successfully pushed
+2b44b46993a4: Image successfully pushed
+Pushing tag for rev [2b44b46993a4] on {http://localhost:5000/v1/repositories/subpop_delayedjob/tags/latest}
+
+```
+
+Push the web image to the repository:
+
+```
+emeryrdev02[~]$ docker push localhost:5000/subpop_web
+The push refers to a repository [localhost:5000/subpop_web] (len: 1)
+Sending image list
+Pushing repository localhost:5000/subpop_web (1 tags)
+Image b6b57a59043e already pushed, skipping
+Image 004814f54a9a already pushed, skipping
+Image b478bcf89851 already pushed, skipping
+Image 4786bcc15aac already pushed, skipping
+Image 32f2a4cccab8 already pushed, skipping
+Image 783fdfa6305f already pushed, skipping
+Image 70e9a6907f10 already pushed, skipping
+Image 4178b2a91377 already pushed, skipping
+Image 125a6ca962cf already pushed, skipping
+Image bd7b40057a50 already pushed, skipping
+Image 37ed6f9f3092 already pushed, skipping
+Image 63136362925b already pushed, skipping
+Image cc129c95131a already pushed, skipping
+Image a9e5ef3759ec already pushed, skipping
+Image 5fe7a16dfa05 already pushed, skipping
+Image 70959490eb9d already pushed, skipping
+Image f0f1a61c2eaf already pushed, skipping
+Image a1f7d50bd2cb already pushed, skipping
+Image cf417cfa1d20 already pushed, skipping
+Image 9168c99105ac already pushed, skipping
+Image 478c86dcb7bb already pushed, skipping
+Image 3726859b22df already pushed, skipping
+Image df07c4daad91 already pushed, skipping
+Image 4e227afa4ac5 already pushed, skipping
+Image 362de763a33e already pushed, skipping
+Image 2b44b46993a4 already pushed, skipping
+Pushing tag for rev [2b44b46993a4] on {http://localhost:5000/v1/repositories/subpop_web/tags/latest}
+```
+
+List the images:
+
+```bash
+emeryrdev02[~]$ docker images
+REPOSITORY                           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+subpop_delayedjob                    latest              2b44b46993a4        15 minutes ago      905 MB
+subpop_web                           latest              2b44b46993a4        15 minutes ago      905 MB
+localhost:5000/subpop_web            latest              2b44b46993a4        15 minutes ago      905 MB
+localhost:5000/subpop_delayedjob     latest              2b44b46993a4        15 minutes ago      905 MB
+...
+```
+
+## Run the application
+
+Clone the `subpop-docker` project on the deployment server:
+
+```
+$ git clone ssh://git@gitlab.library.upenn.edu:2222/emeryr/subpop-docker.git
+```
+
+Copy a `.docker-environment` file into the `subpop-docker` folder. The file should
+look like this:
+
+```bash
+MYSQL_ROOT_PASSWORD=REPLACEME
+RAILS_ENV=production
+RAILS_SERVE_STATIC_FILES=true
+# DEV POP Flickr site keys
+SUBPOP_FLICKR_API_KEY=REPLACEME
+SUBPOP_FLICKR_API_SECRET=REPLACEME
+SUBPOP_FLICKR_ACCESS_TOKEN=REPLACEME
+SUBPOP_FLICKR_ACCESS_SECRET=REPLACEME
+
+SUBPOP_FLICKR_USERID=REPLACEME
+SUBPOP_FLICKR_USERNAME=REPLACEME
+
+SUBPOP_DB_NAME=subpop
+SUBPOP_DB_USER=root
+SUBPOP_DB_PASSWORD=$MYSQL_ROOT_PASSWORD
+
+SUBPOP_DEVISE_SECRET_KEY=REPLACEME
+
+SUBPOP_SECRET_TOKEN=REPLACEME
+SUBPOP_SECRET_KEY_BASE=REPLACEME
+```
+
+Stop any running process:
+
+```
+emeryrdev02[~]$ cd subpop-docker
+emeryrdev02[~/subpop-docker]$ sudo docker ps
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                               NAMES
+d979cde84ff0        d82916b4eba2             "bundle exec rake job"   2 weeks ago         Up 13 days                                              subpopdocker_delayedjob_1
+88302d1d7c6f        d82916b4eba2             "rails server -b 0.0."   2 weeks ago         Up 13 days          0.0.0.0:80->3000/tcp                subpopdocker_web_1
+9e6b03328e71        mysql/mysql-server:5.7   "/entrypoint.sh mysql"   3 weeks ago         Up 13 days          0.0.0.0:3306->3306/tcp, 33060/tcp   subpopdocker_db_1
+emeryrdev02[~/subpop-docker]$ sudo docker-compose stop
+Stopping subpopdocker_delayedjob_1 ... done
+Stopping subpopdocker_web_1 ... done
+Stopping subpopdocker_db_1 ... done
+emeryrdev02[~/subpop-docker]$ 
+```
+
+In a screen session, start the docker process:
+
+```
+emeryrdev02[~/subpop-docker]$ sudo docker-compose up
+Starting subpopdocker_db_1
+Starting subpopdocker_data_1
+Recreating subpopdocker_web_1
+Recreating subpopdocker_delayedjob_1
+Attaching to subpopdocker_db_1, subpopdocker_data_1, subpopdocker_web_1, subpopdocker_delayedjob_1
+subpopdocker_data_1 exited with code 0
+web_1        | Array values in the parameter to `Gem.paths=` are deprecated.
+web_1        | Please use a String or nil.
+web_1        | An Array ({"GEM_PATH"=>["/usr/local/bundle"]}) was passed in from bin/rails:3:in `load'
+web_1        | => Booting Puma
+web_1        | => Rails 4.2.5 application starting in production on http://0.0.0.0:3000
+web_1        | => Run `rails server -h` for more startup options
+web_1        | => Ctrl-C to shutdown server
+delayedjob_1 | [Worker(host:0c4eac4edced pid:1)] Starting job worker
+delayedjob_1 | I, [2016-06-06T14:53:21.457020 #1]  INFO -- : 2016-06-06T14:53:21+0000: [Worker(host:0c4eac4edced pid:1)] Starting job worker
+web_1        | Puma starting in single mode...
+web_1        | * Version 3.4.0 (ruby 2.2.4-p230), codename: Owl Bowl Brawl
+web_1        | * Min threads: 0, max threads: 16
+web_1        | * Environment: production
+web_1        | * Listening on tcp://0.0.0.0:3000
+web_1        | Use Ctrl-C to stop
+```
+
+If needed, run `rake db:migrate`:
+
+```
+emeryrdev02[~/subpop-docker]$ sudo docker-compose run web rake db:migrate
+```
