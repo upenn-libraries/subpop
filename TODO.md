@@ -37,18 +37,22 @@ Double check fields:
 
 User support:
 
-  - Login
-  - Add user to books and evidence: `created_by`, `updated_by`
-  - Show user's books
-  - Push to Flickr workflow
-  - Administration of users
-  - Administration of workflow for "probation" users
+- Add full_name to user
+- Add user to books and evidence: `created_by`, `updated_by`
+- Show user's books
+- Push to Flickr workflow
+- Administration of workflow for "probation" users
 
 Migrate current spreadsheets to app
 
 Spreadsheet import: Deal with single images for multiple pieces of provenance
 
 Add Blacklight to application
+
+Model name:
+
+- replace `item.class.name.underscore` with `item.model_name.element`
+  throughout
 
 #### All sections:
 
@@ -62,6 +66,10 @@ Manage position of side image, when resizing to smaller page layout
         // later. It's hard with bootstrap to fix the image *and* have it be
         // responsive to window resizing. If fixed, the text floats over and
         // covers the fixed image upon resizing.
+
+#### Flickr ####
+
+Move flickr_preview partial from shared to flickr/show view
 
 #### Books ####
 
@@ -81,6 +89,9 @@ Evidence show page:
 Evidence form:
 
 - Provenance agents hide/delete button instead of checkbox
+
+Provenance agents:
+- When selecting name and user hits enter, prevent form submission
 
 Where?
 

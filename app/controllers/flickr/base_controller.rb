@@ -1,47 +1,29 @@
-class FlickrController < ApplicationController
+class Flickr::BaseController < ApplicationController
   include FlickrHelper
 
-  before_action :get_item, only: [ :create, :show, :status, :create, :update, :destroy ]
-  before_action :get_book, only: [ :create_book, :book_status, :update_book, :destroy_book ]
+  before_action :get_item, only: [ :show, :status, :create, :update, :destroy ]
+
+  # Subclasses must implement this and return a item class for the
+  # controller
+  def item_class
+    controller_name.camelize.singularize.constantize
+  end
+
+  def item_class_lstr
+    item_class.to_s.underscore
+  end
 
   def show
+    authorize! :read, @item
+
     respond_to do |format|
       format.html { render layout: !request.xhr? }
     end
   end
 
   def status
-    respond_to do |format|
-      format.js
-      format.json
-    end
-  end
+    authorize! :read, @item
 
-  def create_book
-    respond_to do |format|
-      create_publish_jobs
-      format.js
-      format.html { redirect_to @book, notice: "Publishing all book images" }
-    end
-  end
-
-  def update_book
-    respond_to do |format|
-      create_publish_jobs
-      format.js
-      format.html { redirect_to @book, notice: "Publishing all book images" }
-    end
-  end
-
-  def destroy_book
-    respond_to do |format|
-      create_unpublish_jobs
-      format.js
-      format.html
-    end
-  end
-
-  def book_status
     respond_to do |format|
       format.js
       format.json
@@ -49,6 +31,8 @@ class FlickrController < ApplicationController
   end
 
   def create
+    authorize! :update, @item
+
     respond_to do |format|
       if @item.publishable?
         create_publish_jobs
@@ -63,6 +47,8 @@ class FlickrController < ApplicationController
   end
 
   def update
+    authorize! :update, @item
+
     respond_to do |format|
       if @item.publishable?
         create_publish_jobs
@@ -77,6 +63,8 @@ class FlickrController < ApplicationController
   end
 
   def destroy
+    authorize! :udpate, @item
+
     respond_to do |format|
       if @item.unpublishable?
         create_unpublish_jobs
@@ -94,7 +82,7 @@ class FlickrController < ApplicationController
   private
 
   def create_publish_jobs
-    return enqueue_publish @item unless @item.is_a?(Book)
+    return enqueue_publish @item unless @item.respond_to? :publishables
 
     # item is a book; enqueue each publishable
     @item.publishables.each { |item| enqueue_publish item }
@@ -109,7 +97,7 @@ class FlickrController < ApplicationController
   end
 
   def create_unpublish_jobs
-    return enqueue_unpublish @item unless @item.is_a?(Book)
+    return enqueue_unpublish @item unless @item.respond_to? :publishables
 
     # item is a book; add all unpublishable items
     @item.publishables.each { |item| enqueue_unpublish item }
@@ -122,13 +110,7 @@ class FlickrController < ApplicationController
     RemoveFromFlickrJob.perform_later item
   end
 
-  def get_book
-    @book = @item = Book.find params[:id]
-  end
-
   def get_item
-    @item_type = params[:item_type]
-    klass     = @item_type.camelize.constantize
-    @item     = klass.find params[:id]
+    @item = item_class.find params[:id]
   end
 end

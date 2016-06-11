@@ -1,6 +1,7 @@
 class PhotosController < ApplicationController
   before_action :set_book
   before_action :set_photo, only: [ :update, :show ]
+  authorize_resource only: [:index, :show, :update]
 
   def index
     @photos = @book.photos.queued
@@ -34,6 +35,8 @@ class PhotosController < ApplicationController
   end
 
   def restore_queue
+    authorize! :update, Photo
+
     @book.photos.update_all(in_queue: true)
     respond_to do |format|
       format.html { redirect_to @book }

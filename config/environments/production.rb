@@ -87,4 +87,21 @@ Rails.application.configure do
   # In production, :host should be set to the actual host of your application.
   # TODO: set production host for action_mailer
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.smtp_settings = {
+    :address => ENV.fetch('SUBPOP_SMTP_HOST'),
+    :port    => 25,
+  }
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
 end
+
+Rails.application.config.middleware.use ExceptionNotification::Rack,
+                                        :ignore_exceptions => ExceptionNotifier.ignored_exceptions - ["ActionController::RoutingError"],
+                                        :email => {
+                                          :email_prefix => "[SubPOP] ",
+                                          :sender_address => %{"notifier" <#{ENV['SUBPOP_EMAIL_FROM']}>},
+                                          :exception_recipients => ENV['SUBPOP_EMAIL_EXCEPTIONS_TO']
+                                        }

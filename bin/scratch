@@ -1,13 +1,27 @@
 #!/usr/bin/env bash
 
-alias rails >/dev/null 2>&1 || alias rails="bundle exec rails"
+alias rails >/dev/null 2>&1 || alias rails="bundle exec bin/rails"
 
+# make sure we're in the project root
 cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-bundle exec rails g migration add_deleted_to_title_pages deleted:boolean
-bundle exec rails g migration add_deleted_to_evidence deleted:boolean
+rails generate migration add_user_stamps_to_names \
+  created_by_id:integer \
+  updated_by_id:integer \
+  $generator_options
+
+# rails generate migration add_user_stamps_to_title_pages \...
+# rails generate migration add_user_stamps_to_evidence \...
+# rails generate migration add_user_stamps_to_books \...
+
+# rails generate migration add_full_name_to_users full_name:string $generator_options
+
+# rails g migration add_deleted_at_column_to_users deleted_at:datetime
+
+# bundle exec rails g migration add_deleted_to_title_pages deleted:boolean
+# bundle exec rails g migration add_deleted_to_evidence deleted:boolean
 
 # bin/rails g migration add_in_queue_to_photos in_queue:boolean
 

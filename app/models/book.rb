@@ -1,4 +1,6 @@
 class Book < ActiveRecord::Base
+  include UserFields
+
   has_many :photos, dependent: :destroy, inverse_of: :book
   has_many :title_pages, dependent: :destroy, inverse_of: :book
   has_many :evidence, dependent: :destroy, inverse_of: :book

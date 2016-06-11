@@ -1,0 +1,1 @@
+$('#publish-book-buttons').html("<%= j render(partial: 'flickr/books/publish_buttons', locals: { book: @item }) %>")

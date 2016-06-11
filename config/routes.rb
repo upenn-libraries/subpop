@@ -2,16 +2,6 @@ Rails.application.routes.draw do
 
   get 'flash/show'
 
-  get    'flickr/show/:item_type/:id',   to: 'flickr#show',         as: 'preview'
-  get    'flickr/status/:item_type/:id', to: 'flickr#status',       as: 'flickr_status'
-  post   'flickr/:item_type/:id',        to: 'flickr#create',       as: 'create_flickr_item'
-  put    'flickr/:item_type/:id',        to: 'flickr#update',       as: 'update_flickr_item'
-  delete 'flickr/:item_type/:id',        to: 'flickr#destroy',      as: 'delete_flickr_item'
-  get    'flickr/status/:id',            to: 'flickr#book_status',  as: 'flickr_book_status'
-  post   'flickr/:id',                   to: 'flickr#create_book',  as: 'create_flickr_book'
-  put    'flickr/:id',                   to: 'flickr#update_book',  as: 'update_flickr_book'
-  delete 'flickr/:id',                   to: 'flickr#destroy_book', as: 'delete_flickr_book'
-
   resources :books do
     resources :evidence, only: [ :create, :new, :destroy ]
     resources :photos, only: [ :update, :index, :show ] do
@@ -28,7 +18,31 @@ Rails.application.routes.draw do
     get :autocomplete_name, on: :collection
   end
 
-  devise_for :users
+  namespace :flickr do
+    resources :evidence, only: [ :show, :update, :destroy ] do
+      post :create, on: :member
+      get :status, on: :member
+    end
+
+    resources :title_pages, only: [ :show, :update, :destroy ] do
+      post :create, on: :member
+      get :status, on: :member
+    end
+
+    resources :books, only: [ :show, :update, :destroy ] do
+      post :create, on: :member
+      get :status, on: :member
+    end
+  end
+
+  devise_for :users, :controllers => { :registrations => 'users/registrations' }
+  devise_scope :user do
+    get '/login' => 'devise/sessions#new'
+    get '/logout' => 'devise/sessions#destroy'
+  end
+
+  resources :user, :controller => "user"
+
   get 'welcome/index'
 
   root to: 'books#index'

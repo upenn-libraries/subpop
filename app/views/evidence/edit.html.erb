@@ -6,6 +6,10 @@
 
 <% content_for :footer, @evidence.full_name -%>
 
+<% content_for :footer_right do -%>
+  <%= render '/shared/update_status', object: @evidence  -%>
+<% end -%>
+
 <%= form_for @evidence, builder: SubpopFormbuilder, id: 'evidence-form', html: { class: 'form-horizontal' } do |f| %>
   <%= render 'form', f: f %>
 
@@ -16,3 +20,4 @@
 
 <% end -%>
 
+<%= render '/shared/update_status', object: @evidence -%>

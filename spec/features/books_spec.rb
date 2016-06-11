@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.feature "Books", type: :feature, js: true do
   feature 'User creates a book' do
-    scenario 'enters a new book with evidence' do
+    scenario 'with evidence' do
+      login_as 'testuser'
       # create a book with an images
       visit '/books/new'
       fill_in 'Current repository', with: 'Penn Libraries'
@@ -33,10 +34,16 @@ RSpec.feature "Books", type: :feature, js: true do
       # look at the details
       click_link 'Details'
       expect(page).to have_content 'Bookplate/Label'
+      click_link 'Preview'
+      expect(page).to have_css 'h1', text: 'Title'
+      # Note: following '×' is the rendering of &times;
+      click_button '×'
+
     end
 
     scenario 'user selects a title page' do
-       visit '/books/new'
+      login_as 'testuser'
+      visit '/books/new'
       fill_in 'Current repository', with: 'Penn Libraries'
       fill_in 'Call number / Shelf mark', with: 'BK 123'
       fill_in 'Title', with: 'Holy Bible'
@@ -51,6 +58,10 @@ RSpec.feature "Books", type: :feature, js: true do
       # Use the image for a bookplate
       select 'Title page'
       expect(page).to have_content 'Remove title page'
+      click_link 'Preview'
+      expect(page).to have_css 'h1', text: 'Title'
+      # Note: following '×' is the rendering of &times;
+      click_button '×'
     end
   end
 end

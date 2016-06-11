@@ -4,7 +4,37 @@ module FlickrHelper
     "publishable-#{item.model_name.element}-#{item.id}"
   end
 
+  def flickr_path item
+    case item
+    when Evidence
+      flickr_evidence_path item
+    when TitlePage
+      flickr_title_page_path item
+    when Book
+      flickr_book_path item
+    end
+  end
+
+  def link_to_publish_evidence name, item, options={}
+    if ! item.publishable?
+      options[:disabled] = true
+      options[:title]    = disabled_reason(item.flickr_status)
+
+      name = 'Please wait...' if item.processing?
+      path = '#'
+    elsif item.on_flickr?
+      options[:method] = :put
+      path = flickr_evidence_path(item)
+    else
+      options[:method] = :post
+      path = flickr_evidence_path(item)
+    end
+
+    link_to name, path, options
+  end
+
   def link_to_publish_item name, item, options={}
+    return link_to_publish_evidence(name,item,options) if item.is_a? Evidence
     if ! item.publishable?
       options[:disabled] = true
       options[:title]    = disabled_reason(item.flickr_status)
@@ -14,11 +44,13 @@ module FlickrHelper
     elsif item.on_flickr?
       options[:method]   = :put
 
-      path = update_flickr_item_path item_type: item.model_name.element, id: item
+      # path = update_flickr_item_path item_type: item.model_name.element, id: item
+      path = flickr_path item
     else
       options[:method]   = :post
 
-      path = create_flickr_item_path item_type: item.model_name.element, id: item
+      # path = create_flickr_item_path item_type: item.model_name.element, id: item
+      path = flickr_path item
     end
 
     link_to name, path, options
@@ -37,11 +69,11 @@ module FlickrHelper
     elsif book.on_flickr?
       options[:method] = :put
 
-      path = update_flickr_book_path book
+      path = flickr_book_path book
     else
       options[:method] = :post
 
-      path = create_flickr_book_path book
+      path = flickr_book_path book
     end
 
     link_to name, path, options
@@ -58,7 +90,8 @@ module FlickrHelper
       options[:method]   ||= :delete
       options[:data][:confirm] ||= 'Remove this image from Flickr?'
 
-      path = delete_flickr_item_path item_type: item.model_name.element, id: item
+      #path = delete_flickr_item_path item_type: item.model_name.element, id: item
+      path = flickr_path item
     end
 
     link_to name, path, options
@@ -79,7 +112,7 @@ module FlickrHelper
       options[:method]   = :delete
       options[:data][:confirm] = "Remove all this book's images from Flickr?"
 
-      path = delete_flickr_book_path id: book
+      path = flickr_book_path id: book
     end
 
     link_to name, path, options

@@ -1,3 +1,9 @@
 <h1>Edit Name: <%= @name.name %></h1>
 
+<% content_for :footer, @name.full_name -%>
+
+<% content_for :footer_right do -%>
+  <%= render '/shared/update_status', object: @name  -%>
+<% end -%>
+
 <%= render 'form' %>

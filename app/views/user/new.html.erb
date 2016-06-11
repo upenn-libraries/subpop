@@ -1,0 +1,71 @@
+<h2>New user</h2>
+
+<%= form_for(:user, builder: SubpopFormbuilder, url: { controller: 'user', action: 'create' }, method: :post, html: { class: 'form-horizontal' }) do |f| %>
+
+  <div class="error-div">
+  <%= render '/shared/error_messages', object: @user %>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+     Starred fields are required.
+   </div>
+ </div>
+
+  <div class="form-group">
+  <%= f.label :full_name, class: "col-sm-3 control-label" %>
+    <div class="col-sm-5">
+      <%= f.email_field :full_name, autofocus: true , class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :username, class: "col-sm-3 control-label required" %>
+    <div class="col-sm-5">
+      <%= f.email_field :username, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, class: "col-sm-3 control-label required" %>
+    <div class="col-sm-5">
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, class: "col-sm-3 control-label required" %>
+    <div class="col-sm-5">
+      <%= f.password_field :password, autocomplete: "off" , class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, class: "col-sm-3 control-label required" %>
+    <div class="col-sm-5">
+      <%= f.password_field :password_confirmation, autocomplete: "off" , class: "form-control" %>
+    </div>
+  </div>
+
+  <% if @user.id == current_user.id %>
+  <div class="row field-group">
+    <div class="col-sm-3 field-label">Admin?</div>
+    <div class="col-sm-5 field-value"><%= @user.admin? ? 'Yes': 'No' -%><br>
+      <span class="help-block">User cannot change admin status of own account.</span>
+    </div>
+
+  </div>
+  <% else %>
+   <div class="form-group">
+    <%= f.label :admin, class: "col-sm-3 control-label" %>
+    <div class="col-sm-5">
+      <%= f.check_box :admin, class: "form-control" %>
+    </div>
+  </div>
+  <% end %>
+  <div class="actions">
+    <%= link_to 'User list', user_index_path, class: 'btn btn-default' -%>
+    <%= f.submit "Create", class: 'btn btn-success' %>
+  </div>
+<% end %>
+

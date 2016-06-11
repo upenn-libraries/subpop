@@ -32,8 +32,15 @@
       <tr>
         <td><%= name.name %></td>
         <td>
+
+          <% if can? :read, name -%>
           <%= link_to 'Show', name, class: 'btn btn-default btn-sm' %>
+          <% end -%>
+
+          <% if can? :update, name -%>
           <%= link_to 'Edit', edit_name_path(name), class: 'btn btn-primary btn-sm' %>
+          <% end -%>
+
         </td>
       </tr>
     <% end %>
@@ -44,5 +51,8 @@
 <div class="row">
 <%= paginate @names %>
 <br>
+
+<% if can? :create, Name %>
 <%= link_to 'New Name', new_name_path, class: 'btn btn-primary' %>
+<% end %>
 </div>

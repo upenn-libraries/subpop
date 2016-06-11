@@ -1,6 +1,7 @@
 class Evidence < ActiveRecord::Base
   include Publishable
   include HasPhoto
+  include UserFields
 
   belongs_to :book, required: true, inverse_of: :evidence
 

@@ -108,6 +108,21 @@ module ApplicationHelper
   # TODO: If need, add options for canned date formats like `:long`, `:short`,
   # `:w3c`, etc.
   def format_datetime datetime, fmt="%F %H:%M %Z"
+    return unless datetime.present?
     datetime.strftime fmt if datetime
+  end
+
+  # Use devis links outside of devise controllers:
+  # http://stackoverflow.com/a/6393151
+  def resource_name
+    :user
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
   end
 end

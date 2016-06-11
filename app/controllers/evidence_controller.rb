@@ -1,6 +1,7 @@
 class EvidenceController < ApplicationController
   before_action :set_evidence, only: [:show, :edit, :update, :destroy ]
   before_action :set_book, only: [ :new, :create, :destroy ]
+  authorize_resource
 
   autocomplete :name, :name, full: true
 
@@ -30,7 +31,7 @@ class EvidenceController < ApplicationController
     @evidence = Evidence.new(evidence_params)
 
     respond_to do |format|
-      if @evidence.save
+      if @evidence.save_by current_user
         @evidence.dequeue_photo
         format.html {
           redirect_to @evidence, notice: 'Evidence was successfully created.'
@@ -47,7 +48,7 @@ class EvidenceController < ApplicationController
   # PATCH/PUT /evidence/1.json
   def update
     respond_to do |format|
-      if @evidence.update(evidence_params)
+      if @evidence.update_by current_user, evidence_params
         format.html { redirect_to [@evidence], notice: 'Evidence was successfully updated.' }
         format.json { render :show, status: :ok, location: @evidence }
       else
@@ -61,6 +62,7 @@ class EvidenceController < ApplicationController
   # DELETE /evidence/1.json
   def destroy
     @evidence.requeue_photo
+    @evidence.updated_by current_user
     @evidence.mark_deleted
     DeletePublishableJob.perform_later @evidence
     respond_to do |format|

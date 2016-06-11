@@ -39,15 +39,31 @@
   <%# BUTTONS -%>
   <div class="col-sm-4">
     <div class="btn-group-status" role="group">
-    <%= link_to_publish_item 'Publish image', item, class: 'btn btn-success btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Publish to Flickr' -%>
-    <%= link_to_unpublish_item 'Unpublish image', item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Remove from Flickr' -%>
-    <% unless controller_name == 'evidence' -%>
-    <%= link_to_delete_publishable item.book, item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: "Delete #{item.publishable_format}" -%>
-    <% end -%>
-    <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
-    <% if item.is_a? Evidence -%>
-    <%= link_to 'Details', item, class: 'btn btn-default btn-xs btn-block', data: { toggle: 'tooltip', placement: 'right' }, title: 'Show mark details' %>
-    <% end -%>
+
+      <% if can? :update, item -%>
+      <%= link_to_publish_item 'Publish image', item, class: 'btn btn-success btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Publish to Flickr' -%>
+      <% end -%>
+
+      <% if can? :update, item -%>
+      <%= link_to_unpublish_item 'Unpublish image', item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Remove from Flickr' -%>
+      <% end -%>
+
+      <% if can? :destroy, item -%>
+      <% unless controller_name == 'evidence' -%>
+      <%= link_to_delete_publishable item.book, item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: "Delete #{item.publishable_format}" -%>
+      <% end -%>
+      <% end -%>
+
+      <% if can? :read, item -%>
+      <%= link_to 'Preview', flickr_path(item), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
+      <% end -%>
+
+      <% if can? :read, item -%>
+      <% if item.is_a? Evidence -%>
+      <%= link_to 'Details', item, class: 'btn btn-default btn-xs btn-block', data: { toggle: 'tooltip', placement: 'right' }, title: 'Show mark details' %>
+      <% end -%>
+      <% end -%>
+
     </div>
   </div>
 </div>

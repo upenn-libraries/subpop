@@ -32,7 +32,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rails-jquery-autocomplete'
 
+# authentication
 gem 'devise'
+# authorization
+gem 'cancancan', '~> 1.10'
 
 # pagination
 gem 'kaminari'

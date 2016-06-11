@@ -11,10 +11,17 @@
 
 <% content_for :footer, @book.full_name -%>
 
+<% content_for :footer_right do -%>
+  <%= render '/shared/update_status', object: @book  -%>
+<% end -%>
+
+
 <h2><span id="evidence-format-heading"><%= @book.full_name %></span></h3>
 
 <%= link_to 'Book list', books_path, class: 'btn btn-default' %>
+<% if can? :update, @book -%>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
+<% end -%>
 
 <h3>Who has it?</h3>
 
@@ -106,12 +113,15 @@
 </div>
 
 <br>
+<% if can? :update, @book -%>
 <div class="row">
   <div id="publish-book-buttons" data-book="<%= @book.id -%>">
-    <%= render '/flickr/publish_book_buttons', book: @book %>
+    <%= render '/flickr/books/publish_buttons', book: @book %>
   </div>
 </div>
+<% end -%>
 
+<% if can? :update, @book -%>
 <div class="row field-group">
   <h3>Photo queue</h3>
 
@@ -133,7 +143,17 @@
     <%= render 'photos/index', book: @book, photos: @book.queued_photos %>
   </div> <!-- /photo-queue -->
 </div> <!-- /row field-group -->
+<% end -%>
 
+<div class="row">
+<h3>Last update status</h3>
+<%= render '/shared/update_status', object: @book -%>
+<br>
+</div>
 
+<div class="row">
 <%= link_to 'Book list', books_path, class: 'btn btn-default' %>
+<% if can? :update, @book -%>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
+<% end -%>
+</div>

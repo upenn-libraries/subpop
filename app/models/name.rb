@@ -1,4 +1,5 @@
 class Name < ActiveRecord::Base
+  include UserFields
 
   before_destroy :check_counter_cache
 
