@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     get :autocomplete_name, on: :collection
   end
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => 'users/registrations' }
   get 'welcome/index'
 
   root to: 'books#index'
