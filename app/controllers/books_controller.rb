@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, except: [ :new, :index, :create ]
+  before_action :authenticate_user!, :except => [:show, :index]
 
   # GET /books
   # GET /books.json
