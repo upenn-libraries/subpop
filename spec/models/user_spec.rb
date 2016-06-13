@@ -22,8 +22,17 @@ RSpec.describe User, type: :model do
       expect(build(:user, email: nil)).not_to be_valid
     end
 
-    it 'is invalid without an password' do
+    it 'is invalid without a password' do
       expect(build(:user, password: nil)).not_to be_valid
+    end
+
+    it 'is invalid without a username' do
+      expect(build(:user, username: nil)).not_to be_valid
+    end
+
+    it 'must have a unique username' do
+      user = create(:user)
+      expect(build(:user, username: user.username)).not_to be_valid
     end
 
   end
