@@ -1,0 +1,15 @@
+
+this_dir=`pwd`
+if [[ -f $this_dir/$BASH_SOURCE ]]; then
+  echo "Adding $this_dir/bin to PATH"
+  export PATH=$this_dir/bin:$PATH
+else
+  echo "Could not find expected file $this_dir/$BASH_SOURCE"
+fi
+
+alias rspec="bundle exec rspec"
+alias rake="bundle exec rake"
+alias rails="bundle exec rails"
+
+echo "Bundler aliases:"
+alias | grep "\bbundle exec\b"

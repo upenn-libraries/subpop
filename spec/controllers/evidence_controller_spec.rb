@@ -19,6 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe EvidenceController, type: :controller do
+  login_user
 
   let(:book) { create(:book) }
 

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TitlePagesController, type: :controller do
+  login_user
   let(:title_page) { create(:title_page) }
 
   describe "GET #show" do

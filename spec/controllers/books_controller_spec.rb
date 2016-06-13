@@ -19,6 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe BooksController, type: :controller do
+  login_user
 
   # This should return the minimal set of attributes required to create a valid
   # Book. As you add validations to Book, be sure to

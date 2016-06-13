@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature "Books", type: :feature, js: true do
   feature 'User creates a book' do
     scenario 'enters a new book with evidence' do
+      login_as 'testuser'
       # create a book with an images
       visit '/books/new'
       fill_in 'Current repository', with: 'Penn Libraries'
@@ -36,7 +37,8 @@ RSpec.feature "Books", type: :feature, js: true do
     end
 
     scenario 'user selects a title page' do
-       visit '/books/new'
+      login_as 'testuser'
+      visit '/books/new'
       fill_in 'Current repository', with: 'Penn Libraries'
       fill_in 'Call number / Shelf mark', with: 'BK 123'
       fill_in 'Title', with: 'Holy Bible'

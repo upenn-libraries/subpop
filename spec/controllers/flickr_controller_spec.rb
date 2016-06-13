@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FlickrController, type: :controller do
+  login_user
+
   let(:evidence) { create(:evidence) }
 
   describe "GET #show" do
