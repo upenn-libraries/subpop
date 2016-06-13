@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Books", type: :feature, js: true do
   feature 'User creates a book' do
-    scenario 'enters a new book with evidence' do
+    scenario 'with evidence' do
       login_as 'testuser'
       # create a book with an images
       visit '/books/new'

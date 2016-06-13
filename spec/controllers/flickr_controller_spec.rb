@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FlickrController, type: :controller do
-  login_user
+  login_admin
 
   let(:evidence) { create(:evidence) }
 

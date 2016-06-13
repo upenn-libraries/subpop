@@ -5,11 +5,19 @@ RSpec.describe User, type: :model do
     it 'creates a User' do
       expect(create(:user)).to be_a(User)
     end
+
+    it 'creates an admin' do
+      expect(create(:admin)).to be_a(User)
+    end
   end
 
   context 'initialization' do
     it 'creates a User' do
       expect(User.new).to be_a(User)
+    end
+
+    it 'can be an admin' do
+      expect(build(:user, admin: true)).to be_a(User)
     end
   end
 
