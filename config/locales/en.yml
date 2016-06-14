@@ -95,3 +95,13 @@ en:
           Herbert, Earl of, 1656-1733'; 'Penn, William, 1644-1718',
           'University of Pennsylvania'."
         viaf_id: Use numeric VIAF ID; e.g., '267632219'.
+  unauthorized:
+    manage:
+      all: "Not authorized to %{action} %{subject}."
+      user: "Not allowed to manage other user accounts."
+    update:
+      book: "Not allowed to update this book."
+    destroy:
+      all: "Not authorized to delete %{subject}."
+    create:
+      all: "Not authorized to create new %{subject}."

@@ -2,6 +2,14 @@ class TitlePagesController < ApplicationController
   before_action :set_title_page,  only: [ :show, :destroy ]
   before_action :set_book,        only: [ :create, :destroy ]
   before_action :set_photo,       only: :create
+  authorize_resource
+
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { head :forbidden }
+      format.html { redirect_to @book, :alert => exception.message }
+    end
+  end
 
   def show
     respond_to do |format|

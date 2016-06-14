@@ -1,5 +1,6 @@
 class NamesController < ApplicationController
   before_action :set_name, only: [:show, :edit, :update, :destroy]
+  authorize_resource
 
   autocomplete :name, :name, full: true
 

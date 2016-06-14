@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, except: [ :new, :index, :create ]
+  authorize_resource
 
   # GET /books
   # GET /books.json

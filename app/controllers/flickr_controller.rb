@@ -5,12 +5,16 @@ class FlickrController < ApplicationController
   before_action :get_book, only: [ :create_book, :book_status, :update_book, :destroy_book ]
 
   def show
+    authorize! :read, :flickr
+
     respond_to do |format|
       format.html { render layout: !request.xhr? }
     end
   end
 
   def status
+    authorize! :read, :flickr
+
     respond_to do |format|
       format.js
       format.json
@@ -18,6 +22,8 @@ class FlickrController < ApplicationController
   end
 
   def create_book
+    authorize! :create, :flickr
+
     respond_to do |format|
       create_publish_jobs
       format.js
@@ -26,6 +32,8 @@ class FlickrController < ApplicationController
   end
 
   def update_book
+    authorize! :update, :flickr
+
     respond_to do |format|
       create_publish_jobs
       format.js
@@ -34,6 +42,8 @@ class FlickrController < ApplicationController
   end
 
   def destroy_book
+    authorize! :destroy, :flickr
+
     respond_to do |format|
       create_unpublish_jobs
       format.js
@@ -42,6 +52,8 @@ class FlickrController < ApplicationController
   end
 
   def book_status
+    authorize! :read, :flickr
+
     respond_to do |format|
       format.js
       format.json
@@ -49,6 +61,8 @@ class FlickrController < ApplicationController
   end
 
   def create
+    authorize! :create, :flickr
+
     respond_to do |format|
       if @item.publishable?
         create_publish_jobs
@@ -63,6 +77,8 @@ class FlickrController < ApplicationController
   end
 
   def update
+    authorize! :update, :flickr
+
     respond_to do |format|
       if @item.publishable?
         create_publish_jobs
@@ -77,6 +93,8 @@ class FlickrController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, :flickr
+
     respond_to do |format|
       if @item.unpublishable?
         create_unpublish_jobs

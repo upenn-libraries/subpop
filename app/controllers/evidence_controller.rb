@@ -1,6 +1,7 @@
 class EvidenceController < ApplicationController
   before_action :set_evidence, only: [:show, :edit, :update, :destroy ]
   before_action :set_book, only: [ :new, :create, :destroy ]
+  authorize_resource
 
   autocomplete :name, :name, full: true
 
