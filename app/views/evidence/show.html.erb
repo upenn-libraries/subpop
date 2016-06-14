@@ -108,12 +108,22 @@
 
 <div class="row top-buffer">
 <div class="col-sm-7">
-  <div class="btn-group btn-group-justified" role="group">
+
+  <% if can? :read, @evidence.book -%>
   <%= link_to 'Book', @evidence.book, class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to the book page" %>
-   <%= link_to 'Photo queue', book_path(@evidence.book, anchor: "anchor-photo-queue"), class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to photo queue on the book page" %>
-   <%= link_to 'Edit', edit_evidence_path(@evidence), class: 'btn btn-primary', data: { toggle: 'tooltip' }, title: "Edit this #{@evidence.format_name}" %>
-   <%= link_to 'Delete', [@evidence.book,@evidence], class: 'btn btn-danger', method: :delete, data: { confirm: "Delete this #{@evidence.format_name}?", toggle: 'tooltip' }, title: "Delete this #{@evidence.format_name}" -%>
-   </div>
-<!--    <div class="col-sm-6"></div> -->
+  <% end -%>
+
+  <% if can? :update, @evidence.book -%>
+  <%= link_to 'Photo queue', book_path(@evidence.book, anchor: "anchor-photo-queue"), class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to photo queue on the book page" %>
+  <% end -%>
+
+  <% if can? :update, @evidence -%>
+  <%= link_to 'Edit', edit_evidence_path(@evidence), class: 'btn btn-primary', data: { toggle: 'tooltip' }, title: "Edit this #{@evidence.format_name}" %>
+  <% end -%>
+
+  <% if can? :destroy, @evidence -%>
+  <%= link_to 'Delete', [@evidence.book,@evidence], class: 'btn btn-danger', method: :delete, data: { confirm: "Delete this #{@evidence.format_name}?", toggle: 'tooltip' }, title: "Delete this #{@evidence.format_name}" -%>
+  <% end -%>
+
  </div>
 </div>

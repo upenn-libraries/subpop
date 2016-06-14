@@ -1,9 +1,18 @@
 <p>
 <% if book.all_queued? -%>
-<p><%= book.photos.count -%> photos <%= link_to 'Show all', '#', class: 'btn btn-default btn-sm btn-hidden', disabled: true -%></p>
+<p><%= book.photos.count -%> photos
+
+<% if can? :update, book %>
+<%= link_to 'Show all', '#', class: 'btn btn-default btn-sm btn-hidden', disabled: true -%></p>
+<% end %>
+
 <% else -%>
 <p><%= book.photos.count -%> photos (<%= book.photos_hidden -%> hidden)
+
+<% if can? :update, book %>
 <%= link_to 'Show all', restore_queue_book_photos_path(@book), method: :patch, class: 'btn btn-default btn-sm', remote: true -%></p>
+<% end %>
+
 <% end -%>
 </p>
 

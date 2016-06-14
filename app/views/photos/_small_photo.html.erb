@@ -5,9 +5,13 @@
     target: '_blank', 'data-toggle' => 'tooltip',
     title: 'Click to open in new window.' -%>
   <% if item.is_a?(TitlePage) -%>
+
+  <% if can? :destroy, item %>
   <div class="caption text-right">
     <%= link_to 'Remove title page', book_title_page_path(book,item), method: :delete -%>
   </div>
+  <% end %>
+
   <% end -%>
   <% if item.on_flickr? -%>
   <div class="caption">

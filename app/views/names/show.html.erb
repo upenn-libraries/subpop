@@ -26,5 +26,10 @@
 </div>
 
 
+<% if can? :read, Name %>
 <%= link_to 'Name list', names_path, class: 'btn btn-default' %>
+<% end %>
+
+<% if can? :update, @name %>
 <%= link_to 'Edit', edit_name_path(@name), class: 'btn btn-primary' %>
+<% end %>
