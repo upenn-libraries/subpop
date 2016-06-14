@@ -34,6 +34,11 @@ RSpec.feature "Books", type: :feature, js: true do
       # look at the details
       click_link 'Details'
       expect(page).to have_content 'Bookplate/Label'
+      click_link 'Preview'
+      expect(page).to have_css 'h1', text: 'Title'
+      # Note: following '×' is the rendering of &times;
+      click_button '×'
+
     end
 
     scenario 'user selects a title page' do
@@ -53,6 +58,10 @@ RSpec.feature "Books", type: :feature, js: true do
       # Use the image for a bookplate
       select 'Title page'
       expect(page).to have_content 'Remove title page'
+      click_link 'Preview'
+      expect(page).to have_css 'h1', text: 'Title'
+      # Note: following '×' is the rendering of &times;
+      click_button '×'
     end
   end
 end
