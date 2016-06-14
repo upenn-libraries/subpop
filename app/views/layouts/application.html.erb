@@ -41,10 +41,14 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="<%= 'active' if current_page? root_path -%>"><%= link_to "Home", root_path %></li>
+              <li class="<%= 'active' if current_page?(root_path) || params[:controller] == 'books' -%>"><%= link_to "Home", root_path %></li>
 
               <% if can? :read, Name -%>
               <li class="<%= 'active' if params[:controller] == 'names' -%>"><%= link_to "Names", names_path %></li>
+              <% end -%>
+
+              <% if can? :manage, User -%>
+              <li class="<%= 'active' if params[:controller] == 'user' -%>"><%= link_to "Users", user_index_path %></li>
               <% end -%>
 
             </ul>
@@ -72,10 +76,10 @@
 
       <div class="starter-template">
         <div class="row">
-          <div  class="col-md-3" id="sidebar">
+          <div  class="col-md-4" id="sidebar">
             <%= yield :sidebar -%>
           </div>
-          <div  class="col-md-9">
+          <div  class="col-md-7">
             <div id="flash_messages"><%= render "/shared/flash_messages", flash: flash %></div>
             <%= yield %>
           </div>

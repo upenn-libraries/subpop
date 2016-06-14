@@ -63,7 +63,15 @@ Manage position of side image, when resizing to smaller page layout
         // responsive to window resizing. If fixed, the text floats over and
         // covers the fixed image upon resizing.
 
+#### Flickr ####
+
+Move flicr_preview partial from shared to flickr/show view
+
 #### Books ####
+
+#### Users ####
+
+Add full_name to user (make optional)
 
 #### Evidence
 
