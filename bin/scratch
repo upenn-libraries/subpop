@@ -7,7 +7,7 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate migration add_admin_to_users admin:boolean
+rails generate migration add_full_name_to_users full_name:string $generator_options
 # rails g migration add_deleted_at_column_to_users deleted_at:datetime
 
 # bundle exec rails g migration add_deleted_to_title_pages deleted:boolean

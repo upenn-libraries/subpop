@@ -37,11 +37,10 @@ Double check fields:
 
 User support:
 
-  - Login
+  - Add full_name to user
   - Add user to books and evidence: `created_by`, `updated_by`
   - Show user's books
   - Push to Flickr workflow
-  - Administration of users
   - Administration of workflow for "probation" users
 
 Migrate current spreadsheets to app
@@ -68,10 +67,6 @@ Manage position of side image, when resizing to smaller page layout
 Move flicr_preview partial from shared to flickr/show view
 
 #### Books ####
-
-#### Users ####
-
-Add full_name to user (make optional)
 
 #### Evidence
 
