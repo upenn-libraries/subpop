@@ -13,6 +13,12 @@ class Ability
 
     return if user.new_record?
 
+    # admins can manage anything
+    if user.admin?
+      can :manage, :all
+      return
+    end
+
     # user must be logged in allow full management (not users)
     can :manage, Book
     can :manage, Evidence
@@ -21,8 +27,5 @@ class Ability
     can :manage, Name
     can :manage, Photo
     can :manage, :flickr
-
-    # admins can manage anything
-    can :manage, :all if user.admin?
   end
 end

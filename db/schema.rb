@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615193709) do
+ActiveRecord::Schema.define(version: 20160623210254) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,   null: false
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 20160615193709) do
     t.string   "other_id",       limit: 255
     t.string   "other_id_type",  limit: 255
     t.boolean  "sammelband"
+    t.integer  "created_by_id",  limit: 4
+    t.integer  "updated_by_id",  limit: 4
   end
 
   create_table "content_types", force: :cascade do |t|
@@ -90,6 +92,8 @@ ActiveRecord::Schema.define(version: 20160615193709) do
     t.boolean  "publishing_to_flickr"
     t.text     "citations",             limit: 65535
     t.boolean  "deleted",                             default: false
+    t.integer  "created_by_id",         limit: 4
+    t.integer  "updated_by_id",         limit: 4
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree
@@ -115,6 +119,8 @@ ActiveRecord::Schema.define(version: 20160615193709) do
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.integer  "provenance_agents_count", limit: 4,   default: 0
+    t.integer  "created_by_id",           limit: 4
+    t.integer  "updated_by_id",           limit: 4
   end
 
   add_index "names", ["name"], name: "index_names_on_name", unique: true, using: :btree
@@ -166,6 +172,8 @@ ActiveRecord::Schema.define(version: 20160615193709) do
     t.datetime "published_at"
     t.boolean  "publishing_to_flickr"
     t.boolean  "deleted",                            default: false
+    t.integer  "created_by_id",        limit: 4
+    t.integer  "updated_by_id",        limit: 4
   end
 
   add_index "title_pages", ["book_id"], name: "index_title_pages_on_book_id", using: :btree

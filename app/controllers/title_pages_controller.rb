@@ -21,7 +21,7 @@ class TitlePagesController < ApplicationController
     @title_page = TitlePage.new book: @book, photo: @photo
 
     respond_to do |format|
-      if @title_page.save
+      if @title_page.save_by current_user
         @title_page.dequeue_photo
         format.html { redirect_to @book, notice: 'Added title page.' }
         format.json { render :show, status: :ok, location: @book }

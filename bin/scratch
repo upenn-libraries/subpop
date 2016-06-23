@@ -7,7 +7,17 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate migration add_full_name_to_users full_name:string $generator_options
+rails generate migration add_user_stamps_to_names \
+  created_by_id:integer \
+  updated_by_id:integer \
+  $generator_options
+
+# rails generate migration add_user_stamps_to_title_pages \...
+# rails generate migration add_user_stamps_to_evidence \...
+# rails generate migration add_user_stamps_to_books \...
+
+# rails generate migration add_full_name_to_users full_name:string $generator_options
+
 # rails g migration add_deleted_at_column_to_users deleted_at:datetime
 
 # bundle exec rails g migration add_deleted_to_title_pages deleted:boolean

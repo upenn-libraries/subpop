@@ -28,7 +28,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
 
     respond_to do |format|
-      if @book.save
+      if @book.save_by current_user
         if params[:image].present?
           params[:image].each do |image|
             @book.photos.create image: image
@@ -47,7 +47,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1.json
   def update
     respond_to do |format|
-      if @book.update_attributes book_params
+      if @book.update_by current_user, book_params
         if params[:image].present?
           params[:image].each do |image|
             @book.photos.create! image: image

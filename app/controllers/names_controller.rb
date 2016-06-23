@@ -50,7 +50,7 @@ class NamesController < ApplicationController
     @name = Name.new(name_params)
 
     respond_to do |format|
-      if @name.save
+      if @name.save_by current_user
         format.html { redirect_to @name, notice: 'Name was successfully created.' }
         format.json { render :show, status: :created, location: @name }
         format.js   { render :show, status: :created, location: @name }
@@ -66,7 +66,7 @@ class NamesController < ApplicationController
   # PATCH/PUT /names/1.json
   def update
     respond_to do |format|
-      if @name.update(name_params)
+      if @name.update_by current_user, name_params
         format.html { redirect_to @name, notice: 'Name was successfully updated.' }
         format.json { render :show, status: :ok, location: @name }
       else
