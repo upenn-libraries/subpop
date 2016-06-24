@@ -140,6 +140,9 @@
 </div> <!-- /row field-group -->
 <% end -%>
 
+<h3>Update status</h3>
+<%= render '/shared/update_status', object: @book -%>
+
 <%= link_to 'Book list', books_path, class: 'btn btn-default' %>
 <% if can? :update, @book -%>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>

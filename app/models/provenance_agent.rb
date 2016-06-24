@@ -3,6 +3,7 @@ class ProvenanceAgent < ActiveRecord::Base
   belongs_to :name, required: true, counter_cache: true
 
   delegate :full_name, to: :name, prefix: false, allow_nil: true
+  delegate :book, to: :evidence, allow_nil: true
 
   ROLES = [
     [ "Owner",                        "owner"      ],

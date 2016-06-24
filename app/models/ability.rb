@@ -19,13 +19,14 @@ class Ability
       return
     end
 
-    # user must be logged in allow full management (not users)
-    can :manage, Book
-    can :manage, Evidence
-    can :manage, TitlePage
+    # user must be logged in allow full management
+    # allow user to manage all child objects of own books
+    can :manage, Book, created_by_id: user.id
+    can :manage, Evidence, book: { created_by_id: user.id }
+    can :manage, TitlePage, book: { created_by_id: user.id }
     can :manage, ProvenanceAgent
     can :manage, Name
-    can :manage, Photo
+    can :manage, Photo, book: { created_by_id: user.id }
     can :manage, :flickr
   end
 end
