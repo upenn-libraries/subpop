@@ -21,12 +21,11 @@ class Ability
 
     # user must be logged in allow full management
     # allow user to manage all child objects of own books
-    can :manage, Book, created_by_id: user.id
-    can :manage, Evidence, book: { created_by_id: user.id }
+    can :manage, Book,      created_by_id: user.id
+    can :manage, Evidence,  book: { created_by_id: user.id }
     can :manage, TitlePage, book: { created_by_id: user.id }
-    can :manage, ProvenanceAgent
+    can :manage, Photo,     book: { created_by_id: user.id }
     can :manage, Name
-    can :manage, Photo, book: { created_by_id: user.id }
     can :manage, :flickr
   end
 end
