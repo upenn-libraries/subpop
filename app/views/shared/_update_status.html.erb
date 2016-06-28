@@ -1,11 +1,1 @@
-<div class="update-status">
-  <div class="row field-group">
-    <div class="col-sm-4 field-label">Created by</div>
-    <div class="col-sm-6 field-value"><%= object.created_by_username %> (<%= format_datetime object.created_at -%>) </div>
-  </div>
-
-  <div class="row field-group">
-    <div class="col-sm-4 field-label">Last updated by</div>
-    <div class="col-sm-6 field-value"><%= object.updated_by_username %> (<%= format_datetime object.updated_at -%>) </div>
-  </div>
-</div>
+Created <%= format_datetime object.created_at -%> by <%= object.created_by_username %>; updated <%= format_datetime object.updated_at -%> by <%= object.updated_by_username %>.

@@ -88,7 +88,10 @@
 
       <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid">
-        <div class="navbar-text"><%= content_for?(:footer) ? yield(:footer) : 'POP Submission App' -%></div>
+          <div id="navbar-footer" class="navbar-collapse collapse">
+            <div class="navbar-text"><%= content_for?(:footer) ? yield(:footer) : 'POP Submission App' -%></div>
+            <div class="navbar-text navbar-right"><%= content_for?(:footer_right) ? yield(:footer_right) : '' -%></div>
+          </div>
         </div>
       </nav>
     </div> <!-- /container -->

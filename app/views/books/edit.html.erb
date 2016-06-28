@@ -6,7 +6,16 @@
 
 <% content_for :footer, @book.full_name -%>
 
-<%= render 'form' %>
+<% content_for :footer_right do -%>
+  <%= render '/shared/update_status', object: @book  -%>
+<% end -%>
 
+<%= render 'form' %>
+<br>
+
+<div class="row">
 <%= link_to 'Show', @book %> |
 <%= link_to 'Book list', books_path %>
+<p><%= render '/shared/update_status', object: @book -%></p>
+</div>
+

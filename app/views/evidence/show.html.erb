@@ -7,6 +7,10 @@
 
 <% content_for :footer, @evidence.full_name -%>
 
+<% content_for :footer_right do -%>
+  <%= render '/shared/update_status', object: @evidence  -%>
+<% end -%>
+
 <% end -%>
 
 <h2><%= @evidence.format_name -%></h2>
@@ -104,7 +108,12 @@
     <%= render '/flickr/status', item: @evidence -%>
 </div>
 </div>
-<br><br>
+<div class="row">
+<h3>Last update status</h3>
+<%= render '/shared/update_status', object: @evidence -%>
+<br>
+</div>
+
 
 <div class="row top-buffer">
 <div class="col-sm-7">

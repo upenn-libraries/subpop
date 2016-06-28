@@ -11,6 +11,11 @@
 
 <% content_for :footer, @book.full_name -%>
 
+<% content_for :footer_right do -%>
+  <%= render '/shared/update_status', object: @book  -%>
+<% end -%>
+
+
 <h2><span id="evidence-format-heading"><%= @book.full_name %></span></h3>
 
 <%= link_to 'Book list', books_path, class: 'btn btn-default' %>
@@ -140,10 +145,15 @@
 </div> <!-- /row field-group -->
 <% end -%>
 
-<h3>Update status</h3>
+<div class="row">
+<h3>Last update status</h3>
 <%= render '/shared/update_status', object: @book -%>
+<br>
+</div>
 
+<div class="row">
 <%= link_to 'Book list', books_path, class: 'btn btn-default' %>
 <% if can? :update, @book -%>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
+</div>
