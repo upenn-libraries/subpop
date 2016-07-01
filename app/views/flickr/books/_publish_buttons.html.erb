@@ -1,11 +1,11 @@
 <div class="col-sm-4">
   <div class="btn-group btn-group-justified" role="group">
 
-    <% if can?(:update, :flickr) && can?(:create, :flickr)  -%>
+    <% if can? :update, book   -%>
     <%= link_to_publish_book 'Publish book', book, class: 'btn btn-success btn-sm', title: 'Publish/Update all book images', data: { toggle: 'tooltip' }, remote: true -%>
     <% end -%>
 
-    <% if can? :destroy, :flickr -%>
+    <% if can? :update, book -%>
     <%= link_to_unpublish_book 'Unpublish book', book, class: 'btn btn-danger btn-sm', title: 'Remove all book images from Flickr', data: { toggle: '
       tooltip' }, remote: true -%>
     <% end -%>

@@ -105,14 +105,14 @@ $ ->
         item_id   = $(this).attr('data-item')
         item_type = $(this).attr('data-item-type')
         div_id    = '#' + $(this).attr('id')
-        url       = '/flickr/status/' + item_type + '/' + item_id
+        url       = '/flickr/' + item_type + '/' + item_id + '/status'
         poll_process(url,div_id)
 
     $.poll_publishable = (div_id) ->
         $div = $(div_id)
         item_id   = $div.attr('data-item')
         item_type = $div.attr('data-item-type')
-        url       = '/flickr/status/' + item_type + '/' + item_id
+        url       = '/flickr/' + item_type + '/' + item_id + '/status'
         poll_process(url,div_id)
 
     $.poll_all_publishables = ->
@@ -120,13 +120,13 @@ $ ->
             item_id   = $(this).attr('data-item')
             item_type = $(this).attr('data-item-type')
             div_id    = '#' + $(this).attr('id')
-            url       = '/flickr/status/' + item_type + '/' + item_id
+            url       = '/flickr/' + item_type + '/' + item_id + '/status'
             poll_process(url,div_id)
 
-    $.poll_publish_book_buttons = (div_id) ->
+    $.poll_publish_buttons = (div_id) ->
         if $(div_id).hasClass('processing')
             book_id = $(div_id).attr('data-book')
-            url = '/flickr/status/' + book_id
+            url = '/flickr/books/' + book_id + '/status'
             poll_process(url,div_id)
 
     # $(document).ready(ready)

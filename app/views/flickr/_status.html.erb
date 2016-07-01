@@ -40,11 +40,11 @@
   <div class="col-sm-4">
     <div class="btn-group-status" role="group">
 
-      <% if can? :update, :flickr -%>
+      <% if can? :update, item -%>
       <%= link_to_publish_item 'Publish image', item, class: 'btn btn-success btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Publish to Flickr' -%>
       <% end -%>
 
-      <% if can? :destroy, :flickr -%>
+      <% if can? :update, item -%>
       <%= link_to_unpublish_item 'Unpublish image', item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Remove from Flickr' -%>
       <% end -%>
 
@@ -54,8 +54,8 @@
       <% end -%>
       <% end -%>
 
-      <% if can? :read, :flickr -%>
-      <%= link_to 'Preview', preview_path({ item_type: item.class, id: item }), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
+      <% if can? :read, item -%>
+      <%= link_to 'Preview', flickr_path(item), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
       <% end -%>
 
       <% if can? :read, item -%>

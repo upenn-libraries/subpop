@@ -104,7 +104,7 @@
 <h3>Flickr</h3>
 
 <div class="row">
-<div class="publishable-status<%= @evidence.processing? ? ' processing' : '' -%>" id="<%= publishable_div_id @evidence %>" data-item="<%= @evidence.id -%>" data-item-type="<%= @evidence.model_name.element -%>">
+<div class="publishable-status<%= @evidence.processing? ? ' processing' : '' -%>" id="<%= publishable_div_id @evidence %>" data-item="<%= @evidence.id -%>" data-item-type="<%= @evidence.model_name.element.pluralize -%>">
     <%= render '/flickr/status', item: @evidence -%>
 </div>
 </div>

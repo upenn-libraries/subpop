@@ -113,10 +113,10 @@
 </div>
 
 <br>
-<% if can? :update, :flickr -%>
+<% if can? :update, @book -%>
 <div class="row">
   <div id="publish-book-buttons" data-book="<%= @book.id -%>">
-    <%= render '/flickr/publish_book_buttons', book: @book %>
+    <%= render '/flickr/books/publish_buttons', book: @book %>
   </div>
 </div>
 <% end -%>

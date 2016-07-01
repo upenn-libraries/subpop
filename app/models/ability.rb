@@ -26,6 +26,5 @@ class Ability
     can :manage, TitlePage, book: { created_by_id: user.id }
     can :manage, Photo,     book: { created_by_id: user.id }
     can :manage, Name
-    can :manage, :flickr
   end
 end
