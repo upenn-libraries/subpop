@@ -37,10 +37,10 @@ Double check fields:
 
 User support:
 
-- Add full_name to user
-- Add user to books and evidence: `created_by`, `updated_by`
+<!-- - Add full_name to user -->
+<!-- - Add user to books and evidence: `created_by`, `updated_by` -->
 - Show user's books
-- Push to Flickr workflow
+<!-- - Push to Flickr workflow -->
 - Administration of workflow for "probation" users
 
 Migrate current spreadsheets to app
@@ -69,7 +69,7 @@ Manage position of side image, when resizing to smaller page layout
 
 #### Flickr ####
 
-Move flickr_preview partial from shared to flickr/show view
+<!-- Move flickr_preview partial from shared to flickr/show view -->
 
 #### Books ####
 
@@ -93,7 +93,7 @@ Evidence form:
 Provenance agents:
 - When selecting name and user hits enter, prevent form submission
 
-Where?
+<!-- Where?
 
   - ?? Provenance place?
-  - Hint? <-- Try this one. "Give a place named in the provenance mark or the location of the book at the time the mark was added."
+  - Hint? <-- Try this one. "Give a place named in the provenance mark or the location of the book at the time the mark was added." -->

@@ -54,7 +54,7 @@ en:
         year_start: Year start
         year_end: Year end
         date_narrative: Date narrative
-        where: ""
+        where: Location
         comments: ""
         flickr_status: Flickr status
         published_at: Published
