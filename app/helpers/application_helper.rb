@@ -67,7 +67,7 @@ module ApplicationHelper
   ##
   # Returns a dasherized tag to add HTML id elements. For example, for an TitlePage object with `id` 6
   def html_id_tag obj
-    "#{obj.class.name.underscore.dasherize}-#{obj.id}"
+    "#{obj.model_name.element.dasherize}-#{obj.id}"
   end
 
   def flickr_label_class flickr_status
@@ -91,7 +91,7 @@ module ApplicationHelper
 
   def hint_text_tag obj, attribute
     obj  = obj.object if obj.kind_of? ActionView::Helpers::FormBuilder
-    key = "activerecord.hints.#{obj.class.name.underscore}.#{attribute.to_s}"
+    key = "activerecord.hints.#{obj.model_name.element}.#{attribute.to_s}"
     val = t key, default: ''
     return if val == ''
 
