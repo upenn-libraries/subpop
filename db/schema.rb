@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160623210254) do
 
-  create_table "bookmarks", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4,   null: false
-    t.string   "user_type",     limit: 255
-    t.string   "document_id",   limit: 255
-    t.string   "title",         limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "document_type", limit: 255
-  end
-
-  add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
-
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
     t.string   "owner",          limit: 255
@@ -148,16 +136,6 @@ ActiveRecord::Schema.define(version: 20160623210254) do
 
   add_index "provenance_agents", ["evidence_id"], name: "index_provenance_agents_on_evidence_id", using: :btree
   add_index "provenance_agents", ["name_id"], name: "index_provenance_agents_on_name_id", using: :btree
-
-  create_table "searches", force: :cascade do |t|
-    t.text     "query_params", limit: 65535
-    t.integer  "user_id",      limit: 4
-    t.string   "user_type",    limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
 
   create_table "test_table", primary_key: "field_binary", force: :cascade do |t|
   end
