@@ -7,10 +7,14 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate migration add_user_stamps_to_names \
-  created_by_id:integer \
-  updated_by_id:integer \
+rails generate migration add_date_narrative_to_books \
+  date_narrative:string \
   $generator_options
+
+# rails generate migration add_user_stamps_to_names \
+#   created_by_id:integer \
+#   updated_by_id:integer \
+#   $generator_options
 
 # rails generate migration add_user_stamps_to_title_pages \...
 # rails generate migration add_user_stamps_to_evidence \...

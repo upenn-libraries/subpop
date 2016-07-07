@@ -38,6 +38,7 @@ en:
         title: Title
         creation_place: Place of publication / creation
         creation_date: Date of publication / creation
+        date_narrative: Publication date narrative
         publisher: Publisher / Printer / Scribe
         other_id_type: Other ID type
         other_id: Other ID
@@ -78,6 +79,7 @@ en:
     hints:
       book:
         owner: If different from current repository
+        date_narrative: "Text description of publication/creation date; e.g., '22 August 1876', 'c. 1875'"
       evidence:
         format_other: Enter name of other format type
         location_in_book_page: Enter the page, folio, or signature number

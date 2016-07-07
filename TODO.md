@@ -73,8 +73,11 @@ Manage position of side image, when resizing to smaller page layout
 
 #### Books ####
 
-Add date_narrative field.
-
+<!-- Add date_narrative field
+  - form
+  - show
+  - hint
+ -->
 #### Evidence
 
 Edit/New pages
