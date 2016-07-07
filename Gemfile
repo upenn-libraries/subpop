@@ -47,6 +47,9 @@ gem 'delayed_job_active_record'
 # process paperclip in the background
 gem 'delayed_paperclip'
 
+# send emails when things go wrong
+gem 'exception_notification'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
