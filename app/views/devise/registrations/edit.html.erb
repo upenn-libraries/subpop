@@ -1,6 +1,6 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>Edit <%= resource_name.to_s.humanize %> <%= current_user.username -%></h2>
 
-<%= form_for(resource, builder: SubpopFormbuilder, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
+<%= form_for(resource, builder: SubpopFormbuilder, as: resource_name, url: user_registration_path, html: { method: :put, class: 'form-horizontal' }) do |f| %>
   <%= devise_error_messages! %>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -10,7 +10,7 @@
   <div class="form-group">
   <%= f.label :full_name, class: "col-sm-3 control-label" %>
     <div class="col-sm-5">
-      <%= f.email_field :full_name, autofocus: true , class: "form-control" %>
+      <%= f.text_field :full_name, autofocus: true , class: "form-control" %>
     </div>
   </div>
 
@@ -37,7 +37,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :current_password, class: "col-sm-3 control-label" %>
+    <%= f.label :current_password, class: "col-sm-3 control-label required" %>
     <div class="col-sm-5">
       <%= f.password_field :current_password, autocomplete: "off" , class: "form-control" %>
       <span class="help-block">We need your current password to confirm your changes.</span>
@@ -54,6 +54,6 @@
 <% if current_user.admin? -%>
 <p><%= link_to "Cancel my account", '#', data: { toggle: 'tooltip', placement: 'right' }, class: 'btn btn-danger', disabled: true, title: 'Admin user cannot delete own account.' %></p>
 <% else -%>
-<p><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
+<p><%= button_to "Cancel my account", delete_user_registration_path, data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %></p>
 <% end -%>
 <%= link_to "Back", :back %>

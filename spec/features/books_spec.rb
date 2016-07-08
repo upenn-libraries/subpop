@@ -41,7 +41,7 @@ RSpec.feature "Books", type: :feature, js: true do
 
     end
 
-    scenario 'user selects a title page' do
+    scenario 'with a title page' do
       login_as 'testuser'
       visit '/books/new'
       fill_in 'Current repository', with: 'Penn Libraries'

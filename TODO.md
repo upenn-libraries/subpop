@@ -27,7 +27,7 @@ Add exception notification
 
 Set up permanent servers:
 
-- Staging
+<!-- - Staging -->
 - Production
 
 Double check fields:
@@ -49,10 +49,10 @@ Spreadsheet import: Deal with single images for multiple pieces of provenance
 
 Add Blacklight to application
 
-Model name:
+<!-- Model name: -->
 
-- replace `item.class.name.underscore` with `item.model_name.element`
-  throughout
+<!-- - replace `item.class.name.underscore` with `item.model_name.element`
+  throughout -->
 
 #### All sections:
 
