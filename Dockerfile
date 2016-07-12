@@ -19,6 +19,7 @@ RUN SUBPOP_DEVISE_SECRET_KEY=dummy \
   SUBPOP_FLICKR_USERNAME=dummy \
   SUBPOP_SECRET_KEY_BASE=dummy \
   SUBPOP_SECRET_TOKEN=dummy \
+  SUBPOP_EMAIL_FROM=dummy \
   SUBPOP_SMTP_HOST=example.com \
   RAILS_ENV=production \
   bundle exec rake assets:precompile --trace
