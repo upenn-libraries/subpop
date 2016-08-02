@@ -1,4 +1,4 @@
-<h2>Edit <%= resource_name.to_s.humanize %> <%= current_user.username -%></h2>
+<h2>Edit <%= resource_name.to_s.humanize.downcase %> '<%= current_user.username -%>'</h2>
 
 <%= form_for(resource, builder: SubpopFormbuilder, as: resource_name, url: user_registration_path, html: { method: :put, class: 'form-horizontal' }) do |f| %>
   <%= devise_error_messages! %>
@@ -22,6 +22,17 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :current_password, class: "col-sm-3 control-label required" %>
+    <div class="col-sm-5">
+      <%= f.password_field :current_password, autocomplete: "off" , class: "form-control" %>
+      <span class="help-block">We need your current password to confirm your changes.</span>
+    </div>
+  </div>
+
+  <hr>
+  <h3>Change password (optional)</h3>
+
+  <div class="form-group">
     <%= f.label :password, class: "col-sm-3 control-label" %>
     <div class="col-sm-5">
       <%= f.password_field :password, autocomplete: "off" , class: "form-control" %>
@@ -36,13 +47,6 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :current_password, class: "col-sm-3 control-label required" %>
-    <div class="col-sm-5">
-      <%= f.password_field :current_password, autocomplete: "off" , class: "form-control" %>
-      <span class="help-block">We need your current password to confirm your changes.</span>
-    </div>
-  </div>
 
   <div class="actions">
   <%= f.submit "Update", class: 'btn btn-success' %>
