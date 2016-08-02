@@ -1,3 +1,4 @@
+##
 # Module to be included in Publishable. Generates metadata for model object
 # for publication to Flickr.
 module FlickrMetadata

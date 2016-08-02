@@ -79,8 +79,8 @@ class Book < ActiveRecord::Base
     publishables.any? &:processing?
   end
 
-  def publish!
-    publishables.each { |item| item.publish! }
+  def publish
+    publishables.each { |item| item.publish }
   end
 
   def to_s

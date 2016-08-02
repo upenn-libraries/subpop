@@ -10,6 +10,6 @@ class AddToFlickrJob < ActiveJob::Base
   end
 
   def perform publishable
-    publishable.publish_new!
+    publishable.publish_new
   end
 end

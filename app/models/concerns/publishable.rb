@@ -9,10 +9,11 @@
 # `book_id`, `book` `flickr_id`, `flickr_info`, `published_at`, and
 # `publishing_to_flickr`.
 #
-# TODO: Consider creating a model PhotoInfo for connecting the photo to the
-# model and contain Flickr information shared by Evidence, TitlePage, and
-# Context (if it ever exists). This model would be then be managed by the
-# Publishable Concern.
+# Flickr informatino is stored in the PublicationData assocation. Each
+# Publishable may have one PublicationData. Upon initial publication, a
+# PublicationData object is created. It is then updated upon subsequent
+# updates to Flickr; and deleted if an item is unpublished. Any item on Flickr
+# should have an associated PublicationData instance.
 module Publishable
   extend ActiveSupport::Concern
   include FlickrMetadata
@@ -36,19 +37,19 @@ module Publishable
     scope :active, -> { where deleted: false }
   end
 
-  def publish!
+  def publish
     return              unless publishable?
 
     # TODO: Changing to update_columns as a kludge in order to prevent
     # changing the timestamp. Need to add locking/in_process tracking to
     # different object.
     mark_in_process
-    return publish_new! unless on_flickr?
+    return publish_new unless on_flickr?
 
-    republish!
+    republish
   end
 
-  def publish_new!
+  def publish_new
     begin
       client = Flickr::Client.connect!
 
@@ -61,7 +62,7 @@ module Publishable
     end
   end
 
-  def republish!
+  def republish
     begin
       client = Flickr::Client.connect!
       tags_to_remove.each do |tag|

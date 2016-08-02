@@ -1,3 +1,8 @@
+# PublicationData represents columns shared by all Publishable objects
+# (Evidence,  TitlePage); columns include: flickr_id and metadata.
+#
+# The relationship between Publishable models and PublicationData is managed
+# by the Publishable model concern.
 class PublicationData < ActiveRecord::Base
   belongs_to :publishable, polymorphic: true, inverse_of: :publication_data
 

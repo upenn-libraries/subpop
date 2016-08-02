@@ -10,6 +10,6 @@ class UpdateFlickrJob < ActiveJob::Base
   end
 
   def perform publishable
-    publishable.republish!
+    publishable.republish
   end
 end

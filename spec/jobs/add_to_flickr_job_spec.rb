@@ -12,8 +12,8 @@ RSpec.describe AddToFlickrJob, type: :job do
     }.to have_enqueued_job(AddToFlickrJob).with evidence
   end
 
-  it 'executes publish_new!' do
-    expect(evidence).to receive(:publish_new!)
+  it 'executes publish_new' do
+    expect(evidence).to receive(:publish_new)
     described_class.perform_now evidence
   end
 end

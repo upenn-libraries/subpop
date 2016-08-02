@@ -10,8 +10,8 @@ RSpec.describe UpdateFlickrJob, type: :job do
     }.to have_enqueued_job(UpdateFlickrJob).with evidence
   end
 
-  it 'executes republish!' do
-    expect(evidence).to receive(:republish!)
+  it 'executes republish' do
+    expect(evidence).to receive(:republish)
     described_class.perform_now evidence
   end
 
