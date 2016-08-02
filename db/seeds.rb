@@ -48,3 +48,34 @@ else
 end
 
 puts "INFO: Total count of names in database: #{Name.count}"
+
+ADMIN_USERS = [
+  {
+    username: 'LauraAy',
+    email: 'aydel@upenn.edu',
+    full_name: 'Laura Aydelotte',
+    admin: true
+  },
+  {
+    username: 'doug',
+    email: 'emeryr@upenn.edu',
+    full_name: 'Doug Emery',
+    admin: true
+  }]
+
+
+ADMIN_USERS.each do |data|
+  if User.exists? username: data[:username]
+    puts "User already exists: #{data[:username]}"
+  else
+    pass = SecureRandom.hex
+    User.find_or_create_by username: data[:username] do |user|
+      user.password              = pass
+      user.email                 = data[:email]
+      user.full_name             = data[:full_name]
+      user.admin                 = data[:admin]
+    end
+
+    puts "CREATED User #{data[:username]} with password #{pass}."
+  end
+end
