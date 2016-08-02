@@ -17,4 +17,5 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.uncountable %w( evidence )
+  inflect.irregular 'data', 'data'
 end

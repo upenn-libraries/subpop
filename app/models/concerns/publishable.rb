@@ -24,7 +24,15 @@ module Publishable
 
   included do
     before_destroy :delete_from_flickr
-    delegate :updated_at, to: :book, prefix: true, allow_nil: true
+
+    has_one :publication_data, as: :publishable, inverse_of: :publishable,
+      dependent: :destroy
+    accepts_nested_attributes_for :publication_data
+
+    delegate :updated_at,   to: :book,             prefix: true,  allow_nil: true
+    delegate :published_at, to: :publication_data, prefix: false, allow_nil: true
+    delegate :flickr_id,    to: :publication_data, prefix: false, allow_nil: true
+
     scope :active, -> { where deleted: false }
   end
 
@@ -32,9 +40,9 @@ module Publishable
     return              unless publishable?
 
     # TODO: Changing to update_columns as a kludge in order to prevent
-    # changing the timestamp. Need to locking/in_process tracking to different
-    # object.
-    update_columns publishing_to_flickr: true
+    # changing the timestamp. Need to add locking/in_process tracking to
+    # different object.
+    mark_in_process
     return publish_new! unless on_flickr?
 
     republish!
@@ -46,10 +54,10 @@ module Publishable
 
       id     = client.upload(photo.image_data, upload_data)
       info   = client.get_info id
-      update_attributes! flickr_id: id, flickr_info: info.to_json,
-        published_at: DateTime.now
+      pub_data = PublicationData.new(flickr_id: id, metadata: info.to_json)
+      update_attributes! publication_data: pub_data
     ensure
-      update_columns publishing_to_flickr: false
+      unmark_in_process
     end
   end
 
@@ -66,10 +74,14 @@ module Publishable
       client.set_tags flickr_id, flickrize_tags(tags_from_object)
       client.set_meta flickr_id, metadata
       info = client.get_info flickr_id
-      update_attributes! flickr_info: info.to_json, published_at: DateTime.now
+      publication_data.update_attributes! metadata: info.to_json
     ensure
       update_columns publishing_to_flickr: false
     end
+  end
+
+  def on_flickr?
+    publication_data.present?
   end
 
   ##
@@ -130,11 +142,11 @@ module Publishable
   # **Does not save the attribute changes.** Caller must save or destroy the
   # model object.
   def delete_from_flickr
-    if flickr_id.present?
+    if on_flickr?
       client = Flickr::Client.connect!
       client.delete flickr_id
       # remove all the flickr data
-      assign_attributes flickr_id: nil, flickr_info: nil, published_at: nil
+      publication_data.destroy
     end
   end
 
@@ -167,13 +179,13 @@ module Publishable
   # be in the next second. Adding the second to published_at should catch those
   # cases.
   def changed_since_publication?
-    return true if flickr_id.blank?
+    return true unless on_flickr?
 
     last_updated > published_at + 1.second
   end
 
   # Returns either the book's updated_at value or the publishable model's
-  # updated_at value, which ever is later.
+  # updated_at value, whichever is later.
   def last_updated
     return updated_at       if book_updated_at.blank?
     return book_updated_at  if book_updated_at > updated_at

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707152039) do
+ActiveRecord::Schema.define(version: 20160802164911) do
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "user_id",       limit: 4,   null: false
+    t.string   "user_type",     limit: 255
+    t.string   "document_id",   limit: 255
+    t.string   "title",         limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "document_type", limit: 255
+  end
+
+  add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -74,10 +86,7 @@ ActiveRecord::Schema.define(version: 20160707152039) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
     t.integer  "photo_id",              limit: 4
-    t.string   "flickr_id",             limit: 255
-    t.text     "flickr_info",           limit: 65535
     t.string   "format_other",          limit: 255
-    t.datetime "published_at"
     t.boolean  "publishing_to_flickr"
     t.text     "citations",             limit: 65535
     t.boolean  "deleted",                             default: false
@@ -86,7 +95,6 @@ ActiveRecord::Schema.define(version: 20160707152039) do
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree
-  add_index "evidence", ["flickr_id"], name: "index_evidence_on_flickr_id", using: :btree
   add_index "evidence", ["photo_id"], name: "index_evidence_on_photo_id", using: :btree
 
   create_table "evidence_content_types", force: :cascade do |t|
@@ -138,25 +146,40 @@ ActiveRecord::Schema.define(version: 20160707152039) do
   add_index "provenance_agents", ["evidence_id"], name: "index_provenance_agents_on_evidence_id", using: :btree
   add_index "provenance_agents", ["name_id"], name: "index_provenance_agents_on_name_id", using: :btree
 
+  create_table "publication_data", force: :cascade do |t|
+    t.string   "flickr_id",        limit: 255
+    t.text     "metadata",         limit: 65535
+    t.integer  "publishable_id",   limit: 4
+    t.string   "publishable_type", limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  create_table "searches", force: :cascade do |t|
+    t.text     "query_params", limit: 65535
+    t.integer  "user_id",      limit: 4
+    t.string   "user_type",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
+
   create_table "test_table", primary_key: "field_binary", force: :cascade do |t|
   end
 
   create_table "title_pages", force: :cascade do |t|
     t.integer  "book_id",              limit: 4
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "photo_id",             limit: 4
-    t.string   "flickr_id",            limit: 255
-    t.text     "flickr_info",          limit: 65535
-    t.datetime "published_at"
     t.boolean  "publishing_to_flickr"
-    t.boolean  "deleted",                            default: false
+    t.boolean  "deleted",                        default: false
     t.integer  "created_by_id",        limit: 4
     t.integer  "updated_by_id",        limit: 4
   end
 
   add_index "title_pages", ["book_id"], name: "index_title_pages_on_book_id", using: :btree
-  add_index "title_pages", ["flickr_id"], name: "index_title_pages_on_flickr_id", using: :btree
   add_index "title_pages", ["photo_id"], name: "index_title_pages_on_photo_id", using: :btree
 
   create_table "users", force: :cascade do |t|

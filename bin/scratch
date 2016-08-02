@@ -7,9 +7,23 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate migration add_date_narrative_to_books \
-  date_narrative:string \
+# rails generate model publication_data flickr_id:string \
+#   metadata:text \
+#   published_at:datetime \
+#   publishing_to_flickr:boolean \
+#   publishable_id:integer \
+#   publishable_type:string \
+#   $generator_options
+
+rails generate migration remove_publication_data_columns_from_title_page \
+  flickr_id:string \
+  flickr_info:text \
+  published_at:datetime \
   $generator_options
+
+# rails generate migration add_date_narrative_to_books \
+#   date_narrative:string \
+#   $generator_options
 
 # rails generate migration add_user_stamps_to_names \
 #   created_by_id:integer \

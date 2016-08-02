@@ -12,7 +12,9 @@ RSpec.describe Evidence, type: :model do
     end
 
     it 'creates a complete evidence instance' do
-      expect(create(:evidence_complete)).to be_a Evidence
+      evidence = create(:evidence_complete)
+      expect(evidence).to be_a Evidence
+      expect(evidence.publication_data.publishable).to eq(evidence)
     end
   end
 
