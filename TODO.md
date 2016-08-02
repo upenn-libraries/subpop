@@ -12,6 +12,93 @@
       reject our categories and create their own, resulting in, for example,
       variations on stamp and bookplate that are arbitrary and unsearchable.
 
+# Image edit behavior
+
+### Edit master image
+
+- User selects 'Edit master image' from Photo queue
+- System displays Image edit page
+- User makes edits
+- User clicks "Save"
+- System saves original image and updates derivs
+
+
+##### Edit image for title page or evidence
+
+- User selects image for evidence (e.g., Bookplate)
+- System displays modal with image and query: 'Edit image?'
+- User clicks 'Edit image'
+- System displays Image edit page
+- User makes edits
+- Image edit page has:
+    - 'Use original as context image' checkbox, default: checked
+    - Buttons: 'Cancel', 'Save'
+- See below for Cancel/Save behaviors:
+    - 'Save' with 'Context image' checked
+    - 'Save' with 'Context image' unchecked
+    - 'Cancel'
+
+#### User clicks 'Save' with 'Context image' checked
+
+- User edits image
+- User clicks 'Save' with 'Context image' checked
+- System creates Context Image and attaches original Photo
+    + Note there's a risk here, we can't guarantee the original photo won't be
+      edited in such a way it is no longer usable for context image.
+- System creates new evidence Photo object with cropped content
+- System attaches new evidence Photo to evidence
+- System displays New Evidence page with new image
+- User fills in information, etc.
+
+#### User clicks 'Save' with 'Context image' unchecked
+
+- User edits image
+- User clicks 'Save' with 'Context image' checked
+- System creates new evidence Photo object with cropped content
+    + It seems we always have to do this. We don't know that user doesn't want
+      to use the original image again.
+- System attaches new evidence Photo to evidence
+- System displays New Evidence page with new image
+- User fills in information, etc.
+
+#### User clicks 'Cancel' scenario 1
+
+- User edits images or not
+- User clicks 'Cancel' on edit image page
+- System continues to edit Evidence page
+
+If user wants to Cancel evidence creation, user must click cancel again.  We
+can't know what the user wants to cancel: photo editing or evidence creation.
+
+#### User clicks 'Cancel' scenario 2
+
+- User edits images or not
+- User clicks 'Cancel' on edit image page
+- System returns user to image queue on book page
+
+If user wants to Cancel only image creation, too bad. We return the user to the
+queue to start over. At that point, the user should select not to edit the
+image.
+
+#### Cancel scenario 3
+
+- System displays two cancel buttons 'Cancel save; create Bookplate' and 'Cancel bookplate'.
+- User clicks selection
+- System continues to new evidence page or returns to photo queue based on
+  user's choice.
+
+
+### Possible problems
+
+User creates context image by mistake; need to be able to delete context image
+
+User doesn't like context image; wants to edit it
+
+User wants to attach different image attached to evidence
+
+User wants to edit image attached to evidence/context image/title page
+
+
 ## Flickr
 
 ## Unordered list of stuff
