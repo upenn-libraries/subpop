@@ -13,6 +13,10 @@ RSpec.describe TitlePage, type: :model do
     end
   end
 
+  context 'flickr_metadata' do
+    it_behaves_like 'flickr_metadata'
+  end
+
   context 'validations:' do
     it 'is valid' do
       expect(build(:title_page)).to be_valid
