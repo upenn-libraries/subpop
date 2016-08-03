@@ -7,14 +7,19 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate model context_image \
-  book:references \
-  photo:references \
-  publishing_to_flickr:boolean \
-  delete:boolean \
+rails generate migration add_user_stamps_to_publication_data \
   created_by_id:integer \
   updated_by_id:integer \
   $generator_options
+
+# rails generate model context_image \
+#   book:references \
+#   photo:references \
+#   publishing_to_flickr:boolean \
+#   delete:boolean \
+#   created_by_id:integer \
+#   updated_by_id:integer \
+#   $generator_options
 
 # rails generate model publication_data flickr_id:string \
 #   metadata:text \

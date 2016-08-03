@@ -37,32 +37,36 @@ module Publishable
     scope :active, -> { where deleted: false }
   end
 
-  def publish
+  def publish user_id
     return              unless publishable?
 
     # TODO: Changing to update_columns as a kludge in order to prevent
     # changing the timestamp. Need to add locking/in_process tracking to
     # different object.
     mark_in_process
-    return publish_new unless on_flickr?
+    return publish_new user_id unless on_flickr?
 
-    republish
+    republish user_id
   end
 
-  def publish_new
+  def publish_new user_id
     begin
       client = Flickr::Client.connect!
 
       id     = client.upload(photo.image_data, upload_data)
       info   = client.get_info id
-      pub_data = PublicationData.new(flickr_id: id, metadata: info.to_json)
+      pub_data = PublicationData.new(
+        flickr_id: id,
+        metadata: info.to_json,
+        publishable: self)
+      pub_data.save_by User.find user_id
       update_attributes! publication_data: pub_data
     ensure
       unmark_in_process
     end
   end
 
-  def republish
+  def republish user_id
     begin
       client = Flickr::Client.connect!
       tags_to_remove.each do |tag|
@@ -75,9 +79,9 @@ module Publishable
       client.set_tags flickr_id, flickrize_tags(tags_from_object)
       client.set_meta flickr_id, metadata
       info = client.get_info flickr_id
-      publication_data.update_attributes! metadata: info.to_json
+      publication_data.update_by User.find(user_id), metadata: info.to_json
     ensure
-      update_columns publishing_to_flickr: false
+      unmark_in_process
     end
   end
 

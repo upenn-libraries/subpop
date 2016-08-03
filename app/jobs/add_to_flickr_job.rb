@@ -9,7 +9,7 @@ class AddToFlickrJob < ActiveJob::Base
     job.arguments.first.unmark_in_process
   end
 
-  def perform publishable
-    publishable.publish_new
+  def perform publishable, user_id
+    publishable.publish_new user_id
   end
 end

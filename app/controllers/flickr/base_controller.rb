@@ -92,8 +92,8 @@ class Flickr::BaseController < ApplicationController
     return unless item.publishable?
 
     item.mark_in_process
-    return UpdateFlickrJob.perform_later item if item.on_flickr?
-    AddToFlickrJob.perform_later item
+    return UpdateFlickrJob.perform_later item, current_user.id if item.on_flickr?
+    AddToFlickrJob.perform_later item, current_user.id
   end
 
   def create_unpublish_jobs

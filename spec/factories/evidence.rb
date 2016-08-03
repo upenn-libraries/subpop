@@ -20,7 +20,7 @@ FactoryGirl.define do
     comments              "Text comments"
     photo
 
-    association :publication_data, factory: :unassigned_publication_data
+    association :publication_data, factory: :publication_data
   end
 
   factory :evidence_on_flickr, class: Evidence do
