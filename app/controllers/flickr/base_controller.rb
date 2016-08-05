@@ -107,7 +107,7 @@ class Flickr::BaseController < ApplicationController
     return unless item.unpublishable?
 
     item.mark_in_process
-    RemoveFromFlickrJob.perform_later item
+    RemoveFromFlickrJob.perform_later item, current_user.id
   end
 
   def get_item

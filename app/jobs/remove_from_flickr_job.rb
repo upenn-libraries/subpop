@@ -9,8 +9,8 @@ class RemoveFromFlickrJob < ActiveJob::Base
     job.arguments.first.unmark_in_process
   end
 
-  def perform publishable
-    publishable.delete_from_flickr
-    publishable.save!
+  def perform publishable, user_id
+    publishable.delete_from_flickr user_id
+    publishable.save_by! User.find user_id
   end
 end

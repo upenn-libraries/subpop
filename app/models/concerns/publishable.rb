@@ -14,6 +14,7 @@
 # PublicationData object is created. It is then updated upon subsequent
 # updates to Flickr; and deleted if an item is unpublished. Any item on Flickr
 # should have an associated PublicationData instance.
+##
 module Publishable
   extend ActiveSupport::Concern
   include FlickrMetadata
@@ -58,7 +59,7 @@ module Publishable
 
       self.publication_data ||= PublicationData.new publishable: self
       self.publication_data.assign_attributes flickr_id: id, metadata: info.to_json
-      self.publication_data.save_by! User.find(user_id)
+      self.publication_data.save_by! User.find user_id
     ensure
       unmark_in_process
     end
@@ -79,7 +80,7 @@ module Publishable
       info = client.get_info flickr_id
 
       self.publication_data.assign_attributes metadata: info.to_json
-      self.publication_data.update_by! User.find(user_id)
+      self.publication_data.update_by! User.find user_id
     ensure
       unmark_in_process
     end
@@ -108,11 +109,15 @@ module Publishable
   end
 
   def mark_in_process
-    update_columns publishing_to_flickr: true unless publishing_to_flickr?
+    return if publishing_to_flickr? # already marked true
+
+    update_columns publishing_to_flickr: true
   end
 
   def unmark_in_process
-    update_columns publishing_to_flickr: false if publishing_to_flickr?
+    return unless publishing_to_flickr? # already marked false
+
+    update_columns publishing_to_flickr: false
   end
 
   def publishable_format
@@ -148,13 +153,21 @@ module Publishable
   #
   # **Does not save the attribute changes.** Caller must save or destroy the
   # model object.
-  def delete_from_flickr
-    if on_flickr?
+  def delete_from_flickr user_id
+    begin
+      # DE - 2016-08-05 change delete_from_flickr behavior to clear flickr data;
+      # previously, publication_data was deleted; changed to keep pub..n_data,
+      # but clear flickr_id and metadata. #on_flickr? changed to report presence
+      # of publication_data.flickr_id (handled by delegate; above)
+      return unless on_flickr?
+
       client = Flickr::Client.connect!
       client.delete flickr_id
       # remove all the flickr data
       self.publication_data.clear_flickr_data
-      self.publication_data.save!
+      self.publication_data.save_by! User.find user_id
+    ensure
+      unmark_in_process
     end
   end
 
