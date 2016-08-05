@@ -51,16 +51,14 @@ module Publishable
 
   def publish_new user_id
     begin
-      client = Flickr::Client.connect!
+      client   = Flickr::Client.connect!
 
-      id     = client.upload(photo.image_data, upload_data)
-      info   = client.get_info id
-      pub_data = PublicationData.new(
-        flickr_id: id,
-        metadata: info.to_json,
-        publishable: self)
-      pub_data.save_by User.find user_id
-      update_attributes! publication_data: pub_data
+      id       = client.upload(photo.image_data, upload_data)
+      info     = client.get_info id
+
+      self.publication_data ||= PublicationData.new publishable: self
+      self.publication_data.assign_attributes flickr_id: id, metadata: info.to_json
+      self.publication_data.save_by! User.find(user_id)
     ensure
       unmark_in_process
     end
@@ -79,14 +77,18 @@ module Publishable
       client.set_tags flickr_id, flickrize_tags(tags_from_object)
       client.set_meta flickr_id, metadata
       info = client.get_info flickr_id
-      publication_data.update_by User.find(user_id), metadata: info.to_json
+
+      self.publication_data.assign_attributes metadata: info.to_json
+      self.publication_data.update_by! User.find(user_id)
     ensure
       unmark_in_process
     end
   end
 
   def on_flickr?
-    publication_data.present?
+    # flickr_id is delegated to publication_data; flickr_id.present? returns
+    # true only if publication_data and publication_data.flickr_id are present
+    flickr_id.present?
   end
 
   ##
@@ -151,7 +153,8 @@ module Publishable
       client = Flickr::Client.connect!
       client.delete flickr_id
       # remove all the flickr data
-      publication_data.destroy
+      self.publication_data.clear_flickr_data
+      self.publication_data.save!
     end
   end
 

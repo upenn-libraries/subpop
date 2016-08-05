@@ -8,7 +8,14 @@ class PublicationData < ActiveRecord::Base
   # TODO add user fields?
   belongs_to :publishable, polymorphic: true, inverse_of: :publication_data
 
-  alias_attribute :published_at, :updated_at
-
   validates :publishable, presence: true
+
+  def published_at
+    return if flickr_id.blank? # nil if not on flickr
+    updated_at
+  end
+
+  def clear_flickr_data
+    self.flickr_id = self.metadata = nil
+  end
 end
