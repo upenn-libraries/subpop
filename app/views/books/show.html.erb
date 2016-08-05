@@ -151,12 +151,6 @@
 <% end -%>
 
 <div class="row">
-<h3>Last update status</h3>
-<%= render '/shared/update_status', object: @book -%>
-<br>
-</div>
-
-<div class="row">
 <%= link_to 'Book list', books_path, class: 'btn btn-default' %>
 <% if can? :update, @book -%>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
