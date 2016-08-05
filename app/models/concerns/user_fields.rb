@@ -21,9 +21,21 @@ module UserFields
     save *args, &block
   end
 
+  def save_by!(user, *args, &block)
+    self.created_by = user if !persisted?
+    self.updated_by = user
+
+    save! *args, &block
+  end
+
   def update_by(user, *args, &block)
     self.updated_by = user
     update *args, &block
+  end
+
+  def update_by!(user, *args, &block)
+    self.updated_by = user
+    update! *args, &block
   end
 
 end
