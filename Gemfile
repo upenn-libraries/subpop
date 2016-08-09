@@ -9,6 +9,9 @@ gem 'rails', '4.2.5'
 gem 'mysql2', '~> 0.3.18'
 
 gem 'bootstrap-sass', '~> 3.3.5'
+
+gem 'font-awesome-rails'
+
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails', '~> 6.3.1'
 
@@ -31,6 +34,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rails-jquery-autocomplete', '~> 1.0.3'
+
+gem 'jquery-cropper', '~> 2.3.2'
 
 # authentication
 gem 'devise', '~> 4.1.1'

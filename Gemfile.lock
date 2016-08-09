@@ -110,6 +110,8 @@ GEM
     flickraw (0.9.8)
     flickraw-cached (20120701)
       flickraw (>= 0.9)
+    font-awesome-rails (4.6.3.1)
+      railties (>= 3.2, < 5.1)
     formatador (0.2.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -131,6 +133,7 @@ GEM
     jbuilder (2.4.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
+    jquery-cropper (2.3.2)
     jquery-rails (4.1.0)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -321,8 +324,10 @@ DEPENDENCIES
   exception_notification (~> 4.1.1)
   factory_girl_rails (~> 4.6.0)
   flickraw-cached
+  font-awesome-rails
   guard-rspec (~> 4.6.4)
   jbuilder (~> 2.0)
+  jquery-cropper (~> 2.3.2)
   jquery-rails (~> 4.1.0)
   jquery-turbolinks
   jquery-ui-rails (~> 5.0.5)
