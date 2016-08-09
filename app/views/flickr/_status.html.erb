@@ -55,7 +55,7 @@
       <% end -%>
 
       <% if can? :read, item -%>
-      <%= link_to 'Preview', flickr_path(item), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
+      <%= link_to 'Preview', flickr_path(item), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right', 'modal-id': 'preview' } -%>
       <% end -%>
 
       <% if can? :read, item -%>

@@ -156,3 +156,24 @@
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
 </div>
+
+<script>
+  (function () {
+    var $image = $('#image');
+    var cropBoxData;
+    var canvasData;
+    $(document).on('shown.bs.modal', '#cropper-modal', function () {
+      $image.cropper({
+        autoCropArea: 0.5,
+        built: function () {
+          $image.cropper('setCanvasData', canvasData);
+          $image.cropper('setCropBoxData', cropBoxData);
+        }
+      });
+    }).on('hidden.bs.modal', function () {
+      cropBoxData = $image.cropper('getCropBoxData');
+      canvasData = $image.cropper('getCanvasData');
+      $image.cropper('destroy');
+    });
+  }).call(this);
+</script>

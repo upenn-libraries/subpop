@@ -17,5 +17,9 @@
 //= require jquery-ui/autocomplete
 //= require autocomplete-rails
 //= require turbolinks
-//= require_tree .
 //= require bootstrap-multiselect
+//= require cropper
+//= require evidence
+//= require photos
+//= require subpop
+//= require cropper-main

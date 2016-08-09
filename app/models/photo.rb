@@ -1,4 +1,8 @@
 class Photo < ActiveRecord::Base
+
+  attr_accessor :data_url
+  attr_accessor :edit_master_image
+
   belongs_to :book, inverse_of: :photos
 
   has_attached_file :image,

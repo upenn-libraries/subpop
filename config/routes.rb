@@ -18,6 +18,10 @@ Rails.application.routes.draw do
     get :autocomplete_name, on: :collection
   end
 
+  namespace :cropping do
+    resources :photos, only: [ :edit, :update, :create ]
+  end
+
   namespace :flickr do
     resources :evidence, only: [ :show, :update, :destroy ] do
       post :create, on: :member

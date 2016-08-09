@@ -19,5 +19,8 @@
       title: 'Click to open in new window.' -%>
     <br/>
     <% end %> <%# form_tag %>
+    <% if can? :update, photo -%>
+      <p><%= link_to "Edit photo", edit_cropping_photo_path(photo), title: 'Edit master photo', data: { toggle: 'tooltip', placement: 'right' } -%></p>
+    <% end %>
   </div>  <!-- /panel -->
 </div>  <!-- /list-inline image-queue -->
