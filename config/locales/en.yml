@@ -52,6 +52,7 @@ en:
         location_in_book: Location in book
         location_in_book_page: Page, folio, signature
         transcription: Transcription
+        translation: Translation
         year_when: Year
         year_start: Year start
         year_end: Year end

@@ -157,6 +157,7 @@ rails generate migration add_user_stamps_to_publication_data \
 #       owner \
 #       collection \
 #       geo_location \
+#       acq_source \
 #       call_number \
 #       catalog_url \
 #       vol_number \
