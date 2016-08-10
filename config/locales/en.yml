@@ -30,7 +30,7 @@ en:
         repository: Current repository
         owner: Current owner
         collection: Current collection
-        geo_location: Geographical location
+        geo_location: Geographic location
         call_number: Call number / Shelf mark
         catalog_url: URL to catalog
         vol_number: Volume number
@@ -78,6 +78,7 @@ en:
         role: Role
     hints:
       book:
+        geo_location: City, State/Region, Country
         owner: If different from current repository
         date_narrative: "Text description of publication/creation date; e.g., '22 August 1876', 'c. 1875'"
       evidence:
