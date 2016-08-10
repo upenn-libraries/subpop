@@ -9,6 +9,7 @@
 content_types = [
   "Armorial",
   "Binder's Mark",
+  "Binding Stamp",
   "Signature",
   "Gift",
   "Monogram",
@@ -48,3 +49,10 @@ else
 end
 
 puts "INFO: Total count of names in database: #{Name.count}"
+
+User.find_or_create_by(username: 'LauraAy') do |user|
+  user.password              = SecureRandom.hex
+  user.email                 = 'aydel@upenn.edu'
+  user.full_name             = 'Laura Aydelotte'
+  user.admin                 = true
+end

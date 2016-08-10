@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707152039) do
+ActiveRecord::Schema.define(version: 20160721210359) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160707152039) do
     t.boolean  "deleted",                             default: false
     t.integer  "created_by_id",         limit: 4
     t.integer  "updated_by_id",         limit: 4
+    t.text     "translation",           limit: 65535
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree
