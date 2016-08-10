@@ -4,7 +4,7 @@
 <%= paginate @books %>
 <br>
 <% if can? :create, Book -%>
-<%= link_to 'New Book', new_book_path, class: 'btn btn-primary' %>
+<%= link_to 'Add New Book', new_book_path, class: 'btn btn-primary' %>
 <% end -%>
 </div>
 
