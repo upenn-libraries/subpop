@@ -1,5 +1,13 @@
 <h1>Books</h1>
 
+<div>
+<%= paginate @books %>
+<br>
+<% if can? :create, Book -%>
+<%= link_to 'New Book', new_book_path, class: 'btn btn-primary' %>
+<% end -%>
+</div>
+
 <div class="top-buffer">
 <%= page_entries_info @books, :entry_name => 'book' %>
 </div>
@@ -34,10 +42,4 @@
 <hr>
 <% end -%>
 
-<div>
-<%= paginate @books %>
-<br>
-<% if can? :create, Book -%>
-<%= link_to 'New Book', new_book_path, class: 'btn btn-primary' %>
-<% end -%>
-</div>
+
