@@ -31,16 +31,15 @@
 </div>
 
 <div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :geo_location %></div>
+  <div class="col-sm-6 field-value"><%= @book.geo_location %></div>
+</div>
+
+<div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :owner %></div>
   <div class="col-sm-6 field-value"><%= @book.owner %></div>
 </div>
 
-<h3>Where is it?</h3>
-
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @book, :geo_location %></div>
-  <div class="col-sm-6 field-value"><%= @book.geo_location %></div>
-</div>
 
 <h3>How to find it?</h3>
 
