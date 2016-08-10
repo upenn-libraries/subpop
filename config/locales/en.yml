@@ -28,9 +28,10 @@ en:
     attributes:
       book:
         repository: Current repository
+        geo_location: Geographic location
+        acq_source: Immediate source of acquisition
         owner: Current owner
         collection: Current collection
-        geo_location: Geographic location
         call_number: Call number / Shelf mark
         catalog_url: URL to catalog
         vol_number: Volume number
