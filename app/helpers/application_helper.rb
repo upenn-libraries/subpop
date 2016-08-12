@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include SubpopFormTagHelper
 
   def human_name obj, attr
     obj && obj.class.human_attribute_name(attr) || ''
@@ -87,15 +88,6 @@ module ApplicationHelper
     else
       flash_type.to_s
     end
-  end
-
-  def hint_text_tag obj, attribute
-    obj  = obj.object if obj.kind_of? ActionView::Helpers::FormBuilder
-    key = "activerecord.hints.#{obj.model_name.element}.#{attribute.to_s}"
-    val = t key, default: ''
-    return if val == ''
-
-    raw "<span class=\"help-block\">#{val}</span>"
   end
 
   ##
