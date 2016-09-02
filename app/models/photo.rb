@@ -1,9 +1,12 @@
 class Photo < ActiveRecord::Base
 
-  attr_accessor :data_url
   attr_accessor :edit_master_image
 
-  belongs_to :book, inverse_of: :photos
+  belongs_to :book,           inverse_of: :photos
+
+  has_many   :title_pages,    inverse_of: :photo
+  has_many   :evidence,       inverse_of: :photo
+  has_many   :context_images, inverse_of: :photo
 
   has_attached_file :image,
     styles: {
@@ -29,5 +32,46 @@ class Photo < ActiveRecord::Base
 
   def has_image?
     image.present?
+  end
+
+  def has_book?
+    book.present?
+  end
+
+  # Set the image from the base64-encoded url
+  def data_url= url
+    self.image = url
+  end
+
+  # No use in returning a data_url, but we don't want form fields to break for
+  # lack of the attribute.
+  def data_url
+    nil
+  end
+
+  def orphaned?
+    return false if book.present?
+    !used?
+  end
+
+  # Return true if the photo is not a attached to a book and is associated
+  # with only one Publishable.
+  def isolated?
+    return false if book.present?
+    use_count == 1
+  end
+
+  def use_count
+    evidence.count + title_pages.count + context_images.count
+  end
+
+  ##
+  # Return false, unless the photo has been used for evidence, title page, or
+  # context image.
+  def used?
+    return true unless evidence.empty?
+    return true unless title_pages.empty?
+    return true unless context_images.empty?
+    false
   end
 end
