@@ -4,22 +4,51 @@ Rails.application.routes.draw do
 
   resources :books do
     resources :evidence, only: [ :create, :new, :destroy ]
-    resources :photos, only: [ :update, :index, :show ] do
+    resources :photos, only: [ :update, :index, :show, :new ] do
       patch 'restore_queue', on: :collection
     end
     resources :title_pages, only: [ :create, :destroy ]
+    resources :thumbnails, only: :show
   end
 
-  resources :title_pages, only: :show
+  resources :title_pages, only: :show do
+    resources :thumbnails, only: :show
+  end
 
-  resources :evidence, only: [ :show, :update, :edit, :index ]
+  resources :evidence, only: [ :show, :update, :edit, :index ] do
+    resources :thumbnails, only: :show
+  end
 
   resources :names do
     get :autocomplete_name, on: :collection
   end
 
+  resources :context_images, only: [] do
+    resources :thumbnails, only: :show
+  end
+
+  # Routes for cropping photos. Apart from :books, all resources are nested as
+  # a convention for passing the parent and photo to a single controller for
+  # universal handling of cropping and dynamic display of the edited images.
+  #
+  # The Cropping::PhotosController relies on the ThumbnailsController for
+  # display of edited photos.
+  #
+  # See `app/controllers/concerns/polymorphic_parent.rb` for details.
   namespace :cropping do
-    resources :photos, only: [ :edit, :update, :create ]
+    resources :photos, only: [:new, :create]
+    resources :books, only: [] do
+      resources :photos, only: [ :edit, :update, :new, :create ]
+    end
+    resources :evidence, only: [] do
+      resources :photos, only: [ :edit, :update, :new, :create ]
+    end
+    resources :title_pages, only: [] do
+      resources :photos, only: [ :edit, :update, :new, :create ]
+    end
+    resources :context_images, only: [] do
+      resources :photos, only: [ :edit, :update, :create, :new ]
+    end
   end
 
   namespace :flickr do
