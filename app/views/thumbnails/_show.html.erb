@@ -1,0 +1,13 @@
+<% image_size ||= :thumb %>
+<% source_photo ||= nil %>
+<%= thumb_div parent, thumbnail, source_photo: source_photo do %>
+  <% if thumbnail.image_processing? %>
+  <div class="progress center-block" style="width: 60%">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+      <span class="sr-only">Processing...</span>
+    </div> <!-- progress-bar -->
+  </div> <!-- progress -->
+  <% else %>
+  <%= link_to image_tag(thumbnail.image.url(image_size), class: 'img-responsive center-block'), thumbnail.image.url(:original), target: '_blank', 'data-toggle' => 'tooltip', rel: 'noopener noreferrer', title: 'Click to open in new window.' -%>
+  <% end %>
+<% end %>
