@@ -1,5 +1,11 @@
 <h2>Edit <span id="evidence-format-heading"><%= @evidence.format_name -%></span></h2>
 
+<%# create the modals, we'll refer to them below -%>
+<% content_for :modals do -%>
+  <%= render '/flickr/preview_modal' -%>
+  <%= render '/cropping/photos/cropper_modal' %>
+<% end -%>
+
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', book: @book, evidence: @evidence %>
 <% end -%>
