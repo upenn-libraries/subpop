@@ -1,6 +1,6 @@
 class EvidenceController < ApplicationController
-  before_action :set_evidence, only: [:show, :edit, :update, :destroy ]
   before_action :set_book, only: [ :new, :create, :destroy ]
+  before_action :set_evidence, only: [:show, :edit, :update, :destroy ]
   authorize_resource
 
   autocomplete :name, :name, full: true
@@ -18,7 +18,7 @@ class EvidenceController < ApplicationController
 
   # GET /evidence/new
   def new
-    @evidence = Evidence.new evidence_params
+    @evidence = @book.evidence.build evidence_params
   end
 
   # GET /evidence/1/edit
@@ -28,7 +28,7 @@ class EvidenceController < ApplicationController
   # POST /evidence
   # POST /evidence.json
   def create
-    @evidence = Evidence.new(evidence_params)
+    @evidence = @book.evidence.build evidence_params
 
     respond_to do |format|
       if @evidence.save_by current_user
@@ -64,7 +64,7 @@ class EvidenceController < ApplicationController
     @evidence.requeue_photo
     @evidence.updated_by current_user
     @evidence.mark_deleted
-    DeletePublishableJob.perform_later @evidence
+    DeletePublishableJob.perform_later @evidence, current_user
     respond_to do |format|
       format.js
       format.html { redirect_to @book, notice: 'Evidence was deleted.' }
@@ -78,7 +78,7 @@ class EvidenceController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_evidence
-      @evidence = Evidence.find(params[:id])
+      @evidence = Evidence.includes(:book).find params[:id]
     end
 
     def set_book
