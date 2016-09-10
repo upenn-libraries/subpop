@@ -2,12 +2,23 @@ $ ->
     $(document).on 'click', 'a[disabled="disabled"]', (event) ->
         event.preventDefault()
 
+
     $(document).on 'click', '.modal-link', (event) ->
+        modal_id = $(this).attr('data-modal-id')
+        modal_body_id = modal_id + '-body'
         $.get $(this).attr("href"), (data) ->
-            $('#preview-modal-body').html($(data))
-            $('#preview-modal').modal('show')
+            $('#' + modal_body_id).html($(data))
+            if (/cropper/i).test(modal_id)
+                $('#image').hide()
+
+        # Show modal here, rather than in the callback; otherwise, we get
+        # duplicate 'shown.bs.modal' events, which creates downstream
+        # problems.
+        $('#' + modal_id).modal('show')
 
     $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
+
+    $('.thumb-container').uniqueId()
 
     $(document).on 'click', 'a', (event) ->
         $(this).tooltip('hide')
@@ -115,6 +126,14 @@ $ ->
         url       = '/flickr/' + item_type + '/' + item_id + '/status'
         poll_process(url,div_id)
 
+    $.poll_thumbnail = (div_id) ->
+        $div         = $(div_id).find('.thumb')
+        parent_type  = $div.attr('data-parent-type')
+        parent_id    = $div.attr('data-parent')
+        thumbnail_id = $div.attr('data-thumbnail')
+        url          = '/' + parent_type + '/' + parent_id + '/thumbnails/' + thumbnail_id
+        poll_process(url,div_id)
+
     $.poll_all_publishables = ->
         $('.publishable-status.processing').each ->
             item_id   = $(this).attr('data-item')
@@ -128,5 +147,45 @@ $ ->
             book_id = $(div_id).attr('data-book')
             url = '/flickr/books/' + book_id + '/status'
             poll_process(url,div_id)
+
+    $.update_new_publishable_form = (thumb_html) ->
+        $thumb_div       = $($.parseHTML(thumb_html))
+        source_photo_id = $thumb_div.attr('data-source-photo')
+        thumbnail_id    = $thumb_div.attr('data-thumbnail')
+
+        return unless source_photo_id?
+        return if source_photo_id is thumbnail_id
+
+        possible_ids    = [
+            'new_evidence', 'new_title_page', 'new_context_image'
+        ]
+
+        for id in possible_ids
+            do (id) ->
+                # remove 'new_' from ID
+                parent_name = id.replace(/^new_/, '')
+                if $('form#' + id).attr('id')
+                    selector   = "form##{id}"
+                    selector  += " input##{parent_name}_photo_id"
+                    $(selector).val(thumbnail_id)
+
+    $.thumbnail_container_ids = (thumb_html) ->
+        $thumb_div      = $($.parseHTML(thumb_html))
+        parent_type     = $thumb_div.attr('data-parent-type')
+        parent_id       = $thumb_div.attr('data-parent')
+        source_photo_id = $thumb_div.attr('data-source-photo')
+        thumbnail_id    = $thumb_div.attr('data-thumbnail')
+        # if there's a source photo, that's the ID to use to find the div
+        thumbnail_id    = source_photo_id if source_photo_id
+
+        selector        = '.thumb'
+        selector       += "[data-parent-type=#{parent_type}]"
+        selector       += "[data-parent=#{parent_id}]"
+        selector       += "[data-thumbnail=#{thumbnail_id}]"
+        divs            = $(selector).closest('.thumb-container')
+        $(div).attr('id') for div in divs
+
+    $.set_unique_ids = ->
+        $('.thumb-container').uniqueId()
 
     # $(document).ready(ready)
