@@ -33,8 +33,8 @@
 # the correct parent div to replace its content. The `data-source-photo`
 # attribute makes this possible when a photo is new.
 class Cropping::PhotosController < ApplicationController
-  include PolymorphicParent
   include ApplicationHelper
+  include PolymorphicParent
 
   before_action :set_or_create_parent
   before_action :set_parent_type,   only:   [:new, :create]

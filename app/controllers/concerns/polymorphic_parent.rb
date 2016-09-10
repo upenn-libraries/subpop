@@ -1,3 +1,4 @@
+##
 # Photos can have several types of Photo "parents" (usually not really a
 # parent; see below). This module examines the params hash for parent ID types
 # -- `book_id`, `evidence_id`, etc. It has methods for setting the parent to
@@ -120,7 +121,7 @@
 #   has_many :photo_assignments, as: :assignable
 # end
 #
-# # Wherease publishables, like Evidence have one photo
+# # Whereas publishables, like Evidence have one photo
 # class Evidence
 #   has_one :photo_assignment, as: :assignable
 # end
@@ -129,6 +130,29 @@
 # __IMPORTANT__: It remains to be seen whether this `has_one`/`has_many`
 # combination will work with the same polymorphic association.
 #
+# __IMPORTANT__: One of the more complicated pieces here is the editing of a
+# photo when a new Evidence is created. We display a photo in the sidebar of
+# the new Evidence page with an `Edit` button. Now we have to do some funky
+# business with a `data-parent-id` value of `new` in order to find the div to
+# update:
+#
+# ```erb
+#   <div class="thumb" data-parent="new" data-parent-type="evidence" data-thumbnail="174">
+#     <!-- ... -->
+#   </div>
+# ```
+#
+# This problem will still exist with a PhotoAssignment\* model, which in this
+# case will still be a non-persisted instance. Will we have to do the
+# following?
+#
+# ```erb
+#       <div class="thumb" data-photo-assignment="new">
+#         <!-- ... etc. ... -->
+#         </a>
+#       </div>
+# ```
+
 # Creating a new photo
 # --------------------
 #
