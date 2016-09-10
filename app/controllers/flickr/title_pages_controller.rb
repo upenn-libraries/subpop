@@ -1,2 +1,2 @@
-class Flickr::TitlePagesController < Flickr::BaseController
+class Flickr::TitlePagesController < Flickr::PublishablesController
 end

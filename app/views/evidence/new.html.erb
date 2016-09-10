@@ -2,6 +2,7 @@
 
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', book: @book, evidence: @evidence %>
+  <%= render '/cropping/photos/cropper_modal' %>
 <% end -%>
 
 <% content_for :footer, @evidence.full_name -%>

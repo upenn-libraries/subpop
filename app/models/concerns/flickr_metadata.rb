@@ -54,7 +54,7 @@ module FlickrMetadata
     else
       "#{self.model_name.human} image"
     end
-    [ book.full_name, what ].join ': '
+    [ book_full_name, what ].join ': '
   end
 
   def tags_to_add
