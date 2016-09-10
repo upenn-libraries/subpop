@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :thumbnails, only: :show
   end
 
+  resources :thumbnails, only: :show
+
   # Routes for cropping photos. Apart from :books, all resources are nested as
   # a convention for passing the parent and photo to a single controller for
   # universal handling of cropping and dynamic display of the edited images.
