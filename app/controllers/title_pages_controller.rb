@@ -1,7 +1,7 @@
 class TitlePagesController < ApplicationController
   before_action :set_title_page,  only: [ :show, :destroy ]
   before_action :set_book,        only: [ :create, :destroy ]
-  before_action :set_photo,       only: :create
+
   authorize_resource
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -18,7 +18,7 @@ class TitlePagesController < ApplicationController
   end
 
   def create
-    @title_page = TitlePage.new book: @book, photo: @photo
+    @title_page = @book.title_pages.build title_page_params
 
     respond_to do |format|
       if @title_page.save_by current_user
@@ -35,7 +35,7 @@ class TitlePagesController < ApplicationController
   def destroy
     @title_page.requeue_photo
     @title_page.mark_deleted
-    DeletePublishableJob.perform_later @title_page
+    DeletePublishableJob.perform_later @title_page, current_user
     respond_to do |format|
       format.js
       format.html { redirect_to @book, notice: 'Title page was removed.' }
@@ -43,6 +43,9 @@ class TitlePagesController < ApplicationController
   end
 
   private
+  def title_page_params
+    params.require(:title_page).permit(:photo_id, :book_id)
+  end
 
   def set_title_page
     @title_page = TitlePage.find params[:id]
@@ -50,9 +53,5 @@ class TitlePagesController < ApplicationController
 
   def set_book
     @book = Book.find params[:book_id]
-  end
-
-  def set_photo
-    @photo = Photo.find params[:photo_id]
   end
 end
