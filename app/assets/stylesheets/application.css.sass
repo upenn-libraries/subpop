@@ -71,6 +71,32 @@ ul.image-queue
 .top-buffer
   margin-top: 20px
 
+.bottom-buffer
+  margin-bottom: 20px
+
+.thumb
+  @extend .center-block
+
+// Constrain the size of thumbnails in the publishable statuses. Sometimes these
+// will be :thumb size, sometimes :small. Make sure they always look like
+// :thumb size.
+.publishable-status
+  .image
+    height: 190
+    width: 190
+
+// Constrain the size of thumbnails in the `.queued-photo` divs. Sometimes
+// these will be :thumb size, sometimes :small. Make sure they always look
+// like :thumb size.
+.queued-photo
+  .thumb
+    max-height: 190px
+    max-width: 190px
+    .img-responsive
+      max-height: 100% // override .img-responsive `height: auto`
+      max-width: 100%
+
+
 // Make sure anchors stay below the fixed nav bar.
 // http://stackoverflow.com/a/13184714
 a.anchor
@@ -86,9 +112,10 @@ a.anchor
   width: 125px
 
 .queued-photo
-  .panel
+  .panel-body
     min-width: 262px
-    min-height: 294px
+    min-height: 290px
+    max-height: 290px
 
 // Style the autocomplete drop down menu
 .ui-autocomplete
