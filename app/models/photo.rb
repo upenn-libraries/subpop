@@ -1,7 +1,5 @@
 class Photo < ActiveRecord::Base
 
-  attr_accessor :edit_master_image
-
   belongs_to :book,           inverse_of: :photos
 
   has_many   :title_pages,    inverse_of: :photo
@@ -55,10 +53,10 @@ class Photo < ActiveRecord::Base
   end
 
   # Return true if the photo is not a attached to a book and is associated
-  # with only one Publishable.
+  # with less than 2 publishables.
   def isolated?
     return false if book.present?
-    use_count == 1
+    use_count < 2
   end
 
   def use_count
