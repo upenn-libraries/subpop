@@ -9,18 +9,21 @@
       <%= select_tag "use", grouped_options_for_select(ApplicationHelper::PHOTO_ASSIGNMENTS), include_blank: false,
       prompt: "Use image for", class: "form-control image-use input-small", id: "use-#{photo.id.to_s}", "data-width" => "80%" %>
     </div> <!-- /form-group -->
-    <% end %>
+    <% end %> <%# /select_tag -%>
 
     <br>
     <br>
-    <%= link_to image_tag(photo.image.url(:thumb),
-      class: 'center-block'), photo.image.url(:original),
-      target: '_blank', 'data-toggle' => 'tooltip',
-      title: 'Click to open in new window.' -%>
+    <div class="thumb-container">
+      <%= render '/thumbnails/show', parent: book, thumbnail: photo, image_size: :thumb  %>
+    </div>
     <br/>
-    <% end %> <%# form_tag %>
+    <% end %> <%# /form_tag %>
+
+  </div>  <!-- /.panel-body -->
+  <div class="panel-footer clearfix">
     <% if can? :update, photo -%>
-      <p><%= link_to "Edit photo", edit_cropping_photo_path(photo), title: 'Edit master photo', data: { toggle: 'tooltip', placement: 'right' } -%></p>
+    <%= link_to_crop_photo book, photo, title: 'Edit master photo', class: 'btn btn-default btn-sm modal-link pull-left', remote: true, data: { toggle: 'tooltip', placement: 'right', 'modal-id': 'cropper-modal' } -%>
+      <p class="pull-right"><%= use_count photo -%></p>
     <% end %>
-  </div>  <!-- /panel -->
-</div>  <!-- /list-inline image-queue -->
+  </div> <!-- /.panel-footer -->
+</div>  <!-- /.panel .panel-default -->
