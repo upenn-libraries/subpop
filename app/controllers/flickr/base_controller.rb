@@ -13,14 +13,6 @@ class Flickr::BaseController < ApplicationController
     item_class.to_s.underscore
   end
 
-  def show
-    authorize! :read, @item
-
-    respond_to do |format|
-      format.html { render layout: !request.xhr? }
-    end
-  end
-
   def status
     authorize! :read, @item
 
@@ -111,6 +103,7 @@ class Flickr::BaseController < ApplicationController
   end
 
   def get_item
-    @item = item_class.find params[:id]
+    @item = item_class.find params[:id] if item_class == Book
+    @item = item_class.includes(:book).find params[:id]
   end
 end
