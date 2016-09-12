@@ -29,12 +29,26 @@ module FeatureMacros
     visit evidence_path(@evidence)
   end
 
+  def visit_book
+    @book ||= FactoryGirl.create :book
+    visit book_path @book
+  end
+
   def create_name_by username, attributes={}
     user                  = add_user username
     local_attrs           = attributes.dup
     local_attrs[:name]  ||= 'Smith, John'
 
     Name.new(attributes).save_by user
+  end
+
+  def create_book_with_photo_by username, attributes={}
+    create_book_by username
+    create_photo book: @book
+  end
+
+  def make_photo_a_title_page
+    @title_page = FactoryGirl.create :title_page, book: @book, photo: @photo
   end
 
   def create_book_by username, attributes={}
