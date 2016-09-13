@@ -10,11 +10,13 @@ $ ->
             $('#' + modal_body_id).html($(data))
             if (/cropper/i).test(modal_id)
                 $('#image').hide()
+            # Restoring modal('show') to callback. This is not now causing
+            # dubplicate events. Sadly, I haven't figured out the reason for
+            # the change to the desired behavior. Note that if duplicate
+            # events return, then the cause will need to be investigated.
+            $('#' + modal_id).modal('show')
 
-        # Show modal here, rather than in the callback; otherwise, we get
-        # duplicate 'shown.bs.modal' events, which creates downstream
-        # problems.
-        $('#' + modal_id).modal('show')
+
 
     $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
 
