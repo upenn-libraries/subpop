@@ -6,6 +6,7 @@ class Photo < ActiveRecord::Base
   has_many   :evidence,       inverse_of: :photo
   has_many   :context_images, inverse_of: :photo
 
+  # See config/initializers/paper_clip.rb for :url and :path
   has_attached_file :image,
     styles: {
        original: [ '1800x1800>', :jpg ],
@@ -15,7 +16,9 @@ class Photo < ActiveRecord::Base
     }, convert_options: {
        thumb: "-quality 75 -strip"
     },
-    preserve_files: false
+    preserve_files: false,
+    path: Rails.configuration.x.subpop.paperclip_path,
+    url: Rails.configuration.x.subpop.paperclip_url
 
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
