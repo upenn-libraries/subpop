@@ -42,7 +42,7 @@ class Cropping::PhotosController < ApplicationController
   before_action :set_source_photo,  only:   [:new, :create]
 
   def create
-    authorize! :update, @parent
+    authorize! :update, @source_photo
 
     @photo = build_photo @parent, photo_params
 
@@ -62,7 +62,11 @@ class Cropping::PhotosController < ApplicationController
   end
 
   def new
-    authorize! :update, @parent
+    # All authorization eventually depends on the book. We assume that the the
+    # @source_photo has a connection to the book, either directly or one of the
+    # three publishable types: Evidence, TitlePage, or ContextImage
+    authorize! :update, @source_photo
+
     @photo = build_photo @parent, photo_params
 
     respond_to do |format|
@@ -77,7 +81,7 @@ class Cropping::PhotosController < ApplicationController
   end
 
   def edit
-    authorize! :update, @parent
+    authorize! :update, @photo
 
     respond_to do |format|
       format.html do
@@ -91,7 +95,7 @@ class Cropping::PhotosController < ApplicationController
   end
 
   def update
-    authorize! :update, @parent
+    authorize! :update, @photo
     @photo.assign_attributes photo_params
 
     # @photo.image = @photo.data_url
