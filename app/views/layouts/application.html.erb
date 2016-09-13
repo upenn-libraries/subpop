@@ -20,6 +20,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
   </head>
 
   <body>
@@ -95,5 +96,11 @@
         </div>
       </nav>
     </div> <!-- /container -->
+    <%# Fix cropping spec by removing '.fade' class from cropper-modal. %>
+    <% if Rails.env == 'test' %>
+    <script type="text/javascript">
+      $('#cropper-modal').removeClass('fade');
+    </script>
+    <% end %>
   </body>
 </html>
