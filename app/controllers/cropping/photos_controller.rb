@@ -47,13 +47,12 @@ class Cropping::PhotosController < ApplicationController
     @photo = build_photo @parent, photo_params
 
     if @photo.save
-
       # we have to save non-Books with the new photo
       update_parent @parent, @photo
       respond_to do |format|
         format.html { redirect_to @parent }
         format.js {
-          redirect_to parent_thumbnail_path(@parent,@photo, source_photo_id: @source_photo.id),  format: :js
+          redirect_to parent_thumbnail_path(@parent, @photo, source_photo_id: @source_photo.id),  format: :js
         }
       end
     else
@@ -62,9 +61,6 @@ class Cropping::PhotosController < ApplicationController
   end
 
   def new
-    # All authorization eventually depends on the book. We assume that the the
-    # @source_photo has a connection to the book, either directly or one of the
-    # three publishable types: Evidence, TitlePage, or ContextImage
     authorize! :update, @source_photo
 
     @photo = build_photo @parent, photo_params
