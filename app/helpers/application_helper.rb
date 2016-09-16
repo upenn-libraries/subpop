@@ -161,6 +161,20 @@ module ApplicationHelper
     end
   end
 
+  def edit_photo_div parent, photo, options={}, &block
+    attrs = {
+      'class':              'edit-photo',
+      'data-parent':        parent.id || 'new',
+      'data-parent-type':   parent.model_name.plural,
+      'data-thumbnail':     photo.id,
+      'data-source-photo':  source_photo_id(options)
+    }
+
+    content_tag 'div', attrs do
+      yield if block_given?
+    end
+  end
+
   def source_photo_id options={}
     return if options[:source_photo].blank?
     return options[:source_photo].id if options[:source_photo].is_a?(Photo)

@@ -43,7 +43,8 @@ RSpec.feature "Cropping", type: :feature, js: true do
     within '#sidebar' do
       find('a', text: 'Edit photo').trigger('click')
     end
-    find("button[title='Rotate Right']").click
+    expect(page).to have_content 'Crop image'
+    find("button[title='Rotate Left']").trigger 'click'
     click_button('Crop image')
     expect(page).not_to have_content 'Crop image'
 
@@ -51,7 +52,8 @@ RSpec.feature "Cropping", type: :feature, js: true do
     within '#sidebar' do
       find('a', text: 'Edit photo').trigger('click')
     end
-    find("button[title='Rotate Right']").click
+
+    expect(page).to have_content 'Crop image'
     click_button('Crop image')
     expect(page).not_to have_content 'Crop image'
   end

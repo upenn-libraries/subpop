@@ -1,0 +1,4 @@
+<% source_photo ||= nil %>
+<%= edit_photo_div item, photo, source_photo: source_photo do  %>
+  <%= link_to_crop_photo item, photo, title: 'Edit photo', class: 'btn btn-default btn-sm modal-link pull-right', remote: true, data: { toggle: 'tooltip', placement: 'right', 'modal-id': 'cropper-modal' }  -%>
+<% end %>

@@ -20,8 +20,6 @@ $ ->
 
     $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
 
-    $('.thumb-container').uniqueId()
-
     $(document).on 'click', 'a', (event) ->
         $(this).tooltip('hide')
 
@@ -150,8 +148,11 @@ $ ->
             url = '/flickr/books/' + book_id + '/status'
             poll_process(url,div_id)
 
+    # If there's a new Publishable form (form#new_evidence, etd.) on the page,
+    # we have to change the photo_id (input#evidence_photo_id, etc.). This
+    # will probably only ever Evidence, but we make the code general.
     $.update_new_publishable_form = (thumb_html) ->
-        $thumb_div       = $($.parseHTML(thumb_html))
+        $thumb_div      = $($.parseHTML(thumb_html))
         source_photo_id = $thumb_div.attr('data-source-photo')
         thumbnail_id    = $thumb_div.attr('data-thumbnail')
 
@@ -171,23 +172,28 @@ $ ->
                     selector  += " input##{parent_name}_photo_id"
                     $(selector).val(thumbnail_id)
 
-    $.thumbnail_container_ids = (thumb_html) ->
-        $thumb_div      = $($.parseHTML(thumb_html))
-        parent_type     = $thumb_div.attr('data-parent-type')
-        parent_id       = $thumb_div.attr('data-parent')
-        source_photo_id = $thumb_div.attr('data-source-photo')
-        thumbnail_id    = $thumb_div.attr('data-thumbnail')
-        # if there's a source photo, that's the ID to use to find the div
+    $.thumb_container_ids = (html, inner_klass) ->
+        $new_div        = $($.parseHTML(html))
+        parent_type     = $new_div.attr('data-parent-type')
+        parent_id       = $new_div.attr('data-parent')
+        source_photo_id = $new_div.attr('data-source-photo')
+        thumbnail_id    = $new_div.attr('data-thumbnail')
+
         thumbnail_id    = source_photo_id if source_photo_id
 
-        selector        = '.thumb'
+        selector        = inner_klass
+        selector        = '.' + selector unless selector.match(/^\./)
+        container_sel   = selector + '-container'
         selector       += "[data-parent-type=#{parent_type}]"
         selector       += "[data-parent=#{parent_id}]"
         selector       += "[data-thumbnail=#{thumbnail_id}]"
-        divs            = $(selector).closest('.thumb-container')
+        divs            = $(selector).closest(container_sel)
         $(div).attr('id') for div in divs
 
     $.set_unique_ids = ->
         $('.thumb-container').uniqueId()
+        $('.edit-photo-container').uniqueId()
+
+    $.set_unique_ids()
 
     # $(document).ready(ready)

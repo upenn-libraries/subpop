@@ -12,8 +12,8 @@
     <% end %> <%# /if can? :destroy %>
   <% end %> <%# /if item.is? TitlePage %>
   <% if can? :update, item %>
-    <div class="pull-left">
-      <%= link_to_crop_photo item, item.photo, title: 'Edit photo', class: 'btn btn-default btn-sm modal-link pull-right', remote: true, data: { toggle: 'tooltip', placement: 'right', 'modal-id': 'cropper-modal' }  -%>
+    <div class="pull-left edit-photo-container">
+      <%= render 'photos/edit_photo_link', item: item, photo: item.photo %>
     </div> <!-- /.pull-left -->
   <% end %> <%# /if can? :update, item %>
   <% if item.on_flickr? -%>

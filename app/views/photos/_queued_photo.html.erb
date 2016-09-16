@@ -22,7 +22,9 @@
   </div>  <!-- /.panel-body -->
   <div class="panel-footer clearfix">
     <% if can? :update, photo -%>
-    <%= link_to_crop_photo book, photo, title: 'Edit master photo', class: 'btn btn-default btn-sm modal-link pull-left', remote: true, data: { toggle: 'tooltip', placement: 'right', 'modal-id': 'cropper-modal' } -%>
+    <div class="edit-photo-container pull-left">
+      <%= render 'photos/edit_photo_link', item: book, photo: photo %>
+    </div>
       <p class="pull-right"><%= use_count photo -%></p>
     <% end %>
   </div> <!-- /.panel-footer -->
