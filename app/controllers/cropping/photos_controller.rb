@@ -45,6 +45,7 @@ class Cropping::PhotosController < ApplicationController
     authorize! :update, @source_photo
 
     @photo = build_photo @parent, photo_params
+    @photo.image_file_name = @source_photo.image_file_name
 
     if @photo.save
       # we have to save non-Books with the new photo
