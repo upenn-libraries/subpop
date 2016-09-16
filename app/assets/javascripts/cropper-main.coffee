@@ -2,6 +2,7 @@ $ ->
     'use strict'
 
     $('#cropper-modal').on 'shown.bs.modal', ->
+
         $image = $('#image')
         $dataX = $('#dataX')
         $dataY = $('#dataY')
@@ -67,6 +68,7 @@ $ ->
                         $target.val JSON.stringify(result)
                     catch e
                         console.log e.message
+
             return
 
         # Keyboard
@@ -91,7 +93,7 @@ $ ->
 
         # SubPOP-specific functions and buttons.
         #
-        # Select the entire canvas, that is the entirety of the image that is
+        # Select the entire canvas; that is, the entirety of the image that is
         # visible in the container window.
         selectCanvas = ->
             canvasData = $image.cropper('getCanvasData')
@@ -112,5 +114,10 @@ $ ->
             # reset the canvas
             $image.cropper 'setCanvasData', $image.cropper('getImageData')
             return
+
+        $(document).on 'click', '.subpop-buttons [data-method]', ->
+            data = $(this).data()
+            if data.method
+                eval(data.method)()
 
         return
