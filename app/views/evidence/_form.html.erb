@@ -15,8 +15,9 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :photo_id -%>
-  <%= f.hidden_field :book_id %>
+  <% if @evidence.new_record? %>
+  <%= f.hidden_field :photo_id %>
+  <% end %>
 
   <div class="row field-group">
   <div class="col-sm-3 field-label"><%= human_name @evidence, :book_full_name %></div>

@@ -151,26 +151,35 @@ $ ->
     # If there's a new Publishable form (form#new_evidence, etd.) on the page,
     # we have to change the photo_id (input#evidence_photo_id, etc.). This
     # will probably only ever Evidence, but we make the code general.
+    #
+    # Note that edited Publishables already have an assigned photo, so there's
+    # no photo_id form field to update.
     $.update_new_publishable_form = (thumb_html) ->
-        $thumb_div      = $($.parseHTML(thumb_html))
-        source_photo_id = $thumb_div.attr('data-source-photo')
-        thumbnail_id    = $thumb_div.attr('data-thumbnail')
-
-        return unless source_photo_id?
-        return if source_photo_id is thumbnail_id
-
         possible_ids    = [
             'new_evidence', 'new_title_page', 'new_context_image'
         ]
 
+        form_id = null
         for id in possible_ids
             do (id) ->
-                # remove 'new_' from ID
-                parent_name = id.replace(/^new_/, '')
-                if $('form#' + id).attr('id')
-                    selector   = "form##{id}"
-                    selector  += " input##{parent_name}_photo_id"
-                    $(selector).val(thumbnail_id)
+                s = 'form#' + id
+                # alert($(s)[0].outerHTML)
+                if $('form#' + id).length
+                    form_id = id
+
+        # return unless we have a new publishable form
+        return unless form_id?
+
+        $thumb_div      = $($.parseHTML(thumb_html))
+        source_photo_id = $thumb_div.attr('data-source-photo')
+        thumbnail_id    = $thumb_div.attr('data-thumbnail')
+
+        # nothing to change if no source photo, or photo == source photo
+        return unless source_photo_id?
+        return if source_photo_id is thumbnail_id
+
+        parent_name     = form_id.replace(/^new_/, '')
+        $("form##{form_id} input##{parent_name}_photo_id").val(thumbnail_id)
 
     $.thumb_container_ids = (html, inner_klass) ->
         $new_div        = $($.parseHTML(html))
