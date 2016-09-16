@@ -2,9 +2,13 @@ class Photo < ActiveRecord::Base
 
   belongs_to :book,           inverse_of: :photos
 
-  has_many   :title_pages,    inverse_of: :photo
-  has_many   :evidence,       inverse_of: :photo
-  has_many   :context_images, inverse_of: :photo
+  # We nullify here, when photos are deleted. This makes possible deleting an
+  # entire book, which may choose to delete photos before evidence, etc.
+  # Without :nullify a foreign key constraint will be violated when the photo
+  # is deleted.
+  has_many   :title_pages,    inverse_of: :photo, dependent: :nullify
+  has_many   :evidence,       inverse_of: :photo, dependent: :nullify
+  has_many   :context_images, inverse_of: :photo, dependent: :nullify
 
   # See config/initializers/paper_clip.rb for :url and :path
   has_attached_file :image,
