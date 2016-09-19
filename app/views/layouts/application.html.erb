@@ -25,76 +25,71 @@
 
   <body>
   <%= yield :modals -%>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "POP Submission App", root_path, class: "navbar-brand" %>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="<%= 'active' if current_page?(root_path) || params[:controller] == 'books' -%>"><%= link_to "Home", root_path %></li>
 
-    <div class="container">
+          <% if can? :read, Name -%>
+          <li class="<%= 'active' if params[:controller] == 'names' -%>"><%= link_to "Names", names_path %></li>
+          <% end -%>
 
-      <!-- Static navbar -->
-      <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <%= link_to "POP Submission App", root_path, class: "navbar-brand" %>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="<%= 'active' if current_page?(root_path) || params[:controller] == 'books' -%>"><%= link_to "Home", root_path %></li>
+          <% if can? :manage, User -%>
+          <li class="<%= 'active' if params[:controller] == 'user' -%>"><%= link_to "Users", user_index_path %></li>
+          <% end -%>
 
-              <% if can? :read, Name -%>
-              <li class="<%= 'active' if params[:controller] == 'names' -%>"><%= link_to "Names", names_path %></li>
-              <% end -%>
-
-              <% if can? :manage, User -%>
-              <li class="<%= 'active' if params[:controller] == 'user' -%>"><%= link_to "Users", user_index_path %></li>
-              <% end -%>
-
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? -%>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span><%= current_user.username -%> <%= current_user.admin? ? ' (admin)' : '' %>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Manage account', edit_user_registration_path -%></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete -%></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <% if user_signed_in? -%>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span><%= current_user.username -%> <%= current_user.admin? ? ' (admin)' : '' %>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to 'Manage account', edit_user_registration_path -%></li>
-                  <li role="separator" class="divider"></li>
-                  <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete -%></li>
-                </ul>
-              </li>
-              <% elsif controller.class.parent != Devise -%>
-              <li><%= link_to 'Sign in', new_session_path(resource_name) -%></li>
-              <% end -%>
-            </ul>
-          </div> <!-- /.navbar-right -->
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </nav>
+          </li>
+          <% elsif controller.class.parent != Devise -%>
+          <li><%= link_to 'Sign in', new_session_path(resource_name) -%></li>
+          <% end -%>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+  </nav>
 
-      <div class="starter-template">
-        <div class="row">
-          <div  class="col-md-4" id="sidebar">
-            <%= yield :sidebar -%>
-          </div>
-          <div  class="col-md-7">
-            <div id="flash_messages"><%= render "/shared/flash_messages", flash: flash %></div>
-            <%= yield %>
-          </div>
+  <div class="container">
+
+    <div class="row">
+      <div  class="col-md-4" id="sidebar">
+        <%= yield :sidebar -%>
+      </div>
+      <div  class="col-md-8">
+        <div id="flash_messages"><%= render "/shared/flash_messages", flash: flash %></div>
+        <%= yield %>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div id="navbar-footer" class="navbar-collapse collapse">
+          <div class="navbar-text"><%= content_for?(:footer) ? yield(:footer) : 'POP Submission App' -%></div>
+          <div class="navbar-text navbar-right"><%= content_for?(:footer_right) ? yield(:footer_right) : '' -%></div>
         </div>
       </div>
-
-      <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid">
-          <div id="navbar-footer" class="navbar-collapse collapse">
-            <div class="navbar-text"><%= content_for?(:footer) ? yield(:footer) : 'POP Submission App' -%></div>
-            <div class="navbar-text navbar-right"><%= content_for?(:footer_right) ? yield(:footer_right) : '' -%></div>
-          </div>
-        </div>
-      </nav>
+    </nav>
     </div> <!-- /container -->
     <%# Fix cropping spec by removing '.fade' class from cropper-modal. %>
     <% if Rails.env == 'test' %>
