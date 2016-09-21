@@ -34,12 +34,21 @@ class Book < ActiveRecord::Base
     title_pages.active + context_images.active + evidence.active
   end
 
-  def full_name
-    [ repository, call_number ].flat_map { |s|
+  def full_call_number
+    return '' unless call_number.present?
+
+    parts = [ repository, call_number ].flat_map { |s|
       s.present? ? s : []
     }.join ' '
   end
-  alias :full_call_number :full_name
+
+  def full_name
+    s = full_call_number
+    return s if s.present?
+
+    # If there is no call number, return the repository and title.
+    [ repository, title ].flat_map { |s| s.present? ? s : [] }.join ': '
+  end
 
   def volume_name
     return nil unless vol_number.present?
