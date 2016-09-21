@@ -1,21 +1,25 @@
 <% allow_edit ||= false %>
-<% if evidence.context_image.present? %>
-<div class="thumbnail pull-right">
-  <div class="thumb-container">
-    <%= render '/thumbnails/show', parent: evidence.context_image, thumbnail: evidence.context_image_photo %>
-  </div> <!-- /.thumb-container -->
-</div> <!-- /.thumbnail -->
 <h3>Evidence context</h3>
-<% if allow_edit %>
-<%= form_for @evidence, url: update_context_image_evidence_path(evidence), method: :patch do |f|  %>
-<%= f.hidden_field :context_photo_id, value: nil %>
-<%= f.submit "Remove link to context image", class: 'btn btn-link' %>
-<% end %> <%# form_for @evidence, url: update_... %>
-<%= link_to 'Link to different context image', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
-<% end %> <%# if allow_edit %>
+<% if evidence.context_image.present? %>
+
+  <div class="thumbnail pull-right">
+    <div class="thumb-container">
+      <%= render '/thumbnails/show', parent: evidence.context_image, thumbnail: evidence.context_image_photo %>
+    </div> <!-- /.thumb-container -->
+  </div> <!-- /.thumbnail -->
+
+  <% if allow_edit %>
+    <%= form_for @evidence, url: update_context_image_evidence_path(evidence), method: :patch do |f|  %>
+    <%= f.hidden_field :context_photo_id, value: nil %>
+    <%= f.submit "Remove link to context image", class: 'btn btn-link' %>
+    <% end %> <%# form_for @evidence, url: update_... %>
+    <%= link_to 'Link to different context image', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
+  <% end %> <%# if allow_edit %>
+
 <% else %> <%# if evidence.context_image.present? %>
-<% if allow_edit %>
-<h3>Context</h3>
-<%= link_to 'Link to original image context', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
-<% end %> <%# if allow_edit %>
+
+  <% if allow_edit %>
+    <%= link_to 'Link to original image context', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
+  <% end %> <%# if allow_edit %>
+
 <% end %> <%# if evidence.context_image.present? %>
