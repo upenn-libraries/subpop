@@ -52,7 +52,8 @@ module FlickrMetadata
     what = if self.respond_to? :format_name
       format_name
     else
-      "#{self.model_name.human} image"
+      # DE 2016-09-20 don't append ' image' to avoid 'Context image image'
+      self.model_name.human
     end
     [ book_full_name, what ].join ': '
   end
