@@ -1,5 +1,5 @@
 <% allow_edit ||= false %>
-<h3>Evidence context</h3>
+<h3><%= t 'headers.evidence.context_image' %></h3>
 <% if evidence.context_image.present? %>
 
   <div class="thumbnail pull-right">
@@ -11,15 +11,15 @@
   <% if allow_edit %>
     <%= form_for @evidence, url: update_context_image_evidence_path(evidence), method: :patch do |f|  %>
     <%= f.hidden_field :context_photo_id, value: nil %>
-    <%= f.submit "Remove link to context image", class: 'btn btn-link' %>
+    <%= f.submit t('links.evidence.link_to_context_image'), class: 'btn btn-link' %>
     <% end %> <%# form_for @evidence, url: update_... %>
-    <%= link_to 'Link to different context image', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
+    <%= link_to t('links.evidence.unlink_from_context_image'), choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
   <% end %> <%# if allow_edit %>
 
 <% else %> <%# if evidence.context_image.present? %>
 
   <% if allow_edit %>
-    <%= link_to 'Link to original image context', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
+    <%= link_to t('links.evidence.link_to_context_image'), choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
   <% end %> <%# if allow_edit %>
 
 <% end %> <%# if evidence.context_image.present? %>
