@@ -1,3 +1,44 @@
 <% if evidence.photo.present? -%>
-  <%= render '/photos/small_photos', book: book, items: [ evidence ] %>
-<% end -%>
+  <% image_size ||= :small %>
+  <% allow_edit ||= false %>
+  <div class="thumbnail">
+    <div class="thumb-container">
+      <%= render '/thumbnails/show', parent: evidence, thumbnail: evidence.photo, image_size: image_size %>
+    </div> <!-- /.thumb-container -->
+    <div class="caption clearfix">
+      <% if allow_edit && can?(:update, evidence)  %>
+      <div class="pull-left edit-photo-container">
+        <%= render 'photos/edit_photo_link', item: evidence, photo: evidence.photo %>
+      </div> <!-- /.pull-left -->
+      <% end %> <%# /if can? :update, evidence %>
+      <% if evidence.on_flickr? -%>
+      <a target="_blank" rel="noopener noreferrer" href="<%= evidence.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+      <% end -%> <%# /if evidence.on_flickr? %>
+    </div> <!-- /.caption -->
+  </div>  <!-- /.thumbnail -->
+<% end -%> <%# if evidence.photo.present? %>
+<% if evidence.photo_cropped? %>
+  <% if evidence.context_image.present? %>
+    <div class="context-image">
+      <div class="thumbnail pull-right">
+        <div class="thumb-container">
+          <%= render '/thumbnails/show', parent: evidence.context_image, thumbnail: evidence.context_image_photo %>
+        </div> <!-- /.thumb-container -->
+      </div> <!-- /.thumbnail -->
+      <h3>Evidence context</h3>
+      <% if allow_edit %>
+      <%= form_for @evidence, url: update_context_image_evidence_path(@evidence), method: :patch do |f|  %>
+      <%= f.hidden_field :context_photo_id, value: nil %>
+      <%= f.submit "Remove link to context image", class: 'btn btn-link' %>
+      <% end %> <%# form_for @evidence, url: update_... %>
+      <%= link_to 'Link to different context image', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
+
+      <% end %> <%# if allow_edit %>
+    </div> <!-- /.context-image -->
+  <% else %> <%# if evidence.context_image.present? %>
+    <% if allow_edit %>
+    <h3>Context</h3>
+    <%= link_to 'Link to original image context', choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
+    <% end %> <%# if allow_edit %>
+  <% end %> <%# if evidence.context_image.present? %>
+<% end %> <%# if evidence.photo_cropped? %>

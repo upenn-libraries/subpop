@@ -5,6 +5,8 @@ class ContextImage < ActiveRecord::Base
 
   belongs_to :book, required: true, inverse_of: :context_images
 
+  has_many :evidence, inverse_of: :context_image, dependent: :nullify
+
   delegate :full_name, to: :book, prefix: true, allow_nil: true
 
   def name

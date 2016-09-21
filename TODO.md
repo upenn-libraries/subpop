@@ -1,44 +1,20 @@
 # To-do items
 
-### For discussion
+## Scratch
 
-- Dates associated with names
-    + We want LC-style name entries, but we also want to have separate dates;
-      this is contradictory. How do we proceed? What about legacy data -- how
-      are those names formatted?
+Rename concern HasPhoto -> BelongsToPhoto
 
-- Format Other, and Other format field
-    + This has been added, but it is almost certainly bad. Users will likely
-      reject our categories and create their own, resulting in, for example,
-      variations on stamp and bookplate that are arbitrary and unsearchable.
+Remove cropped? chekcing for display of context image options on evidence pages
+
 
 # Image editing
 
 
 # cropping
 
-- fit image in container
 
-- Decide whether a used master image can be edited and how to behave if yes
 
-    - Option 1) If the image has been used for evidence or a title page, create
-      a new photo object to assign to each publishable to which the image is
-      attached
-
-    - Option 2) If the image has been used for evidence or a title page, create
-      a new *master* photo and edit it.
-
-    - Option 3) Locking: Lock the master image if it has been used.
-
-    - Option 3a) Modified locking:  Lock master image, but allow it to be
-      duplicated (this is about the same thing as Option 2).
-
-- set cropped modal max size to window size?
-- upload image to app
-- create/update image
 - create context image
-- when updating photo show progress bar for image in status element
-
 
 
 ## Flickr
@@ -137,3 +113,24 @@ Provenance agents:
 
   - ?? Provenance place?
   - Hint? <-- Try this one. "Give a place named in the provenance mark or the location of the book at the time the mark was added." -->
+
+<!-- X - fit image in container
+
+x - Decide whether a used master image can be edited and how to behave if yes
+x
+x     - Option 1) If the image has been used for evidence or a title page, create
+x       a new photo object to assign to each publishable to which the image is
+x       attached
+x
+x     - Option 2) If the image has been used for evidence or a title page, create
+x       a new *master* photo and edit it.
+x
+x     - Option 3) Locking: Lock the master image if it has been used.
+x
+x     - Option 3a) Modified locking:  Lock master image, but allow it to be
+x       duplicated (this is about the same thing as Option 2).
+x
+x - set cropped modal max size to window size?
+x - upload image to app
+x - create/update image
+x - when updating photo show progress bar for image in status element -->

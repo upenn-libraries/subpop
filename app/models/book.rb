@@ -31,7 +31,7 @@ class Book < ActiveRecord::Base
   end
 
   def publishables
-    title_pages.active + evidence.active
+    title_pages.active + context_images.active + evidence.active
   end
 
   def full_name

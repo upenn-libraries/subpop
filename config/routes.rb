@@ -9,13 +9,16 @@ Rails.application.routes.draw do
     end
     resources :title_pages, only: [ :create, :destroy ]
     resources :thumbnails, only: :show
+    resources :context_images, only: :destroy
   end
 
-  resources :title_pages, only: :show do
+  resources :title_pages, only: [:show] do
     resources :thumbnails, only: :show
   end
 
   resources :evidence, only: [ :show, :update, :edit, :index ] do
+    patch 'update_context_image', on: :member
+    get 'choose_context_image', on: :member
     resources :thumbnails, only: :show
   end
 
@@ -68,7 +71,12 @@ Rails.application.routes.draw do
       post :create, on: :member
       get :status, on: :member
     end
-  end
+
+    resources :context_images, only: [ :show, :update, :destroy ] do
+      post :create, on: :member
+      get :status, on: :member
+    end
+ end
 
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
   devise_scope :user do

@@ -59,6 +59,10 @@ class Photo < ActiveRecord::Base
     !used?
   end
 
+  def cropped?
+    book.blank?
+  end
+
   # Return true if the photo is not a attached to a book and is associated
   # with less than 2 publishables.
   def isolated?

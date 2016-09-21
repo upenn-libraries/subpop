@@ -3,7 +3,10 @@ class Evidence < ActiveRecord::Base
   include HasPhoto
   include UserFields
 
+  attr_accessor :context_photo_id
+
   belongs_to :book, required: true, inverse_of: :evidence
+  belongs_to :context_image, inverse_of: :evidence
 
   has_many :evidence_content_types, dependent: :destroy
   has_many :content_types, through: :evidence_content_types
@@ -13,6 +16,10 @@ class Evidence < ActiveRecord::Base
   has_many :names, through: :provenance_agents
   accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
     reject_if: proc { |attributes| attributes['name_id'].blank? }
+
+  delegate :photos,   to: :book,          prefix: true, allow_nil: true
+  delegate :photo,    to: :context_image, prefix: true, allow_nil: true
+  delegate :photo_id, to: :context_image, prefix: true, allow_nil: true
 
   FORMATS = [
              [ 'Binding',                      'binding' ],

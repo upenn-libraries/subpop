@@ -1,6 +1,8 @@
 class EvidenceController < ApplicationController
   before_action :set_book, only: [ :new, :create, :destroy ]
-  before_action :set_evidence, only: [:show, :edit, :update, :destroy ]
+  before_action :set_evidence, only: [:show, :edit, :update, :destroy, :choose_context_image, :update_context_image ]
+  before_action :set_context_image, only: [:update_context_image]
+
   authorize_resource
 
   autocomplete :name, :name, full: true
@@ -62,12 +64,25 @@ class EvidenceController < ApplicationController
   # DELETE /evidence/1.json
   def destroy
     @evidence.requeue_photo
-    @evidence.updated_by current_user
+    @evidence.update_by current_user
     @evidence.mark_deleted
     DeletePublishableJob.perform_later @evidence, current_user
     respond_to do |format|
       format.js
       format.html { redirect_to @book, notice: 'Evidence was deleted.' }
+    end
+  end
+
+  def choose_context_image
+  end
+
+  def update_context_image
+    respond_to do |format|
+      if @evidence.update_by current_user, context_image: @context_image
+        format.html { redirect_to @evidence }
+      else
+        format.html { render :choose_context_image }
+      end
     end
   end
 
@@ -83,6 +98,12 @@ class EvidenceController < ApplicationController
 
     def set_book
       @book = Book.find(params[:book_id])
+    end
+
+    def set_context_image
+      return unless evidence_params[:context_photo_id].present?
+      photo = Photo.find evidence_params[:context_photo_id]
+      @context_image = ContextImage.find_or_create_by photo_id: photo.id, book_id: photo.book_id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -104,6 +125,7 @@ class EvidenceController < ApplicationController
         :citations,
         :photo,
         :photo_id,
+        :context_photo_id,
         content_type_ids: [],
         provenance_agents_attributes: [ :id, :name_id, :role, :_destroy ]
         )

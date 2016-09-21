@@ -1,0 +1,32 @@
+<% content_for :sidebar do -%>
+  <%= render 'small_evidence_photo', book: @book, evidence: @evidence %>
+<% end -%>
+
+<%= form_for @evidence, url: update_context_image_evidence_path(@evidence), method: :patch do |f| %>
+
+  <div class="actions">
+    <%= link_to 'Cancel', @evidence, class: "btn btn-default" %>
+    <%= f.submit class: "btn btn-success", value: "Select context image" %>
+  </div>
+
+<% if @evidence.book_photos.present? %>
+<ul class="list-inline">
+  <% @evidence.book_photos.each do |photo| %>
+  <li>
+    <div class="queued-photo">
+
+    <div class="thumbnail">
+      <label for="evidence_context_photo_id_<%= photo.id %>">
+      <%= image_tag photo.image.url(:thumb), class: 'center-block' %>
+      </label>
+      <div class="caption">
+        <%= f.radio_button :context_photo_id, photo.id, checked: (photo.id == @evidence.context_image_photo_id) %>
+        <%= f.label "evidence_context_photo_id_#{photo.id}", 'Use image' %>
+      </div> <!-- /.caption -->
+    </div> <!-- /.thumbnail -->
+    </div> <!-- /.queued-photo -->
+  </li>
+  <% end %> <%# @evidence.book_photos.each do |photo| %>
+</ul>
+<% end %> <%# if @evidence.book_photos.present? %>
+<% end %> <%# form_for @evidence, etc. %>
