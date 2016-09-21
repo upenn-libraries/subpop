@@ -1,6 +1,6 @@
 class ContextImage < ActiveRecord::Base
   include Publishable
-  include HasPhoto
+  include BelongsToPhoto
   include UserFields
 
   belongs_to :book, required: true, inverse_of: :context_images

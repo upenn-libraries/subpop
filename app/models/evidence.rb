@@ -1,6 +1,6 @@
 class Evidence < ActiveRecord::Base
   include Publishable
-  include HasPhoto
+  include BelongsToPhoto
   include UserFields
 
   attr_accessor :context_photo_id

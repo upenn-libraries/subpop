@@ -2,7 +2,7 @@
 # This concern is included in models that belong to a photo: Evidence,
 # TitlePage, and ContextImage.
 #
-module HasPhoto
+module BelongsToPhoto
   extend ActiveSupport::Concern
 
   included do
