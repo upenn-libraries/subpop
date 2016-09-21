@@ -1,5 +1,6 @@
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', book: @book, evidence: @evidence, allow_edit: true %>
+  <%= render '/evidence/context_image', evidence: @evidence, allow_edit: true %>
 <% end -%>
 
 <%# create the modals, we'll refer to them below -%>
