@@ -96,15 +96,15 @@ class Cropping::PhotosController < ApplicationController
     @photo.assign_attributes photo_params
 
     # @photo.image = @photo.data_url
-    if @photo.save
-      respond_to do |format|
+    respond_to do |format|
+      if @photo.save
         format.html { redirect_to @parent }
         format.js {
           redirect_to parent_thumbnail_path(@parent,@photo),  format: :js
         }
+      else
+        format.html { render :edit }
       end
-    else
-      format.html { render :edit }
     end
   end
 
