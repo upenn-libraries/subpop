@@ -58,7 +58,7 @@ label.required:after
 .image-use
   width: 150px
 
-ul.image-queue
+ul.image-list
   li
     vertical-align: top
 
@@ -90,6 +90,10 @@ ul.image-queue
 // these will be :thumb size, sometimes :small. Make sure they always look
 // like :thumb size.
 .queued-photo
+  .panel-body
+    min-width: 262px
+    min-height: 290px
+    max-height: 290px
   .thumb
     max-height: 190px
     max-width: 190px
@@ -112,11 +116,23 @@ a.anchor
 .btn-group-status
   width: 125px
 
-.queued-photo
+.light-box-photo
+  text-align: center
+  .thumbnail
+    border: 0 none
+    box-shadow: none
   .panel-body
-    min-width: 262px
-    min-height: 290px
+    min-width: 190px
+    min-height: 200px
     max-height: 290px
+  .thumb
+    max-height: 190px
+    max-width: 190px
+    .img-responsive
+      max-height: 100% // override .img-responsive `height: auto`
+      max-width: 100%
+    img
+      display: inline-block
 
 // Style the autocomplete drop down menu
 .ui-autocomplete
