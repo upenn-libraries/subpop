@@ -1,6 +1,7 @@
 class ContextImagesController < ApplicationController
   before_action :set_photo, only: :find_by_photo
   before_action :set_context_image, only: [:show, :destroy]
+  before_action :set_book, only: [:destroy]
 
   authorize_resource only: [:show]
 
@@ -13,7 +14,7 @@ class ContextImagesController < ApplicationController
   # DELETE /evidence/1
   # DELETE /evidence/1.json
   def destroy
-    @context_image.update_by current_user
+    @context_image.save_by current_user
     @context_image.mark_deleted
     DeletePublishableJob.perform_later @context_image, current_user
     respond_to do |format|
