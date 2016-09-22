@@ -1,7 +1,8 @@
 class EvidenceController < ApplicationController
+  include LinkToContextImage
+
   before_action :set_book, only: [ :new, :create, :destroy ]
   before_action :set_evidence, only: [:show, :edit, :update, :destroy, :choose_context_image, :update_context_image ]
-  before_action :set_context_image, only: [:update_context_image]
 
   authorize_resource
 
@@ -64,7 +65,7 @@ class EvidenceController < ApplicationController
   # DELETE /evidence/1.json
   def destroy
     @evidence.requeue_photo
-    @evidence.update_by current_user
+    @evidence.save_by current_user
     @evidence.mark_deleted
     DeletePublishableJob.perform_later @evidence, current_user
     respond_to do |format|
@@ -74,12 +75,18 @@ class EvidenceController < ApplicationController
   end
 
   def choose_context_image
+    respond_to do |format|
+      format.html { render layout: !request.xhr? }
+    end
   end
 
   def update_context_image
+    link_to_context_image @evidence, evidence_params[:context_photo_id]
+
     respond_to do |format|
       if @evidence.update_by current_user, context_image: @context_image
         format.html { redirect_to @evidence }
+        format.js
       else
         format.html { render :choose_context_image }
       end
@@ -98,12 +105,6 @@ class EvidenceController < ApplicationController
 
     def set_book
       @book = Book.find(params[:book_id])
-    end
-
-    def set_context_image
-      return unless evidence_params[:context_photo_id].present?
-      photo = Photo.find evidence_params[:context_photo_id]
-      @context_image = ContextImage.find_or_create_by photo_id: photo.id, book_id: photo.book_id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -17,6 +17,9 @@ $ ->
             $('#' + modal_id).modal('show')
 
 
+    $(document).on 'submit', 'form#link_to_context_image', (event) ->
+        $(this).closest('.modal').modal('hide')
+        return true
 
     $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
 

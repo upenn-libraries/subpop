@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :evidence, only: [ :show, :update, :edit, :index ] do
-    patch 'update_context_image', on: :member
+    patch 'update_context_image', on: :member, as: 'link_context_image_to'
     get 'choose_context_image', on: :member
     resources :thumbnails, only: :show
   end

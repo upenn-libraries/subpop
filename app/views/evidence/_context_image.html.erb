@@ -1,27 +1,25 @@
 <% allow_edit ||= false %>
-<div id="context-image">
-  <h3><%= t 'headers.evidence.context_image' %></h3>
-  <% if evidence.context_image.present? %>
+<h3><%= t 'headers.evidence.context_image' %></h3>
+<% if evidence.context_image.present? %>
 
-    <div class="thumbnail pull-right">
-      <div class="thumb-container">
-        <%= render '/thumbnails/show', parent: evidence.context_image, thumbnail: evidence.context_image_photo %>
-      </div> <!-- /.thumb-container -->
-    </div> <!-- /.thumbnail -->
+  <div class="thumbnail pull-right">
+    <div class="thumb-container">
+      <%= render '/thumbnails/show', parent: evidence.context_image, thumbnail: evidence.context_image_photo %>
+    </div> <!-- /.thumb-container -->
+  </div> <!-- /.thumbnail -->
 
-    <% if allow_edit %>
-      <%= form_for @evidence, url: update_context_image_evidence_path(evidence), method: :patch do |f|  %>
-      <%= f.hidden_field :context_photo_id, value: nil %>
-      <%= f.submit t('links.evidence.unlink_from_context_image'), class: 'btn btn-link' %>
-      <% end %> <%# form_for @evidence, url: update_... %>
-      <%= link_to t('links.evidence.link_to_context_image'), choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
-    <% end %> <%# if allow_edit %>
+  <% if allow_edit %>
+    <%= form_for evidence, url: link_context_image_to_evidence_path(evidence), method: :patch, remote: true do |f|  %>
+    <%= f.hidden_field :context_photo_id, value: nil %>
+    <%= f.submit t('links.evidence.unlink_from_context_image'), class: 'btn btn-link' %>
+    <% end %> <%# form_for @evidence, url: update_... %>
+    <%= link_to t('links.evidence.link_to_context_image'), choose_context_image_evidence_path(@evidence), class: 'btn btn-link modal-link', data: { 'modal-id': 'context-image-modal' }, remote: true %>
+  <% end %> <%# if allow_edit %>
 
-  <% else %> <%# if evidence.context_image.present? %>
+<% else %> <%# if evidence.context_image.present? %>
 
-    <% if allow_edit %>
-      <%= link_to t('links.evidence.link_to_context_image'), choose_context_image_evidence_path(@evidence), class: 'btn btn-link' %>
-    <% end %> <%# if allow_edit %>
+  <% if allow_edit %>
+    <%= link_to t('links.evidence.link_to_context_image'), choose_context_image_evidence_path(@evidence), class: 'btn btn-link modal-link', data: { 'modal-id': 'context-image-modal' }, remote: true %>
+  <% end %> <%# if allow_edit %>
 
-  <% end %> <%# if evidence.context_image.present? %>
-</div>
+<% end %> <%# if evidence.context_image.present? %>

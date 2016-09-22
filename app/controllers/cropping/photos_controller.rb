@@ -35,6 +35,7 @@
 class Cropping::PhotosController < ApplicationController
   include ApplicationHelper
   include PolymorphicParent
+  include LinkToContextImage
 
   before_action :set_or_create_parent
   before_action :set_parent_type,   only:   [:new, :create]
@@ -46,6 +47,7 @@ class Cropping::PhotosController < ApplicationController
 
     @photo = build_photo @parent, photo_params
     @photo.image_file_name = @source_photo.image_file_name
+    link_to_context_image @parent, @source_photo.id
 
     if @photo.save
       # we have to save non-Books with the new photo

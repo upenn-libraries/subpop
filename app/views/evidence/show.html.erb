@@ -1,12 +1,15 @@
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', book: @book, evidence: @evidence, allow_edit: true %>
-  <%= render '/evidence/context_image', evidence: @evidence, allow_edit: true %>
+  <div id="context-image">
+    <%= render '/evidence/context_image', evidence: @evidence, allow_edit: true %>
+  </div>
 <% end -%>
 
 <%# create the modals, we'll refer to them below -%>
 <% content_for :modals do -%>
   <%= render '/flickr/preview_modal' -%>
   <%= render '/cropping/photos/cropper_modal' %>
+  <%= render '/evidence/context_image_modal' %>
 <% end -%>
 
 <% content_for :footer, @evidence.full_name -%>

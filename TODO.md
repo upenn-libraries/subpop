@@ -2,10 +2,15 @@
 
 ## Scratch
 
-Rename concern HasPhoto -> BelongsToPhoto
+Automatically create context image for cropped photos
 
-Remove cropped? chekcing for display of context image options on evidence pages
+Fix cropped photo selector page layout
 
+Add sidebar prompt to choose title page images
+
+Fix 'Remove link to page image' -- doesn't remove link; takes user to choose page where linked cannot be deselect
+
+Delete action for publishables removes 'Delete' button from all publishables
 
 # Image editing
 
@@ -134,3 +139,4 @@ x - set cropped modal max size to window size?
 x - upload image to app
 x - create/update image
 x - when updating photo show progress bar for image in status element -->
+<!-- x - Rename concern HasPhoto -> BelongsToPhoto -->
