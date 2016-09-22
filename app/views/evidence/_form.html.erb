@@ -59,6 +59,17 @@
     </div>
   </div>
 
+  <h3>Whose mark is it?</h3>
+
+  <p><span class="help-block">
+  Add names of people and organization identifiable in this provenance mark.
+  </span></p>
+
+  <%= f.fields_for :provenance_agents do |agent| %>
+    <%= render 'provenance_agent_fields', f: agent %>
+  <% end %>
+  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus"></span>', f, :provenance_agents, class: "btn btn-default", title: "Add a name" %>
+
   <h3>What does it say?</h3>
 
   <div class="form-group">
@@ -71,34 +82,31 @@
     <div class="col-sm-8"><%= f.text_area :translation, class: "form-control" %></div>
   </div>
 
-  <h3>When?</h3>
+  <h3>When was it made?</h3>
 
-  <div class="form-group">
+  <div class="row">
     <%= f.label :year_when, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
+    <div class="col-sm-2">
       <%= f.number_field :year_when, class: "form-control" %>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :year_start, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= f.number_field :year_start, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :year_end, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= f.number_field :year_end, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :date_narrative, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
+    <%= f.label :date_narrative, class: "col-sm-2 control-label" %>
+    <div class="col-sm-4">
       <%= f.text_field :date_narrative, class: "form-control" %>
     </div>
   </div>
 
-  <h3>Where?</h3>
+
+
+<div class="row">
+    <%= f.label :year_start, class: "col-sm-3 control-label" %>
+     <div class="col-sm-5 input-group">
+      <%= f.number_field :year_start, class: "form-control" %>
+    <span class="input-group-addon">to</span>
+      <%= f.number_field :year_end, class: "form-control" %>
+    </div>
+</div>
+
+  <h3>Where was it made?</h3>
 
   <p>
     <span class="help-block">
@@ -112,16 +120,7 @@
     <div class="col-sm-8"><%= f.text_field :where, class: "form-control" %></div>
   </div>
 
-  <h3>Who?</h3>
 
-  <p><span class="help-block">
-  Add names of people and organization identifiable in this provenance mark.
-  </span></p>
-
-  <%= f.fields_for :provenance_agents do |agent| %>
-    <%= render 'provenance_agent_fields', f: agent %>
-  <% end %>
-  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus"></span>', f, :provenance_agents, class: "btn btn-default", title: "Add a name" %>
 
   <h3>Comments</h3>
   <div class="form-group">

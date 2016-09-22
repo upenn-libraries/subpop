@@ -13,58 +13,32 @@
   <% end %>
 
 
-
-  <h3>Who has it?</h3>
-
   <div class="form-group">
     <%= f.label :repository, class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_field :repository, class: "form-control" %></div>
   </div>
-  <div class="form-group">
-    <%= f.label :geo_location, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :geo_location, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :acq_source, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :acq_source, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :owner, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= f.text_field :owner, class: "form-control" %>
-    </div>
-  </div>
-
-
-  <h3>How to find it?</h3>
-  <div class="form-group">
-    <%= f.label :call_number, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :call_number, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :vol_number, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :vol_number, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :catalog_url, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :catalog_url, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
+    <div class="form-group">
     <%= f.label :collection, class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_field :collection, class: "form-control" %></div>
   </div>
-  <div class="form-group">
-    <%= f.label :other_id_type, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :other_id_type, class: "form-control" %></div>
+   <div class="form-group">
+    <%= f.label :geo_location, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :geo_location, class: "form-control" %></div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :other_id, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :other_id, class: "form-control" %></div>
+
+  <div class="row">
+    <%= f.label :call_number, class: "col-sm-3 control-label"%>
+    <div class="col-sm-5"><%= f.text_field :call_number, class: "form-control" %></div>
+    <%= f.label :vol_number, class: "col-sm-1 control-label"%>
+    <div class="col-sm-2"><%= f.text_field :vol_number, class: "form-control" %></div>
   </div>
+<br>
 
-  <h3>What is it?</h3>
-
+   <div class="form-group">
+    <%= f.label :catalog_url, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :catalog_url, class: "form-control" %></div>
+  </div>
   <div class="form-group">
     <%= f.label :author, class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_field :author, class: "form-control" %></div>
@@ -77,20 +51,32 @@
     <%= f.label :creation_place, class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_field :creation_place, class: "form-control" %></div>
   </div>
-  <div class="form-group">
-    <%= f.label :creation_date, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.number_field :creation_date, class: "form-control" %></div>
+
+  <div class="row">
+      <%= f.label :creation_date, class: "col-sm-3 control-label" %>
+      <div class="col-sm-2"><%= f.number_field :creation_date, class: "form-control" %></div>
+      <%= f.label :date_narrative, class: "col-sm-2 control-label" %>
+      <div class="col-sm-4"><%= f.text_field :date_narrative, class: "form-control" %></div>
   </div>
-  <div class="form-group">
-    <%= f.label :date_narrative, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8"><%= f.text_field :date_narrative, class: "form-control" %></div>
-  </div>
+
+
   <div class="form-group">
     <%= f.label :publisher, class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_field :publisher, class: "form-control" %></div>
   </div>
+  <div class="form-group">
+    <%= f.label :acq_source, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8"><%= f.text_field :acq_source, class: "form-control" %></div>
+  </div>
 
-  <h3>Upload provenance images from this book:</h3>
+
+
+
+
+
+
+
+  <h2>Step 2: Upload provenance images from this book:</h2>
 
   <div class="form-group">
     <%= f.label :images, class: "col-sm-3 control-label" %>

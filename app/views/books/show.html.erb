@@ -1,6 +1,9 @@
 <% content_for :sidebar do -%>
   <div id="title-pages">
-    <%= render '/books/small_title_page_photos', book: @book -%>
+
+
+  <%= render '/books/small_title_page_photos', book: @book -%>
+
   </div>
 <% end -%>
 
@@ -23,30 +26,20 @@
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
 
-<h3>Who has it?</h3>
-
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :repository %></div>
   <div class="col-sm-6 field-value"><%= @book.repository %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :collection %></div>
+  <div class="col-sm-6 field-value"><%= @book.collection %></div>
 </div>
 
 <div class="row field-group",>
   <div class="col-sm-4 field-label"><%= human_name @book, :geo_location %></div>
   <div class="col-sm-6 field-value"><%= @book.geo_location %></div>
 </div>
-
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @book, :acq_source %></div>
-  <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
-</div>
-
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @book, :owner %></div>
-  <div class="col-sm-6 field-value"><%= @book.owner %></div>
-</div>
-
-
-<h3>How to find it?</h3>
 
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :call_number %></div>
@@ -62,23 +55,6 @@
   <div class="col-sm-4 field-label"><%= human_name @book, :catalog_url %></div>
   <div class="col-sm-6 field-value"><%= @book.catalog_url %></div>
 </div>
-
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @book, :collection %></div>
-  <div class="col-sm-6 field-value"><%= @book.collection %></div>
-</div>
-
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @book, :other_id_type %></div>
-  <div class="col-sm-6 field-value"><%= @book.other_id_type %></div>
-</div>
-
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @book, :other_id %></div>
-  <div class="col-sm-6 field-value"><%= @book.other_id %></div>
-</div>
-
-<h3>What is it?</h3>
 
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book,  :author %></div>
@@ -109,7 +85,10 @@
   <div class="col-sm-4 field-label"><%= human_name @book, :publisher %></div>
   <div class="col-sm-6 field-value"><%= @book.publisher %></div>
 </div>
-
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :acq_source %></div>
+  <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
+</div>
 
 <h3>Title page, evidence images</h3>
 <div id="publishables-list">
