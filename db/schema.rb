@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920220833) do
+ActiveRecord::Schema.define(version: 20160922015210) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,   null: false
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20160920220833) do
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
     t.integer  "book_id",              limit: 4
+    t.integer  "evidence_count",       limit: 4
   end
 
   add_index "context_images", ["book_id"], name: "index_context_images_on_book_id", using: :btree

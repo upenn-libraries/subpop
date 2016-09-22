@@ -31,7 +31,7 @@ class Book < ActiveRecord::Base
   end
 
   def publishables
-    title_pages.active + context_images.active + evidence.active
+    title_pages.active + context_images.used + evidence.active
   end
 
   def full_call_number

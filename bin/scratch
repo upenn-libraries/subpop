@@ -7,8 +7,10 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
+rails generate migration add_evidenc_count_to_context_images \
+  evidence_count:integer
 
-rails generate migration set_default_false_on_deleted_in_context_images
+# rails generate migration set_default_false_on_deleted_in_context_images
 
 # rails generate migration remove_book_id_from_context_images \
 #   book_id:integer \

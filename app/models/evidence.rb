@@ -6,7 +6,7 @@ class Evidence < ActiveRecord::Base
   attr_accessor :context_photo_id
 
   belongs_to :book, required: true, inverse_of: :evidence
-  belongs_to :context_image, inverse_of: :evidence
+  belongs_to :context_image, inverse_of: :evidence, counter_cache: true
 
   has_many :evidence_content_types, dependent: :destroy
   has_many :content_types, through: :evidence_content_types

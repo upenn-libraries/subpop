@@ -9,6 +9,8 @@ class ContextImage < ActiveRecord::Base
 
   delegate :full_name, to: :book, prefix: true, allow_nil: true
 
+  scope :used, -> { active.where 'evidence_count > 0'}
+
   def name
     return "context image" unless book_full_name.present?
     "context image of #{book_full_name}"
