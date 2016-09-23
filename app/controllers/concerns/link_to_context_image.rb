@@ -14,5 +14,4 @@ module LinkToContextImage
 
     @context_image = ContextImage.find_or_create_by! photo_id: photo.id, book_id: photo.book_id
   end
-
 end

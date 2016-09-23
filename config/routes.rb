@@ -12,13 +12,13 @@ Rails.application.routes.draw do
     resources :context_images, only: :destroy
   end
 
+  resources :page_context, only: [:show,:edit,:update]
+
   resources :title_pages, only: [:show] do
     resources :thumbnails, only: :show
   end
 
   resources :evidence, only: [ :show, :update, :edit, :index ] do
-    patch 'update_context_image', on: :member, as: 'link_context_image_to'
-    get 'choose_context_image', on: :member
     resources :thumbnails, only: :show
   end
 

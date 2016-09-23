@@ -1,7 +1,7 @@
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', book: @book, evidence: @evidence, allow_edit: true %>
   <div id="context-image">
-    <%= render '/evidence/context_image', evidence: @evidence, allow_edit: true %>
+    <%= render '/page_context/show', evidence: @evidence, allow_edit: true %>
   </div>
 <% end -%>
 
@@ -9,7 +9,7 @@
 <% content_for :modals do -%>
   <%= render '/flickr/preview_modal' -%>
   <%= render '/cropping/photos/cropper_modal' %>
-  <%= render '/evidence/context_image_modal' %>
+  <%= render '/page_context/context_image_modal' %>
 <% end -%>
 
 <% content_for :footer, @evidence.full_name -%>

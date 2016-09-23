@@ -1,5 +1,4 @@
 class EvidenceController < ApplicationController
-  include LinkToContextImage
 
   before_action :set_book, only: [ :new, :create, :destroy ]
   before_action :set_evidence, only: [:show, :edit, :update, :destroy, :choose_context_image, :update_context_image ]
@@ -71,25 +70,6 @@ class EvidenceController < ApplicationController
     respond_to do |format|
       format.js
       format.html { redirect_to @book, notice: 'Evidence was deleted.' }
-    end
-  end
-
-  def choose_context_image
-    respond_to do |format|
-      format.html { render layout: !request.xhr? }
-    end
-  end
-
-  def update_context_image
-    link_to_context_image @evidence, evidence_params[:context_photo_id]
-
-    respond_to do |format|
-      if @evidence.update_by current_user, context_image: @context_image
-        format.html { redirect_to @evidence }
-        format.js
-      else
-        format.html { render :choose_context_image }
-      end
     end
   end
 

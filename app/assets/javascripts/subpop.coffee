@@ -24,8 +24,10 @@ $ ->
     $(document).on 'subpop.processing', '.thumb-container', ->
         $thumb = $(this).find '.thumb'
 
-
-
+    # In modals, have links with 'dismiss-modal' just dismiss the modal on
+    # click event.
+    $(document).on 'shown.bs.modal', '.modal', (event) ->
+        $(this).find('.dismiss-modal').attr('data-dismiss', 'modal')
 
     $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
 
