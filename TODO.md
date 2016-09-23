@@ -2,13 +2,9 @@
 
 ## Scratch
 
-Automatically create context image for cropped photos
-
-Fix cropped photo selector page layout
+Automatically display context image created for cropped photos
 
 Add sidebar prompt to choose title page images
-
-Fix 'Remove link to page image' -- doesn't remove link; takes user to choose page where linked cannot be deselect
 
 Delete action for publishables removes 'Delete' button from all publishables
 
