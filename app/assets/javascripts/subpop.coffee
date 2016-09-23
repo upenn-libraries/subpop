@@ -21,6 +21,12 @@ $ ->
         $(this).closest('.modal').modal('hide')
         return true
 
+    $(document).on 'subpop.processing', '.thumb-container', ->
+        $thumb = $(this).find '.thumb'
+
+
+
+
     $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
 
     $(document).on 'click', 'a', (event) ->
@@ -30,6 +36,7 @@ $ ->
         $(selector).removeClass('processing')
         clearInterval(interval)
         delete $.polled_urls[url] unless $.polled_urls is undefined
+        $(selector).trigger 'subpop.processed'
 
     is_polling_url = (url) ->
         return false if $.polled_urls is undefined
@@ -82,6 +89,8 @@ $ ->
         delay           = 1000 # milliseconds
         timeout_seconds = 1000
         max_intervals   = (delay * 1000) / timeout_seconds
+
+        $(selector).trigger 'subpop.processing'
 
         count = 0
         interval = setInterval(
