@@ -39,14 +39,14 @@ class Cropping::PhotosController < ApplicationController
 
   before_action :set_or_create_parent
   before_action :set_parent_type,   only:   [:new, :create]
-  before_action :set_photo,         except: [:new, :create]
   before_action :set_source_photo,  only:   [:new, :create]
+  before_action :set_photo,         except: [:new, :create]
 
   def create
     authorize! :update, @source_photo
 
     @photo = build_photo @parent, photo_params
-    @photo.image_file_name = @source_photo.image_file_name
+    set_original_details @photo, @source_photo
     link_to_context_image @parent, @source_photo.id
 
     if @photo.save
@@ -116,6 +116,12 @@ class Cropping::PhotosController < ApplicationController
     return unless parent.persisted?
     return if parent.is_a? Book
     @parent.update_attributes photo: photo
+  end
+
+  def set_original_details photo, source_photo
+    photo.image_file_name = source_photo.image_file_name
+    return if photo.original.present?
+    photo.original = source_photo
   end
 
   def set_photo

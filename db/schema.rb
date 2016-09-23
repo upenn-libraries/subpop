@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922015210) do
+ActiveRecord::Schema.define(version: 20160923150458) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,   null: false
@@ -150,7 +150,10 @@ ActiveRecord::Schema.define(version: 20160922015210) do
     t.integer  "book_id",            limit: 4
     t.boolean  "image_processing"
     t.boolean  "in_queue",                       default: true
+    t.integer  "original_id",        limit: 4
   end
+
+  add_index "photos", ["original_id"], name: "index_photos_on_original_id", using: :btree
 
   create_table "provenance_agents", force: :cascade do |t|
     t.string   "role",        limit: 255

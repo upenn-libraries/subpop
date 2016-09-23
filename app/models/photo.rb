@@ -2,6 +2,11 @@ class Photo < ActiveRecord::Base
 
   belongs_to :book,           inverse_of: :photos
 
+  # Join photo to self. A photo can belong to an original, and inversely an
+  # original can have many derivatives.
+  belongs_to :original,    class_name: 'Photo', inverse_of: :derivatives
+  has_many   :derivatives, class_name: 'Photo', inverse_of: :original, foreign_key: :original_id, dependent: :nullify
+
   # We nullify here, when photos are deleted. This makes possible deleting an
   # entire book, which may choose to delete photos before evidence, etc.
   # Without :nullify a foreign key constraint will be violated when the photo
