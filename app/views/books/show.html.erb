@@ -25,7 +25,8 @@
 <% if can? :update, @book -%>
 <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
-
+<br>
+<br>
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :repository %></div>
   <div class="col-sm-6 field-value"><%= @book.repository %></div>
