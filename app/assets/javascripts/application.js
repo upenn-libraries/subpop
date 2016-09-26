@@ -19,6 +19,7 @@
 //= require autocomplete-rails
 //= require bootstrap-multiselect
 //= require cropper
+//= require page_context
 //= require evidence
 //= require photos
 //= require subpop
