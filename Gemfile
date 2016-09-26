@@ -1,6 +1,6 @@
  source 'https://rubygems.org'
 
-ruby '2.2.4'
+ruby '2.2.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
@@ -9,6 +9,9 @@ gem 'rails', '4.2.5'
 gem 'mysql2', '~> 0.3.18'
 
 gem 'bootstrap-sass', '~> 3.3.5'
+
+gem 'font-awesome-rails'
+
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails', '~> 6.3.1'
 
@@ -31,6 +34,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rails-jquery-autocomplete', '~> 1.0.3'
+
+gem 'jquery-cropper', '~> 2.3.2'
 
 # authentication
 gem 'devise', '~> 4.1.1'
@@ -76,14 +81,14 @@ group :development, :test do
   gem 'spring', '~> 1.6.2'
 
   gem 'spring-commands-rspec', '~> 1.0.4'
-  gem 'rspec-rails', '~> 3.4.2'
+  gem 'rspec-rails', '~> 3.4'
   gem 'guard-rspec', '~> 4.6.4'
   gem 'dotenv-rails', '~> 2.1.0'
   gem 'factory_girl_rails', '~> 4.6.0', require: false
   gem 'database_cleaner', '~> 1.5.1'
-  gem 'poltergeist', '~> 1.9.0'
+  gem 'poltergeist', '~> 1.9'
   gem 'launchy', '~> 2.4.3' # save_and_open_page functionality
-  gem 'capybara', '~> 2.7.1'
+  gem 'capybara', '~> 2.7'
   gem 'capybara-screenshot', '~> 1.0.13'
   gem 'simplecov', '~> 0.11.2', :require => false
 end

@@ -25,8 +25,6 @@ module Publishable
   IN_PROCESS  = "in-process"
 
   included do
-    before_destroy :delete_from_flickr
-
     has_one :publication_data, as: :publishable, inverse_of: :publishable,
       dependent: :destroy
     accepts_nested_attributes_for :publication_data
@@ -34,6 +32,8 @@ module Publishable
     delegate :updated_at,   to: :book,             prefix: true,  allow_nil: true
     delegate :published_at, to: :publication_data, prefix: false, allow_nil: true
     delegate :flickr_id,    to: :publication_data, prefix: false, allow_nil: true
+    delegate :full_name,    to: :book,             prefix: true,  allow_nil: true
+    delegate :cropped?,     to: :photo,            prefix: true,  allow_nil: true
 
     scope :active, -> { where deleted: false }
   end

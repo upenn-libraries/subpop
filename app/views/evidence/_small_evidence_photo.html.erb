@@ -1,3 +1,19 @@
 <% if evidence.photo.present? -%>
-  <%= render '/photos/small_photos', book: book, items: [ evidence ] %>
-<% end -%>
+  <% image_size ||= :small %>
+  <% allow_edit ||= false %>
+  <div class="thumbnail">
+    <div class="thumb-container">
+      <%= render '/thumbnails/show', parent: evidence, thumbnail: evidence.photo, image_size: image_size %>
+    </div> <!-- /.thumb-container -->
+    <div class="caption clearfix">
+      <% if allow_edit && can?(:update, evidence)  %>
+      <div class="pull-left edit-photo-container">
+        <%= render 'photos/edit_photo_link', item: evidence, photo: evidence.photo %>
+      </div> <!-- /.pull-left -->
+      <% end %> <%# /if can? :update, evidence %>
+      <% if evidence.on_flickr? -%>
+      <a target="_blank" rel="noopener noreferrer" href="<%= evidence.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+      <% end -%> <%# /if evidence.on_flickr? %>
+    </div> <!-- /.caption -->
+  </div>  <!-- /.thumbnail -->
+<% end -%> <%# if evidence.photo.present? %>

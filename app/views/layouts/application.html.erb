@@ -91,5 +91,11 @@
       </div>
     </nav>
     </div> <!-- /container -->
+    <%# Fix cropping spec by removing '.fade' class from cropper-modal. %>
+    <% if Rails.env == 'test' %>
+    <script type="text/javascript">
+      $('#cropper-modal').removeClass('fade');
+    </script>
+    <% end %>
   </body>
 </html>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810213511) do
+ActiveRecord::Schema.define(version: 20160923150458) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -48,11 +48,12 @@ ActiveRecord::Schema.define(version: 20160810213511) do
     t.integer  "book_id",              limit: 4
     t.integer  "photo_id",             limit: 4
     t.boolean  "publishing_to_flickr"
-    t.boolean  "deleted"
+    t.boolean  "deleted",                        default: false
     t.integer  "created_by_id",        limit: 4
     t.integer  "updated_by_id",        limit: 4
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "evidence_count",       limit: 4
   end
 
   add_index "context_images", ["book_id"], name: "index_context_images_on_book_id", using: :btree
@@ -96,9 +97,11 @@ ActiveRecord::Schema.define(version: 20160810213511) do
     t.integer  "created_by_id",         limit: 4
     t.integer  "updated_by_id",         limit: 4
     t.text     "translation",           limit: 65535
+    t.integer  "context_image_id",      limit: 4
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree
+  add_index "evidence", ["context_image_id"], name: "index_evidence_on_context_image_id", using: :btree
   add_index "evidence", ["photo_id"], name: "index_evidence_on_photo_id", using: :btree
 
   create_table "evidence_content_types", force: :cascade do |t|
@@ -137,7 +140,10 @@ ActiveRecord::Schema.define(version: 20160810213511) do
     t.integer  "book_id",            limit: 4
     t.boolean  "image_processing"
     t.boolean  "in_queue",                       default: true
+    t.integer  "original_id",        limit: 4
   end
+
+  add_index "photos", ["original_id"], name: "index_photos_on_original_id", using: :btree
 
   create_table "provenance_agents", force: :cascade do |t|
     t.string   "role",        limit: 255
@@ -203,6 +209,7 @@ ActiveRecord::Schema.define(version: 20160810213511) do
   add_foreign_key "context_images", "books"
   add_foreign_key "context_images", "photos"
   add_foreign_key "evidence", "books"
+  add_foreign_key "evidence", "context_images"
   add_foreign_key "evidence", "photos"
   add_foreign_key "evidence_content_types", "content_types"
   add_foreign_key "evidence_content_types", "evidence"

@@ -1,8 +1,13 @@
 <h2>New <span id="evidence-format-heading"><%= @evidence.format_name -%></span></h2>
 
 <% content_for :sidebar do -%>
-  <%= render 'small_evidence_photo', book: @book, evidence: @evidence %>
+  <%= render 'small_evidence_photo', book: @book, evidence: @evidence, allow_edit: true %>
+  <div id="context-image"></div>
 <% end -%>
+
+<% content_for :modals do %>
+  <%= render '/cropping/photos/cropper_modal' %>
+<% end %>
 
 <% content_for :footer, @evidence.full_name -%>
 

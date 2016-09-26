@@ -1,9 +1,12 @@
 class Evidence < ActiveRecord::Base
   include Publishable
-  include HasPhoto
+  include BelongsToPhoto
   include UserFields
 
+  attr_accessor :context_photo_id
+
   belongs_to :book, required: true, inverse_of: :evidence
+  belongs_to :context_image, inverse_of: :evidence, counter_cache: true
 
   has_many :evidence_content_types, dependent: :destroy
   has_many :content_types, through: :evidence_content_types
@@ -13,6 +16,10 @@ class Evidence < ActiveRecord::Base
   has_many :names, through: :provenance_agents
   accepts_nested_attributes_for :provenance_agents, allow_destroy: true,
     reject_if: proc { |attributes| attributes['name_id'].blank? }
+
+  delegate :photos,   to: :book,          prefix: true, allow_nil: true
+  delegate :photo,    to: :context_image, prefix: true, allow_nil: true
+  delegate :photo_id, to: :context_image, prefix: true, allow_nil: true
 
   FORMATS = [
              [ 'Binding',                      'binding' ],
@@ -61,9 +68,6 @@ class Evidence < ActiveRecord::Base
 
   validates :format_other,          absence: true, unless: :has_other_format?
   validates :location_in_book_page, absence: true, unless: :located_on_page?
-
-  delegate :full_name, to: :book, prefix: true, allow_nil: true
-
 
   def full_name
     sprintf "%s, %s", (format_name || 'New evidence'), book_full_name

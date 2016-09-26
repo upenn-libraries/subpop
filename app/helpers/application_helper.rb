@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include SubpopFormTagHelper
 
   def human_name obj, attr
     obj && obj.class.human_attribute_name(attr) || ''
@@ -46,6 +47,24 @@ module ApplicationHelper
     image_tag item.image.url(:thumb), class: 'img-thumbnail'
   end
 
+  def parent_thumbnail_path parent, photo, options={}
+    unless parent.persisted?
+      parent_type = parent.model_name.plural
+      return thumbnail_path photo, options.merge(parent_type: parent_type)
+    end
+
+    case parent
+    when Book
+      book_thumbnail_path          parent, photo, options
+    when TitlePage
+      title_page_thumbnail_path    parent, photo, options
+    when Evidence
+      evidence_thumbnail_path      parent, photo, options
+    when ContextImage
+      context_image_thumbnail_path parent, photo, options
+    end
+  end
+
   def link_to_delete_publishable book, item, options
     if item.processing?
       options[:disabled] = true
@@ -65,8 +84,10 @@ module ApplicationHelper
   end
 
   ##
-  # Returns a dasherized tag to add HTML id elements. For example, for an TitlePage object with `id` 6
-  def html_id_tag obj
+  # Returns a dasherized tag to add to HTML id elements. For example, for an
+  # TitlePage object with `id` 6, will retrun `title-page-6`
+  def html_id_for obj
+    return '' if obj.nil?
     "#{obj.model_name.element.dasherize}-#{obj.id}"
   end
 
@@ -96,6 +117,68 @@ module ApplicationHelper
     return if val == ''
 
     raw "<span class=\"help-block\">#{val}</span>"
+  end
+
+  # We don't call this 'thumbnail' because bootstrap has a 'thumbnail' class.
+  # A `thumb-container` is a `<div>` that contains a 'thumb` div, which
+  # itself conatins the actual content.
+  #
+  # The ThumbnailsController returns an html fragment containing a `thumb`.
+  # The `thumb` has `data` attributes that make possible finding it and its
+  # corresponding `thumb-container`. These are
+  #
+  #   'data-parent':       ID of the parent Book, Evidence, TitlePage, etc.,
+  #                        or 'new' if the parent has not been persisted
+  #
+  #   'data-parent-type':  plural underscore name of the parent; `books`,
+  #                        'evidence', etc. ('evidence' is uninflected)
+  #
+  #   'data-thumbnail':    ID of the photo
+  #
+  #   'data-source-photo': [`thumb` only] ID of the original photo
+  #
+  # When an image is edited and a new photo created, we want to dynamically
+  # display the new photo in the place of the one being replace. Since the new
+  # photo will have a new ID, we can't use its ID to find the right parent
+  # `thumb-container`. The `data-source-photo`, when present, is used to find
+  # the correct `div`.
+  #
+  # Valid options:
+  #
+  #   `:source_photo`: source photo ID
+  #
+  def thumb_div parent, photo, options={}, &block
+    attrs = {
+      'class':            'thumb',
+      'data-parent':      parent.id || 'new',
+      'data-parent-type': parent.model_name.plural,
+      'data-thumbnail':   photo.id,
+      'data-source-photo': source_photo_id(options)
+    }
+
+    content_tag 'div', attrs do
+      yield if block_given?
+    end
+  end
+
+  def edit_photo_div parent, photo, options={}, &block
+    attrs = {
+      'class':              'edit-photo',
+      'data-parent':        parent.id || 'new',
+      'data-parent-type':   parent.model_name.plural,
+      'data-thumbnail':     photo.id,
+      'data-source-photo':  source_photo_id(options)
+    }
+
+    content_tag 'div', attrs do
+      yield if block_given?
+    end
+  end
+
+  def source_photo_id options={}
+    return if options[:source_photo].blank?
+    return options[:source_photo].id if options[:source_photo].is_a?(Photo)
+    options[:source_photo]
   end
 
   ##

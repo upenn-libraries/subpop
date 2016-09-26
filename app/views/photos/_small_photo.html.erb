@@ -1,21 +1,23 @@
 <% image_size ||= :small %>
 <div class="thumbnail">
-  <%= link_to image_tag(item.photo.image.url(image_size),
-    class: 'img-responsive'), item.photo.image.url(:original),
-    target: '_blank', 'data-toggle' => 'tooltip',
-    title: 'Click to open in new window.' -%>
-  <% if item.is_a?(TitlePage) -%>
-
-  <% if can? :destroy, item %>
-  <div class="caption text-right">
-    <%= link_to 'Remove title page', book_title_page_path(book,item), method: :delete -%>
-  </div>
-  <% end %>
-
-  <% end -%>
+  <div class="thumb-container">
+    <%= render '/thumbnails/show', parent: item, thumbnail: item.photo, image_size: image_size %>
+  </div> <!-- /.thumb-container -->
+  <div class="caption clearfix">
+  <% if item.is_a? TitlePage -%>
+    <% if can? :destroy, item %>
+    <div class="pull-right">
+      <%= link_to 'Remove title page', book_title_page_path(item.book,item), method: :delete -%>
+    </div> <!-- /.pull-right -->
+    <% end %> <%# /if can? :destroy %>
+  <% end %> <%# /if item.is? TitlePage %>
+  <% if can? :update, item %>
+    <div class="pull-left edit-photo-container">
+      <%= render 'photos/edit_photo_link', item: item, photo: item.photo %>
+    </div> <!-- /.pull-left -->
+  <% end %> <%# /if can? :update, item %>
   <% if item.on_flickr? -%>
-  <div class="caption">
-    <p><a target="_blank" href="<%= item.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
-    </div>
-  <% end -%>
-</div>
+    <a target="_blank" rel="noopener noreferrer" href="<%= item.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+  <% end -%> <%# /if item.on_flickr? %>
+  </div> <!-- /.caption -->
+</div>  <!-- /.thumbnail -->

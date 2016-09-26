@@ -1,2 +1,2 @@
-class Flickr::EvidenceController < Flickr::BaseController
+class Flickr::EvidenceController < Flickr::PublishablesController
 end

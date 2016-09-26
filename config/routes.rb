@@ -8,14 +8,54 @@ Rails.application.routes.draw do
       patch 'restore_queue', on: :collection
     end
     resources :title_pages, only: [ :create, :destroy ]
+    resources :thumbnails, only: :show
+    resources :context_images, only: :destroy
   end
 
-  resources :title_pages, only: :show
+  resources :page_context, only: [:show,:edit,:update]
 
-  resources :evidence, only: [ :show, :update, :edit, :index ]
+  get '/page_context/find/:derivative_id' => 'page_context#find', as: 'find_page_context'
+
+  resources :title_pages, only: [:show] do
+    resources :thumbnails, only: :show
+  end
+
+  resources :evidence, only: [ :show, :update, :edit, :index ] do
+    resources :thumbnails, only: :show
+  end
 
   resources :names do
     get :autocomplete_name, on: :collection
+  end
+
+  resources :context_images, only: [] do
+    resources :thumbnails, only: :show
+  end
+
+  resources :thumbnails, only: :show
+
+  # Routes for cropping photos. Apart from :books, all resources are nested as
+  # a convention for passing the parent and photo to a single controller for
+  # universal handling of cropping and dynamic display of the edited images.
+  #
+  # The Cropping::PhotosController relies on the ThumbnailsController for
+  # display of edited photos.
+  #
+  # See `app/controllers/concerns/polymorphic_parent.rb` for details.
+  namespace :cropping do
+    resources :photos, only: [:new, :create]
+    resources :books, only: [] do
+      resources :photos, only: [ :edit, :update, :new, :create ]
+    end
+    resources :evidence, only: [] do
+      resources :photos, only: [ :edit, :update, :new, :create ]
+    end
+    resources :title_pages, only: [] do
+      resources :photos, only: [ :edit, :update, :new, :create ]
+    end
+    resources :context_images, only: [] do
+      resources :photos, only: [ :edit, :update, :create, :new ]
+    end
   end
 
   namespace :flickr do
@@ -33,7 +73,12 @@ Rails.application.routes.draw do
       post :create, on: :member
       get :status, on: :member
     end
-  end
+
+    resources :context_images, only: [ :show, :update, :destroy ] do
+      post :create, on: :member
+      get :status, on: :member
+    end
+ end
 
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
   devise_scope :user do

@@ -10,6 +10,7 @@
 <%# create the modals, we'll refer to them below -%>
 <% content_for :modals do -%>
   <%= render '/flickr/preview_modal' -%>
+  <%= render '/cropping/photos/cropper_modal' %>
 <% end -%>
 
 <% content_for :footer, @book.full_name -%>
@@ -17,7 +18,6 @@
 <% content_for :footer_right do -%>
   <%= render '/shared/update_status', object: @book  -%>
 <% end -%>
-
 
 <h2><span id="evidence-format-heading"><%= @book.full_name %></span></h3>
 

@@ -7,10 +7,22 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate migration add_user_stamps_to_publication_data \
-  created_by_id:integer \
-  updated_by_id:integer \
-  $generator_options
+rails generate migration add_original_id_to_photos \
+  original_id:integer
+
+# rails generate migration set_default_false_on_deleted_in_context_images
+
+# rails generate migration remove_book_id_from_context_images \
+#   book_id:integer \
+#   $generator_options
+
+# rails generate controller cropping/photos create edit update \
+#   $generator_options
+
+# rails generate migration add_user_stamps_to_publication_data \
+#   created_by_id:integer \
+#   updated_by_id:integer \
+#   $generator_options
 
 # rails generate model context_image \
 #   book:references \

@@ -5,7 +5,7 @@ class Flickr::BooksController < Flickr::BaseController
     respond_to do |format|
       create_publish_jobs
       format.js
-      format.html { redirect_to @book, notice: "Publishing all book images" }
+      format.html { redirect_to @item, notice: "Publishing all book images" }
     end
   end
 
@@ -15,7 +15,7 @@ class Flickr::BooksController < Flickr::BaseController
     respond_to do |format|
       create_publish_jobs
       format.js
-      format.html { redirect_to @book, notice: "Publishing all book images" }
+      format.html { redirect_to @item, notice: "Publishing all book images" }
     end
   end
 

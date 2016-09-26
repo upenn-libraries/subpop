@@ -9,7 +9,8 @@
           <% update_field = "#{object_name}name_id" %>
           <%# use autocomplete_field_tag because, we search the names and set the ID.  %>
           <%# autocomplete_field_tag 'name', f.object.name, autocomplete_name_name_evidence_index_path, class: "form-control", 'data-id-element' => "##{update_field}" %>
-          <%= text_field_tag 'name', f.object.name, class: 'form-control name-search', 'data-id-element': "##{update_field}"  -%>
+          <%= text_field_tag 'name', f.object.name, class: 'form-control name-search', data: { 'id-element': "##{update_field}" } -%>
+          <%= hint_tag f.object, :name -%>
         </div>
       </div>
       <div class="form-group">
