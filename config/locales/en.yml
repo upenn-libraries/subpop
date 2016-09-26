@@ -87,9 +87,8 @@ en:
       evidence:
         format_other: Enter name of other format type
         location_in_book_page: Enter the page, folio, or signature number
-        year_when: Exact year of evidence; e.g., 1876
-        date_narrative: "Text description of the date; e.g., '22
-          August 1876', 'c. 1875'"
+        year_when: "4 digit year"
+        date_narrative: "e.g., '22 August 1876', 'c. 1875'"
       provenance_agent:
         name: Search for the name and select it from the list. Personal names are listed last name first.
         role: Role
