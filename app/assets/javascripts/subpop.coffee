@@ -195,12 +195,16 @@ $ ->
             url = '/flickr/books/' + book_id + '/status'
             poll_process(url,div_id)
 
-    # If there's a new Publishable form (form#new_evidence, etd.) on the page,
-    # we have to change the photo_id (input#evidence_photo_id, etc.). This
-    # will probably only ever apply to Evidence, but we make the code general.
-    #
-    # Note that edited Publishables already have an assigned photo, so there's
-    # no photo_id form field to update.
+    ###
+
+    If there's a new Publishable form (formnew_evidence, etd.) on the page,
+    we have to change the photo_id (inputevidence_photo_id, etc.). This
+    will probably only ever apply to Evidence, but we make the code general.
+
+    Note that edited Publishables already have an assigned photo, so there's
+    no photo_id form field to update.
+
+    ###
     $.update_new_publishable_form = (thumb_html) ->
         possible_ids    = [
             'new_evidence', 'new_title_page', 'new_context_image'

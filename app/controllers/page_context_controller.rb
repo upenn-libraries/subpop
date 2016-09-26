@@ -7,8 +7,8 @@
 # `:derivative_id`.
 #
 # The `:derivative_id` method for locating the ContextImage is required on the
-# new Evidence page, the corresponding evidence of which cannot have been
-# assigned a ContextImage.
+# new Evidence page, as the evidence instance on that page is new and has no
+# `id`.
 class PageContextController < ApplicationController
   include LinkToContextImage
 
