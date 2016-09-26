@@ -1,8 +1,18 @@
 $ ->
+    #--------------------------------------------------------------------------
+    # Miscellaneous
+    #--------------------------------------------------------------------------
     $(document).on 'click', 'a[disabled="disabled"]', (event) ->
         event.preventDefault()
 
+    $(document).on 'click', 'a', (event) ->
+        $(this).tooltip('hide')
 
+    $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
+
+    #--------------------------------------------------------------------------
+    # Modals
+    #--------------------------------------------------------------------------
     $(document).on 'click', '.modal-link', (event) ->
         modal_id = $(this).attr('data-modal-id')
         modal_body_id = modal_id + '-body'
@@ -16,24 +26,45 @@ $ ->
             # events return, then the cause will need to be investigated.
             $('#' + modal_id).modal('show')
 
-
-    $(document).on 'submit', 'form#link_to_context_image', (event) ->
-        $(this).closest('.modal').modal('hide')
-        return true
-
-    $(document).on 'subpop.processing', '.thumb-container', ->
-        $thumb = $(this).find '.thumb'
-
     # In modals, have links with 'dismiss-modal' just dismiss the modal on
-    # click event.
+    # click event. This is intended to override default behavior that  would
+    # normally load the same page that lies behind the modal.
     $(document).on 'shown.bs.modal', '.modal', (event) ->
         $(this).find('.dismiss-modal').attr('data-dismiss', 'modal')
 
-    $('[data-toggle="tooltip"]').tooltip(container: 'body', trigger: 'hover')
 
-    $(document).on 'click', 'a', (event) ->
-        $(this).tooltip('hide')
+    ###
+    #--------------------------------------------------------------------------
+    # Polling
+    #--------------------------------------------------------------------------
 
+    Functions to handle page display for long running backgroupd jobs, like
+    the generation of image derivatives and jobs that that interact with the
+    Flickr API. See the documentation for `poll_process` for details.
+
+    ---
+    Custom polling events
+    ---
+
+    There are two custom events: `subpop.processing`, and `subpop.processed`.
+
+        `subpop.processing` - fired on `selector` when polling begins
+
+        `subpop.processed`  - fired on `selector` at the end of
+                             `stop_polling_process`
+
+    ###
+
+    ###
+
+    When invoked:
+
+      - removes 'processing' class from 'selector',
+      - clears the interval,
+      - deletes 'url' from the $.polled_urls array
+      - fires the 'subpop.processed' event on 'selector'
+
+    ###
     stop_polling_process = (interval,url,selector) ->
         $(selector).removeClass('processing')
         clearInterval(interval)
@@ -48,41 +79,47 @@ $ ->
         $.polled_urls = {} if $.polled_urls is undefined
         $.polled_urls[url] = true
 
-    # Poll a processing job (image derivative generation, publishing to Flickr,
-    # removing from Flickr) until done and then call a get. Arguments:
-    #
-    #    `selector`  for a div; it should have a class of 'processing' while
-    #                the processing is occuring; when polling stops the
-    #               'processing' class is is removed from the element
-    #
-    #     `url`      the URL to poll: should return JSON during the polling and then
-    #                respond to an http get request takes approprate action to
-    #                complete processing; see below for details
-    #
-    # The `url` should point to a resource that returns a JSON object with a
-    # boolean `processing` attribute that returns true as long as processing
-    # is running. The same URL should respond to a `$.get`  and return a
-    # partial which will replace the content of the <div>.
-    #
-    # Example:
-    #
-    #  `selector': `#publishable-evidence-75`
-    #
-    #  `url`: `'/flickr/status/evidence/75`
-    #
-    # The status action of the Flickr controller returns both JSON and a partial
-    # depending on the AJAX request. JSON is created via `status.jbuilder.coffee`:
-    #
-    #       json.merge! @item.attributes
-    #       json.processing @item.processing?
-    #
-    # `$.get` is responded to by `status.js.coffee`, which replaces the content of
-    # `$.#publishing-<ID>` with un updated status partial:
-    #
-    #     $('#publishable-' + <%= @item.id %>).html("<%= j \
-    #           render(partial: 'flickr/status', locals: { item: @item }) %>")
-    #
-    # It replaces the content of the <div> with
+    ###
+
+    Poll a processing job (image derivative generation, publishing to Flickr,
+    removing from Flickr) until done and then call a get. Arguments:
+
+       `selector`  for a div; it should have a class of 'processing' while
+                   the processing is occuring; when polling stops the
+                  'processing' class is is removed from the element
+
+        `url`      the URL to poll: should return JSON during the polling and then
+                   respond to an http get request takes approprate action to
+                   complete processing; see below for details
+
+    The `url` should point to a resource that returns a JSON object with a
+    boolean `processing` attribute that returns true as long as processing is
+    running. The same URL should respond to a `$.get`  and return a partial
+    which will replace the content of the <div>.
+
+    Example:
+
+     `selector': `publishable-evidence-75`
+
+     `url`: `'/flickr/status/evidence/75`
+
+    The status action of the Flickr controller returns both JSON and a partial
+    depending on the AJAX request. JSON is created via `status.jbuilder.coffee`:
+
+          json.merge! @item.attributes
+          json.processing @item.processing?
+
+    `$.get` is responded to by `status.js.coffee`, which replaces the content
+    of publishing-<ID>` with un updated status partial:
+
+        $('publishable-' + <%= @item.id %>).html("<%= j \
+              render(partial: 'flickr/status', locals: { item: @item }) %>")
+
+    Note that all polled `url`s are added to the  list of polled URL's
+    (`$.polled_urls`). Before polling begins, this list is checked. Polling is
+    not started on any `url` already in the list.
+
+    ###
     poll_process = (url,selector) ->
         # Don't run if we're already polling this url.
         return if is_polling_url(url)
@@ -119,20 +156,16 @@ $ ->
             delay)
         return
 
-    $('.queued-photo.processing').each ->
-        book_id  = $(this).attr('data-book')
-        photo_id = $(this).attr('data-photo')
-        div_id   = '#queued-photo-' + photo_id
-        url      = '/books/' + book_id + '/photos/' + photo_id
-        poll_process(url,div_id)
+    ###
+    #--------------------------------------------------------------------------
+    # Content specific polling functions
+    #--------------------------------------------------------------------------
 
-    $('.publishable-status.processing').each ->
-        item_id   = $(this).attr('data-item')
-        item_type = $(this).attr('data-item-type')
-        div_id    = '#' + $(this).attr('id')
-        url       = '/flickr/' + item_type + '/' + item_id + '/status'
-        poll_process(url,div_id)
+    These global functions commence polling for specific types of content.
+    They are made global so that they can be called from external js code
+    (especially `<action>.js` files returned by various controllers).
 
+    ###
     $.poll_publishable = (div_id) ->
         $div = $(div_id)
         item_id   = $div.attr('data-item')
@@ -164,7 +197,7 @@ $ ->
 
     # If there's a new Publishable form (form#new_evidence, etd.) on the page,
     # we have to change the photo_id (input#evidence_photo_id, etc.). This
-    # will probably only ever Evidence, but we make the code general.
+    # will probably only ever apply to Evidence, but we make the code general.
     #
     # Note that edited Publishables already have an assigned photo, so there's
     # no photo_id form field to update.
@@ -195,6 +228,55 @@ $ ->
         parent_name     = form_id.replace(/^new_/, '')
         $("form##{form_id} input##{parent_name}_photo_id").val(thumbnail_id)
 
+    ###
+
+    Return an array of IDs for thumbnail-related div `*-container` IDs in
+    order to replace the divs' content dynamically.
+
+    For example:
+
+    <div class="thumbnail">
+      <div class="thumb-container" id="ui-id-1">
+        <div class="thumb" data-parent="23" data-parent-type="evidence" data-thumbnail="190">
+          <a target="_blank" data-toggle="tooltip" rel="noopener noreferrer"
+              title="Click to open in new window."
+              href="/system/development/photos/images/000/000/190/original/BS_185_178204.jpg?1474661760">
+            <img class="img-responsive center-block"
+                src="/system/development/photos/images/000/000/190/small/BS_185_178204.jpg?1474661760"
+                alt="Bs 185 178204" />
+          </a>
+        </div> <!-- /.thumb -->
+      </div> <!-- /.thumb-container -->
+    <div> <!-- /.thumbnail -->
+
+    The `inner_klass` is used to find the container by its class by appending
+    `-container`. At present there are two types of containers: `div.thumb-
+    container` with a nested `div.thumb`, and similarly nested `div.edit-
+    photo-container` and `div.edit-photo`.
+
+    When a thumbnail image is replaced by a new one, the corresponding `edit-
+    photo` link is updated with the new photo ID.
+
+    The container div is located by finding the *existing* inner `div.thumb`
+    or `div .edit-photo` using the values provided by the *new* incoming `div`
+    in the `html` argument.
+
+    The incoming attributes are:
+
+    - `data-parent-type`   - `book`, `evidence`, `title-page`
+
+    - `data-parent`        - ID of the parent object, a number or `new` for
+                             a newly created evidence record
+
+    - `data-source-photo`  - used only for a new image, the ID of the source
+                             thumbnail
+
+    - `data-thumbnail`     - ID of the incoming thumbnail
+
+    The selector for the existing div uses these attributes: `data-parent-
+    type`, `data-parent`, `data-thumbnai`.
+
+    ###
     $.thumb_container_ids = (html, inner_klass) ->
         $new_div        = $($.parseHTML(html))
         parent_type     = $new_div.attr('data-parent-type')
@@ -206,17 +288,51 @@ $ ->
 
         selector        = inner_klass
         selector        = '.' + selector unless selector.match(/^\./)
-        container_sel   = selector + '-container'
         selector       += "[data-parent-type=#{parent_type}]"
         selector       += "[data-parent=#{parent_id}]"
         selector       += "[data-thumbnail=#{thumbnail_id}]"
+        container_sel   = selector + '-container'
         divs            = $(selector).closest(container_sel)
         $(div).attr('id') for div in divs
 
+    ###
+
+    On page load, start displaying processing details for any queud photo
+    being processed.
+
+    ###
+    $('.queued-photo.processing').each ->
+        book_id  = $(this).attr('data-book')
+        photo_id = $(this).attr('data-photo')
+        div_id   = '#queued-photo-' + photo_id
+        url      = '/books/' + book_id + '/photos/' + photo_id
+        poll_process(url,div_id)
+
+
+    ###
+
+    On page load, start displaying processing details for any publishable
+    being processed.
+
+    ###
+    $('.publishable-status.processing').each ->
+        item_id   = $(this).attr('data-item')
+        item_type = $(this).attr('data-item-type')
+        div_id    = '#' + $(this).attr('id')
+        url       = '/flickr/' + item_type + '/' + item_id + '/status'
+        poll_process(url,div_id)
+
+    ###
+
+    Function to set unique IDs on `.thumb-container` and `.edit-photo-
+    container` divs.
+
+    ###
     $.set_unique_ids = ->
         $('.thumb-container').uniqueId()
         $('.edit-photo-container').uniqueId()
 
+    # On page load, set unique IDs
     $.set_unique_ids()
 
     # $(document).ready(ready)

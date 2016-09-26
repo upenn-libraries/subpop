@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   resources :page_context, only: [:show,:edit,:update]
 
+  get '/page_context/find/:derivative_id' => 'page_context#find', as: 'find_page_context'
+
   resources :title_pages, only: [:show] do
     resources :thumbnails, only: :show
   end

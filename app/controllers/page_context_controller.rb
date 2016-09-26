@@ -1,10 +1,26 @@
+##
+# PageContextController is used to locate ContextImages for dynamic rediplay
+# on evidence pages following an image crop.
+#
+# The `show` action locates the ContextImage for the provided Evidence `:id`.
+# The `find` action locates the ContextImage for the provided Photo
+# `:derivative_id`.
+#
+# The `:derivative_id` method for locating the ContextImage is required on the
+# new Evidence page, the corresponding evidence of which cannot have been
+# assigned a ContextImage.
 class PageContextController < ApplicationController
   include LinkToContextImage
 
   before_action :set_evidence
+  before_action :set_derivative, only: [:find]
 
   def show
-    # TODO
+    @context_image = @evidence.context_image
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit
@@ -26,7 +42,22 @@ class PageContextController < ApplicationController
     end
   end
 
+  def find
+    @context_image = find_context_image @derivative
+    respond_to do |format|
+      # format.html
+      format.js
+    end
+  end
+
   private
+
+  def find_context_image derivative
+    return unless derivative.present?
+    return unless derivative.original_id.present?
+
+    ContextImage.find_by photo_id: derivative.original_id
+  end
 
   def evidence_params
     params.require(:evidence).permit(
@@ -36,6 +67,14 @@ class PageContextController < ApplicationController
   end
 
   def set_evidence
+    return if params[:id].blank?
+    return if params[:id] == 'new'
+
     @evidence = Evidence.find params[:id]
+  end
+
+  def set_derivative
+    return unless params[:derivative_id].present?
+    @derivative = Photo.find params[:derivative_id]
   end
 end

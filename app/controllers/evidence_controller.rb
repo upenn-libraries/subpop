@@ -107,6 +107,7 @@ class EvidenceController < ApplicationController
         :photo,
         :photo_id,
         :context_photo_id,
+        :context_image_id,
         content_type_ids: [],
         provenance_agents_attributes: [ :id, :name_id, :role, :_destroy ]
         )

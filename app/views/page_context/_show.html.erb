@@ -1,25 +1,27 @@
-<% allow_edit ||= false %>
+<% allow_edit     ||= false     %>
+<% context_image  ||= nil       %>
+<% evidence       ||= evidence  %>
 <h3><%= t 'headers.evidence.context_image' %></h3>
-<% if evidence.context_image.present? %>
+<% if context_image.present? %>
 
   <div class="thumbnail pull-right">
     <div class="thumb-container">
-      <%= render '/thumbnails/show', parent: evidence.context_image, thumbnail: evidence.context_image_photo %>
+      <%= render '/thumbnails/show', parent: context_image, thumbnail: context_image.photo %>
     </div> <!-- /.thumb-container -->
   </div> <!-- /.thumbnail -->
 
-  <% if allow_edit && can?(:update, evidence) %>
+  <% if evidence && allow_edit && can?(:update, evidence) %>
     <%= form_for evidence, url: page_context_path(evidence), method: :patch, remote: true do |f|  %>
     <%= f.hidden_field :context_photo_id, value: nil %>
     <%= f.submit t('links.evidence.unlink_from_context_image'), class: 'btn btn-link' %>
     <% end %> <%# form_for @evidence, url: update_... %>
-    <%= link_to t('links.evidence.link_to_context_image'), edit_page_context_path(@evidence), class: 'btn btn-link modal-link', data: { 'modal-id': 'context-image-modal' }, remote: true %>
+    <%= link_to t('links.evidence.link_to_context_image'), edit_page_context_path(evidence), class: 'btn btn-link modal-link', data: { 'modal-id': 'context-image-modal' }, remote: true %>
   <% end %> <%# if allow_edit %>
 
 <% else %> <%# if evidence.context_image.present? %>
 
-  <% if allow_edit && can?(:update, evidence) %>
-    <%= link_to t('links.evidence.link_to_context_image'), edit_page_context_path(@evidence), class: 'btn btn-link modal-link', data: { 'modal-id': 'context-image-modal' }, remote: true %>
+  <% if evidence && allow_edit && can?(:update, evidence) %>
+    <%= link_to t('links.evidence.link_to_context_image'), edit_page_context_path(evidence), class: 'btn btn-link modal-link', data: { 'modal-id': 'context-image-modal' }, remote: true %>
   <% end %> <%# if allow_edit %>
 
 <% end %> <%# if evidence.context_image.present? %>
