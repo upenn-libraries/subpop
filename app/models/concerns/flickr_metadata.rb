@@ -83,7 +83,15 @@ module FlickrMetadata
       extract_tag(self, attr_chain) || []
     }
 
-    tag_strings.uniq.map { |s| Flickr::Tag.new(raw: s) }
+    tag_strings << context_image_tag
+
+    tag_strings.compact.uniq.map { |s| Flickr::Tag.new(raw: s) }
+  end
+
+  def context_image_tag
+    s = "Page context ID-%d"
+    return sprintf(s, id)               if is_a? ContextImage
+    return sprintf(s, context_image_id) if respond_to? :context_image
   end
 
   ##
