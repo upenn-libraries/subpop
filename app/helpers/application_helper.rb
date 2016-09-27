@@ -208,4 +208,22 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+  ##
+  # Create select options for all users, marking as selected the options for
+  # `username`. If `username` is `all`, 'All users' will be selected. If
+  # `username` is `nil`, `current_user` will be selected.
+  def user_filter_options username=nil
+    user_list = User.by_name.map { |u| [u.username, u.username] }
+    user_list.unshift ['All users', 'all']
+
+    selected = get_user_filter username
+    options_for_select user_list, selected
+  end
+
+  def get_user_filter username=nil
+    return username.downcase if username.present?
+    return 'all' unless user_signed_in?
+    current_user.username
+  end
 end

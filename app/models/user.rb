@@ -10,6 +10,15 @@ class User < ActiveRecord::Base
   before_save :undelete,  if: :restore_account?
 
   validates :username, presence: true, uniqueness: true
+  # TODO exclude usernames 'all', 'admin', ???
+
+  scope :by_name, -> { order("coalesce(full_name, username)") }
+
+  def display_name
+    return full_name if full_name.present?
+
+    username
+  end
 
   # instead of deleting, indicate the user requested a delete & timestamp it
   def soft_delete
