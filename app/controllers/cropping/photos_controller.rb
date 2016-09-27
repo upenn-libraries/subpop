@@ -47,7 +47,8 @@ class Cropping::PhotosController < ApplicationController
 
     @photo = build_photo @parent, photo_params
     set_original_details @photo, @source_photo
-    link_to_context_image @parent, @source_photo.id
+
+    link_to_context_image @parent, @source_photo.id, no_clobber: true
 
     if @photo.save
       # we have to save non-Books with the new photo
