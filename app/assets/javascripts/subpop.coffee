@@ -202,7 +202,6 @@ $ ->
         for id in possible_ids
             do (id) ->
                 s = 'form#' + id
-                # alert($(s)[0].outerHTML)
                 if $('form#' + id).length
                     form_id = id
 
