@@ -48,7 +48,7 @@
       <% end -%>
 
       <% if can? :destroy, item -%>
-      <% unless controller_name == 'evidence' -%>
+      <% unless current_page?  controller: 'evidence' -%>
       <%= link_to_delete_publishable item.book, item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: "Delete #{item.publishable_format}" -%>
       <% end -%>
       <% end -%>
