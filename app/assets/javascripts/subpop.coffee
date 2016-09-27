@@ -20,15 +20,15 @@ $ ->
             $('#' + modal_body_id).html($(data))
             if (/cropper/i).test(modal_id)
                 $('#image').hide()
-            # Restoring modal('show') to callback. This is not now causing
+            # Returning modal('show') to callback. This is not now causing
             # dubplicate events. Sadly, I haven't figured out the reason for
             # the change to the desired behavior. Note that if duplicate
             # events return, then the cause will need to be investigated.
             $('#' + modal_id).modal('show')
 
-    # In modals, have links with 'dismiss-modal' just dismiss the modal on
-    # click event. This is intended to override default behavior that  would
-    # normally load the same page that lies behind the modal.
+    # In modals, have links with 'dismiss-modal' dismiss the modal on click
+    # event; that is, override default 'Cancel' behavior that would normally
+    # just load the page that already lies behind the modal.
     $(document).on 'shown.bs.modal', '.modal', (event) ->
         $(this).find('.dismiss-modal').attr('data-dismiss', 'modal')
 
@@ -41,35 +41,23 @@ $ ->
     Functions to handle page display for long running backgroupd jobs, like
     the generation of image derivatives and jobs that that interact with the
     Flickr API. See the documentation for `poll_process` for details.
-
-    ---
-    Custom polling events
-    ---
-
-    There are two custom events: `subpop.processing`, and `subpop.processed`.
-
-        `subpop.processing` - fired on `selector` when polling begins
-
-        `subpop.processed`  - fired on `selector` at the end of
-                             `stop_polling_process`
-
     ###
 
     ###
-
+    -- stop_polling_process
     When invoked:
 
       - removes 'processing' class from 'selector',
       - clears the interval,
       - deletes 'url' from the $.polled_urls array
-      - fires the 'subpop.processed' event on 'selector'
+      - fires the 'processed.subpop' event on 'selector'
 
     ###
     stop_polling_process = (interval,url,selector) ->
         $(selector).removeClass('processing')
         clearInterval(interval)
         delete $.polled_urls[url] unless $.polled_urls is undefined
-        $(selector).trigger 'subpop.processed'
+        $.fire_subpop_event selector, 'processed.subpop'
 
     is_polling_url = (url) ->
         return false if $.polled_urls is undefined
@@ -129,7 +117,7 @@ $ ->
         timeout_seconds = 1000
         max_intervals   = (delay * 1000) / timeout_seconds
 
-        $(selector).trigger 'subpop.processing'
+        $.fire_subpop_event selector, 'processing.subpop'
 
         count = 0
         interval = setInterval(
@@ -341,4 +329,29 @@ $ ->
     # On page load, set unique IDs
     $.set_unique_ids()
 
-    # $(document).ready(ready)
+    ###
+    ---------------------------------------------------------------------------
+    # EVENTS                                                                  #
+    ---------------------------------------------------------------------------
+
+    Fire `event` on `selector`.
+
+    There are three custom events:
+
+        `processing.subpop`    - fired on `selector` when polling/processing
+                                 begins
+
+        `processed.subpop`     - fired on `selector` at the end of
+                                 `stop_polling_process`
+
+        `replaced.html.subpop` - should be fired when the content of a div is
+                                 replaced
+
+    ###
+
+    $.fire_subpop_event = (selector, event) ->
+        $(selector).trigger event
+
+    $.replace_html = (selector, html) ->
+        $(selector).html(html)
+        $.fire_subpop_event selector, 'replaced.html.subpop'
