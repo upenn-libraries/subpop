@@ -90,8 +90,11 @@ module FlickrMetadata
 
   def context_image_tag
     s = "Page context ID-%d"
-    return sprintf(s, id)               if is_a? ContextImage
-    return sprintf(s, context_image_id) if respond_to? :context_image
+
+    return sprintf(s, id) if is_a? ContextImage
+    return                unless respond_to? :context_image
+    return                unless context_image.present?
+    return sprintf s, context_image_id
   end
 
   ##
