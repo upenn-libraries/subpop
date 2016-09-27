@@ -5,5 +5,4 @@ $.update_new_publishable_form(html)
 for container_id in $.thumb_container_ids(html, 'thumb')
     do (container_id) ->
         selector = '#' + container_id
-        $(selector).html(html)
-        $.fire_subpop_event selector, html
+        $.replace_html selector, html
