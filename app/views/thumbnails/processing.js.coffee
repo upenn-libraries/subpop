@@ -11,8 +11,7 @@ for container_id in $.thumb_container_ids(html, 'thumb')
     do (container_id) ->
         selector = '#' + container_id
         $(selector).attr('data-thumbnail', <%= @thumbnail.id %>)
-        $(selector).html(html)
-        $.replace_html selector, 'replaced.html.subpop'
+        $.replace_html selector, html
         $(selector).addClass('processing')
         $.poll_thumbnail(selector)
 
@@ -27,4 +26,4 @@ for container_id in $.thumb_container_ids(html, 'edit-photo')
     do (container_id) ->
         selector = '#' + container_id
         $(selector).attr('data-thumbnail', <%= @thumbnail.id %>)
-        $.replace_html selector, 'replaced.html.subpop'
+        $.replace_html selector, html
