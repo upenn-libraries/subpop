@@ -295,7 +295,9 @@ $ ->
         selector       += "[data-parent-type=#{parent_type}]"
         selector       += "[data-parent=#{parent_id}]"
         selector       += "[data-thumbnail=#{thumbnail_id}]"
-        container_sel   = selector + '-container'
+
+        container_sel   = inner_klass + '-container'
+        container_sel   = '.' + container_sel unless container_sel.match(/^\./)
         divs            = $(selector).closest(container_sel)
         $(div).attr('id') for div in divs
 
