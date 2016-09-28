@@ -1,0 +1,1 @@
+User.excluded_names = [ 'all', 'admin', 'system', 'sysadmin' ]

@@ -7,9 +7,12 @@ class User < ActiveRecord::Base
   # local attribute for account restoration
   attr_accessor :restore_account
 
+  cattr_accessor :excluded_names
+
   before_save :undelete,  if: :restore_account?
 
   validates :username, presence: true, uniqueness: true
+  validate :excluded_user_names
   # TODO exclude usernames 'all', 'admin', ???
 
   scope :by_name, -> { order("coalesce(full_name, username)") }
@@ -42,6 +45,14 @@ class User < ActiveRecord::Base
   # provide a custom message for a deleted account
   def inactive_message
     !deleted_at ? super : :deleted_account
+  end
+
+  def excluded_user_names
+    return unless username.present?
+    return unless excluded_names.present?
+    return unless excluded_names.include? username.strip.downcase
+
+    errors.add :username, 'is not allowed'
   end
 
 end
