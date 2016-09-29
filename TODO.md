@@ -2,21 +2,13 @@
 
 ## Scratch
 
-Automatically display context image created for cropped photos
-
 Add sidebar prompt to choose title page images
-
-Delete action for publishables removes 'Delete' button from all publishables
 
 # Image editing
 
-
 # cropping
 
-
-
 - create context image
-
 
 ## Flickr
 
@@ -136,3 +128,6 @@ x - upload image to app
 x - create/update image
 x - when updating photo show progress bar for image in status element -->
 <!-- x - Rename concern HasPhoto -> BelongsToPhoto -->
+<!-- Automatically display context image created for cropped photos -->
+<!-- Do not attach context image on crop if one is already assigned -->
+<!-- Delete action for publishables removes 'Delete' button from all publishables -->

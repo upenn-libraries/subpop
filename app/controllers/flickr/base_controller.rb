@@ -103,7 +103,10 @@ class Flickr::BaseController < ApplicationController
   end
 
   def get_item
-    @item = item_class.find params[:id] if item_class == Book
-    @item = item_class.includes(:book).find params[:id]
+    if item_class == Book
+      @item = item_class.find params[:id]
+    else
+      @item = item_class.includes(:book).find params[:id]
+    end
   end
 end

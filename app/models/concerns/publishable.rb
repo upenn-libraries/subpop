@@ -30,6 +30,7 @@ module Publishable
     accepts_nested_attributes_for :publication_data
 
     delegate :updated_at,   to: :book,             prefix: true,  allow_nil: true
+    delegate :updated_at,   to: :photo,            prefix: true,  allow_nil: true
     delegate :published_at, to: :publication_data, prefix: false, allow_nil: true
     delegate :flickr_id,    to: :publication_data, prefix: false, allow_nil: true
     delegate :full_name,    to: :book,             prefix: true,  allow_nil: true
@@ -181,18 +182,19 @@ module Publishable
   end
 
   ##
-  # Returns whether model or book has changed since publication. Always
-  # returns `true` if the flickr ID column is empty; otherwise, returns true
-  # if the model's or book's update timestamp is newer than the publication
-  # timestamp plus one second.
+  # Return whether `last_updated` (see `#last_updated`) has changed since
+  # publication. Always returns `true` if the flickr ID column is empty;
+  # otherwise, returns true if `last_updated` timestamp is newer than
+  # `published_at` timestamp plus one second.
+  #
+  # NOTES:
   #
   # Not sure whether this method always gives the desired result -- is it
-  # possible that insignificant changes to the object will result in a repush
-  # or that?
+  # possible that insignificant changes to the object will result in a repush?
   #
-  # Note that 1 second is added to the published_at time. The update_at value
-  # for the `Publishable` model will always be at least a few millisceconds
-  # after the `published_at` value; as in this case, for example:
+  # One second is added to the published_at time. The updated_at value for the
+  # `Publishable` model will always be at least a few millisceconds after the
+  # `published_at` value; as in this case, for example:
   #
   #     publishable.update_attributes published_at: DateTime.now
   #
@@ -206,12 +208,9 @@ module Publishable
     last_updated > published_at + 1.second
   end
 
-  # Returns either the book's updated_at value or the publishable model's
-  # updated_at value, whichever is later.
+  ##
+  # Return the latest `updated_at` for model, photo, or book.
   def last_updated
-    return updated_at       if book_updated_at.blank?
-    return book_updated_at  if book_updated_at > updated_at
-
-    updated_at
+    [updated_at, book_updated_at, photo_updated_at].compact.max
   end
 end

@@ -5,7 +5,13 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.order("coalesce(repository, owner)").page params[:page]
+    filter = user_filter
+
+    if filter.present?
+      @books = Book.for_user(filter).order("coalesce(repository, owner)").page params[:page]
+    else
+      @books = Book.order("coalesce(repository, owner)").page params[:page]
+    end
   end
 
   # GET /books/1
@@ -73,6 +79,14 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def user_filter
+    return current_user if params[:user_filter].blank?
+    return              if params[:user_filter].strip =~ /^all$/i
+
+    User.find_by username: params[:user_filter]
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])

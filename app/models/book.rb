@@ -9,6 +9,10 @@ class Book < ActiveRecord::Base
   validates_presence_of :title
   accepts_nested_attributes_for :title_pages
 
+  scope :for_user, -> (user) {
+    where "created_by_id = ? or updated_by_id = ?",  user.id, user.id
+  }
+
   def holder
     return repository if repository.present?
     owner

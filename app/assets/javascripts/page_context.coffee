@@ -1,5 +1,5 @@
 $ ->
-    $(document).on 'subpop.processing', '.thumb-container', ->
+    $(document).on 'replaced.html.subpop', '.thumb-container', ->
         $thumb = $(this).find '.thumb'
         if $thumb.attr('data-parent-type') is 'evidence'
             if $thumb.attr('data-parent') is 'new'

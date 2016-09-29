@@ -8,6 +8,15 @@
 <% end -%>
 </div>
 
+<% if user_signed_in? %>
+  <%= form_tag books_path, method: :get, id: 'filter_by_user', class: 'form form-inline' do %>
+    <div class="form-group">
+      <%= label_tag :user_filter, 'Show books for user', class: 'control-label' %>
+      <%= select_tag :user_filter, user_filter_options(params[:user_filter]), class: 'form-control input-small' %>
+      </div>
+  <% end %>
+<% end %>
+
 <div class="top-buffer">
 <%= page_entries_info @books, :entry_name => 'book' %>
 </div>

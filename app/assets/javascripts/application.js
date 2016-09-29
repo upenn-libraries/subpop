@@ -22,6 +22,7 @@
 //= require page_context
 //= require evidence
 //= require photos
+//= require books
 //= require subpop
 //= require cropper-main
 //= require turbolinks

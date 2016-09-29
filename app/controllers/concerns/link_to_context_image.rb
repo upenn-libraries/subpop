@@ -1,8 +1,14 @@
 module LinkToContextImage
   extend ActiveSupport::Concern
 
-  def link_to_context_image item, source_photo_id
+  ##
+  # Link item to ContextImage if item responds to `:context_image=`.
+  #
+  # Use option `:no_clobber` to prevent reassignment.
+  def link_to_context_image item, source_photo_id, options={}
     return unless item.respond_to? :context_image=
+    return     if options[:no_clobber] && item.context_image.present?
+
     item.context_image = get_context_image source_photo_id
   end
 
