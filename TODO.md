@@ -4,18 +4,6 @@
 
 Add sidebar prompt to choose title page images
 
-# Image editing
-
-# cropping
-
-- create context image
-
-## Flickr
-
-- make sure flickrize_tags calculates correct tags for existing photos
-
-## Unordered list of stuff
-
 ### General
 
 Docker
@@ -24,10 +12,6 @@ Docker
   - logs
 
 SubPopFormbuilder: hints don't work for nest form objects
-
-Add exception notification
-
-Rename HasPhoto to BelongsToPhoto; it's confusing as it's named now.
 
 Set up permanent servers:
 
@@ -131,3 +115,13 @@ x - when updating photo show progress bar for image in status element -->
 <!-- Automatically display context image created for cropped photos -->
 <!-- Do not attach context image on crop if one is already assigned -->
 <!-- Delete action for publishables removes 'Delete' button from all publishables -->
+<!-- User model: exclude certain user names: 'all', 'admin', etc. -->
+<!-- Add exception notification -->
+<!-- - create context image -->
+<!-- ## Flickr
+
+- make sure flickrize_tags calculates correct tags for existing photos
+
+## Unordered list of stuff
+ -->
+ <!-- Rename HasPhoto to BelongsToPhoto; it's confusing as it's named now. -->

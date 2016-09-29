@@ -49,8 +49,8 @@ class User < ActiveRecord::Base
 
   def excluded_user_names
     return unless username.present?
-    excludes = excluded_names || []
-    return unless excludes.include? username.strip.downcase
+    return unless excluded_names.present?
+    return unless excluded_names.include? username.strip.downcase
 
     errors.add :username, 'is not allowed'
   end
