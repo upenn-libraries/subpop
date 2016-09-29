@@ -4,7 +4,7 @@
 <% content_for :sidebar do -%>
   <%= render 'small_evidence_photo', book: @book, evidence: @evidence, allow_edit: true %>
   <div id="context-image">
-    <%= render '/evidence/context_image', evidence: @evidence, context_image: @evidence.context_image, allow_edit: true %>
+    <%= render '/page_context/show', evidence: @evidence, context_image: @evidence.context_image, allow_edit: true %>
   </div>
 <% end -%>
 

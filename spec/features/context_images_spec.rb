@@ -27,6 +27,19 @@ RSpec.feature 'Context images', type: :feature, js: true do
     expect(page).not_to have_button 'Remove link to page image'
   end
 
+
+  scenario 'user edits evidence with a context image', type: :feature, js: true do
+    create_evidence_by 'testuser'
+    add_context_image_to_evidence_by 'testuser'
+    login_as 'testuser'
+
+    visit_evidence
+    click_link 'Edit'
+    fill_in 'Year', with: 1822
+    click_button 'Update Evidence'
+    expect(page).to have_content 'Evidence was successfully updated.'
+  end
+
   scenario 'user crops a new evidence', type: :feature, js: true do
     create_book_with_photo_by 'testuser'
     login_as 'testuser'
