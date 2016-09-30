@@ -1,5 +1,53 @@
 $ ->
     #--------------------------------------------------------------------------
+    # Global methods
+    #--------------------------------------------------------------------------
+    ###
+
+    Function to set unique IDs on `.thumb-container` and `.edit-photo-
+    container` divs.
+
+    ###
+    $.set_unique_ids = ->
+        $('.thumb-container').uniqueId()
+        $('.edit-photo-container').uniqueId()
+
+    # On page load, set unique IDs
+    $.set_unique_ids()
+
+    ###
+    ---------------------------------------------------------------------------
+    # EVENTS                                                                  #
+    ---------------------------------------------------------------------------
+
+    Fire `event` on `selector`.
+
+    There are three custom events:
+
+        `processing.subpop`    - fired on `selector` when polling/processing
+                                 begins
+
+        `processed.subpop`     - fired on `selector` at the end of
+                                 `stop_polling_process`
+
+        `replaced.html.subpop` - should be fired when the content of a div is
+                                 replaced
+
+    ###
+    $.fire_subpop_event = (selector, event_name) ->
+        $(selector).trigger event_name
+
+    ###
+
+    Replace html of `selector` with `html` and fire the `replaced.html.subpop`
+    event.
+
+    ###
+    $.replace_html = (selector, html) ->
+        $(selector).html(html)
+        $.fire_subpop_event selector, 'replaced.html.subpop'
+
+    #--------------------------------------------------------------------------
     # Miscellaneous
     #--------------------------------------------------------------------------
     $(document).on 'click', 'a[disabled="disabled"]', (event) ->
@@ -31,7 +79,6 @@ $ ->
     # just load the page that already lies behind the modal.
     $(document).on 'shown.bs.modal', '.modal', (event) ->
         $(this).find('.dismiss-modal').attr('data-dismiss', 'modal')
-
 
     ###
     #--------------------------------------------------------------------------
@@ -117,7 +164,7 @@ $ ->
         timeout_seconds = 1000
         max_intervals   = (delay * 1000) / timeout_seconds
 
-        $.fire_subpop_event selector, 'processing.subpop'
+        $.fire_subpop_event(selector, 'processing.subpop')
 
         count = 0
         interval = setInterval(
@@ -299,6 +346,7 @@ $ ->
         photo_id = $(this).attr('data-photo')
         div_id   = '#queued-photo-' + photo_id
         url      = '/books/' + book_id + '/photos/' + photo_id
+        # alert('Polling ' + url + ',' + div_id)
         poll_process(url,div_id)
 
 
@@ -314,43 +362,3 @@ $ ->
         div_id    = '#' + $(this).attr('id')
         url       = '/flickr/' + item_type + '/' + item_id + '/status'
         poll_process(url,div_id)
-
-    ###
-
-    Function to set unique IDs on `.thumb-container` and `.edit-photo-
-    container` divs.
-
-    ###
-    $.set_unique_ids = ->
-        $('.thumb-container').uniqueId()
-        $('.edit-photo-container').uniqueId()
-
-    # On page load, set unique IDs
-    $.set_unique_ids()
-
-    ###
-    ---------------------------------------------------------------------------
-    # EVENTS                                                                  #
-    ---------------------------------------------------------------------------
-
-    Fire `event` on `selector`.
-
-    There are three custom events:
-
-        `processing.subpop`    - fired on `selector` when polling/processing
-                                 begins
-
-        `processed.subpop`     - fired on `selector` at the end of
-                                 `stop_polling_process`
-
-        `replaced.html.subpop` - should be fired when the content of a div is
-                                 replaced
-
-    ###
-
-    $.fire_subpop_event = (selector, event) ->
-        $(selector).trigger event
-
-    $.replace_html = (selector, html) ->
-        $(selector).html(html)
-        $.fire_subpop_event selector, 'replaced.html.subpop'
