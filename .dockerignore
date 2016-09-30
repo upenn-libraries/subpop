@@ -1,6 +1,5 @@
-log
 .git
-tmp
-.bundle
-vendor/bundle
-Gemfile.lock
+.dockerignore
+.byebug_history
+/log/*
+/tmp/*
