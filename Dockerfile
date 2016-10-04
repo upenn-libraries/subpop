@@ -8,7 +8,9 @@ FROM ruby:2.2.5-slim
 MAINTAINER Doug Emery <emeryr@upenn.edu>
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
-  build-essential libpq-dev
+  libmysqlclient-dev \
+  build-essential \
+  libpq-dev
 
 ENV INSTALL_PATH /subpop
 

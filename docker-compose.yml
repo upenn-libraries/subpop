@@ -1,23 +1,32 @@
-db:
-  image: mysql/mysql-server:5.7
-  env_file: .docker-environment
-  ports:
-    - "3306:3306"
-web:
-  build: .
-  env_file: .docker-environment
-  volumes:
-    - .:/subpop
-  ports:
-    - "3000:3000"
-  links:
-    - db
+version: '2'
 
-delayedjob:
-  build: .
-  links:
-    - db
-  volumes:
-    - .:/subpop
-  env_file: .docker-environment
-  command: bundle exec rake jobs:work
+services:
+  db:
+    image: mysql/mysql-server:5.7
+    env_file: .docker-environment
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'db:/var/lib/mysql'
+
+  web:
+    depends_on:
+      - 'db'
+    build: .
+    volumes:
+      - .:/subpop
+    ports:
+      - "3000:3000"
+    env_file: .docker-environment
+
+  delayedjob:
+    depends_on:
+      - 'db'
+    command: bundle exec rake jobs:work
+    build: .
+    volumes:
+      - .:/subpop
+    env_file: .docker-environment
+
+volumes:
+  db:
