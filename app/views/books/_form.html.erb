@@ -74,7 +74,7 @@
     <div class="col-sm-8"><%= file_field_tag "image[]".to_sym, accept: "image/jpeg", multiple: true, class: "form-control" %></div>
   </div>
 
-   <div class="actions">
+  <div class="actions">
     <% if action_name == 'new' -%>
     <%= link_to 'Cancel', books_path, class: "btn btn-default" %>
     <% else -%>
