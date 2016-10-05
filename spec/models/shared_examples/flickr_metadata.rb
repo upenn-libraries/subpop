@@ -6,8 +6,8 @@ shared_examples_for 'flickr_metadata' do
   let(:photo_info) { JSON::load(photo_json) }
 
   def add_flickr_data item
-    item.flickr_id = photo_info['id']
-    item.flickr_info = photo_json
+    item.build_publication_data(flickr_id: photo_info['id'],
+      metadata: photo_json)
   end
 
   it "has a Flickr title" do

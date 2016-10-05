@@ -39,7 +39,9 @@ RSpec.describe BooksController, type: :controller do
 
   describe "GET #index" do
     it "assigns all books as @books" do
-      book = Book.create! valid_attributes
+      # Accommodate filtering by users: we have to make books owned by @admin;
+      # otherwise, `assigns` will be `[]`.
+      book = Book.create! valid_attributes.merge(created_by: @admin, updated_by: @admin)
       get :index, {}, valid_session
       expect(assigns(:books)).to eq([book])
     end

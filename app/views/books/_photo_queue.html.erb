@@ -1,4 +1,4 @@
-<ul class="list-inline image-queue">
+<ul class="list-inline image-list">
   <% photos.each do |photo| %>
   <li>
     <div class="panel panel-default">
@@ -16,8 +16,8 @@
           target: '_blank', 'data-toggle' => 'tooltip',
           title: 'Click to open in new window.' -%>
           <br/>
-          <% end %> <%# form_tag %>
+          <% end %> <%# end: form_tag %>
     </div>  <!-- /panel -->
-  </div>  <!-- /list-inline image-queue -->
+  </div>  <!-- /list-inline image-list -->
   <% end %> <%# books.photos.each %>
 </ul>

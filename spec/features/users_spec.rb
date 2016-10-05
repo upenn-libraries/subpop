@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Users", type: :feature, js: true do
   scenario 'admin creates user' do
-    login_as 'admin', admin: true
+    login_as 'adminx', admin: true
 
     # go to the users page and create a new user
     click_link 'Users'
@@ -29,7 +29,7 @@ RSpec.feature "Users", type: :feature, js: true do
       full_name: 'MF Doom',
       email: 'viktorvaugn@example.com',
       admin: true)
-    login_as 'admin', admin: true
+    login_as 'adminx', admin: true
 
     # go to the user edit page
     click_link 'Users'
@@ -59,14 +59,14 @@ RSpec.feature "Users", type: :feature, js: true do
       full_name: 'MF Doom',
       email: 'viktorvaugn@example.com',
       admin: false)
-    login_as 'admin', admin: true
+    login_as 'adminx', admin: true
 
     # go to the user edit page and cancel the account
     click_link 'Users'
     find('tr', text: 'doom').click_link 'Edit'
     click_button 'Cancel account'
     expect(page).to have_content "Cancelled account 'doom'."
-    click_link 'admin'
+    click_link 'adminx'
     click_link 'Sign out'
 
     # user tries to sign in
@@ -84,7 +84,7 @@ RSpec.feature "Users", type: :feature, js: true do
     admin: false,
     deleted_at: Time.now)
 
-   login_as 'admin', admin: true
+   login_as 'adminx', admin: true
     # go to the user edit page and restore the account
     click_link 'Users'
     find('tr', text: 'doom').click_link 'Edit'
@@ -93,7 +93,7 @@ RSpec.feature "Users", type: :feature, js: true do
     # click_button 'Restore account'
     find("input[value='Restore account']").trigger 'click'
     expect(page).to have_content "Successfully updated user 'doom'."
-    click_link 'admin'
+    click_link 'adminx'
     click_link 'Sign out'
 
     # user signs in with restored account

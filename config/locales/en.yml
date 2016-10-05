@@ -109,3 +109,10 @@ en:
       all: "Not authorized to delete %{subject}."
     create:
       all: "Not authorized to create new %{subject}."
+  headers:
+    evidence:
+      context_image: Page image
+  links:
+    evidence:
+      link_to_context_image: 'Link to page image'
+      unlink_from_context_image: 'Remove link to page image'

@@ -9,10 +9,12 @@
 # `book_id`, `book` `flickr_id`, `flickr_info`, `published_at`, and
 # `publishing_to_flickr`.
 #
-# TODO: Consider creating a model PhotoInfo for connecting the photo to the
-# model and contain Flickr information shared by Evidence, TitlePage, and
-# Context (if it ever exists). This model would be then be managed by the
-# Publishable Concern.
+# Flickr informatino is stored in the PublicationData assocation. Each
+# Publishable may have one PublicationData. Upon initial publication, a
+# PublicationData object is created. It is then updated upon subsequent
+# updates to Flickr; and deleted if an item is unpublished. Any item on Flickr
+# should have an associated PublicationData instance.
+##
 module Publishable
   extend ActiveSupport::Concern
   include FlickrMetadata
@@ -23,37 +25,48 @@ module Publishable
   IN_PROCESS  = "in-process"
 
   included do
-    before_destroy :delete_from_flickr
-    delegate :updated_at, to: :book, prefix: true, allow_nil: true
+    has_one :publication_data, as: :publishable, inverse_of: :publishable,
+      dependent: :destroy
+    accepts_nested_attributes_for :publication_data
+
+    delegate :updated_at,   to: :book,             prefix: true,  allow_nil: true
+    delegate :updated_at,   to: :photo,            prefix: true,  allow_nil: true
+    delegate :published_at, to: :publication_data, prefix: false, allow_nil: true
+    delegate :flickr_id,    to: :publication_data, prefix: false, allow_nil: true
+    delegate :full_name,    to: :book,             prefix: true,  allow_nil: true
+    delegate :cropped?,     to: :photo,            prefix: true,  allow_nil: true
+
     scope :active, -> { where deleted: false }
   end
 
-  def publish!
+  def publish user_id
     return              unless publishable?
 
     # TODO: Changing to update_columns as a kludge in order to prevent
-    # changing the timestamp. Need to locking/in_process tracking to different
-    # object.
-    update_columns publishing_to_flickr: true
-    return publish_new! unless on_flickr?
+    # changing the timestamp. Need to add locking/in_process tracking to
+    # different object.
+    mark_in_process
+    return publish_new user_id unless on_flickr?
 
-    republish!
+    republish user_id
   end
 
-  def publish_new!
+  def publish_new user_id
     begin
-      client = Flickr::Client.connect!
+      client   = Flickr::Client.connect!
 
-      id     = client.upload(photo.image_data, upload_data)
-      info   = client.get_info id
-      update_attributes! flickr_id: id, flickr_info: info.to_json,
-        published_at: DateTime.now
+      id       = client.upload(photo.image_data, upload_data)
+      info     = client.get_info id
+
+      self.publication_data ||= PublicationData.new publishable: self
+      self.publication_data.assign_attributes flickr_id: id, metadata: info.to_json
+      self.publication_data.save_by! User.find user_id
     ensure
-      update_columns publishing_to_flickr: false
+      unmark_in_process
     end
   end
 
-  def republish!
+  def republish user_id
     begin
       client = Flickr::Client.connect!
       tags_to_remove.each do |tag|
@@ -66,10 +79,18 @@ module Publishable
       client.set_tags flickr_id, flickrize_tags(tags_from_object)
       client.set_meta flickr_id, metadata
       info = client.get_info flickr_id
-      update_attributes! flickr_info: info.to_json, published_at: DateTime.now
+
+      self.publication_data.assign_attributes metadata: info.to_json
+      self.publication_data.update_by! User.find user_id
     ensure
-      update_columns publishing_to_flickr: false
+      unmark_in_process
     end
+  end
+
+  def on_flickr?
+    # flickr_id is delegated to publication_data; flickr_id.present? returns
+    # true only if publication_data and publication_data.flickr_id are present
+    flickr_id.present?
   end
 
   ##
@@ -89,11 +110,15 @@ module Publishable
   end
 
   def mark_in_process
-    update_columns publishing_to_flickr: true unless publishing_to_flickr?
+    return if publishing_to_flickr? # already marked true
+
+    update_columns publishing_to_flickr: true
   end
 
   def unmark_in_process
-    update_columns publishing_to_flickr: false if publishing_to_flickr?
+    return unless publishing_to_flickr? # already marked false
+
+    update_columns publishing_to_flickr: false
   end
 
   def publishable_format
@@ -129,12 +154,21 @@ module Publishable
   #
   # **Does not save the attribute changes.** Caller must save or destroy the
   # model object.
-  def delete_from_flickr
-    if flickr_id.present?
+  def delete_from_flickr user_id
+    begin
+      # DE - 2016-08-05 change delete_from_flickr behavior to clear flickr data;
+      # previously, publication_data was deleted; changed to keep pub..n_data,
+      # but clear flickr_id and metadata. #on_flickr? changed to report presence
+      # of publication_data.flickr_id (handled by delegate; above)
+      return unless on_flickr?
+
       client = Flickr::Client.connect!
       client.delete flickr_id
       # remove all the flickr data
-      assign_attributes flickr_id: nil, flickr_info: nil, published_at: nil
+      self.publication_data.clear_flickr_data
+      self.publication_data.save_by! User.find user_id
+    ensure
+      unmark_in_process
     end
   end
 
@@ -147,18 +181,19 @@ module Publishable
   end
 
   ##
-  # Returns whether model or book has changed since publication. Always
-  # returns `true` if the flickr ID column is empty; otherwise, returns true
-  # if the model's or book's update timestamp is newer than the publication
-  # timestamp plus one second.
+  # Return whether `last_updated` (see `#last_updated`) has changed since
+  # publication. Always returns `true` if the flickr ID column is empty;
+  # otherwise, returns true if `last_updated` timestamp is newer than
+  # `published_at` timestamp plus one second.
+  #
+  # NOTES:
   #
   # Not sure whether this method always gives the desired result -- is it
-  # possible that insignificant changes to the object will result in a repush
-  # or that?
+  # possible that insignificant changes to the object will result in a repush?
   #
-  # Note that 1 second is added to the published_at time. The update_at value
-  # for the `Publishable` model will always be at least a few millisceconds
-  # after the `published_at` value; as in this case, for example:
+  # One second is added to the published_at time. The updated_at value for the
+  # `Publishable` model will always be at least a few millisceconds after the
+  # `published_at` value; as in this case, for example:
   #
   #     publishable.update_attributes published_at: DateTime.now
   #
@@ -167,17 +202,14 @@ module Publishable
   # be in the next second. Adding the second to published_at should catch those
   # cases.
   def changed_since_publication?
-    return true if flickr_id.blank?
+    return true unless on_flickr?
 
     last_updated > published_at + 1.second
   end
 
-  # Returns either the book's updated_at value or the publishable model's
-  # updated_at value, which ever is later.
+  ##
+  # Return the latest `updated_at` for model, photo, or book.
   def last_updated
-    return updated_at       if book_updated_at.blank?
-    return book_updated_at  if book_updated_at > updated_at
-
-    updated_at
+    [updated_at, book_updated_at, photo_updated_at].compact.max
   end
 end

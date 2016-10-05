@@ -1,10 +1,9 @@
 <div class="parent-div-id" data-parent-div="<%= publishable_div_id item -%>">
   <%# THUMBNAIL -%>
-  <div class="col-sm-2">
-    <%= link_to image_tag(item.photo.image.url(:thumb),
-      class: 'img-thumbnail'), item.photo.image.url(:original),
-      target: '_blank', 'data-toggle' => 'tooltip',
-      title: 'Click to open in new window.' -%>
+  <div class="col-sm-2 image">
+    <div class="thumb-container">
+      <%= render '/thumbnails/show', parent: item, thumbnail: item.photo, image_size: :thumb %>
+    </div>
   </div>
 
   <%# STATUS -%>
@@ -49,13 +48,13 @@
       <% end -%>
 
       <% if can? :destroy, item -%>
-      <% unless controller_name == 'evidence' -%>
+      <% unless params[:controller] == 'evidence' -%>
       <%= link_to_delete_publishable item.book, item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: "Delete #{item.publishable_format}" -%>
       <% end -%>
       <% end -%>
 
       <% if can? :read, item -%>
-      <%= link_to 'Preview', flickr_path(item), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right'} -%>
+      <%= link_to 'Preview', flickr_path(item), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right', 'modal-id': 'preview-modal' } -%>
       <% end -%>
 
       <% if can? :read, item -%>

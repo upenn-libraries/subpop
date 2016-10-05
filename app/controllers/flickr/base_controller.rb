@@ -13,14 +13,6 @@ class Flickr::BaseController < ApplicationController
     item_class.to_s.underscore
   end
 
-  def show
-    authorize! :read, @item
-
-    respond_to do |format|
-      format.html { render layout: !request.xhr? }
-    end
-  end
-
   def status
     authorize! :read, @item
 
@@ -92,8 +84,8 @@ class Flickr::BaseController < ApplicationController
     return unless item.publishable?
 
     item.mark_in_process
-    return UpdateFlickrJob.perform_later item if item.on_flickr?
-    AddToFlickrJob.perform_later item
+    return UpdateFlickrJob.perform_later item, current_user.id if item.on_flickr?
+    AddToFlickrJob.perform_later item, current_user.id
   end
 
   def create_unpublish_jobs
@@ -107,10 +99,14 @@ class Flickr::BaseController < ApplicationController
     return unless item.unpublishable?
 
     item.mark_in_process
-    RemoveFromFlickrJob.perform_later item
+    RemoveFromFlickrJob.perform_later item, current_user.id
   end
 
   def get_item
-    @item = item_class.find params[:id]
+    if item_class == Book
+      @item = item_class.find params[:id]
+    else
+      @item = item_class.includes(:book).find params[:id]
+    end
   end
 end

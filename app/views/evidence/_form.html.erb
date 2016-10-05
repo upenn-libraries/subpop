@@ -15,12 +15,14 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :photo_id -%>
-  <%= f.hidden_field :book_id %>
-  <p>
-    <strong>Book</strong>
-    <%= @evidence.book_full_name %>
-  </p>
+  <% if @evidence.new_record? %>
+  <%= f.hidden_field :photo_id %>
+  <% end %>
+
+  <div class="row field-group">
+  <div class="col-sm-3 field-label"><%= human_name @evidence, :book_full_name %></div>
+    <div class="col-sm-8 field-value"><%= @evidence.book_full_name %></div>
+  </div>
 
   <h3>What is it?</h3>
 

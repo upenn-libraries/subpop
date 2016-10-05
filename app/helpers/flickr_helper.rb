@@ -12,6 +12,8 @@ module FlickrHelper
       flickr_title_page_path item
     when Book
       flickr_book_path item
+    when ContextImage
+      flickr_context_image_path item
     end
   end
 

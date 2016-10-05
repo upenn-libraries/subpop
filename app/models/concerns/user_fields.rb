@@ -14,6 +14,7 @@ module UserFields
     delegate :username, to: :updated_by, prefix: true, allow_nil: true
   end
 
+  # Note that `#save_by` invokes `#save`, which does not take attributes.
   def save_by(user, *args, &block)
     self.created_by = user if !persisted?
     self.updated_by = user
@@ -21,9 +22,25 @@ module UserFields
     save *args, &block
   end
 
-  def update_by(user, *args, &block)
+  # Note that `#save_by!` invokes `#save!`, which does not take attributes.
+  def save_by!(user, *args, &block)
+    self.created_by = user if !persisted?
     self.updated_by = user
-    update *args, &block
+
+    save! *args, &block
   end
 
+  # Note that `#updated_by` invokes `#update`, which requires an `attributes`
+  # argument.
+  def update_by(user, attributes, &block)
+    self.updated_by = user
+    update attributes, &block
+  end
+
+  # Note that `#updated_by` invokes `#update`, which requires an `attributes`
+  # argument.
+  def update_by!(user, attributes, &block)
+    self.updated_by = user
+    update! attributes, &block
+  end
 end

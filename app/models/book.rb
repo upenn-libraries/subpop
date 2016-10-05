@@ -1,12 +1,17 @@
 class Book < ActiveRecord::Base
   include UserFields
 
-  has_many :photos, dependent: :destroy, inverse_of: :book
   has_many :title_pages, dependent: :destroy, inverse_of: :book
   has_many :evidence, dependent: :destroy, inverse_of: :book
+  has_many :context_images, dependent: :destroy, inverse_of: :book
+  has_many :photos, dependent: :destroy, inverse_of: :book
 
   validates_presence_of :title
   accepts_nested_attributes_for :title_pages
+
+  scope :for_user, -> (user) {
+    where "created_by_id = ? or updated_by_id = ?",  user.id, user.id
+  }
 
   def holder
     return repository if repository.present?
@@ -30,15 +35,24 @@ class Book < ActiveRecord::Base
   end
 
   def publishables
-    title_pages.active + evidence.active
+    title_pages.active + context_images.used + evidence.active
   end
 
-  def full_name
-    [ repository, call_number ].flat_map { |s|
+  def full_call_number
+    return '' unless call_number.present?
+
+    parts = [ repository, call_number ].flat_map { |s|
       s.present? ? s : []
     }.join ' '
   end
-  alias :full_call_number :full_name
+
+  def full_name
+    s = full_call_number
+    return s if s.present?
+
+    # If there is no call number, return the repository and title.
+    [ repository, title ].flat_map { |s| s.present? ? s : [] }.join ': '
+  end
 
   def volume_name
     return nil unless vol_number.present?
@@ -79,8 +93,8 @@ class Book < ActiveRecord::Base
     publishables.any? &:processing?
   end
 
-  def publish!
-    publishables.each { |item| item.publish! }
+  def publish
+    publishables.each { |item| item.publish }
   end
 
   def to_s

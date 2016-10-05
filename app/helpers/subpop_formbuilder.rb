@@ -1,5 +1,11 @@
 class SubpopFormbuilder < ActionView::Helpers::FormBuilder
 
+  def underscore_name
+    return @obect_name.to_s if object.blank?
+
+    object.model_name.element
+  end
+
   def text_field attribute, options={}
     super + hint(attribute, options)
   end
@@ -100,7 +106,7 @@ class SubpopFormbuilder < ActionView::Helpers::FormBuilder
   end
 
   def hint_text attribute, options={}
-    key = options[:hint_key] || "activerecord.hints.#{@object_name}.#{attribute}"
+    key = options[:hint_key] || "activerecord.hints.#{underscore_name}.#{attribute}"
     I18n.t key, default: ''
   end
 end

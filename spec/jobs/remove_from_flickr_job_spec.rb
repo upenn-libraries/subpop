@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RemoveFromFlickrJob, type: :job do
+  let(:user)     { create(:user) }
   let(:evidence) { create(:evidence) }
 
   it 'enquues the job' do
@@ -13,6 +14,6 @@ RSpec.describe RemoveFromFlickrJob, type: :job do
   it 'executes delete_from_flickr' do
     expect(evidence).to receive(:delete_from_flickr)
     expect(evidence).to receive(:save!)
-    described_class.perform_now evidence
+    described_class.perform_now evidence, user.id
   end
 end

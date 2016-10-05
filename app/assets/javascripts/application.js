@@ -15,7 +15,14 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require jquery-ui/autocomplete
+//= require jquery-ui/core
 //= require autocomplete-rails
-//= require turbolinks
-//= require_tree .
 //= require bootstrap-multiselect
+//= require cropper
+//= require page_context
+//= require evidence
+//= require photos
+//= require books
+//= require subpop
+//= require cropper-main
+//= require turbolinks

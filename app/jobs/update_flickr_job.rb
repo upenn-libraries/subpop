@@ -9,7 +9,7 @@ class UpdateFlickrJob < ActiveJob::Base
     job.arguments.first.unmark_in_process
   end
 
-  def perform publishable
-    publishable.republish!
+  def perform publishable, user_id
+    publishable.republish user_id
   end
 end

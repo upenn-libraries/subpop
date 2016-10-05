@@ -1,4 +1,3 @@
-# This will guess the User class
 FactoryGirl.define do
 
   factory :evidence do
@@ -20,8 +19,8 @@ FactoryGirl.define do
     where                 "Philadelphia"
     comments              "Text comments"
     photo
-    flickr_id             "25367313472"
-    flickr_info           IO.read(Rails.root.join 'spec', 'fixtures', 'flickr_photo.json')
+
+    association :publication_data, factory: :publication_data
   end
 
   factory :evidence_on_flickr, class: Evidence do

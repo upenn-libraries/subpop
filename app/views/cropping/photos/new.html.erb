@@ -1,0 +1,10 @@
+<% content_for :cropper_form do -%>
+<% form_args = [:cropping, (@parent.persisted? ? @parent : nil), @photo] %>
+  <%= form_for form_args, remote: true, class: 'form-horizontal' do |f|-%>
+  <%= f.hidden_field :data_url -%>
+  <%= hidden_field_tag :parent_type, @parent_type %>
+  <%= hidden_field_tag :source_photo_id, @source_photo.id -%>
+  <% end %><%# end: form_for %>
+<% end %><%# end: content_for -%>
+
+<%= render 'cropper', source_photo: @source_photo, parent: @parent %>

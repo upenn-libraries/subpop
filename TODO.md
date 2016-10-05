@@ -1,20 +1,8 @@
 # To-do items
 
-### For discussion
+## Scratch
 
-- Dates associated with names
-    + We want LC-style name entries, but we also want to have separate dates;
-      this is contradictory. How do we proceed? What about legacy data -- how
-      are those names formatted?
-
-- Format Other, and Other format field
-    + This has been added, but it is almost certainly bad. Users will likely
-      reject our categories and create their own, resulting in, for example,
-      variations on stamp and bookplate that are arbitrary and unsearchable.
-
-## Flickr
-
-## Unordered list of stuff
+Add sidebar prompt to choose title page images
 
 ### General
 
@@ -23,7 +11,7 @@ Docker
   - data volume for database
   - logs
 
-Add exception notification
+SubPopFormbuilder: hints don't work for nest form objects
 
 Set up permanent servers:
 
@@ -102,3 +90,38 @@ Provenance agents:
 
   - ?? Provenance place?
   - Hint? <-- Try this one. "Give a place named in the provenance mark or the location of the book at the time the mark was added." -->
+
+<!-- X - fit image in container
+
+x - Decide whether a used master image can be edited and how to behave if yes
+x
+x     - Option 1) If the image has been used for evidence or a title page, create
+x       a new photo object to assign to each publishable to which the image is
+x       attached
+x
+x     - Option 2) If the image has been used for evidence or a title page, create
+x       a new *master* photo and edit it.
+x
+x     - Option 3) Locking: Lock the master image if it has been used.
+x
+x     - Option 3a) Modified locking:  Lock master image, but allow it to be
+x       duplicated (this is about the same thing as Option 2).
+x
+x - set cropped modal max size to window size?
+x - upload image to app
+x - create/update image
+x - when updating photo show progress bar for image in status element -->
+<!-- x - Rename concern HasPhoto -> BelongsToPhoto -->
+<!-- Automatically display context image created for cropped photos -->
+<!-- Do not attach context image on crop if one is already assigned -->
+<!-- Delete action for publishables removes 'Delete' button from all publishables -->
+<!-- User model: exclude certain user names: 'all', 'admin', etc. -->
+<!-- Add exception notification -->
+<!-- - create context image -->
+<!-- ## Flickr
+
+- make sure flickrize_tags calculates correct tags for existing photos
+
+## Unordered list of stuff
+ -->
+ <!-- Rename HasPhoto to BelongsToPhoto; it's confusing as it's named now. -->

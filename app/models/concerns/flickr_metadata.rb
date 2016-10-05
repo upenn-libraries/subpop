@@ -1,3 +1,4 @@
+##
 # Module to be included in Publishable. Generates metadata for model object
 # for publication to Flickr.
 module FlickrMetadata
@@ -51,9 +52,10 @@ module FlickrMetadata
     what = if self.respond_to? :format_name
       format_name
     else
-      "#{self.model_name.human} image"
+      # DE 2016-09-20 don't append ' image' to avoid 'Context image image'
+      self.model_name.human
     end
-    [ book.full_name, what ].join ': '
+    [ book_full_name, what ].join ': '
   end
 
   def tags_to_add
@@ -81,7 +83,18 @@ module FlickrMetadata
       extract_tag(self, attr_chain) || []
     }
 
-    tag_strings.uniq.map { |s| Flickr::Tag.new(raw: s) }
+    tag_strings << context_image_tag
+
+    tag_strings.compact.uniq.map { |s| Flickr::Tag.new(raw: s) }
+  end
+
+  def context_image_tag
+    s = "Page context ID-%d"
+
+    return sprintf(s, id) if is_a? ContextImage
+    return                unless respond_to? :context_image
+    return                unless context_image.present?
+    return sprintf s, context_image_id
   end
 
   ##

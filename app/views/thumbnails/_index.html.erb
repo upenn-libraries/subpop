@@ -1,0 +1,7 @@
+<% if thumbnails.present? %>
+<ul class="list-inline">
+<% thumbnails.each do |photo| %>
+  <li><%= image_tag photo.image.url(:thumb), class: 'center-block' %>
+<% end %>
+</ul>
+<% end %>
