@@ -154,7 +154,8 @@ module Publishable
   #
   # **Does not save the attribute changes.** Caller must save or destroy the
   # model object.
-  def delete_from_flickr user_id
+  def delete_from_flickr user_id=nil
+    return unless user_id.present?
     begin
       # DE - 2016-08-05 change delete_from_flickr behavior to clear flickr data;
       # previously, publication_data was deleted; changed to keep pub..n_data,

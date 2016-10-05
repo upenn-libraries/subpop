@@ -177,6 +177,7 @@ rails generate migration add_translation_to_evidence \
 #       owner \
 #       collection \
 #       geo_location \
+#       acq_source \
 #       call_number \
 #       catalog_url \
 #       vol_number \

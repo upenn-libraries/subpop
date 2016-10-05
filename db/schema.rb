@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160923150458) do
 
-  create_table "bookmarks", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4,   null: false
-    t.string   "user_type",     limit: 255
-    t.string   "document_id",   limit: 255
-    t.string   "title",         limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "document_type", limit: 255
-  end
-
-  add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
-
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
     t.string   "owner",          limit: 255
@@ -46,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.integer  "created_by_id",  limit: 4
     t.integer  "updated_by_id",  limit: 4
     t.string   "date_narrative", limit: 255
+    t.string   "acq_source",     limit: 255
   end
 
   create_table "content_types", force: :cascade do |t|
@@ -56,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160923150458) do
   end
 
   create_table "context_images", force: :cascade do |t|
+    t.integer  "book_id",              limit: 4
     t.integer  "photo_id",             limit: 4
     t.boolean  "publishing_to_flickr"
     t.boolean  "deleted",                        default: false
@@ -63,7 +53,6 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.integer  "updated_by_id",        limit: 4
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
-    t.integer  "book_id",              limit: 4
     t.integer  "evidence_count",       limit: 4
   end
 
@@ -177,16 +166,6 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.integer  "created_by_id",    limit: 4
     t.integer  "updated_by_id",    limit: 4
   end
-
-  create_table "searches", force: :cascade do |t|
-    t.text     "query_params", limit: 65535
-    t.integer  "user_id",      limit: 4
-    t.string   "user_type",    limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
 
   create_table "test_table", primary_key: "field_binary", force: :cascade do |t|
   end

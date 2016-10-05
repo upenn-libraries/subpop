@@ -17,6 +17,8 @@
  *= require font-awesome
  */
 
+$body-bg: #fff9ec
+
 @import "bootstrap-sprockets"
 @import "bootstrap"
 
@@ -24,11 +26,29 @@ body
   padding-top: 70px
   padding-bottom: 70px
 
+.navbar-default
+  .navbar-brand
+    color: #8e231a
+    font-family:  Calisto MT, Bookman Old Style, Bookman, Goudy Old Style, Garamond, Hoefler Text, Bitstream Charter, Georgia, serif
+    font-size: 200%
+    line-height: 30px
+    padding: 10px 15px 10px 15px
+    height: 55px
+  .navbar-nav
+    height: 55px
+    ul
+    font-size: 120%
+    link-height: 60px
+
 .navbar-fixed-top
   margin-bottom: 20px
+  background-color: #fdf1d8
+  border-color: #8e231a
 
 .navbar-fixed-bottom
   margin-top: 20px
+
+.form-inline
 
 .field-group
   .field-label
@@ -179,3 +199,12 @@ a.anchor
       -webkit-border-radius: 0px
       -moz-border-radius: 0px
       background-image: none
+
+  .row
+    margin-left: -2px
+    margin-right: -2px
+
+  .input-group
+    margin-left: -2px
+    margin-right: -2px
+
