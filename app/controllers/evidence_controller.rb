@@ -97,6 +97,7 @@ class EvidenceController < ApplicationController
         :location_in_book,
         :location_in_book_page,
         :transcription,
+        :translation,
         :year_when,
         :year_start,
         :year_end,

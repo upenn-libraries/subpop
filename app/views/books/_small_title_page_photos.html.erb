@@ -1,3 +1,7 @@
-  <% if book.title_pages.present? -%>
+  <% if book.title_pages.active.present? -%>
     <%= render '/photos/small_photos', items: book.title_pages.active, book: book %>
+  <% else -%>
+    <h3>Default book photo</h3>
+
+    <p>You haven't got one of these yet. Be a good little duck and go down to the <a href="#photo-queue">photo queue</a> and pick a title page.</p>
   <% end -%>

@@ -7,7 +7,7 @@ RSpec.feature "Cropping", type: :feature, js: true do
     login_as 'testuser'
     visit_book
 
-    expect(page).to have_content "Who has it?"
+    expect(page).to have_current_path book_path(@book)
     expect(page).to have_content "1 photos"
     click_link 'Edit photo'
     expect(page).to have_content 'Crop image'
