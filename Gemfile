@@ -70,6 +70,8 @@ gem 'rb-fsevent', '~> 0.9.7', group: :darwin
 
 gem 'flickraw-cached'
 
+gem 'lograge'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 8.2.2'
