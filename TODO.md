@@ -10,6 +10,14 @@ Docker
 
   - data volume for database
   - logs
+  - test log options
+  - fix `.dockerignore` -- stop copying log files into container
+    + figure out why `delayed_job.log` alone isn't ignored
+    + stop copying `doc/api`
+
+  - backup plan for database
+
+  - talk to OEM about setting up production box -- with space allocation for images
 
 SubPopFormbuilder: hints don't work for nest form objects
 
