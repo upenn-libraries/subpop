@@ -3,7 +3,17 @@ module Flickr
     attr_reader :info
     PHOTOS_URL = 'https://www.flickr.com/photos/'.freeze
 
-    def initialize info=nil
+    ##
+    # Create a new Flickr::Info object.
+    #
+    # Parameters:
+    #
+    #   `user_id`: the Flickr user ID; a string in the format `123456789@N00`
+    #
+    #   `info`:    data returned by `flickr.photos.getInfo` as JSON or Hash
+    def initialize user_id, info=nil
+      @user_id = user_id
+
       @info = case info
       when nil
         nil
@@ -58,7 +68,7 @@ module Flickr
     end
 
     def nsid
-      owner_data and owner_data['nsid']
+      @user_id
     end
 
     def owner_data
