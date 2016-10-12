@@ -13,30 +13,15 @@ Docker
   - test log options
   - fix `.dockerignore` -- stop copying log files into container
     + figure out why `delayed_job.log` alone isn't ignored
-    + stop copying `doc/api`
 
   - backup plan for database
 
   - talk to OEM about setting up production box -- with space allocation for images
 
-SubPopFormbuilder: hints don't work for nest form objects
-
 Set up permanent servers:
 
-<!-- - Staging -->
 - Production
 
-Double check fields:
-
-- Books
-- Evidence
-
-User support:
-
-<!-- - Add full_name to user -->
-<!-- - Add user to books and evidence: `created_by`, `updated_by` -->
-- Show user's books
-<!-- - Push to Flickr workflow -->
 - Administration of workflow for "probation" users
 
 Migrate current spreadsheets to app
@@ -45,14 +30,8 @@ Spreadsheet import: Deal with single images for multiple pieces of provenance
 
 Add Blacklight to application
 
-<!-- Model name: -->
-
-<!-- - replace `item.class.name.underscore` with `item.model_name.element`
-  throughout -->
-
 #### All sections:
 
-Clean up pages; improve layout
 
 Manage position of side image, when resizing to smaller page layout
 
@@ -130,6 +109,16 @@ x - when updating photo show progress bar for image in status element -->
 
 - make sure flickrize_tags calculates correct tags for existing photos
 
-## Unordered list of stuff
- -->
+## Unordered list of stuff -->
  <!-- Rename HasPhoto to BelongsToPhoto; it's confusing as it's named now. -->
+<!-- + stop copying `doc/api` -->
+<!-- SubPopFormbuilder: hints don't work for nest form objects -->
+<!-- User support: -->
+<!-- - Add full_name to user -->
+<!-- - Add user to books and evidence: `created_by`, `updated_by` -->
+<!-- - Show user's books -->
+<!-- - Push to Flickr workflow -->
+<!-- Clean up pages; improve layout -->
+<!-- Model name: -->
+<!-- - replace `item.class.name.underscore` with `item.model_name.element`
+  throughout -->
