@@ -3,4 +3,5 @@
 .byebug_history
 log/*
 tmp/*
+doc/api/*
 public/system/*
