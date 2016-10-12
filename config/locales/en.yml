@@ -27,18 +27,19 @@ en:
       evidence: Evidence
     attributes:
       book:
-        repository: Current repository
+        repository: Current repository/owner
+        geo_location: Geographic location
+        acq_source: Immediate source of acquisition
         owner: Current owner
         collection: Current collection
-        geo_location: Geographical location
         call_number: Call number / Shelf mark
         catalog_url: URL to catalog
         vol_number: Volume number
         author: Author
         title: Title
         creation_place: Place of publication / creation
-        creation_date: Date of publication / creation
-        date_narrative: Publication date narrative
+        creation_date: Exact year of publication / creation
+        date_narrative: Detailed Date
         publisher: Publisher / Printer / Scribe
         other_id_type: Other ID type
         other_id: Other ID
@@ -51,10 +52,11 @@ en:
         location_in_book: Location in book
         location_in_book_page: Page, folio, signature
         transcription: Transcription
-        year_when: Year
-        year_start: Year start
+        translation: Translation
+        year_when: Exact Year
+        year_start: Year Range
         year_end: Year end
-        date_narrative: Date narrative
+        date_narrative: Detailed Date
         where: Location
         comments: ""
         flickr_status: Flickr status
@@ -78,16 +80,15 @@ en:
         role: Role
     hints:
       book:
+        geo_location: City, State/Region, Country
         owner: If different from current repository
-        date_narrative: "Text description of publication/creation date; e.g., '22 August 1876', 'c. 1875'"
+        creation_date: 4 digit year
+        date_narrative: "e.g., '22 August 1876', 'c. 1875'"
       evidence:
         format_other: Enter name of other format type
         location_in_book_page: Enter the page, folio, or signature number
-        year_when: Exact year of evidence; e.g., 1876
-        year_start: Beginning of a date range; e.g., 1870
-        year_end: End of a year range; e.g., 1880
-        date_narrative: "Text description of the date; e.g., '22
-          August 1876', 'c. 1875'"
+        year_when: "4 digit year"
+        date_narrative: "e.g., '22 August 1876', 'c. 1875'"
       provenance_agent:
         name: Search for the name and select it from the list. Personal names are listed last name first.
         role: Role

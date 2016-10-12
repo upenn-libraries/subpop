@@ -43,5 +43,9 @@ RSpec.describe User, type: :model do
       expect(build(:user, username: user.username)).not_to be_valid
     end
 
+    it 'is not valid with username "all"' do
+      User.excluded_names = ["boz"]
+      expect(build(:user, username: "boz")).not_to be_valid
+    end
   end
 end

@@ -10,6 +10,8 @@ MAINTAINER Doug Emery <emeryr@upenn.edu>
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   libmysqlclient-dev \
   build-essential \
+  imagemagick \
+  file \
   libpq-dev
 
 ENV INSTALL_PATH /subpop

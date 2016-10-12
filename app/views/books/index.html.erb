@@ -1,5 +1,13 @@
 <h1>Books</h1>
 
+<div>
+<%= paginate @books %>
+<br>
+<% if can? :create, Book -%>
+<%= link_to 'Add New Book', new_book_path, class: 'btn btn-primary' %>
+<% end -%>
+</div>
+
 <% if user_signed_in? %>
   <%= form_tag books_path, method: :get, id: 'filter_by_user', class: 'form form-inline' do %>
     <div class="form-group">
@@ -43,10 +51,4 @@
 <hr>
 <% end -%>
 
-<div>
-<%= paginate @books %>
-<br>
-<% if can? :create, Book -%>
-<%= link_to 'New Book', new_book_path, class: 'btn btn-primary' %>
-<% end -%>
-</div>
+

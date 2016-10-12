@@ -9,8 +9,9 @@
 content_types = [
   "Armorial",
   "Binder's Mark",
+  "Binding Stamp",
   "Signature",
-  "Gift",
+  "Gift/Presentation",
   "Monogram",
   "Shelf Mark",
   "Seller's Mark",
@@ -20,7 +21,8 @@ content_types = [
   "(De)Accession Mark",
   "Forgery/Copy",
   "Effaced",
-  "Bibliographic Note"
+  "Bibliographic Note",
+  "Stamped Binding"
 ]
 
 content_types.each do |name|
