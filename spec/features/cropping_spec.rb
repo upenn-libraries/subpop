@@ -2,20 +2,6 @@ require 'rails_helper'
 
 RSpec.feature "Cropping", type: :feature, js: true do
 
-  scenario 'User crops book photo' do
-    create_book_with_photo_by 'testuser'
-    login_as 'testuser'
-    visit_book
-
-    expect(page).to have_current_path book_path(@book)
-    expect(page).to have_content "1 photos"
-    click_link 'Edit photo'
-    expect(page).to have_content 'Crop image'
-
-    click_button('Crop image')
-    expect(page).not_to have_content 'Crop image'
-  end
-
   scenario 'User edits title page photo' do
     create_book_with_photo_by 'testuser'
     make_photo_a_title_page

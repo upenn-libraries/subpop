@@ -67,7 +67,7 @@ module CroppingHelper
   end
 
   def use_count photo
-    return unless photo.used?
+    # return unless photo.used?
     "Used #{photo.use_count} #{'time'.pluralize photo.use_count}"
   end
 end
