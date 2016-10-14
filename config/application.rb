@@ -37,5 +37,10 @@ module Subpop
     # Make sure the lib dir is autoloaded
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{Rails.root}app/jobs)
+
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.log_tags  = [:subdomain, :uuid]
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 end

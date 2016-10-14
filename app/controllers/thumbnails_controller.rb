@@ -12,7 +12,7 @@ class ThumbnailsController < ApplicationController
         if @thumbnail.image_processing?
           render format: :js, template: '/thumbnails/processing'
         else
-          render fomat: :js
+          render format: :js
         end
       }
       format.json

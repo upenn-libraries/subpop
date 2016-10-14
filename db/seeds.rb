@@ -9,6 +9,7 @@
 content_types = [
   "Armorial",
   "Binder's Mark",
+  "Binding Stamp",
   "Signature",
   "Gift/Presentation",
   "Monogram",

@@ -79,7 +79,7 @@
     <div class="col-sm-8"><%= f.text_area :transcription, class: "form-control" %></div>
   </div>
 
-   <div class="form-group">
+  <div class="form-group">
     <%= f.label :translation, class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_area :translation, class: "form-control" %></div>
   </div>
@@ -97,20 +97,18 @@
     </div>
   </div>
 
-
-
-<div class="row">
+  <div class="row">
     <%= f.label :year_start, class: "col-sm-3 control-label" %>
-   <div class="col-sm-2">
+    <div class="col-sm-2">
       <%= f.number_field :year_start, class: "form-control" %>
-      </div>
-      <div class="col-sm-2">
-    <span class="input-group-addon">to</span>
+    </div>
+    <div class="col-sm-2">
+      <span class="input-group-addon">to</span>
     </div>
     <div class="col-sm-2">
       <%= f.number_field :year_end, class: "form-control" %>
-      </div>
-</div>
+    </div>
+  </div>
 
   <h3>Where was it made?</h3>
 
@@ -125,8 +123,6 @@
     <%= f.label :where, class: "col-sm-3 control-label" %>
     <div class="col-sm-8"><%= f.text_field :where, class: "form-control" %></div>
   </div>
-
-
 
   <h3>Comments</h3>
   <div class="form-group">
