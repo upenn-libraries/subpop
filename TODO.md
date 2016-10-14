@@ -15,7 +15,6 @@ SubPopFormbuilder: hints don't work for nest form objects
 
 Set up permanent servers:
 
-<!-- - Staging -->
 - Production
 
 Double check fields:
@@ -23,12 +22,6 @@ Double check fields:
 - Books
 - Evidence
 
-User support:
-
-<!-- - Add full_name to user -->
-<!-- - Add user to books and evidence: `created_by`, `updated_by` -->
-- Show user's books
-<!-- - Push to Flickr workflow -->
 - Administration of workflow for "probation" users
 
 Migrate current spreadsheets to app
@@ -125,3 +118,10 @@ x - when updating photo show progress bar for image in status element -->
 ## Unordered list of stuff
  -->
  <!-- Rename HasPhoto to BelongsToPhoto; it's confusing as it's named now. -->
+<!-- User support: -->
+
+<!-- - Add full_name to user -->
+<!-- - Add user to books and evidence: `created_by`, `updated_by` -->
+<!-- - Show user's books -->
+<!-- - Push to Flickr workflow -->
+<!-- - Staging -->
