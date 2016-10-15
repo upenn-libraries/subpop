@@ -34,7 +34,7 @@ class TitlePagesController < ApplicationController
 
   def destroy
     @title_page.requeue_photo
-    @title_page.mark_deleted
+    # @title_page.mark_deleted
     DeletePublishableJob.perform_later @title_page, current_user
     respond_to do |format|
       format.js

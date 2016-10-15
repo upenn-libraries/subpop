@@ -58,8 +58,10 @@
       <% end -%>
 
       <% if can? :read, item -%>
+      <% unless params[:controller] == 'evidence' -%>
       <% if item.is_a? Evidence -%>
       <%= link_to 'Details', item, class: 'btn btn-default btn-xs btn-block', data: { toggle: 'tooltip', placement: 'right' }, title: 'Show mark details' %>
+      <% end -%>
       <% end -%>
       <% end -%>
 
