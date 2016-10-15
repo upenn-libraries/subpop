@@ -22,7 +22,7 @@ class TitlePagesController < ApplicationController
 
     respond_to do |format|
       if @title_page.save_by current_user
-        @title_page.dequeue_photo
+        #@title_page.dequeue_photo
         format.html { redirect_to @book, notice: 'Added title page.' }
         format.json { render :show, status: :ok, location: @book }
       else
@@ -34,7 +34,7 @@ class TitlePagesController < ApplicationController
 
   def destroy
     @title_page.requeue_photo
-    # @title_page.mark_deleted
+     @title_page.mark_deleted
     DeletePublishableJob.perform_later @title_page, current_user
     respond_to do |format|
       format.js
