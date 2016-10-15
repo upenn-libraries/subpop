@@ -1,7 +1,10 @@
+  
   <% if book.title_pages.active.present? -%>
     <%= render '/photos/small_photos', items: book.title_pages.active, book: book %>
   <% else -%>
-    <h3>Default book photo</h3>
+    <h2>Step 3: Pick a Title Page Image</h2>
 
-    <p>You haven't got one of these yet. Be a good little duck and go down to the <a href="#photo-queue">photo queue</a> and pick a title page.</p>
+    <h4>Go to the <a href="#photo-queue">photo queue</a> and select an image to use as the title page. If your book or manuscript has no title page, pick the incipit or other representative page. The image you select will replace the sample image shown below.</h4>
+
+  <a href="#photo-queue"><%=image_tag "Ducklings_TP.jpg", class: "img-responsive img-rounded img-thumbnail", :alt => "Stock Image"%></a>
   <% end -%>
