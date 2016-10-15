@@ -22,6 +22,7 @@ class TitlePagesController < ApplicationController
 
     respond_to do |format|
       if @title_page.save_by current_user
+
         format.html { redirect_to @book, notice: 'Added title page.' }
         format.json { render :show, status: :ok, location: @book }
       else
