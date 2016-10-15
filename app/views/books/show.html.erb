@@ -21,9 +21,9 @@
 
 <h2><span id="evidence-format-heading"><%= @book.full_name %></span></h3>
 
-<%= link_to 'Book list', books_path, class: 'btn btn-default' %>
+<%= link_to 'Book List', books_path, class: 'btn btn-default' %>
 <% if can? :update, @book -%>
-<%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
+<%= link_to 'Edit Book', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
 <br>
 <br>
@@ -91,6 +91,8 @@
   <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
 </div>
 
+<hr>
+
 <h3>Title page, evidence images</h3>
 <div id="publishables-list">
 <%= render '/flickr/publishables_list', publishables: @book.publishables %>
@@ -106,7 +108,13 @@
 <% end -%>
 
 <% if can? :update, @book -%>
+
+<hr>
+
 <div class="row field-group">
+<h2>Step 4: Assign a provenance format</h2>
+<h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance in each image.  This will take you to a screen where you can fill out more information about each provenance mark. 
+
   <h3>Photo queue</h3>
 
  <!--
@@ -130,8 +138,8 @@
 <% end -%>
 
 <div class="row">
-<%= link_to 'Book list', books_path, class: 'btn btn-default' %>
+<%= link_to 'Book List', books_path, class: 'btn btn-default' %>
 <% if can? :update, @book -%>
-<%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
+<%= link_to 'Edit Book', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
 </div>
