@@ -1,16 +1,17 @@
 
   <% allow_edit ||= false %>
 
+  Title page step 3
+
   <% if book.title_pages.active.present? -%>
     <%= render '/photos/small_photos', items: book.title_pages.active, book: book, allow_edit: allow_edit %>
   <% else -%>
     <h2>Step 3: Pick a Title Page Image</h2>
 
-    <h4>Go to the 
-    <%= link_to 'photo queue', book_path(@book, anchor: "anchor-photo-queue"), title: "Link to photo queue on the book page" %> 
+    <h4>Go to the
+    <%= link_to 'photo queue', book_path(@book, anchor: "anchor-photo-queue"), title: "Link to photo queue on the book page" %>
     and select an image to use as the title page to replace the sample image below. If your book or manuscript has no title page, pick the incipit or other representative page.</h4>
 
-<%= link_to image_tag("Ducklings_TP.jpg", class: "img-responsive img-rounded img-thumbnail", :alt => "Stock Image"), book_path(@book, anchor: "anchor-photo-queue"),  title: "Link to photo queue on the book page" %> 
-  
-  
+<%= link_to image_tag("Ducklings_TP.jpg", class: "img-responsive img-rounded img-thumbnail", :alt => "Stock Image"), book_path(@book, anchor: "anchor-photo-queue"),  title: "Link to photo queue on the book page" %>
+
   <% end -%>
