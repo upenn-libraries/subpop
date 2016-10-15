@@ -88,9 +88,16 @@
   <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
 </div>
 
+
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :comment_book %></div>
   <div class="col-sm-6 field-value"><%= @book.comment_book %></div>
+
+<hr>
+
+
+<div id="publishables-list">
+<%= render '/flickr/publishables_list', publishables: @book.publishables %>
 </div>
 
   <hr>
@@ -137,10 +144,20 @@
     <h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance mark in each image.  This will take you to a screen where you can fill out more information about each provenance mark.</h4>
 <div class="col-md-12">
 <% if can? :update, @book -%>
+
+<hr>
+
 <div class="row field-group">
+<<<<<<< HEAD
 
 
 
+=======
+<h2>Step 4: Assign a provenance format</h2>
+<h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance in each image.  This will take you to a screen where you can fill out more information about each provenance mark.
+
+  <h3>Photo queue</h3>
+>>>>>>> add step 4 header
 
  <!--
 
