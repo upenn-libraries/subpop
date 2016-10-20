@@ -22,6 +22,14 @@ Set up permanent servers:
 
 - Production
 
+<<<<<<< HEAD
+=======
+Double check fields:
+
+- Books
+- Evidence
+
+>>>>>>> development
 - Administration of workflow for "probation" users
 
 Migrate current spreadsheets to app
@@ -111,14 +119,23 @@ x - when updating photo show progress bar for image in status element -->
 
 ## Unordered list of stuff -->
  <!-- Rename HasPhoto to BelongsToPhoto; it's confusing as it's named now. -->
+<<<<<<< HEAD
 <!-- + stop copying `doc/api` -->
 <!-- SubPopFormbuilder: hints don't work for nest form objects -->
 <!-- User support: -->
+=======
+<!-- User support: -->
+
+>>>>>>> development
 <!-- - Add full_name to user -->
 <!-- - Add user to books and evidence: `created_by`, `updated_by` -->
 <!-- - Show user's books -->
 <!-- - Push to Flickr workflow -->
+<<<<<<< HEAD
 <!-- Clean up pages; improve layout -->
 <!-- Model name: -->
 <!-- - replace `item.class.name.underscore` with `item.model_name.element`
   throughout -->
+=======
+<!-- - Staging -->
+>>>>>>> development

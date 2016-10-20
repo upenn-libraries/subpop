@@ -21,11 +21,6 @@
 
   </div>  <!-- /.panel-body -->
   <div class="panel-footer clearfix">
-    <% if can? :update, photo -%>
-    <div class="edit-photo-container pull-left">
-      <%= render 'photos/edit_photo_link', item: book, photo: photo %>
-    </div>
-      <p class="pull-right"><%= use_count photo -%></p>
-    <% end %>
+    <p class="pull-right"><%= use_count photo -%></p>
   </div> <!-- /.panel-footer -->
 </div>  <!-- /.panel .panel-default -->

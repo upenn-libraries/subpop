@@ -36,7 +36,7 @@ module ApplicationHelper
     link_to(raw(name), '#', options)
   end
 
-  def thumnail_link_to item,path=nil
+  def thumbnail_link_to item,path=nil
     return unless item.has_image?
     link_to thumbnail_image_tag(item), item.image.url(:original), target: '_blank',
       'data-toggle': 'tooltip', title: 'Click to open in new window'
