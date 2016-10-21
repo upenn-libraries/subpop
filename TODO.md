@@ -55,16 +55,16 @@ Manage position of side image, when resizing to smaller page layout
  -->
 #### Evidence
 
-Edit/New pages
-- "Back to photo queue" anchor on Safari doesn't scroll down far enough
+<!-- Edit/New pages
+- "Back to photo queue" anchor on Safari doesn't scroll down far enough -->
 
-Create context images
+<!-- Create context images -->
 
-Investigate image cropping
+<!-- Investigate image cropping -->
 
-Evidence show page:
+<!-- Evidence show page:
 
-- Add name window from Add name list
+- Add name window from Add name list -->
 
 Evidence form:
 

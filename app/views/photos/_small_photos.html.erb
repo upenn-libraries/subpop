@@ -1,9 +1,10 @@
+<% allow_edit ||= false %>
 <div class="evidence-image">
 <% image_size = items.size > 1 ? :thumb : :small -%>
 <% items.each do |item| -%>
   <% if item.photo.present? && item.photo.image? -%>
   <div class="row">
-  <%= render '/photos/small_photo', item: item, image_size: image_size, book: book -%>
+  <%= render '/photos/small_photo', item: item, image_size: image_size, book: book, allow_edit: allow_edit -%>
   </div>
   <% end -%>
 <% end -%>

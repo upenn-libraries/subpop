@@ -37,33 +37,36 @@
 
   <%# BUTTONS -%>
   <div class="col-sm-4">
-    <div class="btn-group-status" role="group">
+    <div class="btn-group-status btn-group-vertical" role="group">
 
       <% if can? :update, item -%>
       <%= link_to_publish_item 'Publish image', item, class: 'btn btn-success btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Publish to Flickr' -%>
-      <% end -%>
+      <% end -%> <%# /if can? :update, item -%>
 
       <% if can? :update, item -%>
       <%= link_to_unpublish_item 'Unpublish image', item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: 'Remove from Flickr' -%>
-      <% end -%>
+      <% end -%> <%# /if can? :update, item -%>
 
       <% if can? :destroy, item -%>
       <% unless params[:controller] == 'evidence' -%>
       <%= link_to_delete_publishable item.book, item, class: 'btn btn-danger btn-xs btn-block', remote: true, data: { toggle: 'tooltip', placement: 'right' }, title: "Delete #{item.publishable_format}" -%>
-      <% end -%>
-      <% end -%>
+      <% end -%> <%# /unless params[:controller] == 'evidence' -%>
+      <% end -%> <%# /if can? :destroy, item -%>
 
       <% if can? :read, item -%>
       <%= link_to 'Preview', flickr_path(item), remote: true, class: 'btn btn-default btn-xs btn-block modal-link', title: 'Preview Flickr display', data: { toggle: 'tooltip', placement: 'right', 'modal-id': 'preview-modal' } -%>
-      <% end -%>
+      <% end -%> <%# /if can? :read, item -%>
 
-      <% if can? :read, item -%>
-      <% unless params[:controller] == 'evidence' -%>
       <% if item.is_a? Evidence -%>
-      <%= link_to 'Details', item, class: 'btn btn-default btn-xs btn-block', data: { toggle: 'tooltip', placement: 'right' }, title: 'Show mark details' %>
-      <% end -%>
-      <% end -%>
-      <% end -%>
+        <% unless params[:controller] == 'evidence' -%>
+          <% if can? :read, item -%>
+          <%= link_to 'Details', item, class: 'btn btn-default btn-xs btn-block', data: { toggle: 'tooltip', placement: 'right' }, title: 'Show mark details' %>
+          <% end %> <%# /if can? :read, item %>
+          <% if can? :update, item %>
+          <%= link_to 'Edit', edit_evidence_path(item), class: 'btn btn-primary btn-xs btn-block', data: { toggle: 'tooltip', placement: 'right' }, title: 'Edit evidence' %>
+          <% end %>
+        <% end %> <%# /unless params[:controller] == 'evidence' %>
+      <% end %> <%# /if item.is_a? Evidence %>
 
     </div>
   </div>

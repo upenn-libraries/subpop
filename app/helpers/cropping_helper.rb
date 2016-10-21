@@ -1,6 +1,6 @@
 module CroppingHelper
   def link_to_crop_photo parent, photo, options
-    text = options.delete(:text) || "Edit photo"
+    text = options.delete(:link_name) || "Edit photo"
     options[:title] ||= text
     link_to text, crop_image_path(parent, photo), options
   end

@@ -6,11 +6,13 @@
       <%= render '/thumbnails/show', parent: evidence, thumbnail: evidence.photo, image_size: image_size %>
     </div> <!-- /.thumb-container -->
     <div class="caption clearfix">
-      <% if allow_edit && can?(:update, evidence)  %>
-      <div class="pull-left edit-photo-container">
-        <%= render 'photos/edit_photo_link', item: evidence, photo: evidence.photo %>
-      </div> <!-- /.pull-left -->
-      <% end %> <%# /if can? :update, evidence %>
+      <% if allow_edit %>
+        <% if can?(:update, evidence)  %>
+        <div class="pull-left edit-photo-container">
+          <%= render 'photos/edit_photo_link', item: evidence, photo: evidence.photo %>
+        </div> <!-- /.pull-left -->
+        <% end %> <%# /if can? :update, evidence %>
+      <% end %> <%# /if allow_edit %>
       <% if evidence.on_flickr? -%>
       <a target="_blank" rel="noopener noreferrer" href="<%= evidence.photopage_url -%>">View on Flickr <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
       <% end -%> <%# /if evidence.on_flickr? %>
