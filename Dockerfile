@@ -11,8 +11,7 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   libmysqlclient-dev \
   build-essential \
   imagemagick \
-  file \
-  libpq-dev
+  file
 
 ENV INSTALL_PATH /subpop
 
