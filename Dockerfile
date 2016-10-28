@@ -21,7 +21,7 @@ WORKDIR $INSTALL_PATH
 
 COPY Gemfile Gemfile.lock ./
 
-RUN bundle install --binstubs
+RUN bundle install --binstubs --without development test
 
 COPY . .
 
