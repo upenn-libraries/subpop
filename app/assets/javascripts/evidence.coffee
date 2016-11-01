@@ -68,6 +68,7 @@ ready = ->
         # remove every div.field_with_errors
         $(selector).find('.field_with_errors').children().unwrap()
 
+
     $('#evidence_location_in_book').change ->
         show_hide_page_number()
 
@@ -85,14 +86,31 @@ ready = ->
         $(this).before($(this).data('fields').replace(regexp, time))
         event.preventDefault()
 
+    set_searching_feedback = (searchField, nameField) ->
+        # At present, we're only using searchField, but accept nameField for
+        # consistency and parallelism with `set_name_selected_feedback`. We
+        # may want to do something with nameField later.
+        $.remove_feedback searchField
+        $.set_feedback searchField, 'warning', 'warning-sign'
+        $.set_help_block searchField, 'WARNING: No name selected. Please select or create a name.'
+
+    set_name_selected_feedback = (searchField, nameField) ->
+        $.remove_feedback searchField
+        $.set_feedback nameField, 'success', 'ok'
+        $.remove_help_block searchField
+
     $(document.body).on 'keydown', '.name-search', ->
         $(this).autocomplete
             source: '/names'
             response: (event, ui) ->
                 # There may be a better way to get this, but the 'term' property
                 # is on the request obect, which we don't have access to here.
-                searchTerm = $(this).val()
+                searchField = $(this)
+                searchTerm = searchField.val()
+                nameField = $(searchField.attr('data-display-element'))
                 exactMatch = false
+
+                set_searching_feedback searchField, nameField
 
                 # Add a "Create: <searchTerm>" option if the term isn't in the
                 # returned list of names
@@ -105,10 +123,12 @@ ready = ->
                         value: 'CREATE',
                         id: 'CREATE'
                         });
+
             select: (event, ui) ->
                 event.preventDefault()
-                nameField = $(this)
-                idField   = $($(this).attr('data-id-element'))
+                searchField = $(this)
+                idField     = $($(this).attr('data-id-element'))
+                nameField   = $($(this).attr('data-display-element'))
                 if (ui.item.value == 'CREATE')
                     # Grab the new name the user has entered in the search box
                     newName = ui.item.label.substring(ui.item.label.indexOf("'") + 1, ui.item.label.lastIndexOf("'"))
@@ -131,8 +151,10 @@ ready = ->
                                     # for the provenance agent
                                     if idField
                                         idField.val(data.id)
-                                    nameField.val(data.name)
+                                    searchField.val(data.name)
                                     show_flash('success', 'Created name: ' + data.name)
+                                    nameField.val(data.name)
+                                    set_name_selected_feedback searchField, nameField
                                     $('#name-modal').modal('hide')
                                 error: (data, status, jqXHR) ->
                                     if data.status == 422
@@ -145,8 +167,10 @@ ready = ->
                                 )
                             false
                 else
-                    $(idField).val(ui.item.value)
+                    idField.val(ui.item.value)
                     $(this).val(ui.item.label)
+                    nameField.val(ui.item.label)
+                    set_name_selected_feedback this, nameField
             focus: (event, ui) ->
                 event.preventDefault()
 

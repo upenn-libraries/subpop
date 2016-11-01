@@ -1,16 +1,25 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <fieldset>
-      <div class="form-group">
-        <%= f.label :name, class: "col-sm-3 control-label" %>
+      <%= f.hidden_field :name_id %>
+      <div class="form-group has-feedback">
+        <%= f.label :name, class: 'col-sm-3 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_field :name, class: 'form-control disabled-bold', disabled: true %>
+            <span class="form-control-feedback" aria-hidden="true"></span>
+            <span class="sr-only"></span>
+          </div>
+      </div>
+      <div class="form-group has-feedback">
+        <%= label_tag :search, 'Find/Create name', class: "col-sm-3 control-label" %>
         <div class="col-sm-8">
-          <%= f.hidden_field :name_id %>
-          <% object_name = f.object_name.gsub /[\[\]\]]+/, '_' -%>
-          <% update_field = "#{object_name}name_id" %>
-          <%# use autocomplete_field_tag because, we search the names and set the ID.  %>
-          <%# autocomplete_field_tag 'name', f.object.name, autocomplete_name_name_evidence_index_path, class: "form-control", 'data-id-element' => "##{update_field}" %>
-          <%= text_field_tag 'name', f.object.name, class: 'form-control name-search', data: { 'id-element': "##{update_field}" } -%>
-          <%= hint_tag f.object, :name -%>
+
+          <% object_name   = f.object_name.gsub /[\[\]\]]+/, '_' -%>
+          <% update_field  = "#{object_name}name_id" %>
+          <% display_field = "#{object_name}name" %>
+            <%= text_field_tag 'search', '', class: 'form-control name-search', data: { 'id-element': "##{update_field}", 'display-element': "##{display_field}" }, placeholder: 'Name search' -%>
+            <span class="form-control-feedback" aria-hidden="true"></span>
+            <span class="sr-only"></span>
         </div>
       </div>
       <div class="form-group">
