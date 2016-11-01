@@ -91,7 +91,6 @@ en:
         date_narrative: "e.g., '22 August 1876', 'c. 1875'"
       provenance_agent:
         name: Search for the name below and select it from the list. Personal names are listed last name first.
-        role: Role
       name:
         name:
           "Use Library of Congress name format; e.g., 'Pembroke, Thomas
