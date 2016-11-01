@@ -75,9 +75,20 @@ ready = ->
     $('#evidence_format').change ->
         show_hide_format_other()
 
-    $(document.body).on 'click', '.remove_fields', (event) ->
-        $(this).prev('input[type=hidden]').val('1')
-        $(this).closest('fieldset').hide()
+    ### $(document.body).on 'click', '.remove-fields', (event)
+
+    We assume that the clicked element is contained by a 'fieldset' unless the
+    'data-parent-css-class' attribute has been set. 'data-parent-css-class' if provided MUST NOT have a prefixed '.'
+
+    ###
+    $(document.body).on 'click', '.remove-fields', (event) ->
+        if $(this).attr('data-field-container-class')
+            parent_selector = '.' + $(this).attr('data-field-container-class')
+        else
+            parent_selector = 'fieldset'
+
+        $(this).closest(parent_selector).find('input[name$="[_destroy]"]').val('1')
+        $(this).closest(parent_selector).hide()
         event.preventDefault()
 
     $(document.body).on 'click', '.add_fields', (event) ->
