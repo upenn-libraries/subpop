@@ -12,6 +12,92 @@ $ ->
         $('.thumb-container').uniqueId()
         $('.edit-photo-container').uniqueId()
 
+
+    #--------------------------------------------------------------------------
+    # Feedback management
+    #--------------------------------------------------------------------------
+    ###
+    Functions for feedback on a bootstrap form-group. Input is expected to
+    belong to a `div.form-group` with  the '.has-feedback' class. Input should
+    be followed by 2 span elements with classes 'form-control-feedback' and
+    'sr-only' respectively. If there is need for multiple 'sr-only' spans,
+    these functions will need to be altered.
+
+    <div class="form-group has-feedback">
+        <label class="col-sm-3 control-label" for="model_some_field">Name</label>
+          <div class="col-sm-8">
+
+            <input class="form-control" type="text" name="model[some_field]" id="model_some_field">
+
+            <span class="form-control-feedback" aria-hidden="true"></span>
+            <span class="sr-only"></span>
+          </div>
+      </div>
+
+    ###
+
+    ### $.set_feedback(input, type, icon)
+
+    Function to set the feedback on input's '.form-group' and feedback spans.
+
+        `type` should be one of (success|warning|error); type will be
+
+            (1) be set as the text of '.sr-only' span as "(#{type})", and
+            (2) be added to the form group as class "has-#{type}"
+
+        `icon` will be appended to span '.form-control-feedback' classes as
+            "glyphicon glyphicon-#{icon}"
+
+    ###
+    $.set_feedback = (input, type, icon) ->
+        $(input).closest('.form-group').addClass("has-#{type}")
+        $(input).closest('.form-group').find('.sr-only').html("(#{type})")
+        $(input).closest('.form-group').find('.form-control-feedback').addClass("glyphicon glyphicon-#{icon}")
+
+    ### $.remove_feedback(input)
+
+    Function to remove the feedback from input's '.form-group' and feedback spans.
+
+    ###
+    $.remove_feedback = (input) ->
+        $(input).closest('.form-group').removeClass (index, css) ->
+            (css.match(/(^|\s)has-(success|warning|error)/) || []).join(' ')
+
+        $(input).closest('.form-group').find('.sr-only').html("")
+        $(input).closest('.form-group').find('.form-control-feedback').removeClass (index,css) ->
+            (css.match(/(^|\s)glyphicon.*/) || []).join(' ')
+
+    #--------------------------------------------------------------------------
+    # Help-block management
+    #--------------------------------------------------------------------------
+    ###
+
+    Set/add input help-block spans or remove them.
+
+    TODO: Make this fancy so that help-blocks can be restored? Or let callers,
+    retrieve existing text themselves?
+
+    ###
+    ### $.set_help_block(input, text)
+
+    Function to append or set help block for `input` as `text`.
+
+    ###
+    $.set_help_block = (input, text) ->
+        if $(input).closest('div').find('span.help-block').length is 1
+            $(input).closest('div').find('span.help-block').html(text)
+        else
+            $(input).closest('div').append("<span class='help-block'>#{text}</span>")
+
+    ### $.remove_help_block(input)
+
+    Function to remove '.help-block' for `input`.
+
+    ###
+    $.remove_help_block = (input) ->
+        # we assume each input is contained in a div
+        $(input).closest('div').find('span.help-block').remove()
+
     ###
     ---------------------------------------------------------------------------
     # EVENTS                                                                  #
