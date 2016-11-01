@@ -1,0 +1,190 @@
+body
+  padding-top: 70px
+  padding-bottom: 70px
+
+.navbar-default
+  .navbar-brand
+    color: #8e231a
+    font-family:  Calisto MT, Bookman Old Style, Bookman, Goudy Old Style, Garamond, Hoefler Text, Bitstream Charter, Georgia, serif
+    font-size: 200%
+    line-height: 30px
+    padding: 10px 15px 10px 15px
+    height: 55px
+  .navbar-nav
+    height: 55px
+    ul
+    font-size: 120%
+    link-height: 60px
+
+.navbar-fixed-top
+  margin-bottom: 20px
+  background-color: #fdf1d8
+  border-color: #8e231a
+
+.navbar-fixed-bottom
+  margin-top: 20px
+
+.form-inline
+
+.field-group
+  .field-label
+    text-align: right
+    font-weight: bold
+  .field-value
+    text-align: left
+    font-weight: normal
+
+.form-control:disabled.disabled-bold
+  font-weight: bold
+  color: #000
+
+label.required:after
+  content: " *"
+
+.error_explanation
+  color: red
+  ul
+    color: red
+    margin: 0 0 30px 0
+
+.field_with_errors
+  @extend .has-error
+  .form-control
+    color: $state-danger-text
+
+.title-page
+  width: 250px
+
+.image-use
+  width: 150px
+
+ul.image-list
+  li
+    vertical-align: top
+
+// TOOD: Placeholder for the evidence image div, so we can make it fixed
+// later. It's hard with bootstrap to fix the image *and* have it be
+// responsive to window resizing. If fixed, the text floats over and covers
+// the fixed image upon resizing.
+.evidence-image
+  // position: fixed
+
+.top-buffer
+  margin-top: 20px
+
+.bottom-buffer
+  margin-bottom: 20px
+
+.thumb
+  @extend .center-block
+
+// Constrain the size of thumbnails in the publishable statuses. Sometimes these
+// will be :thumb size, sometimes :small. Make sure they always look like
+// :thumb size.
+.publishable-status
+  .image
+    height: 190
+    width: 190
+
+// Constrain the size of thumbnails in the `.queued-photo` divs. Sometimes
+// these will be :thumb size, sometimes :small. Make sure they always look
+// like :thumb size.
+.queued-photo
+  .panel-body
+    min-width: 262px
+    min-height: 290px
+    max-height: 290px
+  .thumb
+    max-height: 190px
+    max-width: 190px
+    .img-responsive
+      max-height: 100% // override .img-responsive `height: auto`
+      max-width: 100%
+
+
+// Make sure anchors stay below the fixed nav bar.
+// http://stackoverflow.com/a/13184714
+a.anchor
+  display: block
+  position: relative
+  top: -45px
+  visibility: hidden
+
+.btn-hidden
+  visibility: hidden
+
+.btn-group-status
+  width: 125px
+
+.light-box-photo
+  text-align: center
+  .thumbnail
+    border: 0 none
+    box-shadow: none
+  .panel-body
+    min-width: 190px
+    min-height: 200px
+    max-height: 290px
+  .thumb
+    max-height: 190px
+    max-width: 190px
+    .img-responsive
+      max-height: 100% // override .img-responsive `height: auto`
+      max-width: 100%
+    img
+      display: inline-block
+
+// Style the autocomplete drop down menu
+.ui-autocomplete
+  position: absolute
+  top: 100%
+  left: 0
+  z-index: 1000
+  float: left
+  display: none
+  min-width: 160px
+  _width: 160px
+  padding: 4px 0
+  margin: 2px 0 0 0
+  list-style: none
+  background-color: #ffffff
+  border-color: #ccc
+  border-color: rgba(0, 0, 0, 0.2)
+  border-style: solid
+  border-width: 1px
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px
+  border-radius: 5px
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+  -webkit-background-clip: padding-box
+  -moz-background-clip: padding
+  background-clip: padding-box
+  *border-right-width: 2px
+  *border-bottom-width: 2px
+  .ui-menu-item
+    display: block
+    padding: 3px 15px
+    clear: both
+    font-weight: normal
+    line-height: 18px
+    color: #555555
+    white-space: nowrap
+    &.ui-state-focus
+      color: #ffffff
+      text-decoration: none
+      background-color: #0088cc
+      border-radius: 0px
+      -webkit-border-radius: 0px
+      -moz-border-radius: 0px
+      background-image: none
+
+  .row
+    margin-left: -2px
+    margin-right: -2px
+
+  .input-group
+    margin-left: -2px
+    margin-right: -2px
+
