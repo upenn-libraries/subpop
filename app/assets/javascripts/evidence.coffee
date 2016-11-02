@@ -131,7 +131,7 @@ ready = ->
                                     # for the provenance agent
                                     if idField
                                         idField.val(data.id)
-                                    nameField.val(data.name)
+                                    nameField.val(data.full_name)
                                     show_flash('success', 'Created name: ' + data.name)
                                     $('#name-modal').modal('hide')
                                 error: (data, status, jqXHR) ->

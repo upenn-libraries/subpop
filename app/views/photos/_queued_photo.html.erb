@@ -26,6 +26,9 @@
       <%= render 'photos/edit_photo_link', item: book, photo: photo %>
     </div>
       <p class="pull-right"><%= use_count photo -%></p>
+
+      <p><%= link_to "Make Title Page", book_title_pages_path(book, title_page: { photo_id: photo }), method: :post %></p>
     <% end %>
+
   </div> <!-- /.panel-footer -->
 </div>  <!-- /.panel .panel-default -->
