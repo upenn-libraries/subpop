@@ -1,5 +1,6 @@
+  <% allow_edit ||= false %>
   <% if book.title_pages.active.present? -%>
-    <%= render '/photos/small_photos', items: book.title_pages.active, book: book %>
+    <%= render '/photos/small_photos', items: book.title_pages.active, book: book, allow_edit: allow_edit %>
   <% else -%>
     <h3>Default book photo</h3>
 

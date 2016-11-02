@@ -89,7 +89,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {
     host: ENV.fetch('SUBPOP_HOST', 'localhost'),
     port: ENV.fetch('SUBPOP_PORT', 3000),
-    protocol: 'https'
+    protocol: ENV.fetch('SUBPOP_HTTP_PROTOCOL', 'http')
   }
 
   # config.action_mailer.delivery_method = :sendmail

@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.integer  "updated_by_id",         limit: 4
     t.text     "translation",           limit: 65535
     t.integer  "context_image_id",      limit: 4
+    t.text     "translation",           limit: 65535
   end
 
   add_index "evidence", ["book_id"], name: "index_evidence_on_book_id", using: :btree

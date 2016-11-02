@@ -71,4 +71,4 @@ production:
   <<: *default
   database: <%= ENV['SUBPOP_DB_NAME'] %>
   username: <%= ENV['SUBPOP_DB_USER'] %>
-  password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
+  password: <%= ENV['SUBPOP_DB_PASSWORD'] %>

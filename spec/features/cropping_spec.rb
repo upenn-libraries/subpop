@@ -9,7 +9,7 @@ RSpec.feature "Cropping", type: :feature, js: true do
 
     expect(page).to have_current_path book_path(@book)
     expect(page).to have_content "1 photos"
-    click_link 'Edit photo'
+    click_link 'Edit master photo'
     expect(page).to have_content 'Crop image'
 
     click_button('Crop image')

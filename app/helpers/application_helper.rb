@@ -31,12 +31,13 @@ module ApplicationHelper
 
     options[:class] ||= ""
     options[:class] += " add_fields"
-    options[:data]  = {id: id, fields: fields.gsub("\n", "")}
+    options[:data]  ||= {}
+    options[:data].update id: id, fields: fields.gsub("\n", "")
 
     link_to(raw(name), '#', options)
   end
 
-  def thumnail_link_to item,path=nil
+  def thumbnail_link_to item,path=nil
     return unless item.has_image?
     link_to thumbnail_image_tag(item), item.image.url(:original), target: '_blank',
       'data-toggle': 'tooltip', title: 'Click to open in new window'
