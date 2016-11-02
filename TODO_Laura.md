@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 -Fix gap between 'selected' menu button and bottom of nav bar
 
@@ -106,7 +107,26 @@ TOTHINK
 
   -Colors of buttons?
 
+=======
+<<<<<<< HEAD
+>>>>>>> todo additions
 -Fix gap between 'selected' menu button and bottom of nav bar
+=======
+Remove the "other id" fields from books
+Remove the sammelbande from books
+
+run tests
+
+make evidence show page look right
+
+
+
+
+
+Hints for
+  #city, state/region, country on geographic location field
+  *entering name *Ask Doug about this*
+>>>>>>> todo additions
 
 Add headers for these steps:
   3 Pick title page
