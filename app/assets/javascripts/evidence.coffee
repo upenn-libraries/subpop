@@ -163,6 +163,7 @@ ready = ->
                                     if idField
                                         idField.val(data.id)
                                     searchField.val(data.name)
+
                                     show_flash('success', 'Created name: ' + data.name)
                                     nameField.val(data.name)
                                     set_name_selected_feedback searchField, nameField
