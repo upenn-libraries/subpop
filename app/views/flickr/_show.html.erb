@@ -1,7 +1,8 @@
+<% allow_edit ||= false %>
 <div class="container" id="modals"></div>
 <div class="row">
   <div class="col-md-5">
-    <%= render '/photos/small_photo', book: book, item: item %>
+    <%= render '/photos/small_photo', book: book, item: item, allow_edit: allow_edit %>
   </div>
   <div class="col-md-6">
     <h1>Title</h1>

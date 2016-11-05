@@ -1,9 +1,6 @@
 <% content_for :sidebar do -%>
   <div id="title-pages">
-
-
-  <%= render '/books/small_title_page_photos', book: @book -%>
-
+  <%= render '/books/small_title_page_photos', book: @book, allow_edit: true -%>
   </div>
 <% end -%>
 

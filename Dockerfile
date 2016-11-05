@@ -11,8 +11,7 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   libmysqlclient-dev \
   build-essential \
   imagemagick \
-  file \
-  libpq-dev
+  file
 
 ENV INSTALL_PATH /subpop
 
@@ -22,7 +21,7 @@ WORKDIR $INSTALL_PATH
 
 COPY Gemfile Gemfile.lock ./
 
-RUN bundle install --binstubs
+RUN bundle install --binstubs --without development test
 
 COPY . .
 

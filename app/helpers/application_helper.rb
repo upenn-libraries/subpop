@@ -31,7 +31,8 @@ module ApplicationHelper
 
     options[:class] ||= ""
     options[:class] += " add_fields"
-    options[:data]  = {id: id, fields: fields.gsub("\n", "")}
+    options[:data]  ||= {}
+    options[:data].update id: id, fields: fields.gsub("\n", "")
 
     link_to(raw(name), '#', options)
   end

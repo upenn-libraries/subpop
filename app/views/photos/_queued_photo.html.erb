@@ -1,4 +1,5 @@
-<div class="panel panel-default">
+
+ <div class="panel panel-default">
   <div class="panel-body">
     <%= form_tag "", class: "form form-inline" do %>
     <%= hidden_field_tag "photo_id", photo.id, id: "photo-#{photo.id}" %>
@@ -21,9 +22,13 @@
 
   </div>  <!-- /.panel-body -->
   <div class="panel-footer clearfix">
-    
-   
-    
-    <p class="pull-right"><%= use_count photo -%></p>
+    <% if can? :update, photo -%>
+    <div class="edit-photo-container pull-left">
+      <%= render 'photos/edit_photo_link', item: book, photo: photo, link_name: 'Edit master photo' %>
+    </div>
+      <p class="pull-right"><%= use_count photo -%></p>
+
+      <p><%= link_to "Make Title Page", book_title_pages_path(book, title_page: { photo_id: photo }), method: :post %></p>
+    <% end %>
   </div> <!-- /.panel-footer -->
 </div>  <!-- /.panel .panel-default -->

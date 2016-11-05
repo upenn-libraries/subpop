@@ -70,7 +70,7 @@
   <%= f.fields_for :provenance_agents do |agent| %>
     <%= render 'provenance_agent_fields', f: agent %>
   <% end %>
-  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus"></span>', f, :provenance_agents, class: "btn btn-default", title: "Add a name" %>
+  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus"></span>', f, :provenance_agents, class: "btn btn-default", title: "Add a name", data: { toggle: 'tooltip', placement: 'right' } %>
 
   <h3>What does it say?</h3>
 

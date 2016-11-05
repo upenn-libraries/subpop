@@ -10,17 +10,17 @@ Docker
 
   - data volume for database
   - logs
+  - test log options
+<!--   - fix `.dockerignore` -- stop copying log files into container
+    + figure out why `delayed_job.log` alone isn't ignored -->
 
-SubPopFormbuilder: hints don't work for nest form objects
+  - backup plan for database
+
+  - talk to OEM about setting up production box -- with space allocation for images
 
 Set up permanent servers:
 
 - Production
-
-Double check fields:
-
-- Books
-- Evidence
 
 - Administration of workflow for "probation" users
 
@@ -30,14 +30,8 @@ Spreadsheet import: Deal with single images for multiple pieces of provenance
 
 Add Blacklight to application
 
-<!-- Model name: -->
-
-<!-- - replace `item.class.name.underscore` with `item.model_name.element`
-  throughout -->
-
 #### All sections:
 
-Clean up pages; improve layout
 
 Manage position of side image, when resizing to smaller page layout
 
@@ -61,16 +55,16 @@ Manage position of side image, when resizing to smaller page layout
  -->
 #### Evidence
 
-Edit/New pages
-- "Back to photo queue" anchor on Safari doesn't scroll down far enough
+<!-- Edit/New pages
+- "Back to photo queue" anchor on Safari doesn't scroll down far enough -->
 
-Create context images
+<!-- Create context images -->
 
-Investigate image cropping
+<!-- Investigate image cropping -->
 
-Evidence show page:
+<!-- Evidence show page:
 
-- Add name window from Add name list
+- Add name window from Add name list -->
 
 Evidence form:
 
@@ -115,13 +109,16 @@ x - when updating photo show progress bar for image in status element -->
 
 - make sure flickrize_tags calculates correct tags for existing photos
 
-## Unordered list of stuff
- -->
+## Unordered list of stuff -->
  <!-- Rename HasPhoto to BelongsToPhoto; it's confusing as it's named now. -->
+<!-- + stop copying `doc/api` -->
+<!-- SubPopFormbuilder: hints don't work for nest form objects -->
 <!-- User support: -->
-
 <!-- - Add full_name to user -->
 <!-- - Add user to books and evidence: `created_by`, `updated_by` -->
 <!-- - Show user's books -->
 <!-- - Push to Flickr workflow -->
-<!-- - Staging -->
+<!-- Clean up pages; improve layout -->
+<!-- Model name: -->
+<!-- - replace `item.class.name.underscore` with `item.model_name.element`
+  throughout -->

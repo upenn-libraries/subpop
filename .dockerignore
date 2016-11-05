@@ -1,6 +1,7 @@
 .git
 .dockerignore
 .byebug_history
-/log/*
-/tmp/*
+log/*
+tmp/*
+doc/api/*
 public/system/*
