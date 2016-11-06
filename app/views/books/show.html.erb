@@ -88,8 +88,6 @@
   <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
 </div>
 
-
-<<<<<<< HEAD
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :comment_book %></div>
   <div class="col-sm-6 field-value"><%= @book.comment_book %></div>
@@ -100,9 +98,11 @@
 <div id="publishables-list">
 <%= render '/flickr/publishables_list', publishables: @book.publishables %>
 </div>
+
   <hr>
+
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading panel-custom">
     <h2 class-"panel-title">Final Step: Publish and Edit Images</h2>
     </div>
   <div class="panel-body">
@@ -132,6 +132,7 @@
  </div> <!-- /panel-body -->
 </div> <!-- /panel panel-default -->
 
+<<<<<<< HEAD
 <hr>
 
  <div class="panel panel-default panel-queue">
@@ -145,27 +146,35 @@
 <% if can? :update, @book -%>
  </div> <!-- /panel-body -->
 </div> <!-- /panel panel-default -->
+=======
+ </div>
+</div>
+>>>>>>> Add headers and top publish buttons
 
 
 <hr>
 
- <div class="panel panel-default panel-queue">
+ <div class="panel panel-default">
     <div class="panel-heading">
     <a class="anchor" id="anchor-photo-queue"></a>
     <h2 class-"panel-title">Step 4: Photo Queue</h2>
-  </div>
-<div class="panel-body">
+    </div>
+  <div class="panel-body">
+
     <h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance mark in each image.  This will take you to a screen where you can fill out more information about each provenance mark.</h4>
-<div class="col-md-12">
+
 <% if can? :update, @book -%>
 <div class="row field-group">
 
+<<<<<<< HEAD
 <h2>Step 4: Assign a provenance format</h2>
 <h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance in each image.  This will take you to a screen where you can fill out more information about each provenance mark.
 
   <h3>Photo queue</h3>
 
 
+=======
+>>>>>>> Add headers and top publish buttons
  <!--
 
       The anchor below, #photo-queue, doesn't function properly on Safari when
