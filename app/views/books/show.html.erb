@@ -88,7 +88,6 @@
   <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
 </div>
 
-
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @book, :comment_book %></div>
   <div class="col-sm-6 field-value"><%= @book.comment_book %></div>
@@ -129,7 +128,6 @@
   </div>
   <% end -%>
   <% end -%>
-
  </div> <!-- /panel-body -->
 </div> <!-- /panel panel-default -->
 
@@ -145,9 +143,21 @@
 <div class="col-md-12">
 <% if can? :update, @book -%>
 
+
 <hr>
 
+ <div class="panel panel-default">
+    <div class="panel-heading">
+    <a class="anchor" id="anchor-photo-queue"></a>
+    <h2 class-"panel-title">Step 4: Photo Queue</h2>
+    </div>
+  <div class="panel-body">
+
+    <h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance mark in each image.  This will take you to a screen where you can fill out more information about each provenance mark.</h4>
+
+<% if can? :update, @book -%>
 <div class="row field-group">
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -158,6 +168,10 @@
 
   <h3>Photo queue</h3>
 >>>>>>> add step 4 header
+=======
+
+
+>>>>>>> Add headers and top publish buttons
 
  <!--
 
@@ -172,7 +186,11 @@
       .at the top of the screen.
 
   -->
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> Add headers and top publish buttons
   <div id="photo-queue">
     <%= render 'photos/index', book: @book, photos: @book.queued_photos %>
   </div> <!-- /photo-queue -->
@@ -186,6 +204,13 @@
 <%= link_to 'Edit Book', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
 </div>
+<<<<<<< HEAD
   </div><!-- /panel-body -->
   </div> <!-- /panel panel-default -->
 
+=======
+
+
+  </div> <!-- /panel-body -->
+</div> <!-- /panel panel-default -->
+>>>>>>> Add headers and top publish buttons
