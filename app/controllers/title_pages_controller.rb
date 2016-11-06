@@ -35,12 +35,10 @@ class TitlePagesController < ApplicationController
   end
 
   def destroy
-<<<<<<< HEAD
     @title_page.mark_deleted
-=======
     @title_page.requeue_photo
      @title_page.mark_deleted
->>>>>>> fix 'remove title page' problem
+
     DeletePublishableJob.perform_later @title_page, current_user
     respond_to do |format|
       format.js

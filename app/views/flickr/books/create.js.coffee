@@ -3,6 +3,6 @@ $('#publish-book-buttons').html("<%= j render(partial: '/flickr/books/publish_bu
 $('#publish-book-buttons').addClass('processing')
 $.poll_publish_buttons('#publish-book-buttons')
 
-# reload all the images and start polling the ones that are porcessing
+# reload all the images and start polling the ones that are processing
 $('#publishables-list').html("<%= j render(partial: '/flickr/publishables_list', locals: { publishables: @item.publishables }) %>")
 $.poll_all_publishables()

@@ -88,31 +88,55 @@
   <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
 </div>
 
-<hr>
+  <hr>
 
-<h3>Title page, evidence images</h3>
-<div id="publishables-list">
-<%= render '/flickr/publishables_list', publishables: @book.publishables %>
-</div>
+  <div class="panel panel-default">
+    <div class="panel-heading panel-custom">
+    <h2 class-"panel-title">Final Step: Publish and Edit Images</h2>
+    </div>
+  <div class="panel-body">
 
-<br>
-<% if can? :update, @book -%>
-<div class="row">
-  <div id="publish-book-buttons" data-book="<%= @book.id -%>">
-    <%= render '/flickr/books/publish_buttons', book: @book %>
+ <% if @book.publishables.present? -%>
+ <% if can? :update, @book -%>
+ <div class="row">
+    <div id="publish-book-buttons" data-book="<%= @book.id -%>">
+      <%= render '/flickr/books/publish_buttons', book: @book %>
+    </div>
   </div>
-</div>
-<% end -%>
+  <% end -%>
+  <% end -%>
 
-<% if can? :update, @book -%>
+  <div id="publishables-list">
+  <%= render '/flickr/publishables_list', publishables: @book.publishables %>
+  </div>
+<% if @book.publishables.present? -%>
+ <% if can? :update, @book -%>
+ <div class="row">
+    <div id="publish-book-buttons" data-book="<%= @book.id -%>">
+      <%= render '/flickr/books/publish_buttons', book: @book %>
+    </div>
+  </div>
+  <% end -%>
+  <% end -%>
+
+ </div> 
+</div>
 
 <hr>
 
-<div class="row field-group">
-<h2>Step 4: Assign a provenance format</h2>
-<h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance in each image.  This will take you to a screen where you can fill out more information about each provenance mark. 
+ <div class="panel panel-default">
+    <div class="panel-heading">
+    <a class="anchor" id="anchor-photo-queue"></a>
+    <h2 class-"panel-title">Step 4: Photo Queue</h2>
+    </div>
+  <div class="panel-body">
 
-  <h3>Photo queue</h3>
+    <h4>Use the dropdowns in the photo queue below to select the provenance format that best describes the provenance mark in each image.  This will take you to a screen where you can fill out more information about each provenance mark.</h4>
+
+<% if can? :update, @book -%>
+<div class="row field-group">
+
+
 
  <!--
 
@@ -127,7 +151,7 @@
       .at the top of the screen.
 
   -->
-  <a class="anchor" id="anchor-photo-queue"></a>
+  
   <div id="photo-queue">
     <%= render 'photos/index', book: @book, photos: @book.queued_photos %>
   </div> <!-- /photo-queue -->
@@ -140,3 +164,7 @@
 <%= link_to 'Edit Book', edit_book_path(@book), class: 'btn btn-primary' %>
 <% end -%>
 </div>
+  
+
+  </div> <!-- /panel-body -->
+</div> <!-- /panel panel-default -->
