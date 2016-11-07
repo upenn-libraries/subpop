@@ -1,4 +1,9 @@
 <% if publishables.present? -%>
+
+ <h4>Click "Publish Book" to publish all images to Flickr, or click the "Publish" button next to individual images to publish images one at a time."</h4>
+
+<hr> 
+
 <% publishables.each do |item| -%>
 <div class="row">
 <div class="publishable-status<%= item.processing? ? ' processing' : '' -%>" id="<%= publishable_div_id item %>" data-item="<%= item.id -%>" data-item-type="<%= item.model_name.plural -%>">
@@ -8,5 +13,5 @@
 <hr>
 <% end -%>
 <% else -%>
-<p>No images have been assigned.</p>
+<h4>You haven't assigned information about any provenance images yet. Please go down to the <%= link_to 'photo queue', book_path(@book, anchor: "anchor-photo-queue"), title: "Link to photo queue on the book page" %> to get started.</h4>
 <% end -%>

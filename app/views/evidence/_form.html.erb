@@ -15,14 +15,19 @@
     </div>
   <% end %>
 
+
   <% if @evidence.new_record? %>
   <%= f.hidden_field :photo_id %>
   <% end %>
+
 
   <div class="row field-group">
   <div class="col-sm-3 field-label"><%= human_name @evidence, :book_full_name %></div>
     <div class="col-sm-8 field-value"><%= @evidence.book_full_name %></div>
   </div>
+
+  <h2> Step 5: Information About Provenance Mark</h2>
+<h4>Fill out what you know about this provenance mark.  All fields except "Mark format" are optional, so just leave blank what you don't know.</h4>
 
   <h3>What is it?</h3>
 
