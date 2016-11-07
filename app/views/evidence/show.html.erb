@@ -17,7 +17,27 @@
 <% content_for :footer_right do -%>
   <%= render '/shared/update_status', object: @evidence  -%>
 <% end -%>
+<div class="row top-buffer">
+<div class="col-sm-7">
 
+  <% if can? :read, @evidence.book -%>
+  <%= link_to 'Back to Book', @evidence.book, class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to the book page" %>
+  <% end -%>
+
+  <% if can? :update, @evidence.book -%>
+  <%= link_to 'Back to Photo queue', book_path(@evidence.book, anchor: "anchor-photo-queue"), class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to photo queue on the book page" %>
+  <% end -%>
+
+  <% if can? :update, @evidence -%>
+  <%= link_to 'Edit', edit_evidence_path(@evidence), class: 'btn btn-primary', data: { toggle: 'tooltip' }, title: "Edit this #{@evidence.format_name}" %>
+  <% end -%>
+
+  <% if can? :destroy, @evidence -%>
+  <%= link_to 'Delete', [@evidence.book,@evidence], class: 'btn btn-danger', method: :delete, data: { confirm: "Delete this #{@evidence.format_name}?", toggle: 'tooltip' }, title: "Delete this #{@evidence.format_name}" -%>
+  <% end -%>
+
+ </div>
+</div>
 <h2><%= @evidence.format_name -%></h2>
 
 <h3>Book</h3>
@@ -29,10 +49,6 @@
 
 <h3>What is it?</h3>
 
-<div class="row field-group">
-  <div class="col-sm-4 field-label"><%= human_name @evidence, :location_in_book %></div>
-  <div class="col-sm-6 field-value"><%= @evidence.location_name %></div>
-</div>
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @evidence, :format %></div>
   <div class="col-sm-6 field-value"><%= @evidence.format_name %></div>
@@ -52,6 +68,24 @@
 </div>
 
 <div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @evidence, :location_in_book %></div>
+  <div class="col-sm-6 field-value"><%= @evidence.location_name %></div>
+</div>
+
+<h3>Whose mark is it?</h3>
+<% if @evidence.provenance_agents.present? %>
+  <% @evidence.provenance_agents.each do |agent| %>
+    <div class="row field-group">
+      <div class="col-sm-4 field-label"><%= agent.role_name %></div>
+      <div class="col-sm-6 field-value"><%= agent.full_name %></div>
+    </div>
+  <% end %>
+<% else %>
+  <p>No provenance agents associated with this evidence.</p>
+<% end %>
+
+<h3>What does it say?</h3>
+<div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @evidence, :transcription %></div>
   <div class="col-sm-6 field-value"><%= @evidence.transcription %></div>
 </div>
@@ -61,6 +95,7 @@
   <div class="col-sm-6 field-value"><%= @evidence.translation %></div>
 </div>
 
+<h3>When was it made?</h3>
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @evidence, :year_when %></div>
   <div class="col-sm-6 field-value"><%= @evidence.year_when %></div>
@@ -81,12 +116,13 @@
   <div class="col-sm-6 field-value"><%= @evidence.date_narrative %></div>
 </div>
 
-<h3>Where?</h3>
+<h3>Where was it made?</h3>
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @evidence, :where %></div>
   <div class="col-sm-6 field-value"><%= @evidence.where %></div>
 </div>
 
+<h3>Comments</h3>
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @evidence, :comments %></div>
   <div class="col-sm-6 field-value"><%= @evidence.comments %></div>
@@ -97,19 +133,6 @@
   <div class="col-sm-4 field-label"><%= human_name @evidence, :citations -%></div>
   <div class="col-sm-6 field-value"><pre><%= @evidence.citations -%></pre></div>
 </div>
-
-<h3>Provenance</h3>
-
-<% if @evidence.provenance_agents.present? %>
-  <% @evidence.provenance_agents.each do |agent| %>
-    <div class="row field-group">
-      <div class="col-sm-4 field-label"><%= agent.role_name %></div>
-      <div class="col-sm-6 field-value"><%= agent.full_name %></div>
-    </div>
-  <% end %>
-<% else %>
-  <p>No provenance agents associated with this evidence.</p>
-<% end %>
 
 <h3>Flickr</h3>
 
@@ -123,11 +146,11 @@
 <div class="col-sm-7">
 
   <% if can? :read, @evidence.book -%>
-  <%= link_to 'Book', @evidence.book, class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to the book page" %>
+  <%= link_to 'Back to Book', @evidence.book, class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to the book page" %>
   <% end -%>
 
   <% if can? :update, @evidence.book -%>
-  <%= link_to 'Photo queue', book_path(@evidence.book, anchor: "anchor-photo-queue"), class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to photo queue on the book page" %>
+  <%= link_to 'Back to Photo queue', book_path(@evidence.book, anchor: "anchor-photo-queue"), class: 'btn btn-default', data: { toggle: 'tooltip' }, title: "Return to photo queue on the book page" %>
   <% end -%>
 
   <% if can? :update, @evidence -%>
