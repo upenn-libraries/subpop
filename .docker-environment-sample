@@ -1,39 +1,38 @@
-# Rename this file to .docker-environment and fill in values
+###################################################################
+#
+# Copy this file to .docker-environment and fill in values
 #
 # Note that containers will get network hostnames based on their
 # names in the docker-compose.yml file.
 #
-SUBPOP_DB_NAME=fillinwithdbname
-SUBPOP_DB_USER=fillinwithdbuser
-# Provide a password of your choosing.
-SUBPOP_DB_PASSWORD=fillthisin
-SUBPOP_DB_HOST=db
-# Hostname of app (e.g., sdbmdev.library.upenn.edu, localhost); used
-# to make URLs in emails; in dev, not particularly important
-SUBPOP_APP_HOST=fillthisin
-# smpt host, duh
-SUBPOP_SMTP_HOST=fillthisin
-# email address
-SUBPOP_EMAIL_FROM=fillthisin
-# email address
-SUBPOP_EMAIL_EXCEPTIONS_TO=fillthisin
-# SECRET KEYS: Keys should be the same across environments (dev,
-# staging, production) for passwords to be the same across
-# environments.
 #
-# Generate keys by running rails task secret.
+# DO NOT use $ parameters in this file; they won't be interpreted; I don't
+# know about variables from the environment.
 #
-# In dev, generate keys in Docker container.
-# SUBPOP_BLACKLIGHT_SECRET_KEY=fillthisin
-
-# Used by config/initializers/devise.rb
-# SUBPOP_DEVISE_SECRET_KEY=fillthisin
-
-# Used by config/secrets.yml
-# SUBPOP_SECRET_KEY_BASE=fillthisin
-# SUBPOP_SECRET_TOKEN=fillthisin
-
-# URL for Solr instance
-# SOLR_URL=http://solr:8983/solr/development
-# Used by MySQL docker image to set up MySQL root password
+####
 MYSQL_ROOT_PASSWORD=2prOWnu321qgnIw4C1RWPrvH6INkEnA6
+RAILS_ENV=production
+
+# POP Flickr env variables
+SUBPOP_FLICKR_API_KEY=fill_me_in
+SUBPOP_FLICKR_API_SECRET=fill_me_in
+SUBPOP_FLICKR_ACCESS_TOKEN=fill_me_in
+SUBPOP_FLICKR_ACCESS_SECRET=fill_me_in
+SUBPOP_FLICKR_USERID=fill_me_in
+SUBPOP_FLICKR_USERNAME=fill_me_in
+
+SUBPOP_HOST=host
+SUBPOP_PORT=port
+
+SUBPOP_DB_NAME=subpop
+SUBPOP_DB_USER=fill_in_with_db_user
+SUBPOP_DB_PASSWORD=fill_in_with_db_password
+
+SUBPOP_SMTP_HOST=smtp.example.com
+SUBPOP_EMAIL_FROM=email@example.com
+SUBPOP_EMAIL_EXCEPTIONS_TO=email@example.com
+
+# Use `rake secret` to generate secrets for these
+SUBPOP_DEVISE_SECRET_KEY=secret_1
+SUBPOP_SECRET_TOKEN=secret_2
+SUBPOP_SECRET_KEY_BASE=secret_3
