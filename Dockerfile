@@ -26,7 +26,7 @@ RUN bundle install --binstubs --without development test
 COPY . .
 
 # Delete old server.pid or it just won't start
-CMD [ "rm", "-f" "/subpop/tmp/pids/server.pid"]
+CMD [ "rm", "-f", "/subpop/tmp/pids/server.pid"]
 CMD ["rails","server","-b","0.0.0.0"]
 # CMD ["rake","jobs:work"]
 # CMD ["foreman","start"]
