@@ -1,0 +1,217 @@
+#!/usr/bin/env bash
+# -ex:
+# bail on errors and show debugging stuff
+
+# - Run the rake task to precompile the assets
+# - Run `docker-compose stop`
+# - Run `docker-compose up`
+# - Run rake db:migrate on the web container.
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+read -r -d '' HELP <<-EOF
+Options:
+
+  -c path/to/local_config
+        [DEFAULT=${SCRIPT_DIR}/local_config]
+  -h    Display this help message
+
+This script will:
+
+   - Run the rake task to precompile the assets
+   - Bring down the current container
+   - Bring up the docker container
+   - Migrate the database
+
+Local config file should define variables required by this script and by
+'docker-compose.yml'. For example:
+
+DOCKER_APP_LOCAL_PUBLIC_DIR=/var/provenance/public
+DOCKER_APP_LOCAL_IMAGE_DIR=/var/provenance/images
+
+EOF
+
+################################################################################
+### TEMPFILES
+# From:
+#   http://stackoverflow.com/questions/430078/shell-script-templates
+# create a default tmp file name
+tmp=${TMPDIR:-/tmp}/prog.$$
+# delete any existing temp files
+trap "rm -f $tmp.?; exit 1" 0 1 2 3 13 15
+# then do
+#   ...real work that creates temp files $tmp.1, $tmp.2, ...
+
+################################################################################
+#### USAGE AND ERRORS
+COMMAND=`basename $0`
+# Load basic functions; primarily messaging functions
+# Rename file name here to match actual functions
+FUNCTIONS="`dirname $0`/bash-functions"
+if source "${FUNCTIONS}" ; then
+  :
+else
+  error_no_exit "Functions file not found; expected ${FUNCTIONS}"
+  exit 1
+fi
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Note that LOGFILE is used by functions for log commands: log_message,
+# log_warning, log_error, etc.
+#
+# replace log file with another value if you want
+LOGFILE=LOG_${COMMAND}_`tstamp`.log
+
+usage() {
+   echo "Usage: $COMMAND [OPTIONS] DOCKER_COMPOSE_YML"
+}
+
+print_help() {
+  echo "$HELP"
+}
+
+################################################################################
+### OPTIONS
+###############################################################################
+while getopts "hc:" opt; do
+  case $opt in
+    c)
+      LOCAL_CONFIG=$OPTARG
+      ;;
+    h)
+      usage
+      print_help
+      exit 1
+      ;;
+    \?)
+      echo "ERROR Invalid option: -$OPTARG" >&2
+      echo ""
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+#----------------------------------------------------------------------------
+# Load config if present
+#----------------------------------------------------------------------------
+if [[ "${LOCAL_CONFIG}" ]]; then
+  :
+else
+  LOCAL_CONFIG=${SCRIPT_DIR}/local_config
+fi
+
+[[ -f "$LOCAL_CONFIG" ]] && source "$LOCAL_CONFIG"
+
+###############################################################################
+### THESCRIPT
+###############################################################################
+
+#----------------------------------------------------------------------------
+# Sanity checks
+#----------------------------------------------------------------------------
+
+# --- docker-compose.yml ---
+DOCKER_COMPOSE_YML=$1
+if file_exists "$DOCKER_COMPOSE_YML" DOCKER_COMPOSE_YML ; then
+  :
+else
+  error "Bad DOCKER_COMPOSE_YML argument"
+fi
+
+# --- .docker-environment ---
+#
+# docker-compose.yml file expects .docker-environment; unlike the `docker`
+# command `docker-compose` does not have an `--env-file` option.
+#
+# TODO maybe make this flexible to use alternate paths?
+DOCKER_ENV_FILE="${PWD}/.docker-environment"
+if file_exists "$DOCKER_ENV_FILE" DOCKER_ENV_FILE ; then
+  # message "Found expected DOCKER_ENV_FILE: $DOCKER_ENV_FILE"
+  :
+else
+  error "No DOCKER_ENV_FILE found; expected: ${DOCKER_ENV_FILE}"
+fi
+
+# --- docker-compose.yml VAR check --
+# check for compose file vars
+COMPOSE_VARS=$(grep --extended-regexp --only-matching '\$\{\w+\}' docker-compose.yml | \
+  grep --extended-regexp --only-matching "\w+" | \
+  sort --unique)
+
+var_errors=
+for var in $COMPOSE_VARS; do
+  if [[ -z "${!var}" ]]; then
+    error_no_exit "Variable expected by DOCKER_COMPOSE_YML is missing: $var"
+    var_errors=y
+  fi
+done
+
+if [[ "$var_errors" ]]; then
+  error "Variables required by docker-compose.yml are missing"
+fi
+
+#----------------------------------------------------------------------------
+# Precompile the assets
+#----------------------------------------------------------------------------
+if [[ -z "$DOCKER_APP_LOCAL_PUBLIC_DIR" ]]; then
+  error "DOCKER_APP_LOCAL_PUBLIC_DIR must be defined"
+fi
+
+message "Precompiling assets"
+docker run --rm --env-file "$DOCKER_ENV_FILE" \
+  -v "$DOCKER_APP_LOCAL_PUBLIC_DIR":/subpop/public subpop_web \
+  bundle exec rake assets:precompile
+
+if [[ $? -eq 0 ]]; then
+  message "Assets precompiled!"
+else
+  error "Unable to precompile assets"
+fi
+
+#----------------------------------------------------------------------------
+# Bring down the current container
+#----------------------------------------------------------------------------
+message "Running docker-compose stop"
+docker-compose --file "$DOCKER_COMPOSE_YML" stop
+
+if [[ $? -eq 0 ]]; then
+  message "Docker containers stopped!"
+else
+  error "Error stopping docker containers"
+fi
+
+#----------------------------------------------------------------------------
+# Run `docker-compose up`
+#----------------------------------------------------------------------------
+message "Running: docker-compose up"
+docker-compose --file "$DOCKER_COMPOSE_YML" up -d
+
+if [[ $? -eq 0 ]]; then
+  message "Docker containers started"
+else
+  error "Error starting docker containers"
+fi
+
+#----------------------------------------------------------------------------
+# Run `docker-compose rake db:migrate`
+#----------------------------------------------------------------------------
+command="docker-compose --file \"$DOCKER_COMPOSE_YML\" run --rm web bundle exec rake db:migrate"
+message "Running: $command"
+eval $command
+
+if [[ $? -eq 0 ]]; then
+  message "Databse migration run"
+else
+  error "Error migrating database"
+fi
+
+################################################################################
+### EXIT
+# http://stackoverflow.com/questions/430078/shell-script-templates
+rm -f $tmp.?
+trap 0
+exit 0
