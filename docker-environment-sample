@@ -32,15 +32,23 @@ SUBPOP_FLICKR_USERID=fill_me_in
 SUBPOP_FLICKR_USERNAME=fill_me_in
 
 # The values below are used by `config/environments/production.rb` for
-# `config.action_mailer.default_url_options` and are used by the devise
-# mailer to build URLs.SUBPOP_HOST=host
+# `config.action_mailer.default_url_options` and are used by the devise mailer
+# to build URLs.
+SUBPOP_HOST=host
 SUBPOP_HTTP_PROTOCOL=https
 SUBPOP_PORT=port
 
+# Database configuration.
+#
+# You must repeat the values from above; do not use variables.
+#
+# DON'T DO THIS! ==> SUBPOP_DB_PASSWORD=$MYSQL_PASSWORD <== VERY BAD
+#
 SUBPOP_DB_NAME=subpop
 SUBPOP_DB_USER=subpop
 SUBPOP_DB_PASSWORD=password
 
+# Mailer and exception notification configuration.
 SUBPOP_SMTP_HOST=smtp.example.com
 SUBPOP_EMAIL_FROM=email@example.com
 SUBPOP_EMAIL_EXCEPTIONS_TO=email@example.com
