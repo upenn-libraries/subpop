@@ -1,16 +1,16 @@
 
-<<<<<<< HEAD
+
 Remove the "other id" fields from books
 Remove the sammelbande from books
-=======
+
 #Fix gap between 'selected' menu button and bottom of nav bar
 #Remove the "other id" fields from books
 #Remove the sammelbande from books
->>>>>>> Add headers and top publish buttons
+ publish buttons
 
 run tests
 
-make evidence show page look right
+#make evidence show page look right
 
 
 
@@ -22,24 +22,17 @@ Hints for
 
 
 Add headers for these steps:
-<<<<<<< HEAD
-  3 Pick title page
-  4 Assign provenance Format
-  5 Add info for provenance marks (make clear that nothing is required)
-  Final: Publish
-=======
   #3 Pick title page
   #4 Assign provenance Format
   #5 Add info for provenance marks (make clear that nothing is required)
-  #Final: Publish 
->>>>>>> Add headers and top publish buttons
 
+  #Final: Publish
 #Fill "little duck" space with something more final
 #"Add Title Page" button for images in photo queue
--Add another "Publish" button at top of images (to minimize scrolling required for phone users)
+*Add another "Publish" button at top of images (to minimize scrolling required for phone users)
 	NB Problem with having two sets of publish buttons
 
--Add page navigation thing to bottom of list of books on initial page
+#Add page navigation thing to bottom of list of books on initial page
 
 -Change wording of hint for identified names
 -Change "title" field for book to text field
@@ -49,12 +42,8 @@ Add headers for these steps:
 
 TOTHINK
 
-<<<<<<< HEAD
-  -Change wording "Publish book" to "Publish all" on button (?)
+
   -Colors of buttons?
-=======
-  -Colors of buttons? 
->>>>>>> Add headers and top publish buttons
 
 
 
