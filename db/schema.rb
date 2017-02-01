@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20170411205038) do
   add_index "bookmarks", ["document_id"], name: "index_bookmarks_on_document_id", using: :btree
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
+ActiveRecord::Schema.define(version: 20161201212538) do
+
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
     t.string   "owner",          limit: 255
