@@ -88,6 +88,11 @@
   <div class="col-sm-6 field-value"><%= @book.acq_source %></div>
 </div>
 
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @book, :comment_book %></div>
+  <div class="col-sm-6 field-value"><%= @book.comment_book %></div>
+</div>
+
   <hr>
   <div class="panel panel-default">
     <div class="panel-heading">

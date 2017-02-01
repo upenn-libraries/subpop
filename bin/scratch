@@ -7,9 +7,15 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate migration add_institution_to_users \
- institution:string \
+rails generate migration add_comment_book_to_books \
+ comment_book:text \
   $generator_options
+
+#generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
+
+#rails generate migration add_institution_to_users \
+ #institution:string \
+  #$generator_options
 
 # rails generate migration add_translation_to_evidence \
 #  translation:text \

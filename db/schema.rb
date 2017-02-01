@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201212538) do
+ActiveRecord::Schema.define(version: 20170201223322) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20161201212538) do
     t.string   "creation_place", limit: 255
     t.integer  "creation_date",  limit: 4
     t.string   "publisher",      limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "other_id",       limit: 255
     t.string   "other_id_type",  limit: 255
     t.boolean  "sammelband"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20161201212538) do
     t.integer  "updated_by_id",  limit: 4
     t.string   "date_narrative", limit: 255
     t.string   "acq_source",     limit: 255
+    t.text     "comment_book",   limit: 65535
   end
 
   create_table "content_types", force: :cascade do |t|

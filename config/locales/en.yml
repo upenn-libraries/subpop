@@ -45,6 +45,7 @@ en:
         other_id: Other ID
         created_at: Created
         updated_at: Updated
+        comment_book: Comments
       evidence:
         format: Mark format
         format_other: Other format
