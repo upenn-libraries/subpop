@@ -114,7 +114,7 @@ Remove the sammelbande from books
 
 run tests
 
-make evidence show page look right
+#make evidence show page look right
 
 Hints for
   #city, state/region, country on geographic location field
@@ -130,10 +130,10 @@ Add headers for these steps:
 
 #Fill "little duck" space with something more final
 #"Add Title Page" button for images in photo queue
--Add another "Publish" button at top of images (to minimize scrolling required for phone users)
+*Add another "Publish" button at top of images (to minimize scrolling required for phone users)
 	NB Problem with having two sets of publish buttons
 
--Add page navigation thing to bottom of list of books on initial page
+#Add page navigation thing to bottom of list of books on initial page
 
 -Change wording of hint for identified names
 -Change "title" field for book to text field

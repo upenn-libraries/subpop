@@ -12,12 +12,9 @@ rails generate migration add_comment_book_to_books \
  comment_book:text \
   $generator_options
 
-<<<<<<< HEAD
 
 #generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-=======
->>>>>>> update todo
 #rails generate migration add_institution_to_users \
  #institution:string \
   #$generator_options
