@@ -1,6 +1,18 @@
+
 -Fix gap between 'selected' menu button and bottom of nav bar
 Remove the "other id" fields from books
 Remove the sammelbande from books
+
+#Add Institution field for users
+-Fix "Unpublish book" button not displaying properly
+#Add orienting text to Home page
+-Make context image references consistent
+-Fix display of "link to page image"
+#Make photo queue display as two columns?
+
+-Add sammelbande fields to DB?
+
+
 
 #Fix gap between 'selected' menu button and bottom of nav bar
 #Remove the "other id" fields from books
