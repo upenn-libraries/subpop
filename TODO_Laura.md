@@ -6,6 +6,12 @@
 -Make context image references consistent
 -Fix display of "link to page image"
 #Make photo queue display as two columns?
+<<<<<<< HEAD
+=======
+
+-Add sammelbande fields to DB?
+
+>>>>>>> update todo
 
 -Add sammelbande fields to DB?
 
