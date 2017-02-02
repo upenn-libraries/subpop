@@ -1,4 +1,8 @@
 
+-Fix gap between 'selected' menu button and bottom of nav bar
+
+Remove the "other id" fields from books
+Remove the sammelbande from books
 
 #Add Institution field for users
 -Fix "Unpublish book" button not displaying properly
@@ -10,9 +14,6 @@
 -Add sammelbande fields to DB?
 
 
-
-Remove the "other id" fields from books
-Remove the sammelbande from books
 
 #Fix gap between 'selected' menu button and bottom of nav bar
 #Remove the "other id" fields from books
