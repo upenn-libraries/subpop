@@ -72,6 +72,9 @@ gem 'flickraw-cached'
 
 gem 'lograge'
 
+# blacklight
+gem 'blacklight', "~> 6.0"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 8.2.2'
@@ -98,4 +101,13 @@ end
 # Access an IRB console on exception pages or by using <%= console %> in views
 gem 'web-console', '~> 2.0', group: :development
 
-gem 'blacklight', "~> 6.0"
+
+group :development, :test do
+  gem 'solr_wrapper', '>= 0.3'
+end
+
+gem 'rsolr', '~> 1.0'
+group :development, :test do
+end
+
+gem 'blacklight-marc', '~> 6.1'
