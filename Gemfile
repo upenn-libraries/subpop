@@ -75,6 +75,11 @@ gem 'lograge'
 # blacklight
 gem 'blacklight', "~> 6.0"
 
+# For indexing records in Solr
+gem 'sunspot_rails', '~> 2.2.0'
+gem 'sunspot_solr', '~> 2.2.0'
+gem 'progress_bar'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 8.2.2'
