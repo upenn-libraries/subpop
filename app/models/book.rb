@@ -13,6 +13,14 @@ class Book < ActiveRecord::Base
     where "created_by_id = ? or updated_by_id = ?",  user.id, user.id
   }
 
+  searchable do
+    text :title, stored: true
+    text :author, stored: true
+    string :title, stored: true
+    string :author, stored: true
+  
+  end 
+  
   def holder
     return repository if repository.present?
     owner

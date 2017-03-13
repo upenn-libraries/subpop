@@ -5,13 +5,24 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    filter = user_filter
+    # filter = user_filter
 
-    if filter.present?
-      @books = Book.for_user(filter).order("coalesce(repository, owner)").page params[:page]
-    else
-      @books = Book.order("coalesce(repository, owner)").page params[:page]
+    # if filter.present?
+    #   @books = Book.for_user(filter).order("coalesce(repository, owner)").page params[:page]
+    # else
+    #   @books = Book.order("coalesce(repository, owner)").page params[:page]
+    # end
+
+    @query = Book.search do
+        fulltext params[:search]
+        facet :title, limit: 5
+        facet :author, limit: 5
+        with :title, params[:title] if params[:title].present?
+        with :author, params[:author] if params[:author].present?
+        
     end
+    @books = @query.results
+
   end
 
   # GET /books/1

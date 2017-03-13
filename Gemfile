@@ -72,6 +72,9 @@ gem 'flickraw-cached'
 
 gem 'lograge'
 
+gem 'sunspot_rails', '~> 2.2.0'
+gem 'sunspot_solr', '~> 2.2.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 8.2.2'
