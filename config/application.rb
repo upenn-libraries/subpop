@@ -38,14 +38,14 @@ module Subpop
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{Rails.root}app/jobs)
 
-    config.lograge.enabled = true
+    # config.lograge.enabled = true
 
-    config.lograge.custom_options = ->(event) {
-      exceptions = %w(controller action format id)
-      {
-        params: event.payload[:params].except(*exceptions)
-      }
-    }
+    # config.lograge.custom_options = ->(event) {
+    #   exceptions = %w(controller action format id)
+    #   {
+    #     params: event.payload[:params].except(*exceptions)
+    #   }
+    # }
 
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
