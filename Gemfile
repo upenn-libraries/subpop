@@ -115,4 +115,4 @@ gem 'rsolr', '~> 1.0'
 group :development, :test do
 end
 
-gem 'blacklight-marc', '~> 6.1'
+#gem 'blacklight-marc', '~> 6.1'
