@@ -210,6 +210,12 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def subpop_link_to_document document
+    # TODO: Extract type and evidence; id: link to evidence
+    # TODO: link_to(evidence.image.url(:thumb))
+    raw("<pre>#{Evidence.find(document.id.split.last).image.url(:thumb)}</pre>")
+  end
+
   ##
   # Create select options for all users, marking as selected the options for
   # `username`. If `username` is `all`, 'All users' will be selected. If
