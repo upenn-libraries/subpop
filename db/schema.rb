@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201223322) do
+ActiveRecord::Schema.define(version: 20170411190336) do
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "user_id",       limit: 4,     null: false
+    t.string   "user_type",     limit: 255
+    t.string   "document_id",   limit: 255
+    t.string   "document_type", limit: 255
+    t.binary   "title",         limit: 65535
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "bookmarks", ["document_id"], name: "index_bookmarks_on_document_id", using: :btree
+  add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -116,14 +129,14 @@ ActiveRecord::Schema.define(version: 20170201223322) do
   add_index "evidence_content_types", ["evidence_id"], name: "index_evidence_content_types_on_evidence_id", using: :btree
 
   create_table "names", force: :cascade do |t|
-    t.string   "name",                    limit: 255,             null: false
+    t.string   "name",                    limit: 255,               null: false
     t.integer  "year_start",              limit: 4
     t.integer  "year_end",                limit: 4
     t.string   "viaf_id",                 limit: 255
-    t.string   "comment",                 limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.integer  "provenance_agents_count", limit: 4,   default: 0
+    t.text     "comment",                 limit: 65535
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.integer  "provenance_agents_count", limit: 4,     default: 0
     t.integer  "created_by_id",           limit: 4
     t.integer  "updated_by_id",           limit: 4
   end
@@ -167,6 +180,16 @@ ActiveRecord::Schema.define(version: 20170201223322) do
     t.integer  "created_by_id",    limit: 4
     t.integer  "updated_by_id",    limit: 4
   end
+
+  create_table "searches", force: :cascade do |t|
+    t.binary   "query_params", limit: 65535
+    t.integer  "user_id",      limit: 4
+    t.string   "user_type",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
 
   create_table "test_table", primary_key: "field_binary", force: :cascade do |t|
   end
