@@ -213,7 +213,9 @@ module ApplicationHelper
   def subpop_link_to_document document
     # TODO: Extract type and evidence; id: link to evidence
     # TODO: link_to(evidence.image.url(:thumb))
-    raw("<pre>#{Evidence.find(document.id.split.last).image.url(:thumb)}</pre>")
+   #raw("<pre>#{Evidence.find(document.id.split.last).image.url(:thumb)}</pre>")
+      Evidence.find(document.id.split.last).image.url(:thumb)
+
   end
 
   ##
