@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411190336) do
+ActiveRecord::Schema.define(version: 20170411205038) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,     null: false
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20170411190336) do
     t.integer  "provenance_agents_count", limit: 4,     default: 0
     t.integer  "created_by_id",           limit: 4
     t.integer  "updated_by_id",           limit: 4
+    t.string   "gender",                  limit: 255
   end
 
   add_index "names", ["name"], name: "index_names_on_name", unique: true, using: :btree
