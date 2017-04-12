@@ -73,6 +73,7 @@ class Evidence < ActiveRecord::Base
   def full_name
     sprintf "%s, %s", (format_name || 'New evidence'), book_full_name
   end
+  alias_method :name, :full_name
 
   def format_name
     return format_other if self.format == 'other_format'
