@@ -9,6 +9,13 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
+     <!-- Mobile viewport optimization h5bp.com/ad -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- Internet Explorer use the highest version available -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <title>POP Submission App</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -73,7 +80,11 @@
     </div><!--/.container-fluid -->
   </nav>
 
-  <div class="container">
+  <!-- Blacklight header and search field. -->
+
+  <%= render :partial => 'shared/header_navbar' %>
+
+ <div class="container">
 
     <div class="row">
       <div  class="col-md-4 box" id="sidebar">
