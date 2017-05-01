@@ -160,7 +160,11 @@ ready = ->
                                     # for the provenance agent
                                     if idField
                                         idField.val(data.id)
+
+                                    nameField.val(data.full_name)
+
                                     searchField.val(data.name)
+
                                     show_flash('success', 'Created name: ' + data.name)
                                     nameField.val(data.name)
                                     set_name_selected_feedback searchField, nameField

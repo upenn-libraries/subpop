@@ -1,4 +1,23 @@
 
+April 2017
+
+-Create Home page with links to "home" "upload," "search", "names", "users"  make root
+-From search results:  links to evidence and book evidence comes from
+-clean-up Blacklight portion of header
+-improve navigation clarity for upload, view, search
+-copy "back to book" etc. to top of results page after saving evidence
+
+-add "gender" field to "name"
+-add "alternate name" field to "name"? (discuss w/Doug)
+-change hint for name entry to clarify
+
+#fix add name issue on Laura branch
+
+-Refine search fields and
+-Merge Laura_search_experiment
+
+
+-run tests
 
 #Add Institution field for users
 -Fix "Unpublish book" button not displaying properly
@@ -6,12 +25,7 @@
 -Make context image references consistent
 -Fix display of "link to page image"
 #Make photo queue display as two columns?
-<<<<<<< HEAD
-=======
 
--Add sammelbande fields to DB?
-
->>>>>>> update todo
 
 -Add sammelbande fields to DB?
 
@@ -60,22 +74,20 @@ TOTHINK
   -Colors of buttons?
 
 -Fix gap between 'selected' menu button and bottom of nav bar
->>>>>>> Add headers and top publish buttons
 Remove the "other id" fields from books
 Remove the sammelbande from books
+
+
+-Add sammelbande fields to DB?
+
 
 #Fix gap between 'selected' menu button and bottom of nav bar
 #Remove the "other id" fields from books
 #Remove the sammelbande from books
 
-
 run tests
 
 #make evidence show page look right
-
-
-
-
 
 Hints for
   #city, state/region, country on geographic location field
@@ -88,12 +100,11 @@ Add headers for these steps:
   #4 Assign provenance Format
   #5 Add info for provenance marks (make clear that nothing is required)
   #Final: Publish
-
-
 #Fill "little duck" space with something more final
 #"Add Title Page" button for images in photo queue
 *Add another "Publish" button at top of images (to minimize scrolling required for phone users)
 	NB Problem with having two sets of publish buttons
+
 
 #Add page navigation thing to bottom of list of books on initial page
 
@@ -151,8 +162,6 @@ TOTHINK
 
   -Change wording "Publish book" to "Publish all" on button (?)
   -Colors of buttons?
-
-
 
 
 

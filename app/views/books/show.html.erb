@@ -106,6 +106,7 @@
     <div id="publish-book-buttons" data-book="<%= @book.id -%>">
       <%= render '/flickr/books/publish_buttons', book: @book %>
     </div>
+<<<<<<< HEAD
   </div>
   <% end -%>
   <% end -%>
@@ -113,6 +114,16 @@
   <div id="publishables-list">
   <%= render '/flickr/publishables_list', publishables: @book.publishables %>
   </div>
+=======
+  </div>
+  <% end -%>
+  <% end -%>
+
+  <div id="publishables-list">
+  <%= render '/flickr/publishables_list', publishables: @book.publishables %>
+  </div>
+
+>>>>>>> 0712033aa603a2d336abde8150b22bc20d194fad
 <% if @book.publishables.present? -%>
  <% if can? :update, @book -%>
  <div class="row">
@@ -122,7 +133,6 @@
   </div>
   <% end -%>
   <% end -%>
-
  </div> <!-- /panel-body -->
 </div> <!-- /panel panel-default -->
 
