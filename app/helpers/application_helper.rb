@@ -210,6 +210,27 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def subpop_link_to_document document
+    obj = object_from_document document
+    img = image_from_document document
+    link_to img + obj.name, obj
+    # image_tag Evidence.find(document.id.split.last).image.url(:thumb), class: 'img-thumbnail'
+  end
+
+  def image_from_document document
+    obj = object_from_document document
+     image_tag Evidence.find(obj).image.url(:thumb), class: 'img-thumbnail'
+  end
+
+  def object_from_document document
+    parts = document.id.split
+    obj_id = parts.pop.to_i
+    kind = parts.join
+
+    klass = Object.const_get kind
+    klass.find(obj_id)
+  end
+
   ##
   # Create select options for all users, marking as selected the options for
   # `username`. If `username` is `all`, 'All users' will be selected. If

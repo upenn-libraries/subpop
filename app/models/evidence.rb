@@ -20,7 +20,8 @@ class Evidence < ActiveRecord::Base
   delegate :photos,   to: :book,          prefix: true, allow_nil: true
   delegate :photo,    to: :context_image, prefix: true, allow_nil: true
   delegate :photo_id, to: :context_image, prefix: true, allow_nil: true
-
+  delegate :title,    to: :book,          prefix: true, allow_nil: true
+  delegate :author,   to: :book,          prefix: true, allow_nil: true
   FORMATS = [
              [ 'Binding',                      'binding' ],
              [ 'Binding Waste',                'binding_waste' ],
@@ -72,6 +73,7 @@ class Evidence < ActiveRecord::Base
   def full_name
     sprintf "%s, %s", (format_name || 'New evidence'), book_full_name
   end
+  alias_method :name, :full_name
 
   def format_name
     return format_other if self.format == 'other_format'
@@ -80,6 +82,10 @@ class Evidence < ActiveRecord::Base
 
   def location_name
     return location_in_book_page if location_in_book == 'page_number'
+    LOCATIONS_BY_CODE[location_in_book]
+  end
+
+  def location_name_without_page
     LOCATIONS_BY_CODE[location_in_book]
   end
 
@@ -113,5 +119,21 @@ class Evidence < ActiveRecord::Base
 
   def to_s
     format_name
+  end
+
+  searchable do
+    text :format_name
+    text :location_name_without_page
+    text :transcription
+    text :book_title
+    text :book_author
+
+    string :format_name, stored: true
+    string :location_name_without_page, stored: true
+    string :book_title, stored: true
+    string :book_author, stored: true
+    string :content_types, multiple: true, stored: true do
+      content_types.map &:name
+    end
   end
 end

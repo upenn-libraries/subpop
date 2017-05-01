@@ -100,4 +100,25 @@ class Book < ActiveRecord::Base
   def to_s
     full_call_number
   end
+
+  # searchable do
+  #   text :title
+  #   text :repository
+  #   text :owner
+  #   text :collection
+  #   text :geo_location
+  #   text :call_number
+  #   text :catalog_url
+  #   text :author
+  #   text :creation_place
+  #   string :title, stored: true
+  #   string :repository, stored: true
+  #   string :owner, stored: true
+  #   string :collection, stored: true
+  #   string :geo_location, stored: true
+  #   string :call_number, stored: true
+  #   string :catalog_url, stored: true
+  #   string :author, stored: true
+  #   string :creation_place, stored: true
+  # end
 end

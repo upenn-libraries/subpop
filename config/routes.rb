@@ -1,5 +1,29 @@
 Rails.application.routes.draw do
 
+
+
+  mount Blacklight::Engine => '/'
+  root to: "books#index"
+    concern :searchable, Blacklight::Routes::Searchable.new
+
+  resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+    concerns :searchable
+  end
+
+  concern :exportable, Blacklight::Routes::Exportable.new
+
+  resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
+    concerns :exportable
+  end
+
+  resources :bookmarks do
+    concerns :exportable
+
+    collection do
+      delete 'clear'
+    end
+  end
+
   get 'flash/show'
 
   resources :books do
@@ -97,7 +121,7 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
 
-  root to: 'books#index'
+  # root to: 'books#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

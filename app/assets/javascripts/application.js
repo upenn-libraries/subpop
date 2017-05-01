@@ -25,4 +25,6 @@
 //= require books
 //= require subpop
 //= require cropper-main
-//= require turbolinks
+//= require turbolinks//
+// Required by Blacklight
+//= require blacklight/blacklight
