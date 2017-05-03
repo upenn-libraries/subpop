@@ -16,11 +16,60 @@
   </div>
 </div> -->
 
-<div id="search-navbar" class="navbar-static-top" role="navigation">
+<!-- <div id="search-navbar" class="navbar-static-top" role="navigation">
 
   <div class="<%= container_classes %>">
     <%= render_search_bar  %>
 
   </div>
-</div>
+</div> -->
+ <%= yield :modals -%>
+ <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <div  class="navbar-header">
+
+      <%= image_tag "Penn_libraries.png", :alt => "Penn Libraries", class: "navbar-brand" %>
+         </div>
+      <div class="navbar-header">
+        <%= link_to "POP Database", root_path, class: "navbar-brand" %>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="<%= 'active' if current_page?(root_path) || params[:controller] == 'books' -%>"><%= link_to "Home", root_path %></li>
+
+          <% if can? :read, Name -%>
+          <li class="link-height <%= 'active' if params[:controller] == 'names' -%>"><%= link_to "Names", names_path %></li>
+          <% end -%>
+
+          <% if can? :manage, User -%>
+          <li class= " link-height <%= 'active' if params[:controller] == 'user' -%>"><%= link_to "Users", user_index_path %></li>
+          <% end -%>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? -%>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span><%= current_user.username -%> <%= current_user.admin? ? ' (admin)' : '' %>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Manage account', edit_user_registration_path -%></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete -%></li>
+            </ul>
+          </li>
+          <% elsif controller.class.parent != Devise -%>
+          <li><%= link_to 'Sign in', new_session_path(resource_name) -%></li>
+          <% end -%>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+  </nav>
 
