@@ -5,28 +5,54 @@ services:
     image: mysql/mysql-server:5.7
     env_file: .docker-environment
     ports:
-      - '3306:3306'
+      - "127.0.0.1:3307:3306"
     volumes:
-      - 'db:/var/lib/mysql'
+      - db:/var/lib/mysql
 
   web:
-    depends_on:
-      - 'db'
-    build: .
-    volumes:
-      - .:/subpop
-    ports:
-      - "3000:3000"
+    image: subpop_web
     env_file: .docker-environment
+    depends_on:
+      - db
+    volumes:
+      - '${DOCKER_APP_LOCAL_PUBLIC_DIR}:/subpop/public'
+      - '${DOCKER_APP_LOCAL_IMAGE_DIR}:/subpop/public/system/'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "28"
+
+  http:
+    image: nginx:stable
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/htpasswd:/etc/nginx/htpasswd
+      - ./docker/nginx/cert.crt:/etc/nginx/cert.crt
+      - ./docker/nginx/cert.key:/etc/nginx/cert.key
+      - '${DOCKER_APP_LOCAL_PUBLIC_DIR}:/subpop/public'
+    ports:
+      - "8443:8443"
+    command: /bin/bash -c "nginx -g 'daemon off;'"
+    depends_on:
+      - web
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "28"
 
   delayedjob:
+    image: subpop_web
     depends_on:
-      - 'db'
-    command: bundle exec rake jobs:work
-    build: .
-    volumes:
-      - .:/subpop
+      - db
+    volumes_from:
+      - web
     env_file: .docker-environment
+    command: bundle exec rake jobs:work
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "28"
 
 volumes:
-  db:
+   db:
+   web:

@@ -22,15 +22,15 @@
 
   </div>  <!-- /.panel-body -->
   <div class="panel-footer clearfix">
+
     <% if can? :update, photo -%>
     <div class="edit-photo-container pull-left">
       <%= render 'photos/edit_photo_link', item: book, photo: photo, link_name: 'Edit master photo' %>
-
       <p><%= link_to 'Make Title Page', book_title_pages_path(book, title_page: { photo_id: photo }), method: :post, class: 'btn btn-default btn-sm'%></p>
       </div>
-
       <p class="pull-right"><%= use_count photo -%></p>
     <% end %>
+
   </div> <!-- /.panel-footer -->
 </div>  <!-- /.panel .panel-default -->
 

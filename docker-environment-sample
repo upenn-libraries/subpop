@@ -1,0 +1,59 @@
+###################################################################
+#
+# Copy this file to .docker-environment and fill in values
+#
+# Note that containers will get network hostnames based on their
+# names in the docker-compose.yml file.
+#
+#
+# DO NOT use $ parameters in this file; they won't be interpreted; I don't
+# know about variables from the environment.
+#
+####
+
+# Set up all the MYSQL values; MYSQL_DATABASE, MYSQL_USER, and MYSQL_PASSWORD
+# are not needed if db user is root; do not use root in production.
+MYSQL_ROOT_PASSWORD=root_password
+MYSQL_DATABASE=subpop
+MYSQL_USER=subpop
+MYSQL_PASSWORD=password
+
+# We're always using production, because we don't develop in docker. Should
+# change this is developing in docker.
+RAILS_ENV=production
+
+# POP Flickr env variables
+SUBPOP_FLICKR_API_KEY=fill_me_in
+SUBPOP_FLICKR_API_SECRET=fill_me_in
+SUBPOP_FLICKR_ACCESS_TOKEN=fill_me_in
+SUBPOP_FLICKR_ACCESS_SECRET=fill_me_in
+
+SUBPOP_FLICKR_USERID=fill_me_in
+SUBPOP_FLICKR_USERNAME=fill_me_in
+
+# The values below are used by `config/environments/production.rb` for
+# `config.action_mailer.default_url_options` and are used by the devise mailer
+# to build URLs.
+SUBPOP_HOST=host
+SUBPOP_HTTP_PROTOCOL=https
+SUBPOP_PORT=port
+
+# Database configuration.
+#
+# You must repeat the values from above; do not use variables.
+#
+# DON'T DO THIS! ==> SUBPOP_DB_PASSWORD=$MYSQL_PASSWORD <== VERY BAD
+#
+SUBPOP_DB_NAME=subpop
+SUBPOP_DB_USER=subpop
+SUBPOP_DB_PASSWORD=password
+
+# Mailer and exception notification configuration.
+SUBPOP_SMTP_HOST=smtp.example.com
+SUBPOP_EMAIL_FROM=email@example.com
+SUBPOP_EMAIL_EXCEPTIONS_TO=email@example.com
+
+# Use `rake secret` to generate secrets for these
+SUBPOP_DEVISE_SECRET_KEY=secret_1
+SUBPOP_SECRET_TOKEN=secret_2
+SUBPOP_SECRET_KEY_BASE=secret_3

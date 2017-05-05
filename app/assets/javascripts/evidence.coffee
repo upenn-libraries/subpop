@@ -76,10 +76,8 @@ ready = ->
         show_hide_format_other()
 
     ### $(document.body).on 'click', '.remove-fields', (event)
-
     We assume that the clicked element is contained by a 'fieldset' unless the
     'data-parent-css-class' attribute has been set. 'data-parent-css-class' if provided MUST NOT have a prefixed '.'
-
     ###
     $(document.body).on 'click', '.remove-fields', (event) ->
         if $(this).attr('data-field-container-class')

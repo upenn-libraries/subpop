@@ -14,12 +14,12 @@
       <%= f.text_field :name, class: "form-control", autofocus: true %>
     </div>
   </div>
-
-<!--   <div class="form-group">
-    <%= f.label :gender, class: "col-sm-3 control-label required" %>
+    <div class="form-group">
+     <%= f.label :gender, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <%= f.select :gender, Names::GENDER, { include_blank: true }, { class: "form-control" } %>
-    </div> -->
+      <%= f.select :gender, Name::GENDER, { include_blank: true }, { class: "form-control" } %>
+    </div>
+    </div>
 
   <div class="form-group">
     <%= f.label :year_start, class: "col-sm-3 control-label" %>
