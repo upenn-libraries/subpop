@@ -41,7 +41,9 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="<%= 'active' if current_page?(root_path) || params[:controller] == 'books' -%>"><%= link_to "Home", root_path %></li>
+          <li class="<%= 'active' if current_page?(root_path) || params[:controller] == 'welcome' -%>"><%= link_to "Home", root_path %></li>
+
+          <li class="<%= 'active' if current_page?(books_path) || params[:controller] == 'books' -%>"><%= link_to "Upload", books_path %></li>
 
           <% if can? :read, Name -%>
           <li class="link-height <%= 'active' if params[:controller] == 'names' -%>"><%= link_to "Names", names_path %></li>
