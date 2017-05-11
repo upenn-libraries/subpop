@@ -13,9 +13,8 @@ April 2017
 
 #fix add name issue on Laura branch
 
--Refine search fields and
--Merge Laura_search_experiment
-
+-Add all relevant search fields to search capability
+#Merge Laura_search_experiment with Laura branch
 
 -run tests
 
