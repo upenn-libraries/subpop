@@ -22,13 +22,9 @@ class TitlePagesController < ApplicationController
 
     respond_to do |format|
       if @title_page.save_by current_user
-<<<<<<< HEAD
 
         #@title_page.dequeue_photo
 
-=======
-        #@title_page.dequeue_photo
->>>>>>> 0712033aa603a2d336abde8150b22bc20d194fad
         format.html { redirect_to @book, notice: 'Added title page.' }
         format.json { render :show, status: :ok, location: @book }
       else
