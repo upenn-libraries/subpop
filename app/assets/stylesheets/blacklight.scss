@@ -4,8 +4,5 @@
 
 @import 'blacklight/blacklight';
 
-#search-navbar {
-  background-color: #f8f8f8;
-  box-shadow: 0px 0px 5px lightgray;
-  margin-bottom: 10px;
-}
+@import "subpop"
+

@@ -30,12 +30,16 @@
   </head>
 
 
-       
+
 
   <body>
-
+  <div class="main-content-wrapper"
+    <div class="main-content">
    <%= render :partial => 'shared/header_navbar' %>
    <%= render :partial => 'shared/search_navbar' %>
+
+   <%# this is from blacklight %>
+      <%= render partial: 'shared/ajax_modal' %>
 
  <!--  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -110,6 +114,8 @@
     </nav>
     </div> <!-- /container -->
     <%# Fix cropping spec by removing '.fade' class from cropper-modal. %>
+    </div>
+    </div>
     <% if Rails.env == 'test' %>
     <script type="text/javascript">
       $('#cropper-modal').removeClass('fade');
