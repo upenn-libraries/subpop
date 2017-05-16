@@ -8,9 +8,9 @@ class BooksController < ApplicationController
     filter = user_filter
 
     if filter.present?
-      @books = Book.for_user(filter).order("coalesce(repository, owner)").page params[:page]
+      @books = Book.for_user(filter).order("coalesce(repository, owner)").includes(:title_pages).page params[:page]
     else
-      @books = Book.order("coalesce(repository, owner)").page params[:page]
+      @books = Book.order("coalesce(repository, owner)").includes(:title_pages).page params[:page]
     end
   end
 
