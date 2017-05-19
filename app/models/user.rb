@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+
+  PASSWORD_RE = /^(?=.*[[:alnum:]])(?=.*[_!#$%&\/()=?+*~^\[\]{}:-])/
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable,
@@ -59,11 +61,10 @@ class User < ActiveRecord::Base
   end
 
   def password_complexity
-    if password.present?
-       if !password.match(/^(?=.*[[:alnum:]])(?=.*[_!#$%&\/()=?+*~^\[\]{}:-])/)
-         errors.add :password, "complexity requirement not met"
-       end
-    end
+    return if password.blank?
+    return if password.match PASSWORD_RE
+
+    errors.add :password, "complexity requirement not met"
   end
 
 end
