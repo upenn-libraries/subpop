@@ -67,6 +67,12 @@ RSpec.describe User, type: :model do
       user.valid?
       expect(user.errors).to be_added(:password, 'complexity requirement not met')
     end
+
+    it 'validates a long password' do
+      user = User.new password: 'correcthorsebatterystaple'
+      user.valid?
+      expect(user.errors).not_to be_added(:password, 'complexity requirement not met')
+    end
   end
 
   context 'password length' do

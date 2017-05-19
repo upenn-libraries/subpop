@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
 
   def password_complexity
     return if password.blank?
+    return if password.size > 20
     return if password.match PASSWORD_RE
 
     errors.add :password, "complexity requirement not met"
