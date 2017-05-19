@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable,
-    :rememberable, :trackable, :validatable
+    :rememberable, :trackable, :validatable,
+    :registerable
 
   # local attribute for account restoration
   attr_accessor :restore_account
@@ -13,6 +14,8 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: true
   validate :excluded_user_names
+  validate :password_complexity
+
   # TODO exclude usernames 'all', 'admin', ???
 
   scope :by_name, -> { order("coalesce(full_name, username)") }
@@ -53,6 +56,14 @@ class User < ActiveRecord::Base
     return unless excluded_names.include? username.strip.downcase
 
     errors.add :username, 'is not allowed'
+  end
+
+  def password_complexity
+    if password.present?
+       if !password.match(/^(?=.*[[:alnum:]])(?=.*[_!#$%&\/()=?+*~^\[\]{}:-])/)
+         errors.add :password, "Password complexity requirement not met"
+       end
+    end
   end
 
 end

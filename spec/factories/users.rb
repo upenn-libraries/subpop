@@ -6,8 +6,8 @@ FactoryGirl.define do
     sequence :email do |n|
        "smith#{n}@example.com"
     end
-    password 'secretpassword'
-    password_confirmation "secretpassword"
+    password 'secretpassword---'
+    password_confirmation "secretpassword---"
 
     factory :admin do |n|
       admin true

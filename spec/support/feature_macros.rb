@@ -4,7 +4,7 @@ module FeatureMacros
 
   def login_as username, attributes={}
     add_user username, attributes
-    password = attributes[:password] || 'secretpassword'
+    password = attributes[:password] || 'secretpassword---'
 
     visit '/users/sign_in'
     fill_in 'Username', with: username

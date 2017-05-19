@@ -10,8 +10,8 @@ RSpec.feature "Users", type: :feature, js: true do
     fill_in 'Full name',              with: 'MF Doom'
     fill_in 'Username',               with: 'doom'
     fill_in 'Email',                  with: 'viktorvaugn@example.com'
-    fill_in 'Password',               with: 'vaudevillevillain'
-    fill_in 'Password confirmation',  with: 'vaudevillevillain'
+    fill_in 'Password',               with: 'vaudevillevillain---'
+    fill_in 'Password confirmation',  with: 'vaudevillevillain---'
     check   'Admin'
     click_button 'Create'
 
@@ -64,7 +64,7 @@ RSpec.feature "Users", type: :feature, js: true do
     # go to the user edit page and cancel the account
     click_link 'Users'
     find('tr', text: 'doom').click_link 'Edit'
-    click_button 'Cancel account'
+    find_button('Cancel account').trigger('click')
     expect(page).to have_content "Cancelled account 'doom'."
     click_link 'adminx'
     click_link 'Sign out'
@@ -72,7 +72,7 @@ RSpec.feature "Users", type: :feature, js: true do
     # user tries to sign in
     click_link 'Sign in'
     fill_in 'Username', with: 'doom'
-    fill_in 'Password', with: 'secretpassword'
+    fill_in 'Password', with: 'secretpassword---'
     click_button 'Log in'
     expect(page).to have_content 'Sorry, your account has been cancelled.'
   end
@@ -99,7 +99,7 @@ RSpec.feature "Users", type: :feature, js: true do
     # user signs in with restored account
     click_link 'Sign in'
     fill_in 'Username', with: 'doom'
-    fill_in 'Password', with: 'secretpassword'
+    fill_in 'Password', with: 'secretpassword---'
     click_button 'Log in'
     expect(page).to have_content 'Signed in successfully.'
   end

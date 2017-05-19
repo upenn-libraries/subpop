@@ -66,7 +66,7 @@
             </ul>
           </li>
           <% elsif controller.class.parent != Devise -%>
-          <li><%= link_to 'Sign in', new_session_path(resource_name) -%></li>
+          <li><%= link_to 'Sign in | Register', new_session_path(resource_name) -%></li>
           <% end -%>
         </ul>
       </div><!--/.nav-collapse -->

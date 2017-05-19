@@ -42,11 +42,21 @@
     </div>
   </div>
 
+  <div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-5"><%# hint_tag f.object, :password %></div>
+  </div>
+
   <div class="form-group">
     <%= f.label :password, class: "col-sm-3 control-label required" %>
     <div class="col-sm-5">
       <%= f.password_field :password, class: "form-control", autocomplete: "off" %>
     </div>
+  </div>
+
+  <div class="row" id="pwd-container">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-5"><div class="pwstrength_viewport_progress"></div></div>
   </div>
 
   <div class="form-group">
@@ -56,9 +66,55 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-5"><div class="alert alert-default" id="check_password_match">No password entered.</div></div>
+  </div>
+
   <div class="actions">
     <%= f.submit "Sign up", class: 'btn btn-success' %>
   </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+<script type="text/javascript">
+jQuery(document).ready(function () {
+  "use strict";
+  var options = {};
+  options.ui = {
+      container: "#pwd-container",
+      showVerdictsInsideProgressBar: true,
+      viewports: {
+          progress: ".pwstrength_viewport_progress"
+      }
+  };
+  options.common = {
+      debug: false,
+      onLoad: function () {
+          $('#messages').text('Start typing password');
+      }
+  };
+  $('#user_password').pwstrength(options);
+
+  function checkPasswordMatch() {
+    var password = $("#user_password").val();
+    var confirmPassword = $("#user_password_confirmation").val();
+
+    if (password != confirmPassword) {
+      $("#check_password_match").html('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Passwords do not match!');
+      $("#check_password_match").removeClass('alert-default');
+      $("#check_password_match").removeClass('alert-success');
+      $("#check_password_match").addClass('alert-danger');
+    } else {
+      $("#check_password_match").html('<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Passwords match.');
+      $("#check_password_match").removeClass('alert-default');
+      $("#check_password_match").removeClass('alert-danger');
+      $("#check_password_match").addClass('alert-success');
+    };
+  };
+
+  $("#user_password, #user_password_confirmation").keyup(checkPasswordMatch);
+});
+
+</script>

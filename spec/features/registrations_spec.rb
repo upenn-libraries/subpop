@@ -8,7 +8,7 @@ RSpec.feature "Registrations", type: :feature, js: true do
     click_link 'Manage account'
     fill_in 'Full name',        with: 'CeeLo Green'
     fill_in 'Email',            with: 'ceelo@example.com'
-    fill_in 'Current password', with: 'secretpassword'
+    fill_in 'Current password', with: 'secretpassword---'
     click_button 'Update'
     expect(page).to have_content 'Your account has been updated successfully.'
 
@@ -19,14 +19,25 @@ RSpec.feature "Registrations", type: :feature, js: true do
     expect(page).to have_field 'Email',     with: 'ceelo@example.com'
   end
 
+  scenario 'user self-registers', type: :feature, js: true do
+    visit '/users/sign_up'
+    fill_in 'Full name',             with: 'CeeLo Green'
+    fill_in 'Username',              with: 'testuser'
+    fill_in 'Email',                 with: 'ceelo@example.com'
+    fill_in 'Password',              with: 'abcd1234---'
+    fill_in 'Password confirmation', with: 'abcd1234---'
+    click_button 'Sign up'
+    expect(page).to have_content 'Welcome! You have signed up successfully.'
+  end
+
   scenario 'user edits password' do
     login_as 'testuser'
 
     click_link 'testuser'
     click_link 'Manage account'
-    fill_in 'Password',               with: 'abcd1234'
-    fill_in 'Password confirmation',  with: 'abcd1234'
-    fill_in 'Current password',       with: 'secretpassword'
+    fill_in 'Password',               with: 'abcd1234---'
+    fill_in 'Password confirmation',  with: 'abcd1234---'
+    fill_in 'Current password',       with: 'secretpassword---'
     click_button 'Update'
     expect(page).to have_content 'Your account has been updated successfully.'
 
@@ -35,7 +46,7 @@ RSpec.feature "Registrations", type: :feature, js: true do
     click_link 'Sign out'
     click_link 'Sign in'
     fill_in 'Username', with: 'testuser'
-    fill_in 'Password', with: 'abcd1234'
+    fill_in 'Password', with: 'abcd1234---'
     click_button 'Log in'
     expect(page).to have_content 'Signed in successfully.'
   end
@@ -45,13 +56,13 @@ RSpec.feature "Registrations", type: :feature, js: true do
 
     click_link 'testuser'
     click_link 'Manage account'
-    click_button 'Cancel my account'
+    find_button('Cancel my account').trigger('click') # click_button 'Cancel my account'
     expect(page).to have_content 'Bye! Your account has been successfully cancelled.'
 
     # try to log in
     click_link 'Sign in'
     fill_in 'Username', with: 'testuser'
-    fill_in 'Password', with: 'secretpassword'
+    fill_in 'Password', with: 'secretpassword---'
     click_button 'Log in'
     expect(page).to have_content 'Sorry, your account has been cancelled.'
   end

@@ -18,6 +18,7 @@
 //= require jquery-ui/core
 //= require autocomplete-rails
 //= require bootstrap-multiselect
+//= require pwstrength-bootstrap
 //= require cropper
 //= require page_context
 //= require evidence

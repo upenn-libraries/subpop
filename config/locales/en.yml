@@ -98,6 +98,10 @@ en:
           Herbert, Earl of, 1656-1733'; 'Penn, William, 1644-1718',
           'University of Pennsylvania'."
         viaf_id: Use numeric VIAF ID; e.g., '267632219'.
+      user:
+        password:
+          "Password must be  at least 8 characters and contain alphanumeric
+          and special characters."
   unauthorized:
     manage:
       all: "Not authorized to %{action} %{subject}."
