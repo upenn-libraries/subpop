@@ -48,4 +48,32 @@ RSpec.describe User, type: :model do
       expect(build(:user, username: "boz")).not_to be_valid
     end
   end
+
+  context 'password_complexity' do
+    it 'validates "abcd123-" ' do
+      user = User.new password: "abcd123-"
+      user.valid?
+      expect(user.errors).not_to include(:password)
+    end
+
+    it 'does not validate "abcd1234"' do
+      user = User.new password: "abcd1234"
+      user.valid?
+      expect(user.errors).to be_added(:password, 'complexity requirement not met')
+    end
+
+    it 'does not validate "%$#@@$%)(*-+="' do
+      user = User.new password: "%$#@@$%)(*-+="
+      user.valid?
+      expect(user.errors).to be_added(:password, 'complexity requirement not met')
+    end
+  end
+
+  context 'password length' do
+    it 'does not validate "abcd123"' do
+      user = User.new password: 'abcd123'
+      user.valid?
+      expect(user.errors).to be_added(:password, 'is too short (minimum is 8 characters)')
+    end
+  end
 end

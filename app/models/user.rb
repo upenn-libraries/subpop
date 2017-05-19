@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   def password_complexity
     if password.present?
        if !password.match(/^(?=.*[[:alnum:]])(?=.*[_!#$%&\/()=?+*~^\[\]{}:-])/)
-         errors.add :password, "Password complexity requirement not met"
+         errors.add :password, "complexity requirement not met"
        end
     end
   end
