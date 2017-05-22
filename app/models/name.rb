@@ -25,12 +25,7 @@ class Name < ActiveRecord::Base
   }
 
 
-  validates :gender, inclusion: { in: GENDER.map(&:last), message: "'%{value}' is not in list" }
-  # validates :book,                  presence: true
-  validates :gender_other,          presence: true, if: :has_other_gender?
-
-  validates :gender_other,          absence: true, unless: :has_other_gender?
-
+  validates :gender, inclusion: { in: GENDER.map(&:last), message: "'%{value}' is not in list", allow_blank: true }
 
   def full_name
     return name if name_has_date?

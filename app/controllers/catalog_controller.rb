@@ -90,11 +90,11 @@ class CatalogController < ApplicationController
     # config.add_facet_field 'title_ss', label: 'Title'
     # config.add_facet_field 'author_ss', label: 'Author'
 
-    config.add_facet_field 'format_name_ss', label: 'Format'
-    config.add_facet_field 'location_name_without_page_ss', label: 'Location'
-    config.add_facet_field 'book_title_ss', label: 'Title'
+    config.add_facet_field 'format_name_ss', label: 'Format', collapse: false
+    config.add_facet_field 'location_name_without_page_ss', label: 'Location in book'
+    config.add_facet_field 'book_title_ss', label: 'Title', collapse: false
     config.add_facet_field 'content_types_sms', label: 'Content Type'
-    config.add_facet_field 'book_author_ss', label: 'Author'
+    config.add_facet_field 'book_author_ss', label: 'Author', collapse: false
 
 
 

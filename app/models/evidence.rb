@@ -18,10 +18,30 @@ class Evidence < ActiveRecord::Base
     reject_if: proc { |attributes| attributes['name_id'].blank? }
 
   delegate :photos,   to: :book,          prefix: true, allow_nil: true
+
   delegate :photo,    to: :context_image, prefix: true, allow_nil: true
   delegate :photo_id, to: :context_image, prefix: true, allow_nil: true
+
   delegate :title,    to: :book,          prefix: true, allow_nil: true
   delegate :author,   to: :book,          prefix: true, allow_nil: true
+  delegate :repository,   to: :book,          prefix: true, allow_nil: true
+   delegate :owner,   to: :book,          prefix: true, allow_nil: true
+  delegate :collection,   to: :book,          prefix: true, allow_nil: true
+  delegate :geo_location,   to: :book,          prefix: true, allow_nil: true
+  delegate :call_number,   to: :book,          prefix: true, allow_nil: true
+  delegate :creation_place,   to: :book,          prefix: true, allow_nil: true
+  delegate :creation_date,   to: :book,          prefix: true, allow_nil: true
+  delegate :creation_place,   to: :book,          prefix: true, allow_nil: true
+  delegate :publisher,   to: :book,          prefix: true, allow_nil: true
+  delegate :date_narrative,   to: :book,          prefix: true, allow_nil: true
+  delegate :acq_source,   to: :book,          prefix: true, allow_nil: true
+  delegate :comment_book,   to: :book,          prefix: true, allow_nil: true
+
+
+
+
+
+
   FORMATS = [
              [ 'Binding',                      'binding' ],
              [ 'Binding Waste',                'binding_waste' ],
@@ -127,13 +147,45 @@ class Evidence < ActiveRecord::Base
     text :transcription
     text :book_title
     text :book_author
+    text :book_repository
+    text :book_owner
+    text :book_collection
+    text :book_geo_location
+    text :book_call_number
+    text :book_creation_place
+    text :book_creation_date
+    text :book_publisher
+    text :book_date_narrative
+    text :book_acq_source
+    text :book_comment_book
+
 
     string :format_name, stored: true
     string :location_name_without_page, stored: true
-    string :book_title, stored: true
-    string :book_author, stored: true
     string :content_types, multiple: true, stored: true do
       content_types.map &:name
     end
+
+
+
+    string :book_title, stored: true
+    string :book_author, stored: true
+    string :book_repository, stored: true
+    string :book_owner, stored: true
+    string :book_collection, stored: true
+    string :book_geo_location, stored: true
+    string :book_call_number, stored: true
+    string :book_creation_place, stored: true
+    string :book_creation_date, stored: true
+    string :book_publisher, stored: true
+    string :book_date_narrative, stored: true
+    string :book_acq_source, stored: true
+    string :book_comment_book, stored: true
+
+
+
+    integer :year_when
+    integer :year_start
+
   end
 end
