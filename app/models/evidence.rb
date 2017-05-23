@@ -25,7 +25,7 @@ class Evidence < ActiveRecord::Base
   delegate :title,    to: :book,          prefix: true, allow_nil: true
   delegate :author,   to: :book,          prefix: true, allow_nil: true
   delegate :repository,   to: :book,          prefix: true, allow_nil: true
-   delegate :owner,   to: :book,          prefix: true, allow_nil: true
+  delegate :owner,   to: :book,          prefix: true, allow_nil: true
   delegate :collection,   to: :book,          prefix: true, allow_nil: true
   delegate :geo_location,   to: :book,          prefix: true, allow_nil: true
   delegate :call_number,   to: :book,          prefix: true, allow_nil: true
@@ -144,7 +144,14 @@ class Evidence < ActiveRecord::Base
   searchable do
     text :format_name
     text :location_name_without_page
+    text :format_other
     text :transcription
+    text :date_narrative
+    text :where
+    text :comments
+    text :citations
+    text :content_types
+
     text :book_title
     text :book_author
     text :book_repository
@@ -153,7 +160,6 @@ class Evidence < ActiveRecord::Base
     text :book_geo_location
     text :book_call_number
     text :book_creation_place
-    text :book_creation_date
     text :book_publisher
     text :book_date_narrative
     text :book_acq_source
@@ -161,7 +167,13 @@ class Evidence < ActiveRecord::Base
 
 
     string :format_name, stored: true
+    string :format_other, stored: true
     string :location_name_without_page, stored: true
+    string :transcription, stored: true
+    string :date_narrative, stored: true
+    string :where, stored: true
+    string :comments, stored: true 
+    string :citations, stored: true 
     string :content_types, multiple: true, stored: true do
       content_types.map &:name
     end
@@ -182,10 +194,7 @@ class Evidence < ActiveRecord::Base
     string :book_acq_source, stored: true
     string :book_comment_book, stored: true
 
-
-
-    integer :year_when
-    integer :year_start
+    integer :book_creation_date
 
   end
 end

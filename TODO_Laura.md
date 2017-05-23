@@ -16,6 +16,9 @@ April 2017
 -Add all relevant search fields to search capability
 #Merge Laura_search_experiment with Laura branch
 
+NB --Adding dates?  
+   --content_type not working
+
 -run tests
 
 #Add Institution field for users
