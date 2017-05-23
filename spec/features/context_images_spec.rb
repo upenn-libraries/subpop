@@ -34,7 +34,7 @@ RSpec.feature 'Context images', type: :feature, js: true do
     login_as 'testuser'
 
     visit_evidence
-    click_link 'Edit'
+    first(:link, text: /^Edit$/).click
     fill_in 'Exact Year', with: 1822
     click_button 'Update Evidence'
     expect(page).to have_content 'Evidence was successfully updated.'

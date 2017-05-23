@@ -27,7 +27,7 @@ RSpec.feature "Books", type: :feature, js: true do
       expect(page).to have_content 'Publish image'
 
       # return to the book page
-      click_link 'Book'
+      first(:link, 'Back to Book').click
       expect(page).to have_content 'Publish image'
       expect(page).to have_content 'Publish book'
 

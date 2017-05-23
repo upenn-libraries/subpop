@@ -45,7 +45,7 @@ RSpec.feature "Registrations", type: :feature, js: true do
 
     click_link 'testuser'
     click_link 'Manage account'
-    click_button 'Cancel my account'
+    find(:button, 'Cancel my account').trigger "click"
     expect(page).to have_content 'Bye! Your account has been successfully cancelled.'
 
     # try to log in
