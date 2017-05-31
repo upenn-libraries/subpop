@@ -1,7 +1,7 @@
 <%= form_tag search_action_url, method: :get, class: 'search-query-form clearfix navbar-form', role: 'search' do %>
   <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
   <div class="row">
-  <div classs = "col-xs-11">
+  <div class = "col-xs-11">
   <div class="input-group">
     <% if search_fields.length > 1 %>
       <span class="input-group-addon for-search-field">
@@ -12,7 +12,7 @@
       <%= hidden_field_tag :search_field, search_fields.first.last %>
     <% end %>
 
-    <label for="q" class="sr-only"><%= t('blacklight.search.form.search.label') %></label>
+   <label for="q" class="sr-only"><%= t('blacklight.search.form.search.label') %></label>
     <%= text_field_tag :q, params[:q], placeholder: t('blacklight.search.form.search.placeholder'), class: "search_q q form-control", id: "q", autofocus: should_autofocus_on_search_box?, data: { autocomplete_enabled: autocomplete_enabled?, autocomplete_path: blacklight.suggest_index_path }  %>
 
     <span class="input-group-btn">
