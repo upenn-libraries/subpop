@@ -13,23 +13,11 @@ class CatalogController < ApplicationController
     ## Model that maps search index responses to the blacklight response model
     #config.response_model = Blacklight::Solr::Response
 
-    # config.default_solr_params = {
-    #   :qf => ['title_text', 'author_text'],
-    #   :defType => 'edismax',
-    #   :qt => 'search',
-    #   :q => '*.*',
-    #   rows: 10
-    # }
 
     config.default_solr_params = {
-      :qf => ['format_name_text',
-        'location_name_without_page_text',
-        'transcription_text',
-        'book_title_text', 'book_author_text'],
       :defType => 'edismax',
-      :qt => 'search',
-      :q => '*:*',
-      rows: 10
+      rows: 10,
+      "facet.mincount": 1
     }
 
     # solr path which will be added to solr base url before the other solr params.
@@ -55,7 +43,6 @@ class CatalogController < ApplicationController
     # config.index.display_type_field = 'format'
     config.index.title_field = 'book_title'
     config.index.display_type_field = 'format'
-
 
     # solr field configuration for document/show views
     #config.show.title_field = 'title_display'
@@ -93,17 +80,11 @@ class CatalogController < ApplicationController
 
     config.add_facet_field 'format_name_ss', label: 'Format'
     config.add_facet_field 'location_name_without_page_ss', label: 'Location in book'
-    config.add_facet_field 'where_ss', label: 'Provenance Place'
-    config.add_facet_field 'content_types_sms', label: 'Content Type'
-
     config.add_facet_field 'book_title_ss', label: 'Title'
+    config.add_facet_field 'content_types_sms', label: 'Content Type'
     config.add_facet_field 'book_author_ss', label: 'Author'
-    config.add_facet_field 'book_repository_ss', label: 'Current Repository'
-    config.add_facet_field 'book_owner_ss', label: 'Current Owner'
-    config.add_facet_field 'book_collection_ss', label: 'Current Collection'
-    config.add_facet_field 'book_geo_location_ss', label: 'Current Location'
-    config.add_facet_field 'book_creation_place_ss', label: 'Place of Publication/Creation'
-    config.add_facet_field 'book_publisher_ss', label: 'Printer/Publisher/Scribe'
+
+
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -112,52 +93,26 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-  #Evidence index fields
+
+  #Book index field
+    # config.add_index_field 'title_ss', label: 'Title'
+    # config.add_index_field 'author_ss', label: 'Author'
     config.add_index_field 'format_name_ss', label: 'Format'
-    config.add_index_field 'location_name_without_page_ss', label: 'Location in book'
-    config.add_index_field 'format_other_ss', label: 'Other Format'
-    config.add_index_field 'transcription_ss', label: 'Transcription'
-    config.add_index_field 'date_narrative_ss', label: 'Date Narrative'
-    config.add_index_field 'where_ss', label: 'Provenance Place'
-    config.add_index_field 'comments_ss', label: 'Evidence Comments'
-    config.add_index_field 'citation_ss', label: 'Citations'
-    config.add_index_field 'content_types_sms', label: 'Content Type'
-
-  #Book index fields
+    config.add_index_field 'location_name_without_page_ss', label: 'Location'
     config.add_index_field 'book_title_ss', label: 'Title'
+    config.add_index_field 'content_types_sms', label: 'Content Type'
     config.add_index_field 'book_author_ss', label: 'Author'
-    config.add_index_field 'book_repository_ss', label: 'Repository'
-    config.add_index_field 'book_owner_ss', label: 'Current Owner'
-    config.add_index_field 'book_collection_ss', label: 'Current Collection'
-    config.add_index_field 'book_geo_location_ss', label: 'Current Location'
-    config.add_index_field 'book_call_number_ss', label: 'Call Number'
-    config.add_index_field 'book_creation_place_ss', label: 'Place of Publication/Creation'
-    config.add_index_field 'book_publisher_ss', label: 'Printer/Publisher/Scribe'
-    config.add_index_field 'book_date_narrative_ss', label: 'Date Narrative'
-    config.add_index_field 'book_acq_source_ss', label: 'Immediate Source of Acquisition'
-    config.add_index_field 'book_comment_book_ss', label: 'Book Comments'
-
-
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
 
-  #Evidence show fields
-    config.add_show_field 'format_name_ss', label: 'Format'
-    config.add_show_field 'location_name_without_page_ss', label: 'Location in book'
-    config.add_show_field 'format_other_ss', label: 'Other Format'
-    config.add_show_field 'where_ss', label: 'Provenance Place'
-    config.add_show_field 'content_types_sms', label: 'Content Type'
-
-
   #Book show field
-    config.add_show_field 'book_title_ss', label: 'Title'
-    config.add_show_field 'book_author_ss', label: 'Author'
-    config.add_show_field 'book_repository_ss', label: 'Current Repository'
-    config.add_show_field 'book_owner_ss', label: 'Current Owner'
-    config.add_show_field 'book_collection_ss', label: 'Current Collection'
-    config.add_show_field 'book_geo_location_ss', label: 'Current Location'
-    config.add_show_field 'book_creation_place_ss', label: 'Place of Publication/Creation'
-    config.add_show_field 'book_publisher_ss', label: 'Publisher'
+    # config.add_show_field 'title', label: 'Title'
+    # config.add_show_field 'author', label: 'Author'
+    config.add_show_field 'format_name', label: 'Format'
+    config.add_show_field 'location_name_without_page', label: 'Location'
+    config.add_show_field 'book_title', label: 'Title'
+    config.add_show_field 'content_types', label: 'Content Type'
+    config.add_show_field 'book_author', label: 'Author'
 
    # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -176,8 +131,9 @@ class CatalogController < ApplicationController
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
-    config.add_search_field 'all_fields', label: 'All Fields'
-
+    config.add_search_field 'all_fields', label: 'All Fields' do |field|
+        field.solr_local_parameters = {qf: 'complete_evidence_texts'}
+    end
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
@@ -205,50 +161,6 @@ class CatalogController < ApplicationController
     #   }
     # end
 
-
-
-    config.add_search_field('format_name') do |field|
-      # solr_parameters hash are sent to Solr as ordinary url query params.
-      field.solr_parameters = { :'spellcheck.dictionary' => 'format' }
-
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
-      field.solr_local_parameters = {
-        qf: '$format_name_qf',
-        pf: '$format_name_pf'
-      }
-    end
-
-    config.add_search_field('transcription') do |field|
-      # solr_parameters hash are sent to Solr as ordinary url query params.
-      field.solr_parameters = { :'spellcheck.dictionary' => 'transcription' }
-
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
-      field.solr_local_parameters = {
-        qf: '$transcription_qf',
-        pf: '$transcription_pf'
-      }
-    end
-
-       config.add_search_field('book_author') do |field|
-      # solr_parameters hash are sent to Solr as ordinary url query params.
-      field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
-
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
-      field.solr_local_parameters = {
-        qf: '$book_author_qf',
-        pf: '$book_author_pf'
-      }
-    end
-
     config.add_search_field('book_title') do |field|
       # solr_parameters hash are sent to Solr as ordinary url query params.
       field.solr_parameters = { :'spellcheck.dictionary' => 'book_title' }
@@ -258,24 +170,54 @@ class CatalogController < ApplicationController
       # Solr parameter de-referencing like $title_qf.
       # See: http://wiki.apache.org/solr/LocalParams
       field.solr_local_parameters = {
-        qf: '$book_title_qf',
-        pf: '$book_title_pf'
+        qf: 'book_title_text',
+        pf: 'book_title_text'
       }
     end
 
-    config.add_search_field('book_repository') do |field|
+    config.add_search_field('format_name', label: "Format") do |field|
       # solr_parameters hash are sent to Solr as ordinary url query params.
-      field.solr_parameters = { :'spellcheck.dictionary' => 'book_repository' }
+      field.solr_parameters = { :'spellcheck.dictionary' => 'format' }
 
       # :solr_local_parameters will be sent using Solr LocalParams
       # syntax, as eg {! qf=$title_qf }. This is neccesary to use
       # Solr parameter de-referencing like $title_qf.
       # See: http://wiki.apache.org/solr/LocalParams
       field.solr_local_parameters = {
-        qf: '$book_repository_qf',
-        pf: '$book_repository_pf'
+        qf: 'format_name_text',
+        pf: 'format_name_text'
       }
     end
+
+    config.add_search_field('book_author') do |field|
+      # solr_parameters hash are sent to Solr as ordinary url query params.
+      field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
+
+      # :solr_local_parameters will be sent using Solr LocalParams
+      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
+      # Solr parameter de-referencing like $title_qf.
+      # See: http://wiki.apache.org/solr/LocalParams
+      field.solr_local_parameters = {
+        qf: 'book_author_text',
+        pf: 'book_author_text'
+      }
+    end
+
+
+    config.add_search_field('location_name_without_page', label: 'Location in Book') do |field|
+      # solr_parameters hash are sent to Solr as ordinary url query params.
+      field.solr_parameters = { :'spellcheck.dictionary' => 'location_name_without_page' }
+
+      # :solr_local_parameters will be sent using Solr LocalParams
+      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
+      # Solr parameter de-referencing like $title_qf.
+      # See: http://wiki.apache.org/solr/LocalParams
+      field.solr_local_parameters = {
+        qf: 'location_name_without_page_text',
+        pf: 'location_name_without_page_text'
+      }
+    end
+
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc

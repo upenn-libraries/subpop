@@ -25,7 +25,7 @@ class Evidence < ActiveRecord::Base
   delegate :title,    to: :book,          prefix: true, allow_nil: true
   delegate :author,   to: :book,          prefix: true, allow_nil: true
   delegate :repository,   to: :book,          prefix: true, allow_nil: true
-  delegate :owner,   to: :book,          prefix: true, allow_nil: true
+   delegate :owner,   to: :book,          prefix: true, allow_nil: true
   delegate :collection,   to: :book,          prefix: true, allow_nil: true
   delegate :geo_location,   to: :book,          prefix: true, allow_nil: true
   delegate :call_number,   to: :book,          prefix: true, allow_nil: true
@@ -132,7 +132,7 @@ class Evidence < ActiveRecord::Base
   end
 
   def date_string
-    return nil unless has_date?
+    return nil unless has_date?3
     return year_when.to_s if year_when.present?
     [ year_start, year_end ].join '-'
   end
@@ -142,15 +142,41 @@ class Evidence < ActiveRecord::Base
   end
 
   searchable do
+
+    text :complete_evidence, stored: true do
+      fields = [
+        format_name,
+        location_name,
+        transcription,
+        date_narrative,
+        where,
+        comments,
+        citations,
+        book_title,
+        book_author,
+        book_owner,
+        book_collection,
+        book_geo_location,
+        book_call_number,
+        book_creation_place,
+        book_publisher,
+        book_date_narrative,
+        book_acq_source,
+        book_comment_book
+      ]
+      fields += content_type_names
+
+      fields.map(&:to_s).select(&:present?).join("\n")
+    end
+
+
+
+
     text :format_name
     text :location_name_without_page
-    text :format_other
     text :transcription
-    text :date_narrative
-    text :where
-    text :comments
-    text :citations
-    text :content_types
+
+
 
     text :book_title
     text :book_author
@@ -160,6 +186,7 @@ class Evidence < ActiveRecord::Base
     text :book_geo_location
     text :book_call_number
     text :book_creation_place
+    text :book_creation_date
     text :book_publisher
     text :book_date_narrative
     text :book_acq_source
@@ -167,13 +194,7 @@ class Evidence < ActiveRecord::Base
 
 
     string :format_name, stored: true
-    string :format_other, stored: true
     string :location_name_without_page, stored: true
-    string :transcription, stored: true
-    string :date_narrative, stored: true
-    string :where, stored: true
-    string :comments, stored: true 
-    string :citations, stored: true 
     string :content_types, multiple: true, stored: true do
       content_types.map &:name
     end
@@ -194,7 +215,10 @@ class Evidence < ActiveRecord::Base
     string :book_acq_source, stored: true
     string :book_comment_book, stored: true
 
-    integer :book_creation_date
+
+
+    integer :year_when
+    integer :year_start
 
   end
 end
