@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Remediations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Spreadsheet</th>
+      <th>Created by</th>
+      <th>Updated by</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @remediations.each do |remediation| %>
+      <tr>
+        <td><%= link_to remediation.spreadsheet_file_name, remediation.spreadsheet.url %></td>
+        <td><%= remediation.created_by_username %></td>
+        <td><%= remediation.updated_by_username %></td>
+        <td><%= link_to 'Show', remediation %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Remediation', new_remediation_path %>
