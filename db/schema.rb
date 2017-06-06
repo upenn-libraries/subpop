@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606155503) do
+ActiveRecord::Schema.define(version: 20170606172512) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,     null: false
@@ -183,11 +183,15 @@ ActiveRecord::Schema.define(version: 20170606155503) do
   end
 
   create_table "remediations", force: :cascade do |t|
-    t.text     "problems",      limit: 65535
-    t.integer  "created_by_id", limit: 4
-    t.integer  "updated_by_id", limit: 4
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.text     "problems",                 limit: 65535
+    t.integer  "created_by_id",            limit: 4
+    t.integer  "updated_by_id",            limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "spreadsheet_file_name",    limit: 255
+    t.string   "spreadsheet_content_type", limit: 255
+    t.integer  "spreadsheet_file_size",    limit: 4
+    t.datetime "spreadsheet_updated_at"
   end
 
   create_table "searches", force: :cascade do |t|
