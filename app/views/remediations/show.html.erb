@@ -1,19 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Problems:</strong>
-  <%= @remediation.problems %>
-</p>
 
-<p>
-  <strong>Created by:</strong>
-  <%= @remediation.created_by_id %>
-</p>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :spreadsheet %></div>
+  <div class="col-sm-6 field-value"><%= link_to @remediation.spreadsheet_file_name, @remediation.spreadsheet.url %></div>
+</div>
 
-<p>
-  <strong>Updated by:</strong>
-  <%= @remediation.updated_by_id %>
-</p>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :problems %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.problems %></div>
+</div>
 
-<%= link_to 'Edit', edit_remediation_path(@remediation) %> |
+
 <%= link_to 'Back', remediations_path %>

@@ -5,22 +5,20 @@
 <table>
   <thead>
     <tr>
-      <th>Problems</th>
+      <th>Spreadsheet</th>
       <th>Created by</th>
       <th>Updated by</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @remediations.each do |remediation| %>
       <tr>
-        <td><%= remediation.problems %></td>
-        <td><%= remediation.created_by_id %></td>
-        <td><%= remediation.updated_by_id %></td>
+        <td><%= link_to remediation.spreadsheet_file_name, remediation.spreadsheet.url %></td>
+        <td><%= remediation.created_by_username %></td>
+        <td><%= remediation.updated_by_username %></td>
         <td><%= link_to 'Show', remediation %></td>
-        <td><%= link_to 'Edit', edit_remediation_path(remediation) %></td>
-        <td><%= link_to 'Destroy', remediation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
