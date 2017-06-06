@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Problems:</strong>
+  <%= @remediation.problems %>
+</p>
+
+<p>
+  <strong>Created by:</strong>
+  <%= @remediation.created_by_id %>
+</p>
+
+<p>
+  <strong>Updated by:</strong>
+  <%= @remediation.updated_by_id %>
+</p>
+
+<%= link_to 'Edit', edit_remediation_path(@remediation) %> |
+<%= link_to 'Back', remediations_path %>

@@ -1,0 +1,29 @@
+<%= form_for(@remediation) do |f| %>
+  <% if @remediation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@remediation.errors.count, "error") %> prohibited this remediation from being saved:</h2>
+
+      <ul>
+      <% @remediation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :problems %><br>
+    <%= f.text_area :problems %>
+  </div>
+  <div class="field">
+    <%= f.label :created_by_id %><br>
+    <%= f.number_field :created_by_id %>
+  </div>
+  <div class="field">
+    <%= f.label :updated_by_id %><br>
+    <%= f.number_field :updated_by_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
