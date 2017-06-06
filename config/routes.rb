@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :remediations, only: [:show, :index, :new, :create]
+
   get 'flash/show'
 
   resources :books do

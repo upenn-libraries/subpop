@@ -13,7 +13,6 @@ rails g scaffold remediation \
 	updated_by_id:integer \
     $generator_options
 
-
 # rails generate migration add_translation_to_evidence \
 #  translation:text \
 #   $generator_options
