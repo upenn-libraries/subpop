@@ -40,4 +40,20 @@ RSpec.describe Remediation, type: :model do
       expect(remediation.errors[:spreadsheet]).not_to be_present
     end
   end
+
+  context 'problems' do
+    it 'saves problems' do
+      rem = create :remediation, problems: %w(error1 error2)
+      rem.reload
+      expect(rem.problems).to eq(%w(error1 error2))
+    end
+  end
+
+  context 'spreadsheet_checker' do
+    it 'says the sheet is problem free' do
+      expect(create :remediation).to be_problem_free
+    end
+
+    it 'has a format heading'
+  end
 end

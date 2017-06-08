@@ -52,6 +52,8 @@ gem 'delayed_job_active_record', '~> 4.1.0'
 # process paperclip in the background
 gem 'delayed_paperclip', '~> 2.9.1'
 
+gem 'roo', '~> 2.7.1'
+
 gem 'daemons', '1.1.9'
 
 # send emails when things go wrong
