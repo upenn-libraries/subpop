@@ -1,5 +1,6 @@
 class Remediation < ActiveRecord::Base
   include UserFields
+  include SpreadsheetExtractor
 
   has_attached_file :spreadsheet
   validates_attachment_content_type :spreadsheet, content_type: ["application/vnd.ms-excel",

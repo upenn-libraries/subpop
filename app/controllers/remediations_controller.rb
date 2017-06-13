@@ -1,5 +1,6 @@
 class RemediationsController < ApplicationController
   before_action :set_remediation, only: [:show, :edit, :update, :destroy]
+  authorize_resource
 
   # GET /remediations
   # GET /remediations.json

@@ -40,4 +40,8 @@ RSpec.describe Remediation, type: :model do
       expect(remediation.errors[:spreadsheet]).not_to be_present
     end
   end
+
+  context 'spreadsheet extractor' do
+    it_behaves_like 'spreadsheet_extractor'
+  end
 end
