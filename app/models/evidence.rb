@@ -39,6 +39,10 @@ class Evidence < ActiveRecord::Base
     hash.merge(pair.last => pair.first)
   }
 
+  FORMATS_BY_NAME = FORMATS.inject({}) { |hash, pair|
+    hash.merge(pair.first => pair.last)
+  }
+
   LOCATIONS = [
     [ 'Front Cover',                'front_cover' ],
     [ 'Inside Front Cover',         'inside_front_cover' ],
@@ -57,6 +61,10 @@ class Evidence < ActiveRecord::Base
 
   LOCATIONS_BY_CODE = LOCATIONS.inject({}) { |hash, pair|
     hash.merge(pair.last => pair.first)
+  }
+
+  LOCATIONS_BY_NAME = LOCATIONS.inject({}) { |hash, pair|
+    hash.merge(pair.first => pair.last)
   }
 
   validates :format, inclusion: { in: FORMATS.map(&:last), message: "'%{value}' is not in list" }

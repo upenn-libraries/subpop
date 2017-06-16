@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609211709) do
+ActiveRecord::Schema.define(version: 20170616182303) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,     null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20170609211709) do
     t.string   "catalog_url",    limit: 255
     t.string   "vol_number",     limit: 255
     t.string   "author",         limit: 255
-    t.string   "title",          limit: 255
+    t.text     "title",          limit: 65535
     t.string   "creation_place", limit: 255
     t.integer  "creation_date",  limit: 4
     t.string   "publisher",      limit: 255
