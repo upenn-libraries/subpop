@@ -1,5 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<div class="row">
+  <h2>Remediation: <%= @remediation.spreadsheet_file_name %></h2>
+</div>
+
+<% unless @remediation.problems.blank? %>
+  <div class="row">
+    <%= link_to 'Remediations list', remediations_path, class: 'btn btn-default' %>
+  </div>
+<% end %>
 
 <div class="row field-group">
   <div class="col-sm-4 field-label"><%= human_name @remediation, :spreadsheet %></div>
@@ -11,5 +20,6 @@
   <div class="col-sm-6 field-value"><%= @remediation.problems %></div>
 </div>
 
-
-<%= link_to 'Back', remediations_path %>
+<div class="row">
+  <%= link_to 'Remediations list', remediations_path, class: 'btn btn-default' %>
+</div>

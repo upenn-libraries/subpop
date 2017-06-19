@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606172512) do
+ActiveRecord::Schema.define(version: 20170609211709) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -167,6 +167,16 @@ ActiveRecord::Schema.define(version: 20170606172512) do
     t.integer  "updated_by_id",    limit: 4
   end
 
+  create_table "remediation_agents", force: :cascade do |t|
+    t.integer  "remediation_id",      limit: 4
+    t.text     "transformations_log", limit: 65535
+    t.text     "publications_log",    limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "remediation_agents", ["remediation_id"], name: "index_remediation_agents_on_remediation_id", using: :btree
+
   create_table "remediations", force: :cascade do |t|
     t.text     "problems",                 limit: 65535
     t.integer  "created_by_id",            limit: 4
@@ -227,6 +237,7 @@ ActiveRecord::Schema.define(version: 20170606172512) do
   add_foreign_key "evidence_content_types", "evidence"
   add_foreign_key "provenance_agents", "evidence"
   add_foreign_key "provenance_agents", "names"
+  add_foreign_key "remediation_agents", "remediations"
   add_foreign_key "title_pages", "books"
   add_foreign_key "title_pages", "photos"
 end

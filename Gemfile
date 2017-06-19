@@ -42,6 +42,8 @@ gem 'devise', '~> 4.1.1'
 # authorization
 gem 'cancancan', '~> 1.10'
 
+gem 'rubyXL', '~> 3.3.23'
+
 # pagination
 gem 'kaminari', '~> 0.16.3'
 

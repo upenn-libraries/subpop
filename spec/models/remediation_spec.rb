@@ -1,5 +1,50 @@
 require 'rails_helper'
 
+let(:nonprovenance_item) {
+  {
+    column: 'C',
+    image_url: 'image.url',
+    not_provenance: 'x'
+  }
+}
+
+let(:valid_bookplate) {
+  {
+    column:                           "C",
+    flick_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
+    url_to_catalog:                   "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5050597",
+    copy_current_repository:          "Penn Libraries",
+    copy_current_collection:          "American Culture Class Collection",
+    copy_current_geographic_location: "Philadelphia",
+    copy_call_number_shelf_mark:      "AC8 H3188 A825y",
+    copy_title:                       "Youth's keepsake : A Christmas and New Year's gift for young people.",
+    copy_place_of_publication:        "United States Massachusetts Boston.",
+    copy_date_of_publication:         "1835",
+    evidence_format:                  "Bookplate/Label",
+    evidence_comments:                "Bookplate of Carroll Atwood Wilson (1886-1947), American lawyer (he served as chief legal counsel to the Guggenheims) and book collector.",
+    id_owner:                         "Wilson, Carroll A. (Carroll Atwood), 1886-1947"
+  }
+}
+
+
+let(:minimal_bookplate) {
+  {
+    column:                           "C",
+    flick_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
+    copy_call_number_shelf_mark:      "AC8 H3188 A825y",
+    copy_title:                       "Youth's keepsake : A Christmas and New Year's gift for young people.",
+    evidence_format:                  "Bookplate/Label",
+    
+  }
+}
+
+
+let(:insufficient_bookplate) {
+  {
+
+  }
+}
+
 RSpec.describe Remediation, type: :model do
   let(:subject) {  create(:remediation) }
   let(:valid_attributes) {
@@ -63,7 +108,7 @@ RSpec.describe Remediation, type: :model do
     context 'required for provenance' do
       it 'is valid if image is present'
 
-      it 'is invalid if imagine is blank'
+      it 'is invalid if image is blank'
 
       it 'is valid if current repository is present'
 
@@ -71,7 +116,7 @@ RSpec.describe Remediation, type: :model do
 
       it 'is valid if call number is present'
 
-      it 'is invalid if call number is blank'
+      it 'is invalid if call number is blank' 
 
       it 'is valid if title is present'
 
@@ -87,7 +132,7 @@ RSpec.describe Remediation, type: :model do
 
       it 'is invalid if format is not in the format list'
 
-      it 'is valid if location-in-book is in the location-in-book list'
+      # it 'is valid if location-in-book is in the location-in-book list'
 
       it 'is invalid if location-in-book is not in the location-in-book list'
 
@@ -136,5 +181,7 @@ RSpec.describe Remediation, type: :model do
       it 'is invalid if image file cannot be found on OPenn'
     end
 
+  context 'spreadsheet extractor' do
+    it_behaves_like 'spreadsheet_extractor'
   end
 end

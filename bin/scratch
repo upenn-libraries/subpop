@@ -7,11 +7,27 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
+<<<<<<< HEAD
 rails g scaffold remediation \
 	problems:text \
 	created_by_id:integer \
 	updated_by_id:integer \
     $generator_options
+=======
+rails g model remediation_agent \
+  remediation:references \
+  transformations_log:text \
+  publications_log:text
+
+
+# rails g migration add_spreadsheet_to_remediations
+
+# rails g scaffold remediation \
+#   problems:text \
+#   created_by_id:integer \
+#   updated_by_id:integer \
+#   $generator_options
+>>>>>>> development
 
 # rails generate migration add_translation_to_evidence \
 #  translation:text \
