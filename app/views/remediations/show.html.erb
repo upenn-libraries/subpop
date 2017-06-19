@@ -20,6 +20,13 @@
   <div class="col-sm-6 field-value"><%= @remediation.problems %></div>
 </div>
 
+<% if @remediation.remediation_agent.present? %>
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :publications_log %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.publications_log.inspect %></div>
+</div>
+<% end %>
+
 <div class="row">
   <%= link_to 'Remediations list', remediations_path, class: 'btn btn-default' %>
 </div>

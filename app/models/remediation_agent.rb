@@ -1,7 +1,13 @@
 class RemediationAgent < ActiveRecord::Base
+  serialize :errors_log
+  serialize :publications_log
+  serialize :transformations_log
+
   belongs_to :remediation
 
   validates :remediation, presence: true
+
+  NON_FLICKR_URL_BASE = "http://openn.library.upenn.edu/html/pop_pictures"
 
   def not_provenance? col_hash
     col_hash[:not_provenance].present? || col_hash[:evidence_format].blank?
@@ -10,8 +16,34 @@ class RemediationAgent < ActiveRecord::Base
   def remediate
     data_array = remediation.spreadsheet_data
     data_array.each do |col_hash|
-
+      begin
+        publishable = _create col_hash
+        publishable.publish remediation.created_by_id, force: true
+        log_publication col_hash, publishable
+      rescue Exception => e
+        log_error col_hash, publishable, e
+      end
     end
+  end
+
+  def log_publication col_hash, publishable
+    # return if self.publications_log.present?
+    # self.publications_log = []
+    # self.publications_log << "alfkdjsaf;lsjeso[id uioda esdoqwdfijhsafjkshfskjernhwoipuqdxnuewaopidxumweoixnuepoxfehwao"
+    deets = { type: publishable.class.name, id: publishable.id }
+    self.publications_log ||= []
+    self.publications_log << { col_hash[:column].to_sym => deets }
+    # (self.publications_log ||= []) << { col_hash[:column].to_sym => deets }
+    # self.publications_log << "Hi!"
+  end
+
+  def log_error col_hash, publishable, exception
+    deets = {}
+    if publishable.present?
+      deets.update(publishable: { type: publishable.class.name, id: publishable.id })
+    end
+    deets.update(exception: exception.to_s)
+    (self.errors_log ||= []) << { col_hash[:column].to_sym => deets }
   end
 
   def create_and_publish col_hash
@@ -32,12 +64,14 @@ class RemediationAgent < ActiveRecord::Base
 
   def _create_context_image col_hash
     (context_attrs ||= {}).update book: _get_book(col_hash)
+    context_attrs.update _handle_photo col_hash
 
     ContextImage.create! context_attrs
   end
 
   def _create_title_page col_hash
     (title_attrs ||= {}).update book: _get_book(col_hash)
+    title_attrs.update _handle_photo col_hash
 
     TitlePage.create! title_attrs
   end
@@ -49,6 +83,7 @@ class RemediationAgent < ActiveRecord::Base
     evidence_attrs.update _handle_content_types col_hash
     evidence_attrs.update _handle_provenance(col_hash)
     evidence_attrs.update _remap_attrs(Remediation::EVIDENCE_ATTRIBUTES, col_hash)
+    evidence_attrs.update _handle_photo col_hash
 
     Evidence.create! evidence_attrs
   end
@@ -208,6 +243,27 @@ class RemediationAgent < ActiveRecord::Base
     Book.find_or_create_by find_attrs do |book|
       book.assign_attributes attrs
     end
+  end
+
+  def _handle_photo col_hash
+    attrs = {}
+
+    flickr_url = col_hash.delete :flickr_url
+    if flickr_url =~ /flickr\.com/
+      flickr_id = flickr_url.strip.split('/').pop
+      client = Flickr::Client.connect!
+      info = client.get_info flickr_id
+
+      image_url = client.url info, :url_o
+
+      publication_data = PublicationData.new metadata: info.to_json, flickr_id: flickr_id
+      attrs.update publication_data: publication_data
+      attrs.update photo: Photo.create!(image: open(image_url))
+    else
+      attrs.update photo: Photo.create!(image: open("#{NON_FLICKR_URL_BASE}/#{flickr_url}"))
+    end
+
+    attrs
   end
 
   def _remap_attrs attr_map, col_hash

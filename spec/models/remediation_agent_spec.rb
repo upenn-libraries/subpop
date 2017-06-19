@@ -9,7 +9,7 @@ RSpec.describe RemediationAgent, type: :model do
  let(:not_provenance_hash) {
     {
       column:         'C',
-      image_url:      'https://www.flickr.com/photos/58558794@N07/6106275763',
+      image_url:      'https://www.flickr.com/photos/130616888@N02/34478571073',
       not_provenance: 'x'
     }
   }
@@ -17,7 +17,7 @@ RSpec.describe RemediationAgent, type: :model do
   let(:no_format_hash) {
     {
       column:                           "C",
-      flickr_url:                       "https://www.flickr.com/photos/58558794@N07/6106275763",
+      flickr_url:                       "https://www.flickr.com/photos/130616888@N02/34444669214",
       url_to_catalog:                   "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5050597",
       copy_current_repository:          "Penn Libraries",
       copy_current_collection:          "American Culture Class Collection",
@@ -34,7 +34,7 @@ RSpec.describe RemediationAgent, type: :model do
   let(:valid_bookplate) {
     {
       column:                           "C",
-      flickr_url:                       "https://www.flickr.com/photos/58558794@N07/6106275763",
+      flickr_url:                       "https://www.flickr.com/photos/130616888@N02/35158508881",
       url_to_catalog:                   "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5050597",
       copy_current_repository:          "Penn Libraries",
       copy_current_collection:          "American Culture Class Collection",
@@ -89,7 +89,7 @@ RSpec.describe RemediationAgent, type: :model do
   let(:valid_context_image) {
     {
       column:                           "M",
-      flickr_url:                       "https://www.flickr.com/photos/58558794@N07/8377198340",
+      flickr_url:                       "BS_185_178207.jpg",
       url_to_catalog:                   "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5884548",
       copy_current_repository:          "Penn Libraries",
       copy_current_collection:          "Italian Culture Class Collection",

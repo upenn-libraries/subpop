@@ -2,7 +2,7 @@ class Remediation < ActiveRecord::Base
   include UserFields
   include SpreadsheetExtractor
 
-  has_one :remediation_agent
+  has_one :remediation_agent, dependent: :destroy
 
   has_attached_file :spreadsheet
   validates_attachment_content_type :spreadsheet, content_type: ["application/vnd.ms-excel",
@@ -10,5 +10,7 @@ class Remediation < ActiveRecord::Base
     message: "Only Excel files are allowed"
 
   validates :spreadsheet, presence: true
+
+  delegate :publications_log, to: :remediation_agent, prefix: false, allow_nil: true
 
 end
