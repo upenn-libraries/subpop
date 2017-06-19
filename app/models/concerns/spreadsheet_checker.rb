@@ -12,8 +12,8 @@ module SpreadsheetChecker
 
  def check
    self.problems = []
-   sheet = Roo::Excelx.new(spreadsheet.path)
-   return self.problems = ['bad spreadsheet'] unless verify_headings(sheet) 
+   verify_headings
+   return if self.problems.present?  
    spreadsheet_data.each do |entry| # how to invoke?
      heading = entry[:column]
      entry_problems = check_entry(entry)
@@ -23,7 +23,9 @@ module SpreadsheetChecker
 
 
   def verify_headings sheet
-
+    REQUIRED_FIELDS.each do |field|
+      self.problems << "missing required field #{field}" unless headings[field]
+    end
   end
 
   # def normalize_heading heading
