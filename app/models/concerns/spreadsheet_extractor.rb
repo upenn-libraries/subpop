@@ -227,6 +227,10 @@ module SpreadsheetExtractor
     @heading_column
   end
 
+  def headings
+    @headings ||= extract_heading_addresses
+  end
+
   ##
   # Return all strings normalized and their addresses from heading_column on
   # sheet. Returns a hash in which keys are normalized strings and values are
