@@ -25,6 +25,9 @@ class RemediationsController < ApplicationController
 
     respond_to do |format|
       if @remediation.save_by current_user
+        agent = @remediation.create_remediation_agent
+        SpreadsheetRemediationJob.perform_later agent
+
         format.html { redirect_to @remediation, notice: 'Remediation was successfully created.' }
         format.json { render :show, status: :created, location: @remediation }
       else

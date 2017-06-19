@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609211709) do
+ActiveRecord::Schema.define(version: 20170617210122) do
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20170609211709) do
     t.string   "catalog_url",    limit: 255
     t.string   "vol_number",     limit: 255
     t.string   "author",         limit: 255
-    t.string   "title",          limit: 255
+    t.text     "title",          limit: 65535
     t.string   "creation_place", limit: 255
     t.integer  "creation_date",  limit: 4
     t.string   "publisher",      limit: 255
@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 20170609211709) do
     t.text     "publications_log",    limit: 65535
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.text     "errors_log",          limit: 65535
   end
 
   add_index "remediation_agents", ["remediation_id"], name: "index_remediation_agents_on_remediation_id", using: :btree

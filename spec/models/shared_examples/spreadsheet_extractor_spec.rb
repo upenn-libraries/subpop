@@ -34,4 +34,12 @@ shared_examples_for "spreadsheet_extractor" do
   it 'gets the heading addresses' do
     expect(new_object.extract_heading_addresses).to be_a Hash
   end
+
+  context 'nonprovenance' do
+
+  end
+
+  context 'provenance' do
+
+  end
 end

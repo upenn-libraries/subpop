@@ -13,51 +13,96 @@ module SpreadsheetExtractor
 
   MAX_COLUMN = 10000
 
-  COLUMNS = [
-    "Image URL",
-    "Flickr Title",
-    "Not Provenance",
-    "Url to Catalog",
-    "copy: current repository",
-    "copy: current collection",
-    "copy: current owner",
-    "copy: current geographic location",
-    "copy: call number/shelf mark",
-    "copy: volume number",
-    "copy: other id",
-    "copy: author",
-    "copy: title",
-    "copy: place of publication",
-    "copy: date of publication",
-    "copy: date narrative",
-    "copy: printer/publisher/scribe",
-    "evidence: location in book",
-    "evidence: format",
-    "evidence: other format",
-    "evidence: content type",
-    "evidence: transcription",
-    "evidence: translation",
-    "evidence: date start",
-    "evidence: date end",
-    "evidence: date narrative",
-    "evidence: date",
-    "evidence: place",
-    "evidence: citation",
-    "evidence: comments",
-    "id: owner",
-    "id: librarian",
-    "id: bookseller/auction house",
-    "id: binder",
-    "id: annotator",
-    "id: unknown role",
-    "Problems"
-  ]
-
-  COLUMN_HASH = COLUMNS.inject({}) { |col_hash,col|
-    normal = ClassMethods.normalized_heading(col)
-    col_hash[normal] = col
-    col_hash
+  HEADER_HASH = {
+    image_url:                        "Image URL",
+    flickr_title:                     "Flickr Title",
+    not_provenance:                   "Not Provenance",
+    url_to_catalog:                   "Url to Catalog",
+    copy_current_repository:          "copy: current repository",
+    copy_current_collection:          "copy: current collection",
+    copy_current_owner:               "copy: current owner",
+    copy_current_geographic_location: "copy: current geographic location",
+    copy_call_number_shelf_mark:      "copy: call number/shelf mark",
+    copy_volume_number:               "copy: volume number",
+    copy_other_id:                    "copy: other id",
+    copy_author:                      "copy: author",
+    copy_title:                       "copy: title",
+    copy_place_of_publication:        "copy: place of publication",
+    copy_date_of_publication:         "copy: date of publication",
+    copy_date_narrative:              "copy: date narrative",
+    copy_printer_publisher_scribe:    "copy: printer/publisher/scribe",
+    copy_acquisition_source:          "copy: acquisition source",
+    evidence_location_in_book:        "evidence: location in book",
+    evidence_format:                  "evidence: format",
+    evidence_other_format:            "evidence: other format",
+    evidence_content_type:            "evidence: content type",
+    evidence_transcription:           "evidence: transcription",
+    evidence_translation:             "evidence: translation",
+    evidence_date_start:              "evidence: date start",
+    evidence_date_end:                "evidence: date end",
+    evidence_date_narrative:          "evidence: date narrative",
+    evidence_date:                    "evidence: date",
+    evidence_place:                   "evidence: place",
+    evidence_citation:                "evidence: citation",
+    evidence_comments:                "evidence: comments",
+    id_owner:                         "id: owner",
+    id_librarian:                     "id: librarian",
+    id_bookseller_auction_house:      "id: bookseller/auction house",
+    id_binder:                        "id: binder",
+    id_annotator:                     "id: annotator",
+    id_unknown_role:                  "id: unknown role",
+    problems:                         "Problems"
   }
+
+  BOOK_ATTRIBUTES = {
+    url_to_catalog:                   :catalog_url,
+    copy_current_repository:          :repository,
+    copy_current_collection:          :collection,
+    copy_current_owner:               :owner,
+    copy_current_geographic_location: :geo_location,
+    copy_call_number_shelf_mark:      :call_number,
+    copy_volume_number:               :vol_number,
+    copy_other_id:                    :other_id,
+    copy_author:                      :author,
+    copy_title:                       :title,
+    copy_place_of_publication:        :creation_place,
+    copy_date_of_publication:         :creation_date,
+    copy_date_narrative:              :date_narrative,
+    copy_printer_publisher_scribe:    :publisher,
+    copy_acquisition_source:          :acq_source,
+    copy_comment:                     :comment_book
+  }
+
+  EVIDENCE_ATTRIBUTES = {
+    evidence_location_in_book:        :location_in_book,
+    evidence_format:                  :format,
+    evidence_other_format:            :format_other,
+    evidence_content_type:            :content_types,
+    evidence_transcription:           :transcription,
+    evidence_translation:             :translation,
+    evidence_date_start:              :year_start,
+    evidence_date_end:                :year_end,
+    evidence_date_narrative:          :date_narrative,
+    evidence_date:                    :year_when,
+    evidence_place:                   :where,
+    evidence_citation:                :citations,
+    evidence_comments:                :comments
+  }
+
+  PROVENANCE_AGENT_ATTRIBUTES = {
+    id_owner:                         { role: 'owner' },
+    id_librarian:                     { role: 'librarian' },
+    id_bookseller_auction_house:      { role: 'bookseller' },
+    id_binder:                        { role: 'binder' },
+    id_annotator:                     { role: 'annotator' },
+    id_unknown_role:                  { role: 'unknown' }
+  }
+
+  CONTEXT_IMAGE_ATTRIBUTES = { }
+
+  TITLE_PAGE_ATTRIBUTES = { }
+
+  HEADERS = HEADER_HASH.values
 
   COLUMN_LETTERS = (1..MAX_COLUMN).inject(['A']) { |ra, i| ra << ra.last.succ  }
 
@@ -70,7 +115,7 @@ module SpreadsheetExtractor
   # values. E.g.,
   #
   #    [{:column=>"C",
-  #      :flick_url=>"https://www.flickr.com/photos/58558794@N07/6106275763",
+  #      :flickr_url=>"https://www.flickr.com/photos/58558794@N07/6106275763",
   #      :url_to_catalog=>
   #        "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5050597",
   #      :copy_current_repository=>"Penn Libraries",
@@ -88,7 +133,7 @@ module SpreadsheetExtractor
   #          collector.",
   #      :id_owner=>"Wilson, Carroll A. (Carroll Atwood), 1886-1947"},
   #     {:column=>"D",
-  #      :flick_url=>"https://www.flickr.com/photos/58558794@N07/6106051679",
+  #      :flickr_url=>"https://www.flickr.com/photos/58558794@N07/6106051679",
   #      :url_to_catalog=>
   #       "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5057263",
   #      :copy_current_repository=>"Penn Libraries",
@@ -156,12 +201,12 @@ module SpreadsheetExtractor
 
   ##
   # Return true if value is one of the known headers. If a value is a symbol,
-  # see if it is in COLUMN_HASH; otherwise, convert value to normalized
+  # see if it is in HEADER_HASH; otherwise, convert value to normalized
   # heading and check.
   def known_header? value
-    return COLUMN_HASH.include? value if value.is_a? Symbol
+    return HEADER_HASH.include? value if value.is_a? Symbol
 
-    COLUMN_HASH.include? ClassMethods.normalized_heading value
+    HEADER_HASH.include? ClassMethods.normalized_heading value
   end
 
   ##
@@ -182,12 +227,16 @@ module SpreadsheetExtractor
     @heading_column
   end
 
+  def headings
+    @headings ||= extract_heading_addresses
+  end
+
   ##
   # Return all strings normalized and their addresses from heading_column on
   # sheet. Returns a hash in which keys are normalized strings and values are
   # arrays in format `[ROW, COLUMN]`:
   #
-  #     {:flick_url=>[0, 1],
+  #     {:flickr_url=>[0, 1],
   #      :file_name=>[1, 1],
   #      :not_provenance=>[3, 1],
   #      :url_to_catalog=>[4, 1],
@@ -205,7 +254,7 @@ module SpreadsheetExtractor
   #
   def extract_heading_addresses
     addresses = {}
-    addresses[:flick_url] =  [FLICKR_URL_ROW, heading_column]
+    addresses[:flickr_url] =  [FLICKR_URL_ROW, heading_column]
 
     (0..200).each do |i|
       row = worksheet[i]
