@@ -1,5 +1,6 @@
 class Remediation < ActiveRecord::Base
   include UserFields
+  include SpreadsheetExtractor
   include SpreadsheetChecker
 
   serialize :problems
