@@ -32,6 +32,7 @@ module SpreadsheetExtractor
     copy_date_narrative:              "copy: date narrative",
     copy_printer_publisher_scribe:    "copy: printer/publisher/scribe",
     copy_acquisition_source:          "copy: acquisition source",
+    copy_comments:                    "copy: comments",
     evidence_location_in_book:        "evidence: location in book",
     evidence_format:                  "evidence: format",
     evidence_other_format:            "evidence: other format",
@@ -70,7 +71,7 @@ module SpreadsheetExtractor
     copy_date_narrative:              :date_narrative,
     copy_printer_publisher_scribe:    :publisher,
     copy_acquisition_source:          :acq_source,
-    copy_comment:                     :comment_book
+    copy_comments:                    :comment_book
   }
 
   EVIDENCE_ATTRIBUTES = {
