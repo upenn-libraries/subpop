@@ -14,6 +14,18 @@ class Name < ActiveRecord::Base
 
   scope :name_like, -> (name) { where("lower(name) like ?", name.downcase) }
 
+  GENDER = [
+    ['Female', 'female'],
+    ['Male',  'male'],
+    ['Other', 'other'],
+  ]
+
+  GENDER_BY_CODE = GENDER.inject({}) { |hash, pair|
+    hash.merge(pair.last => pair.first)
+  }
+
+  validates :gender, inclusion: { in: GENDER.map(&:last), message: "'%{value}' is not in list", allow_blank: true }
+
   def full_name
     return name if name_has_date?
     return name unless date_string.present?

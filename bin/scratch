@@ -7,8 +7,10 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails g migration add_errors_log_to_remediation_agents \
-  errors_log:text
+rails g migration add_gender_to_names gender:string
+
+# rails g migration add_errors_log_to_remediation_agents \
+#   errors_log:text
 
 # rails g migration change_book_title_from_string_to_text
 
