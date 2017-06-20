@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# This spec tests the spe
+# This spec tests the SpreadsheetExtractor capability in a class.
 
 shared_examples_for "spreadsheet_extractor" do
   let(:model) {  described_class }
