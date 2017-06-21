@@ -53,9 +53,7 @@ module SpreadsheetExtractor
     id_annotator:                     "id: annotator",
     id_unknown_role:                  "id: unknown role",
     id_gender:                        "id: gender",
-    problems:                         "Problems",
-    id_problems:                      "id: Problems",
-    problem_stuff:                    "problem stuff"
+    problems:                         "Problems"
   }
 
   BOOK_ATTRIBUTES = {
