@@ -68,6 +68,47 @@ RSpec.describe RemediationAgent, type: :model do
     }
   }
 
+  let(:bookplate_with_gender) {
+    {
+      column:                           "C",
+      flickr_url:                       "https://www.flickr.com/photos/130616888@N02/35158508881",
+      copy_call_number_shelf_mark:      "AC8 H3188 A825y",
+      copy_title:                       "Youth's keepsake : A Christmas and New Year's gift for young people.",
+      evidence_format:                  "Bookplate/Label",
+      id_owner:                         "Wilson, Carroll A. (Carroll Atwood), 1886-1947",
+      id_gender:                        "Other",
+      problems:                         "Trouble comin' my way."
+    }
+  }
+
+  let(:bookplate_with_gender_two_agents) {
+    {
+      column:                           "C",
+      flickr_url:                       "https://www.flickr.com/photos/130616888@N02/35158508881",
+      copy_call_number_shelf_mark:      "AC8 H3188 A825y",
+      copy_title:                       "Youth's keepsake : A Christmas and New Year's gift for young people.",
+      evidence_format:                  "Bookplate/Label",
+      id_owner:                         "Wilson, Carroll A. (Carroll Atwood), 1886-1947",
+      id_annotator:                     "Annotator, The",
+      id_gender:                        "Other",
+      problems:                         "Trouble comin' my way."
+    }
+  }
+
+  let(:bookplate_with_gender_two_owners) {
+    {
+      column:                           "C",
+      flickr_url:                       "https://www.flickr.com/photos/130616888@N02/35158508881",
+      copy_call_number_shelf_mark:      "AC8 H3188 A825y",
+      copy_title:                       "Youth's keepsake : A Christmas and New Year's gift for young people.",
+      evidence_format:                  "Bookplate/Label",
+      evidence_location_in_book:        "Inside Front Cover",
+      id_owner:                         "Wilson, Carroll A. (Carroll Atwood), 1886-1947 |  | Barber, Joseph",
+      id_gender:                        "Other",
+      problems:                         "Trouble comin' my way."
+    }
+  }
+
   let(:valid_title_page) {
     {
       column:                           "E",
@@ -143,6 +184,24 @@ RSpec.describe RemediationAgent, type: :model do
       agent = RemediationAgent.new remediation: build(:remediation)
       agent.valid?
       expect(agent.errors[:remediate]).to be_blank
+    end
+  end
+
+  context '_handle_provenance' do
+    it 'handles gender in provenance' do
+      attrs = subject._handle_provenance bookplate_with_gender
+      # binding.pry
+      expect(attrs[:provenance_agents].first.name.gender).to eq 'other'
+    end
+
+    it "doesn't assign gender when two owners are present" do
+      attrs = subject._handle_provenance bookplate_with_gender_two_owners
+      expect(attrs[:provenance_agents].map { |a| a.name.gender }).to all be_nil
+    end
+
+    it "doesn't assign gender when two different agents are present" do
+      attrs = subject._handle_provenance bookplate_with_gender_two_agents
+      expect(attrs[:provenance_agents].map { |a| a.name.gender }).to all be_nil
     end
   end
 

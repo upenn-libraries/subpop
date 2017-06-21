@@ -24,6 +24,17 @@ class Name < ActiveRecord::Base
     hash.merge(pair.last => pair.first)
   }
 
+  GENDER_CODE_BY_NAME = GENDER.inject({}) { |hash, pair|
+    hash.merge(pair.first.downcase => pair.last)
+  }
+
+  class << self
+    def gender_code gender_name
+      return unless gender_name.is_a? String
+      GENDER_CODE_BY_NAME[gender_name.strip.downcase]
+    end
+  end
+
   validates :gender, inclusion: { in: GENDER.map(&:last), message: "'%{value}' is not in list", allow_blank: true }
 
   def full_name

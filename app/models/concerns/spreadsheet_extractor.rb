@@ -52,7 +52,10 @@ module SpreadsheetExtractor
     id_binder:                        "id: binder",
     id_annotator:                     "id: annotator",
     id_unknown_role:                  "id: unknown role",
-    problems:                         "Problems"
+    id_gender:                        "id: gender",
+    problems:                         "Problems",
+    id_problems:                      "id: Problems",
+    problem_stuff:                    "problem stuff"
   }
 
   BOOK_ATTRIBUTES = {
@@ -212,7 +215,6 @@ module SpreadsheetExtractor
 
   ##
   # Return index of the first column with a value that is a known header
-  #
   def heading_column
     return @heading_column if @heading_column.present?
     worksheet.each do |row|
