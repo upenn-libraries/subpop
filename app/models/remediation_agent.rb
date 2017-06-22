@@ -10,7 +10,7 @@ class RemediationAgent < ActiveRecord::Base
   validates :remediation, presence: true
 
   def not_provenance? col_hash
-    col_hash[:not_provenance].present? || col_hash[:evidence_format].blank?
+    col_hash[:evidence_format].blank?
   end
 
   def remediate
