@@ -15,6 +15,15 @@ module SpreadsheetPhotoURL
       url_or_filename =~ /flickr\.com/
     end
 
+    def live?
+      begin
+        open image_url
+        true
+      rescue OpenURI::HTTPError
+        false
+      end
+    end
+
     def flickr_id
       return unless flickr?
       @flickr_id ||= url_or_filename.strip.split('/').pop
