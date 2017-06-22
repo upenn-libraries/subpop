@@ -113,7 +113,7 @@ module SpreadsheetExtractor
 
   ##
   # Return an array of hashes, containing all data in sheet. Each hash as  a
-  # normalized header value as its keys, and all non-blank cell values as its
+  # normalized heading value as its keys, and all non-blank cell values as its
   # values. E.g.,
   #
   #    [{:column=>"C",
@@ -202,24 +202,24 @@ module SpreadsheetExtractor
   end
 
   ##
-  # Return true if value is one of the known headers. If a value is a symbol,
+  # Return true if value is one of the known headings. If a value is a symbol,
   # see if it is in HEADER_HASH; otherwise, convert value to normalized
   # heading and check.
-  def known_header? value
-    return HEADER_HASH.include? value if value.is_a? Symbol
+  def known_heading? value
+    return known_headings.include? value if value.is_a? Symbol
 
-    HEADER_HASH.include? ClassMethods.normalized_heading value
+    known_headings.include? ClassMethods.normalized_heading value
   end
 
   ##
-  # Return index of the first column with a value that is a known header
+  # Return index of the first column with a value that is a known heading
   def heading_column
     return @heading_column if @heading_column.present?
     worksheet.each do |row|
       row && row.cells.each do |cell|
         next unless cell
         next unless cell.value
-        if known_header? cell.value
+        if known_heading? cell.value
           @heading_column = cell.column
           break
         end
@@ -230,6 +230,10 @@ module SpreadsheetExtractor
 
   def headings
     @headings ||= extract_heading_addresses
+  end
+
+  def known_headings
+    HEADER_HASH.keys + %i{ file_name }
   end
 
   ##
@@ -251,7 +255,7 @@ module SpreadsheetExtractor
   #      # ... etc.
   #      :presentation=>[38, 1]}
   #
-  # Does not check heading names against canonical header list.
+  # Does not check heading names against canonical heading list.
   #
   def extract_heading_addresses
     addresses = {}
