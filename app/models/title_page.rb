@@ -11,6 +11,7 @@ class TitlePage < ActiveRecord::Base
     return "title page" unless book_full_name.present?
     "title page of #{book_full_name}"
   end
+  alias_method :full_name, :name
 
   def to_s
     model_name.human

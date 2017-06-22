@@ -1,4 +1,6 @@
 class RemediationAgent < ActiveRecord::Base
+  include SpreadsheetPhotoURL
+
   serialize :errors_log
   serialize :publications_log
   serialize :transformations_log
@@ -6,8 +8,6 @@ class RemediationAgent < ActiveRecord::Base
   belongs_to :remediation
 
   validates :remediation, presence: true
-
-  NON_FLICKR_URL_BASE = "http://openn.library.upenn.edu/html/pop_pictures"
 
   def not_provenance? col_hash
     col_hash[:not_provenance].present? || col_hash[:evidence_format].blank?
@@ -21,7 +21,7 @@ class RemediationAgent < ActiveRecord::Base
         publishable.publish remediation.created_by_id, force: true
         log_publication col_hash, publishable
       rescue Exception => e
-        log_error col_hash, publishable, e
+        log_error col_hash, publishable, e.to_s
       end
     end
   end
@@ -30,19 +30,17 @@ class RemediationAgent < ActiveRecord::Base
     # return if self.publications_log.present?
     # self.publications_log = []
     # self.publications_log << "alfkdjsaf;lsjeso[id uioda esdoqwdfijhsafjkshfskjernhwoipuqdxnuewaopidxumweoixnuepoxfehwao"
-    deets = { type: publishable.class.name, id: publishable.id }
+    deets = { class_name: publishable.class.name, id: publishable.id }
     self.publications_log ||= []
     self.publications_log << { col_hash[:column].to_sym => deets }
-    # (self.publications_log ||= []) << { col_hash[:column].to_sym => deets }
-    # self.publications_log << "Hi!"
   end
 
-  def log_error col_hash, publishable, exception
+  def log_error col_hash, publishable, message
     deets = {}
     if publishable.present?
       deets.update(publishable: { type: publishable.class.name, id: publishable.id })
     end
-    deets.update(exception: exception.to_s)
+    deets.update(message: message.to_s)
     (self.errors_log ||= []) << { col_hash[:column].to_sym => deets }
   end
 
@@ -218,16 +216,35 @@ class RemediationAgent < ActiveRecord::Base
   #
   # Note that pipe-separated names are turned into mulitple provenance agents.
   def _handle_provenance col_hash
-    agents = []
-    Remediation::PROVENANCE_AGENT_ATTRIBUTES.each do |heading_key,role_hash|
+    agents = {}
+
+    role_names = Remediation::PROVENANCE_AGENT_ATTRIBUTES.flat_map do |heading_key,role_hash|
       names = col_hash.delete heading_key
-      next unless names.present?
-      names.split(/\|/ ).each do |name_string|
-        agent_name = Name.find_or_create_by name: name_string
-        agents << ProvenanceAgent.new(name: agent_name, role: role_hash[:role])
+      next [] unless names.present?
+      { role: role_hash[:role], names: names.split(/\|/) }
+    end
+
+    return agents if role_names.blank?
+
+    name_count = role_names.sum { |h| h[:names].size }
+    # We only assign gender if we have one name; otherwise, we don't know
+    # which name the gender goes with.
+    gender_code = Name::gender_code col_hash.delete(:id_gender)
+    if gender_code && name_count > 1
+      gender_code = nil
+    end
+    # Create a ProvenanceAgent for each name
+    role_names.each do |h|
+      h[:names].each do |name|
+        # Note: Gender is set only for those names that are created
+        name_obj = Name.find_or_create_by name: name do |obj|
+          obj.gender = gender_code
+        end
+        (agents[:provenance_agents] ||= []) << ProvenanceAgent.new(name: name_obj, role: h[:role])
       end
     end
-    { provenance_agents: agents }
+
+    agents
   end
 
   ##
@@ -248,19 +265,13 @@ class RemediationAgent < ActiveRecord::Base
   def _handle_photo col_hash
     attrs = {}
 
-    flickr_url = col_hash.delete :flickr_url
-    if flickr_url =~ /flickr\.com/
-      flickr_id = flickr_url.strip.split('/').pop
-      client = Flickr::Client.connect!
-      info = client.get_info flickr_id
-
-      image_url = client.url info, :url_o
-
-      publication_data = PublicationData.new metadata: info.to_json, flickr_id: flickr_id
-      attrs.update publication_data: publication_data
-      attrs.update photo: Photo.create!(image: open(image_url))
+    url_data = image_url_data col_hash.delete :flickr_url
+    if url_data.flickr?
+      pub_data = PublicationData.new metadata: url_data.flickr_info.to_json, flickr_id: url_data.flickr_id
+      attrs.update publication_data: pub_data
+      attrs.update photo: Photo.create!(image: open(url_data.image_url))
     else
-      attrs.update photo: Photo.create!(image: open("#{NON_FLICKR_URL_BASE}/#{flickr_url}"))
+      attrs.update photo: Photo.create!(image: open(url_data.image_url))
     end
 
     attrs

@@ -1,4 +1,6 @@
 class RemediationsController < ApplicationController
+  include RemadiationHelper
+
   before_action :set_remediation, only: [:show, :edit, :update, :destroy]
   authorize_resource
 
