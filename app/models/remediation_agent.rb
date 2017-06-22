@@ -1,4 +1,6 @@
 class RemediationAgent < ActiveRecord::Base
+  include SpreadsheetPhotoURL
+
   serialize :errors_log
   serialize :publications_log
   serialize :transformations_log
@@ -6,8 +8,6 @@ class RemediationAgent < ActiveRecord::Base
   belongs_to :remediation
 
   validates :remediation, presence: true
-
-  NON_FLICKR_URL_BASE = "http://openn.library.upenn.edu/html/pop_pictures"
 
   def not_provenance? col_hash
     col_hash[:not_provenance].present? || col_hash[:evidence_format].blank?
@@ -30,7 +30,7 @@ class RemediationAgent < ActiveRecord::Base
     # return if self.publications_log.present?
     # self.publications_log = []
     # self.publications_log << "alfkdjsaf;lsjeso[id uioda esdoqwdfijhsafjkshfskjernhwoipuqdxnuewaopidxumweoixnuepoxfehwao"
-    deets = { type: publishable.class.name, id: publishable.id }
+    deets = { class_name: publishable.class.name, id: publishable.id }
     self.publications_log ||= []
     self.publications_log << { col_hash[:column].to_sym => deets }
   end
@@ -265,19 +265,13 @@ class RemediationAgent < ActiveRecord::Base
   def _handle_photo col_hash
     attrs = {}
 
-    flickr_url = col_hash.delete :flickr_url
-    if flickr_url =~ /flickr\.com/
-      flickr_id = flickr_url.strip.split('/').pop
-      client = Flickr::Client.connect!
-      info = client.get_info flickr_id
-
-      image_url = client.url info, :url_o
-
-      publication_data = PublicationData.new metadata: info.to_json, flickr_id: flickr_id
-      attrs.update publication_data: publication_data
-      attrs.update photo: Photo.create!(image: open(image_url))
+    url_data = image_url_data col_hash.delete :flickr_url
+    if url_data.flickr?
+      pub_data = PublicationData.new metadata: url_data.flickr_info.to_json, flickr_id: url_data.flickr_id
+      attrs.update publication_data: pub_data
+      attrs.update photo: Photo.create!(image: open(url_data.image_url))
     else
-      attrs.update photo: Photo.create!(image: open("#{NON_FLICKR_URL_BASE}/#{flickr_url}"))
+      attrs.update photo: Photo.create!(image: open(url_data.image_url))
     end
 
     attrs
