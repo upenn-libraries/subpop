@@ -15,6 +15,8 @@ module SpreadsheetExtractor
 
   HEADER_HASH = {
     image_url:                        "Image URL",
+    file_name:                        "File name",
+    flickr_url:                       "Flickr URL",
     flickr_title:                     "Flickr Title",
     not_provenance:                   "Not Provenance",
     url_to_catalog:                   "Url to Catalog",
@@ -233,7 +235,7 @@ module SpreadsheetExtractor
   end
 
   def known_headings
-    HEADER_HASH.keys + %i{ file_name }
+    HEADER_HASH.keys
   end
 
   ##
