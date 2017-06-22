@@ -233,7 +233,7 @@ module SpreadsheetExtractor
   end
 
   def known_headings
-    HEADER_HASH.keys + %i{ file_name }
+    HEADER_HASH.keys + %i{ file_name flickr_url }
   end
 
   ##

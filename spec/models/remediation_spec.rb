@@ -83,7 +83,6 @@ RSpec.describe Remediation, type: :model do
  let(:missing_required_fields) {
     {
       column:                      'MQ',
-      flick_url:                   'flickr.url',
       copy_current_repository:     '',
       copy_title:                  '',
       copy_call_number_shelf_mark: '',
@@ -145,6 +144,39 @@ RSpec.describe Remediation, type: :model do
     }
   }
 
+
+  let(:good_flickr_photo) {
+    {
+      column:    'FP',
+      flick_url: 'https://www.flickr.com/photos/58558794@N07/6106275763',
+      format:    'Inscription'
+    }
+  }
+
+  let(:good_openn_photo) {
+    {
+      column:   'OP',
+      format:    'Inscription'
+    }
+  }
+
+  let(:non_url) {
+    {
+      column:    'NU',
+      flick_url: 'not a url at all',
+      format:    'Inscription'
+    }
+  }
+
+  let(:bad_flickr_url) {
+    {
+      column:    'BF',
+      flick_url: '',
+      format:    'Inscription'
+    }
+  }
+
+
   context 'factory' do
     it 'creates a Remediation' do
       expect(create :remediation).to be_a Remediation
@@ -192,62 +224,65 @@ RSpec.describe Remediation, type: :model do
       expect(create :remediation).to be_problem_free
     end
 
-
-    it 'has no invalid headings' do
-    # subject. # # # ?
-    # expect(subject.problems[:headings].join).to_not include('invalid heading')
+    it 'is valid if it has no invalid headings' do
+      remediation = create :remediation
+      remediation.verify_headings
+      expect(remediation).to be_problem_free
     end
 
-    it 'has all required headings' do
-    # subject. # # # ?
-    # expect(subject.problems[:headings].join).to_not include('missing required')
-    end
+    it 'is invalid if it has invalid headings' do
 
+    end
 
 
     context 'required for provenance' do
-      it 'is valid if image is present'
+      # it 'is valid if image is present' do
 
-      it 'is invalid if image is blank'
+      # end
+
+      it 'is invalid if image field is blank' do
+        subject.check_entry(missing_required_fields)
+        expect(subject.fetch_problem(:MQ).join).to include('flickr_url')
+      end
 
       it 'is valid if current repository is present' do
         subject.check_entry(all_required_fields)
-        expect(subject.problems[:RQ].join).to_not include('copy_current_repository')
+        expect(subject.fetch_problem(:RQ).join).to_not include('copy_current_repository')
       end
 
       it 'is invalid if current repository is blank' do
         subject.check_entry(missing_required_fields)
-        expect(subject.problems[:MQ].join).to include('copy_current_repository')
+        expect(subject.fetch_problem(:MQ).join).to include('copy_current_repository')
       end
 
       it 'is valid if call number is present' do
         subject.check_entry(all_required_fields)
-        expect(subject.problems[:RQ].join).to_not include('copy_call_number_shelf_mark')
+        expect(subject.fetch_problem(:RQ).join).to_not include('copy_call_number_shelf_mark')
       end
 
       it 'is invalid if call number is blank' do
         subject.check_entry(missing_required_fields)
-        expect(subject.problems[:MQ].join).to include('copy_call_number_shelf_mark')
+        expect(subject.fetch_problem(:MQ).join).to include('copy_call_number_shelf_mark')
       end
 
       it 'is valid if title is present' do
         subject.check_entry(all_required_fields)
-        expect(subject.problems[:RQ].join).to_not include('copy_title')
+        expect(subject.fetch_problem(:RQ).join).to_not include('copy_title')
       end
 
       it 'is invalid if title is blank' do
         subject.check_entry(missing_required_fields)
-        expect(subject.problems[:MQ].join).to include('copy_title')
+        expect(subject.fetch_problem(:MQ).join).to include('copy_title')
       end
 
       it 'is valid if format is other and other_format is present' do
         subject.check_entry(good_other_format)
-        expect(subject.problems[:GO].join).to_not include('evidence_other_format')
+        expect(subject.fetch_problem(:GO).join).to_not include('evidence_other_format')
       end
 
       it 'is invalid if format is other and other_format is blank' do
         subject.check_entry(bad_other_format)
-        expect(subject.problems[:BO].join).to include('evidence_other_format')
+        expect(subject.fetch_problem(:BO).join).to include('evidence_other_format')
       end
     end
 
@@ -270,12 +305,12 @@ RSpec.describe Remediation, type: :model do
         ]
         single_field_hashes = valid_formats.map{ |fmt| {column: 'A', flick_url: 'flickr.url', evidence_format: fmt} }
         single_field_hashes.each{ |h| subject.check_entry(h) }
-        expect(subject.problems[:A].join).to_not include('evidence_format')
+        expect(subject.fetch_problem(:A).join).to_not include('evidence_format')
       end
 
       it 'is invalid if format is not in the format list' do
         subject.check_entry(bad_format_bad_content_type)
-        expect(subject.problems[:BF].join).to include('evidence_format')
+        expect(subject.fetch_problem(:BF).join).to include('evidence_format')
       end
 
       it 'is valid if all content types are in the content type list' do
@@ -297,77 +332,80 @@ RSpec.describe Remediation, type: :model do
         single_field_hashes = valid_content_types.map{ |c_t| {column: 'A', evidence_format: 'Inscription', evidence_content_type: c_t} }
         single_field_hashes.each{ |h| subject.check_entry(h) }
         subject.check_entry({column: 'A', flick_url: 'flickr.url', evidence_format: 'Inscription', evidence_content_type: 'Armorial | Gift | Monogram'})
-        expect(subject.problems[:A].join).to_not include('evidence_content_type')
+        expect(subject.fetch_problem(:A).join).to_not include('evidence_content_type')
       end
 
       it 'is invalid if not all content types are in the content type list' do
         subject.check_entry(bad_format_bad_content_type)
-        expect(subject.problems[:BF].join).to include('evidence_content_type')
+        expect(subject.fetch_problem(:BF).join).to include('evidence_content_type')
       end
 
       it 'is valid if date of publication is an integer year' do
         subject.check_entry(all_good_dates)
-        expect(subject.problems[:AD].join).to_not include('copy_date_of_publication')
+        expect(subject.fetch_problem(:AD).join).to_not include('copy_date_of_publication')
       end
 
       it 'is valid if evidence: date start is an integer year' do
         subject.check_entry(all_good_dates)
-        expect(subject.problems[:AD].join).to_not include('evidence_date_start')
+        expect(subject.fetch_problem(:AD).join).to_not include('evidence_date_start')
       end
 
       it 'is valid if evidence: date end is an integer year' do
         subject.check_entry(all_good_dates)
-        expect(subject.problems[:AD].join).to_not include('evidence_date_end')
+        expect(subject.fetch_problem(:AD).join).to_not include('evidence_date_end')
       end
 
       it 'is valid if evidence: date is an integer year' do
         subject.check_entry(all_good_dates)
-        expect(subject.problems[:AD].join).to_not include('evidence_date]')
+        expect(subject.fetch_problem(:AD).join).to_not include('evidence_date]')
       end
 
       it 'is invalid if date of publication is not a valid year' do
         subject.check_entry(all_bad_dates)
-        expect(subject.problems[:BD].join).to include('copy_date_of_publication')
+        expect(subject.fetch_problem(:BD).join).to include('copy_date_of_publication')
       end
 
       it 'is invalid if evidence: date start is not a valid year' do
         subject.check_entry(all_bad_dates)
-        expect(subject.problems[:BD].join).to include('evidence_date_start')
+        expect(subject.fetch_problem(:BD).join).to include('evidence_date_start')
       end
 
       it 'is invalid if evidence: date end is not a valid year' do
         subject.check_entry(all_bad_dates)
-        expect(subject.problems[:BD].join).to include('evidence_date_end')
+        expect(subject.fetch_problem(:BD).join).to include('evidence_date_end')
       end
 
       it 'is invalid if evidence: date is not a valid year' do
         subject.check_entry(all_bad_dates)
-        expect(subject.problems[:BD].join).to include('evidence_date]')
+        expect(subject.fetch_problem(:BD).join).to include('evidence_date]')
       end
 
       it 'is valid if date of publication is blank' do
         subject.check_entry(minimal_bookplate)
-        expect(subject.problems[:MB].join).to_not include('copy_date_of_publication')
+        expect(subject.fetch_problem(:MB).join).to_not include('copy_date_of_publication')
       end
 
       it 'is valid if evidence: date start is blank' do
         subject.check_entry(minimal_bookplate)
-        expect(subject.problems[:MB].join).to_not include('evidence_date_start')
+        expect(subject.fetch_problem(:MB).join).to_not include('evidence_date_start')
       end
 
       it 'is valid if evidence: date end is blank' do
         subject.check_entry(minimal_bookplate)
-        expect(subject.problems[:MB].join).to_not include('evidence_date_end')
+        expect(subject.fetch_problem(:MB).join).to_not include('evidence_date_end')
       end
 
       it 'is valid if evidence: date is blank' do
         subject.check_entry(minimal_bookplate)
-        expect(subject.problems[:MB].join).to_not include('evidence_date]')
+        expect(subject.fetch_problem(:MB).join).to_not include('evidence_date]')
       end
     end
 
     context 'images' do
-      it 'is valid if flick_url is live'
+      it 'is valid if flick_url is live' do
+        subject.check_entry(good_flickr_photo)
+        expect(subject.fetch_problem(:FP).join).to_not include('flick_url')
+      end
 
       it 'is invalid if flick_url is not live'
 
