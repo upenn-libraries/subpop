@@ -1,6 +1,9 @@
 class Remediation < ActiveRecord::Base
   include UserFields
   include SpreadsheetExtractor
+  include SpreadsheetChecker
+
+  serialize :problems
 
   has_one :remediation_agent, dependent: :destroy
 
