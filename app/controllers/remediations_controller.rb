@@ -7,7 +7,7 @@ class RemediationsController < ApplicationController
   # GET /remediations
   # GET /remediations.json
   def index
-    @remediations = Remediation.all
+    @remediations = Remediation.order('created_at DESC').page params[:page]
   end
 
   # GET /remediations/1
@@ -25,19 +25,13 @@ class RemediationsController < ApplicationController
   def create
     @remediation = Remediation.new remediation_params
 
-    @remediation.check
     respond_to do |format|
-      if @remediation.problem_free?
-        if @remediation.save_by current_user
-          agent = @remediation.create_remediation_agent
-          SpreadsheetRemediationJob.perform_later agent
+      if @remediation.save_by current_user
+        agent = @remediation.create_remediation_agent
+        SpreadsheetRemediationJob.perform_later agent
 
-          format.html { redirect_to @remediation, notice: 'Remediation was successfully created.' }
-          format.json { render :show, status: :created, location: @remediation }
-        else
-          format.html { render :new }
-          format.json { render json: @remediation.errors, status: :unprocessable_entity }
-        end
+        format.html { redirect_to @remediation, notice: 'Remediation was successfully created.' }
+        format.json { render :show, status: :created, location: @remediation }
       else
         format.html { render :new }
         format.json { render json: @remediation.errors, status: :unprocessable_entity }

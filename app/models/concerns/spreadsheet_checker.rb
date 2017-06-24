@@ -5,6 +5,8 @@
 module SpreadsheetChecker
   extend ActiveSupport::Concern
 
+  include SpreadsheetPhotoURL
+
   def problem_free?
    self.problems.blank?
   end
@@ -98,8 +100,6 @@ module SpreadsheetChecker
     self.problems.keys.sort.each{ |k| message << "#{k} problems[k] \n\n" }
     message
   end
-
-
 
   FIELDS_TO_CHECK = %i(
     copy_current_repository

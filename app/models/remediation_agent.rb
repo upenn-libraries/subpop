@@ -14,8 +14,16 @@ class RemediationAgent < ActiveRecord::Base
   end
 
   def remediate
-    data_array = remediation.spreadsheet_data
-    data_array.each do |col_hash|
+    logger.info { "Pre-checking remediation: #{remediation}" }
+    remediation.check
+    # don't continue if we couldn't check the spreadsheet
+    return if self.errors_log.present?
+    # don't continue if there's a problem with the sheet
+    return unless remediation.problem_free?
+
+    logger.info { "Remediation remediation is problem free; processing #{remediation}" }
+
+    remediation.spreadsheet_data.each do |col_hash|
       begin
         publishable = _create col_hash
         publishable.publish remediation.created_by_id, force: true
@@ -46,6 +54,17 @@ class RemediationAgent < ActiveRecord::Base
 
   def create_and_publish col_hash
     publishable = _create col_hash
+  end
+
+  def _check_spreadsheet
+    begin
+      remediation.check
+    rescue Exception => e
+      col_hash = { column: :spreadsheet }
+      log_error col_hash, nil, "Error processing spreadsheet: #{e}"
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
+    end
   end
 
   def _create col_hash

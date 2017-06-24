@@ -1,37 +1,52 @@
 <p id="notice"><%= notice %></p>
 
+<div class="row">
 <h1>Listing Remediations</h1>
+</div>
 
-<% if @remediations.present? %>
+<div class="row">
+  <%= paginate @remediations %>
+  <br>
+  <% if @remediations.present? %>
   <%= link_to 'New Remediation', new_remediation_path, class: 'btn btn-primary' %>
-<% end %>
+  <% end %>
+</div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Spreadsheet</th>
-      <th>Uploaded</th>
-      <th>By</th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="row">
+  <br>
+  <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Note!</strong> Latest remedations are listed first.
+  </div>
+</div>
 
-  <tbody>
-    <% @remediations.each do |remediation| %>
+<div class="row">
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Spreadsheet</th>
+        <th>Uploaded</th>
+        <th>By</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @remediations.each do |remediation| %>
       <tr>
         <td><%= remediation.spreadsheet_file_name %></td>
-        <td><%= remediation.created_at.to_formatted_s :long %></td>
+        <td><%= remediation.created_at.to_formatted_s :smart_and_fancy %></td>
         <td><%= remediation.created_by_username %></td>
         <td>
-        <%= link_to raw('<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>'), remediation.spreadsheet.url { |n|  }, class: 'btn btn-default', 'title': 'Download spreadsheet', 'aria-label': 'Download spreadsheet' %>
-        <%= link_to 'Details', remediation, class: 'btn btn-default' %>
+          <%= link_to raw('<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>'), remediation.spreadsheet.url { |n|  }, class: 'btn btn-default', 'title': 'Download spreadsheet', 'aria-label': 'Download spreadsheet' %>
+          <%= link_to 'Details', remediation, class: 'btn btn-default' %>
 
         </td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Remediation', new_remediation_path, class: 'btn btn-primary' %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <%= link_to 'New Remediation', new_remediation_path, class: 'btn btn-primary' %>
+</div>
