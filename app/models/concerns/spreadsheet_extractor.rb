@@ -181,6 +181,10 @@ module SpreadsheetExtractor
     @spreadsheet_data
   end
 
+  def entry_count
+    spreadsheet_data.size
+  end
+
   ##
   # Retun a RubyXML workbook object
   def workbook
@@ -189,6 +193,10 @@ module SpreadsheetExtractor
 
   def worksheet
     workbook[0]
+  end
+
+  def field_name col_sym
+    HEADER_HASH.fetch col_sym
   end
 
   ##

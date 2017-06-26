@@ -6,25 +6,26 @@
 
 <div class="row">
   <%= paginate @remediations %>
-  <br>
-  <% if @remediations.present? %>
+</div>
+<% if @remediations.present? %>
+  <div class="row">
   <%= link_to 'New Remediation', new_remediation_path, class: 'btn btn-primary' %>
-  <% end %>
-</div>
-
-<div class="row">
-  <br>
-  <div class="alert alert-info alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Note!</strong> Latest remedations are listed first.
   </div>
-</div>
+  <br>
+  <div class="row">
+    <div class="alert alert-info alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Note!</strong> Latest remedations are listed first.
+    </div>
+  </div>
+<% end %>
 
 <div class="row">
 <table class="table table-striped">
     <thead>
       <tr>
         <th>Spreadsheet</th>
+        <th>Status</th>
         <th>Uploaded</th>
         <th>By</th>
         <th></th>
@@ -35,6 +36,7 @@
       <% @remediations.each do |remediation| %>
       <tr>
         <td><%= remediation.spreadsheet_file_name %></td>
+        <td><%= remediation.remediation_agent_status %></td>
         <td><%= remediation.created_at.to_formatted_s :smart_and_fancy %></td>
         <td><%= remediation.created_by_username %></td>
         <td>

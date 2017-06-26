@@ -15,6 +15,11 @@
   <div class="col-sm-6 field-value"><%= link_to @remediation.spreadsheet_file_name, @remediation.spreadsheet.url %></div>
 </div>
 
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :remediation_agent_status %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.remediation_agent_status %></div>
+</div>
+
 <% if @remediation.publications_log.present? %>
   <div class="row">
   <h3>Pulication notes</h3>
@@ -31,16 +36,22 @@
 <% end %>
 
 <% if @remediation.problems.present? %>
-  <div class="row">
-    <h3>Spreadsheet Problems</h3>
-  </div>
-  <div class="row field-group">
-    <div class="col-sm-4 field-label"><%= human_name @remediation, :problems %></div>
-    <div class="col-sm-6 field-value"><%= @remediation.problems %></div>
-  </div>
+<div class="row">
+  <h3>Spreadsheet Problems</h3>
+  <ul>
+    <% @remediation.problems.each do |col, messages| %>
+    <li>Column: <%= col %>
+      <ul>
+        <% messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </li>
+    <% end %>
+  </ul>
+</div>
+
 <% end %>
-
-
 
 <div class="row">
   <%= link_to 'Remediations list', remediations_path, class: 'btn btn-default' %>

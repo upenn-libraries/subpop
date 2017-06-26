@@ -9,35 +9,31 @@ class RemediationAgent < ActiveRecord::Base
 
   validates :remediation, presence: true
 
+  STATUS_UNCHECKED            = 'unchecked'
+  STATUS_CHECKING             = 'checking'
+  STATUS_FAILED_CHECK         = 'failed-check'
+  STATUS_PASSED_CHECK         = 'passed-checked'
+  STATUS_PROCESSING           = 'processing'
+  STATUS_COMPLETE             = 'complete'
+  STATUS_COMPLETE_WITH_ERRORS = 'complete-with-errors'
+
+
   def not_provenance? col_hash
     col_hash[:evidence_format].blank?
   end
 
   def remediate
-    logger.info { "Pre-checking remediation: #{remediation}" }
-    remediation.check
-    # don't continue if we couldn't check the spreadsheet
-    return if self.errors_log.present?
-    # don't continue if there's a problem with the sheet
-    return unless remediation.problem_free?
+    set_total
+    _check_spreadsheet
+    return unless passed_check?
+    _do_remediation
+  end
 
-    logger.info { "Remediation remediation is problem free; processing #{remediation}" }
-
-    remediation.spreadsheet_data.each do |col_hash|
-      begin
-        publishable = _create col_hash
-        publishable.publish remediation.created_by_id, force: true
-        log_publication col_hash, publishable
-      rescue Exception => e
-        log_error col_hash, publishable, e.to_s
-      end
-    end
+  def set_status status
+    self.update_attribute :status, status
   end
 
   def log_publication col_hash, publishable
-    # return if self.publications_log.present?
-    # self.publications_log = []
-    # self.publications_log << "alfkdjsaf;lsjeso[id uioda esdoqwdfijhsafjkshfskjernhwoipuqdxnuewaopidxumweoixnuepoxfehwao"
     deets = { class_name: publishable.class.name, id: publishable.id }
     self.publications_log ||= []
     self.publications_log << { col_hash[:column].to_sym => deets }
@@ -57,14 +53,48 @@ class RemediationAgent < ActiveRecord::Base
   end
 
   def _check_spreadsheet
+    logger.info { "Pre-checking remediation: #{remediation.inspect}" }
+    set_status STATUS_CHECKING
     begin
       remediation.check
+
+      if remediation.problem_free?
+        set_status STATUS_PASSED_CHECK
+      else
+        set_status STATUS_FAILED_CHECK
+      end
     rescue Exception => e
       col_hash = { column: :spreadsheet }
       log_error col_hash, nil, "Error processing spreadsheet: #{e}"
       logger.error e.message
       logger.error e.backtrace.join("\n")
+      set_status STATUS_FAILED_CHECK
     end
+  end
+
+  def _do_remediation
+    logger.info { "Remediation remediation is problem free; processing #{remediation.inspect}" }
+    set_status STATUS_PROCESSING
+
+    remediation.spreadsheet_data.each do |col_hash|
+      begin
+        publishable = _create col_hash
+        publishable.publish remediation.created_by_id, force: true
+        log_publication col_hash, publishable
+      rescue Exception => e
+        log_error col_hash, publishable, e.to_s
+      end
+    end
+
+    if self.errors_log.present?
+      set_status STATUS_COMPLETE_WITH_ERRORS
+    else
+      set_status STATUS_COMPLETE
+    end
+  end
+
+  def passed_check?
+    ![STATUS_UNCHECKED, STATUS_CHECKING, STATUS_FAILED_CHECK].include? self.status
   end
 
   def _create col_hash

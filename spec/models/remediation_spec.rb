@@ -20,7 +20,7 @@ RSpec.describe Remediation, type: :model do
   let(:valid_bookplate) {
     {
       column:                           "C",
-      flick_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
+      flickr_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
       url_to_catalog:                   "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5050597",
       copy_current_repository:          "Penn Libraries",
       copy_current_collection:          "American Culture Class Collection",
@@ -39,7 +39,7 @@ RSpec.describe Remediation, type: :model do
   let(:minimal_bookplate) {
     {
       column:                           "MB",
-      flick_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
+      flickr_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
       copy_current_repository:          "Penn",
       copy_call_number_shelf_mark:      "AC8 H3188 A825y",
       copy_title:                       "Youth's keepsake : A Christmas and New Year's gift for young people.",
@@ -51,7 +51,7 @@ RSpec.describe Remediation, type: :model do
   # let(:evidence_date_start_invalid) {
   #   {
   #     column:                           "C",
-  #     flick_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
+  #     flickr_url:                        "https://www.flickr.com/photos/58558794@N07/6106275763",
   #     url_to_catalog:                   "http://franklin.library.upenn.edu/record.html?id=FRANKLIN_5050597",
   #     copy_current_repository:          "Penn Libraries",
   #     copy_current_collection:          "American Culture Class Collection",
@@ -72,7 +72,7 @@ RSpec.describe Remediation, type: :model do
   let(:all_required_fields) {
     {
       column:                      'RQ',
-      flick_url:                   'flickr.url',
+      flickr_url:                  'flickr.url',
       copy_current_repository:     'Required Repositories',
       copy_title:                  'required title',
       copy_call_number_shelf_mark: 'required0.1 number2',
@@ -82,6 +82,7 @@ RSpec.describe Remediation, type: :model do
 
  let(:missing_required_fields) {
     {
+      flickr_url:                  '',
       column:                      'MQ',
       copy_current_repository:     '',
       copy_title:                  '',
@@ -95,7 +96,7 @@ RSpec.describe Remediation, type: :model do
   let(:all_good_dates) {
     {
       column:                    'AD',
-      flick_url:                 'flickr.url',
+      flickr_url:                'flickr.url',
       copy_date_of_publication:  '1111',
       evidence_date_start:       '1112',
       evidence_date_end:         '1113',
@@ -108,7 +109,7 @@ RSpec.describe Remediation, type: :model do
   let(:all_bad_dates) {
     {
       column:                    'BD',
-      flick_url:                 'flickr.url',
+      flickr_url:                'flickr.url',
       copy_date_of_publication:  '8111',
       evidence_date_start:       'a112',
       evidence_date_end:         'c.1113',
@@ -120,7 +121,7 @@ RSpec.describe Remediation, type: :model do
    let(:bad_format_bad_content_type) {
     {
       column:                'BF',
-      flick_url:             'flickr.url',
+      flickr_url:             'flickr.url',
       evidence_format:       'an invalid format',
       evidence_content_type: 'an invalid content_type | Armorial'
     }
@@ -129,7 +130,7 @@ RSpec.describe Remediation, type: :model do
    let(:good_other_format) {
     {
       column:                'GO',
-      flick_url:             'flickr.url',
+      flickr_url:            'flickr.url',
       evidence_format:       'Other Format',
       evidence_other_format: 'pressed flower'
     }
@@ -138,7 +139,7 @@ RSpec.describe Remediation, type: :model do
    let(:bad_other_format) {
     {
       column:                'BO',
-      flick_url:             'flickr.url',
+      flickr_url:            'flickr.url',
       evidence_format:       'Other Format',
       evidence_other_format: ''
     }
@@ -148,7 +149,7 @@ RSpec.describe Remediation, type: :model do
   let(:good_flickr_photo) {
     {
       column:    'FP',
-      flick_url: 'https://www.flickr.com/photos/58558794@N07/6106275763',
+      flickr_url: 'https://www.flickr.com/photos/58558794@N07/6106275763',
       format:    'Inscription'
     }
   }
@@ -163,7 +164,7 @@ RSpec.describe Remediation, type: :model do
   let(:non_url) {
     {
       column:    'NU',
-      flick_url: 'not a url at all',
+      flickr_url: 'not a url at all',
       format:    'Inscription'
     }
   }
@@ -171,7 +172,7 @@ RSpec.describe Remediation, type: :model do
   let(:bad_flickr_url) {
     {
       column:    'BF',
-      flick_url: '',
+      flickr_url: '',
       format:    'Inscription'
     }
   }
@@ -295,7 +296,7 @@ RSpec.describe Remediation, type: :model do
           "Drawing/Illumination",
           "Inscription",
           "Other paste-in",
-          "Seal",
+          "Wax Seal",
           "Stamp -- inked",
           "Stamp -- blind or embossed",
           "Stamp -- perforated",
@@ -303,9 +304,11 @@ RSpec.describe Remediation, type: :model do
           "Title Page (non-evidence)",
           "Context Image (non-evidence"
         ]
-        single_field_hashes = valid_formats.map{ |fmt| {column: 'A', flick_url: 'flickr.url', evidence_format: fmt} }
-        single_field_hashes.each{ |h| subject.check_entry(h) }
-        expect(subject.fetch_problem(:A).join).to_not include('evidence_format')
+        valid_formats.each do |fmt|
+          remediation = Remediation.new
+          remediation.check_format fmt
+          expect(remediation).to be_problem_free
+        end
       end
 
       it 'is invalid if format is not in the format list' do
@@ -329,10 +332,11 @@ RSpec.describe Remediation, type: :model do
           "Seller's Mark",
           "Signature"
         ]
-        single_field_hashes = valid_content_types.map{ |c_t| {column: 'A', evidence_format: 'Inscription', evidence_content_type: c_t} }
-        single_field_hashes.each{ |h| subject.check_entry(h) }
-        subject.check_entry({column: 'A', flick_url: 'flickr.url', evidence_format: 'Inscription', evidence_content_type: 'Armorial | Gift | Monogram'})
-        expect(subject.fetch_problem(:A).join).to_not include('evidence_content_type')
+        valid_content_types.each { |n| ContentType.find_or_create_by name: n }
+        valid_content_types.each do |content_type|
+          remediation = Remediation.new
+          expect(remediation.valid_content_type? content_type).to be_truthy, "exepected #{content_type} to be valid"
+        end
       end
 
       it 'is invalid if not all content types are in the content type list' do
@@ -402,12 +406,12 @@ RSpec.describe Remediation, type: :model do
     end
 
     context 'images' do
-      it 'is valid if flick_url is live' do
+      it 'is valid if flickr_url is live' do
         subject.check_entry(good_flickr_photo)
-        expect(subject.fetch_problem(:FP).join).to_not include('flick_url')
+        expect(subject.fetch_problem(:FP).join).to_not include('flickr_url')
       end
 
-      it 'is invalid if flick_url is not live'
+      it 'is invalid if flickr_url is not live'
 
       it 'is valid if image file can be found on OPenn'
 

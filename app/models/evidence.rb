@@ -35,6 +35,8 @@ class Evidence < ActiveRecord::Base
              [ 'Other Format',                 'other' ],
             ]
 
+  FORMAT_NAMES = FORMATS.map &:first
+
   FORMATS_BY_CODE = FORMATS.inject({}) { |hash, pair|
     hash.merge(pair.last => pair.first)
   }

@@ -7,8 +7,17 @@ module SpreadsheetChecker
 
   include SpreadsheetPhotoURL
 
+  def check
+    verify_headings
+    self.save
+    return if self.problems.present?
+    spreadsheet_data.each{ |entry| check_entry(entry) }
+    self.save
+    true
+  end
+
   def problem_free?
-   self.problems.blank?
+    self.problems.blank?
   end
 
   def fetch_problem col_sym
@@ -16,19 +25,13 @@ module SpreadsheetChecker
     self.problems[col_sym] || []
   end
 
-  def check
-   verify_headings
-   return if self.problems.present?
-   spreadsheet_data.each{ |entry| check_entry(entry) }
-   true
-  end
-
   def verify_headings
     headings.keys.each do |heading_key|
-      add_problem(nil, "ERROR--invalid heading [#{heading_key}]", :headings) unless known_heading?(heading_key)
+      add_problem(heading_key, "invalid heading: #{heading_key}", :headings) unless known_heading?(heading_key)
     end
+
     REQUIRED_FIELDS.each do |field|
-      add_problem(nil, "ERROR--missing required field [#{field}]", :headings) unless headings[field]
+      add_problem(field, "missing required field: '#{field_name field}'", :headings) unless headings[field]
     end
   end
 
@@ -44,39 +47,52 @@ module SpreadsheetChecker
   def check_photo url_or_filename
     return add_problem(:flickr_url, 'is required') if url_or_filename.blank?
     data = image_url_data(url_or_filename)
-    data.live? or add_problem(:flickr_url, "doesn't point to a live file #{(date.image_url)}")
+    data.live? or add_problem(:flickr_url, "doesn't point to a live file #{(data.image_url)}")
   end
 
-  def check_field(field_name, value)
-    required_field = REQUIRED_FIELDS.include?(field_name)
-    required_field = true if field_name == :evidence_other_format && @other_format_flag
-    @other_format_flag = true if field_name == :evidence_format && (value == 'Other Format')
+  def check_field(heading, value)
+    required_field     = true if REQUIRED_FIELDS.include?(heading)
+    required_field     = true if (heading == :evidence_other_format && @other_format_flag)
+    @other_format_flag = (heading == :evidence_format && value == 'Other Format')
 
-    return add_problem(field_name, 'is required') if value.blank? && required_field
-    return if value.blank?
-    return check_list_field(field_name, value) if LIST_FIELDS.include?(field_name)
-    return check_year_field(field_name, value) if YEAR_FIELDS.include?(field_name)
+    return add_problem(heading, 'is required') if required_field && value.blank?
+    return                                     if value.blank?
+    return check_format heading                if heading == :evidence_format
+    return check_piped_content_type value      if heading == :evidence_content_type
+    return check_year_field(heading, value)    if YEAR_FIELDS.include?(heading)
     nil
   end
 
-  def check_list_field field_name, value
-    return check_piped_content_type(value) if field_name == :evidence_content_type && value.include?('|')
-    return if VALID_LIST_VALUES[field_name].include? value
-    add_problem(field_name, 'has invalid data entered')
+  def check_format value
+    # format is required, but that's checked elsewhere
+    return if value.blank?
+    return if VALID_LIST_VALUES[:evidence_format].include? value.to_s.strip
+    add_problem :evidence_format, "'#{value}' is not a valid value"
   end
 
-  def check_piped_content_type value
-    types = value.split '|'
-    no_problems = types.all? do |t|
-      VALID_LIST_VALUES[:evidence_content_type].include? t.strip
+  def check_piped_content_type values
+    values.to_s.strip.split('|').each do |value|
+      next if valid_content_type? value
+      add_problem :evidence_content_type, "#{value} is not a valid value"
     end
-    return if no_problems
-    add_problem(:evidence_content_type, 'has invalid data entered ("#{value}")')
   end
 
-  def check_year_field field_name, value
+  def valid_content_type? value
+    # blank is valid
+    return true if value.blank?
+
+    # THIS IS IMPORTANT!!!! --- ContentTypes are configurable. We cache
+    # values from the database for the scope of a single spreadsheet check.
+    # Setting valid content_types in a constant could (would definitely?)
+    # prevent updating of the information for subsequent checks.
+    @valid_content_types ||= ContentType.select(:name).map &:name
+
+    return true if @valid_content_types.include? value.to_s.strip
+  end
+
+  def check_year_field heading, value
     return if valid_year?(value)
-    add_problem(field_name, 'is not a valid year')
+    add_problem(heading, 'is not a valid year')
   end
 
   def valid_year? value
@@ -84,15 +100,15 @@ module SpreadsheetChecker
     (-5000..3000).include? value.to_i
   end
 
-  def add_problem field_name, message, problem_type = nil
-    key = @col_sym unless problem_type
+  def add_problem heading, message, problem_type = nil
+    key = problem_type || @col_sym
     self.problems ||= {}
-    s = format_message(field_name, message)
+    s = format_message(heading, message)
     (self.problems[key] ||= []) << s
   end
 
-  def format_message field_name, message
-    "ERROR--[#{field_name}]: #{message}"
+  def format_message heading, message
+    "ERROR--[#{heading}]: #{message}"
   end
 
   def assemble_message
@@ -121,11 +137,6 @@ module SpreadsheetChecker
     evidence_format
     )
 
-  LIST_FIELDS = %i(
-    evidence_format
-    evidence_content_type
-    )
-
   YEAR_FIELDS = %i(
     copy_date_of_publication
     evidence_date
@@ -134,38 +145,9 @@ module SpreadsheetChecker
   )
 
   VALID_LIST_VALUES = {
-
-    evidence_format: [
-      "Binding",
-      "Binding Waste",
-      "Bookplate/Label",
-      "Drawing/Illumination",
-      "Inscription",
-      "Other paste-in",
-      "Seal",
-      "Stamp -- inked",
-      "Stamp -- blind or embossed",
-      "Stamp -- perforated",
-      "Other Format",
+    evidence_format: Evidence::FORMAT_NAMES + [
       "Title Page (non-evidence)",
-      "Context Image (non-evidence"
-    ],
-
-    evidence_content_type: [
-      "Armorial",
-      "Bibliographic Note",
-      "Binder's Mark",
-      "(De)Accession Mark",
-      "Effaced",
-      "Forgery/Copy",
-      "Gift",
-      "Monogram",
-      "Price/Purchase Information",
-      "Sale Record",
-      "Shelf Mark",
-      "Seller's Mark",
-      "Signature"
-    ]
+      "Context Image (non-evidence"]
   }
 end
 
