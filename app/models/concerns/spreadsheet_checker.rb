@@ -57,7 +57,7 @@ module SpreadsheetChecker
 
     return add_problem(heading, 'is required') if required_field && value.blank?
     return                                     if value.blank?
-    return check_format heading                if heading == :evidence_format
+    return check_format value                  if heading == :evidence_format
     return check_piped_content_type value      if heading == :evidence_content_type
     return check_year_field(heading, value)    if YEAR_FIELDS.include?(heading)
     nil

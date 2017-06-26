@@ -20,6 +20,16 @@
   <div class="col-sm-6 field-value"><%= @remediation.remediation_agent_status %></div>
 </div>
 
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :processed_count %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.processed_count %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :total_count %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.total_count %></div>
+</div>
+
 <% if @remediation.publications_log.present? %>
   <div class="row">
   <h3>Pulication notes</h3>

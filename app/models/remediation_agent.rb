@@ -29,6 +29,14 @@ class RemediationAgent < ActiveRecord::Base
     _do_remediation
   end
 
+  def set_total
+    self.update_attribute :total_count, remediation.entry_count
+  end
+
+  def set_count count
+    self.update_attribute :processed_count, count
+  end
+
   def set_status status
     self.update_attribute :status, status
   end
@@ -76,7 +84,7 @@ class RemediationAgent < ActiveRecord::Base
     logger.info { "Remediation remediation is problem free; processing #{remediation.inspect}" }
     set_status STATUS_PROCESSING
 
-    remediation.spreadsheet_data.each do |col_hash|
+    remediation.spreadsheet_data.each_with_index do |col_hash, index|
       begin
         publishable = _create col_hash
         publishable.publish remediation.created_by_id, force: true
@@ -84,6 +92,7 @@ class RemediationAgent < ActiveRecord::Base
       rescue Exception => e
         log_error col_hash, publishable, e.to_s
       end
+      set_count index+1
     end
 
     if self.errors_log.present?

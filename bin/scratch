@@ -7,8 +7,14 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails g migration add_status_to_remediation_agents \
-  status:string
+rails g migration add_processed_count_to_remediation_agents \
+  processed_count:integer
+
+# rails g migration add_total_count_to_remediation_agents \
+#   total_count:integer
+
+# rails g migration add_status_to_remediation_agents \
+#   status:string
 
 # rails g migration add_gender_to_names gender:string
 

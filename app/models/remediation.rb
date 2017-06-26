@@ -15,6 +15,8 @@ class Remediation < ActiveRecord::Base
   validates :spreadsheet, presence: true
 
   delegate :publications_log, to: :remediation_agent, prefix: false, allow_nil: true
-  delegate :status, to: :remediation_agent, prefix: true, allow_nil: true
+  delegate :status,           to: :remediation_agent, prefix: true,  allow_nil: true
+  delegate :total_count,      to: :remediation_agent, prefix: false, allow_nil: true
+  delegate :processed_count,  to: :remediation_agent, prefix: false, allow_nil: true
 
 end
