@@ -42,6 +42,8 @@ gem 'devise', '~> 4.1.1'
 # authorization
 gem 'cancancan', '~> 1.10'
 
+gem 'rubyXL', '~> 3.3.23'
+
 # pagination
 gem 'kaminari', '~> 0.16.3'
 
@@ -51,6 +53,8 @@ gem 'paperclip', '~> 4.3'
 gem 'delayed_job_active_record', '~> 4.1.0'
 # process paperclip in the background
 gem 'delayed_paperclip', '~> 2.9.1'
+
+gem 'roo', '~> 2.7.1'
 
 gem 'daemons', '1.1.9'
 

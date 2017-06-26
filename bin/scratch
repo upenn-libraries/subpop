@@ -7,9 +7,49 @@ cd `dirname $0`/..
 
 generator_options="--no-helper --no-view-specs --no-helper-specs --no-assets --no-stylesheets"
 
-rails generate migration add_translation_to_evidence \
- translation:text \
-  $generator_options
+rails g migration add_processed_count_to_remediation_agents \
+  processed_count:integer
+
+# rails g migration add_total_count_to_remediation_agents \
+#   total_count:integer
+
+# rails g migration add_status_to_remediation_agents \
+#   status:string
+
+# rails g migration add_gender_to_names gender:string
+
+# rails g migration add_errors_log_to_remediation_agents \
+#   errors_log:text
+
+# rails g model remediation_agent \
+#   remediation:references \
+#   transformations_log:text \
+#   publications_log:text
+
+# rails g scaffold remediation \
+# 	problems:text \
+# 	created_by_id:integer \
+# 	updated_by_id:integer \
+#     $generator_options
+
+# rails g migration change_book_title_from_string_to_text
+
+# rails g model remediation_agent \
+#   remediation:references \
+#   transformations_log:text \
+#   publications_log:text
+
+# rails g migration add_spreadsheet_to_remediations
+
+# rails g scaffold remediation \
+#   problems:text \
+#   created_by_id:integer \
+#   updated_by_id:integer \
+#   $generator_options
+
+# rails generate migration add_translation_to_evidence \
+#  translation:text \
+#   $generator_options
 
 #rails generate migration add_original_id_to_photos \
  # original_id:integer

@@ -1,8 +1,12 @@
 
 this_dir=`pwd`
 if [[ -f $this_dir/$BASH_SOURCE ]]; then
-  echo "Adding $this_dir/bin to PATH"
-  export PATH=$this_dir/bin:$PATH
+  if echo $PATH | grep -F "$this_dir/bin" >/dev/null ; then
+    echo "Already added to PATH: $this_dir/bin"
+  else
+    echo "Adding $this_dir/bin to PATH"
+    export PATH=$this_dir/bin:$PATH
+  fi
 else
   echo "Could not find expected file $this_dir/$BASH_SOURCE"
 fi

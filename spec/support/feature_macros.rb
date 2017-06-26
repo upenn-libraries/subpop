@@ -59,6 +59,17 @@ module FeatureMacros
     create_photo book: @book
   end
 
+  def create_remediation_by username, attributes={}
+    create_obect_by username, :remediation, attributes
+  end
+
+  def create_obect_by username, obj_sym, attributes={}
+    user = add_user username
+
+    obj = build obj_sym.to_sym, attributes
+    obj.save_by user
+  end
+
   def make_photo_a_title_page
     @title_page = FactoryGirl.create :title_page, book: @book, photo: @photo
   end

@@ -227,4 +227,9 @@ module ApplicationHelper
     return 'all' unless user_signed_in?
     current_user.username
   end
+
+  def format_smart_date datetime
+    return datetime.to_formatted_s :weekday_with_tz_name if datetime > 7.days.ago
+    datetime.to_formatted_s :date_with_tz_name
+  end
 end

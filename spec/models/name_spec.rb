@@ -29,6 +29,27 @@ RSpec.describe Name, type: :model do
     it "is not valid if VIAF ID is not a number" do
       expect(build(:name, viaf_id: "123456789012345678901234567890x")).not_to be_valid
     end
+
+    it "is valid if gender is 'male'" do
+      expect(build(:name, gender: 'male')).to be_valid
+    end
+
+    it "is valid if gender is 'female'" do
+      expect(build(:name, gender: 'female')).to be_valid
+    end
+
+    it "is valid if gender is 'other'" do
+      expect(build(:name, gender: 'other')).to be_valid
+    end
+
+    it 'is valid if gender is blank' do
+      expect(build(:name, gender: nil)).to be_valid
+    end
+
+    it "is invalid if gender is 'x'" do
+      expect(build(:name, gender: 'x')).not_to be_valid
+    end
+
   end
 
   context 'date_string' do
