@@ -30,6 +30,7 @@ services:
       - ./docker/nginx/cert.crt:/etc/nginx/cert.crt
       - ./docker/nginx/cert.key:/etc/nginx/cert.key
       - '${DOCKER_APP_LOCAL_PUBLIC_DIR}:/subpop/public'
+      - '${DOCKER_APP_LOCAL_IMAGE_DIR}:/subpop/public/system/'
     ports:
       - "8443:8443"
     command: /bin/bash -c "nginx -g 'daemon off;'"

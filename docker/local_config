@@ -1,2 +1,2 @@
-DOCKER_APP_LOCAL_PUBLIC_DIR=/private/var/provenance/public
-DOCKER_APP_LOCAL_IMAGE_DIR=/private/var/provenance/images
+DOCKER_APP_LOCAL_PUBLIC_DIR=/var/provenance/public
+DOCKER_APP_LOCAL_IMAGE_DIR=/var/provenance/images
