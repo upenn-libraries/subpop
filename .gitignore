@@ -42,3 +42,4 @@ bower.json
 .ruby-version
 .\#*
 .byebug_history
+.idea/
