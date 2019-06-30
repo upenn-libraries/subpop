@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+<h1>Listing Remediations</h1>
+</div>
+
+<div class="row">
+  <%= paginate @remediations %>
+</div>
+<% if @remediations.present? %>
+  <div class="row">
+  <%= link_to 'New Remediation', new_remediation_path, class: 'btn btn-primary' %>
+  </div>
+  <br>
+  <div class="row">
+    <div class="alert alert-info alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Note!</strong> Latest remedations are listed first.
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Spreadsheet</th>
+        <th>Status</th>
+        <th>Uploaded</th>
+        <th>By</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @remediations.each do |remediation| %>
+      <tr>
+        <td><%= remediation.spreadsheet_file_name %></td>
+        <td><%= remediation.remediation_agent_status %></td>
+        <td><%= remediation.created_at.to_formatted_s :smart_and_fancy %></td>
+        <td><%= remediation.created_by_username %></td>
+        <td>
+          <%= link_to raw('<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>'), remediation.spreadsheet.url { |n|  }, class: 'btn btn-default', 'title': 'Download spreadsheet', 'aria-label': 'Download spreadsheet' %>
+          <%= link_to 'Details', remediation, class: 'btn btn-default' %>
+
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <%= link_to 'New Remediation', new_remediation_path, class: 'btn btn-primary' %>
+</div>

@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923150458) do
+ActiveRecord::Schema.define(version: 20170626195534) do
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "user_id",       limit: 4,     null: false
+    t.string   "user_type",     limit: 255
+    t.string   "document_id",   limit: 255
+    t.string   "document_type", limit: 255
+    t.binary   "title",         limit: 65535
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "bookmarks", ["document_id"], name: "index_bookmarks_on_document_id", using: :btree
+  add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "repository",     limit: 255
@@ -22,12 +35,12 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.string   "catalog_url",    limit: 255
     t.string   "vol_number",     limit: 255
     t.string   "author",         limit: 255
-    t.string   "title",          limit: 255
+    t.text     "title",          limit: 65535
     t.string   "creation_place", limit: 255
     t.integer  "creation_date",  limit: 4
     t.string   "publisher",      limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "other_id",       limit: 255
     t.string   "other_id_type",  limit: 255
     t.boolean  "sammelband"
@@ -35,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.integer  "updated_by_id",  limit: 4
     t.string   "date_narrative", limit: 255
     t.string   "acq_source",     limit: 255
+    t.text     "comment_book",   limit: 65535
   end
 
   create_table "content_types", force: :cascade do |t|
@@ -45,7 +59,6 @@ ActiveRecord::Schema.define(version: 20160923150458) do
   end
 
   create_table "context_images", force: :cascade do |t|
-    t.integer  "book_id",              limit: 4
     t.integer  "photo_id",             limit: 4
     t.boolean  "publishing_to_flickr"
     t.boolean  "deleted",                        default: false
@@ -53,6 +66,7 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.integer  "updated_by_id",        limit: 4
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
+    t.integer  "book_id",              limit: 4
     t.integer  "evidence_count",       limit: 4
   end
 
@@ -96,7 +110,6 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.boolean  "deleted",                             default: false
     t.integer  "created_by_id",         limit: 4
     t.integer  "updated_by_id",         limit: 4
-    t.text     "translation",           limit: 65535
     t.integer  "context_image_id",      limit: 4
     t.text     "translation",           limit: 65535
   end
@@ -116,16 +129,17 @@ ActiveRecord::Schema.define(version: 20160923150458) do
   add_index "evidence_content_types", ["evidence_id"], name: "index_evidence_content_types_on_evidence_id", using: :btree
 
   create_table "names", force: :cascade do |t|
-    t.string   "name",                    limit: 255,             null: false
+    t.string   "name",                    limit: 255,               null: false
     t.integer  "year_start",              limit: 4
     t.integer  "year_end",                limit: 4
     t.string   "viaf_id",                 limit: 255
-    t.string   "comment",                 limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.integer  "provenance_agents_count", limit: 4,   default: 0
+    t.text     "comment",                 limit: 65535
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.integer  "provenance_agents_count", limit: 4,     default: 0
     t.integer  "created_by_id",           limit: 4
     t.integer  "updated_by_id",           limit: 4
+    t.string   "gender",                  limit: 255
   end
 
   add_index "names", ["name"], name: "index_names_on_name", unique: true, using: :btree
@@ -168,6 +182,42 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.integer  "updated_by_id",    limit: 4
   end
 
+  create_table "remediation_agents", force: :cascade do |t|
+    t.integer  "remediation_id",      limit: 4
+    t.text     "transformations_log", limit: 65535
+    t.text     "publications_log",    limit: 65535
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.text     "errors_log",          limit: 65535
+    t.string   "status",              limit: 255,   default: "unchecked"
+    t.integer  "total_count",         limit: 4
+    t.integer  "processed_count",     limit: 4,     default: 0
+  end
+
+  add_index "remediation_agents", ["remediation_id"], name: "index_remediation_agents_on_remediation_id", using: :btree
+
+  create_table "remediations", force: :cascade do |t|
+    t.text     "problems",                 limit: 65535
+    t.integer  "created_by_id",            limit: 4
+    t.integer  "updated_by_id",            limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "spreadsheet_file_name",    limit: 255
+    t.string   "spreadsheet_content_type", limit: 255
+    t.integer  "spreadsheet_file_size",    limit: 4
+    t.datetime "spreadsheet_updated_at"
+  end
+
+  create_table "searches", force: :cascade do |t|
+    t.binary   "query_params", limit: 65535
+    t.integer  "user_id",      limit: 4
+    t.string   "user_type",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
+
   create_table "test_table", primary_key: "field_binary", force: :cascade do |t|
   end
 
@@ -202,6 +252,7 @@ ActiveRecord::Schema.define(version: 20160923150458) do
     t.datetime "deleted_at"
     t.boolean  "admin"
     t.string   "full_name",              limit: 255
+    t.string   "institution",            limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -216,6 +267,7 @@ ActiveRecord::Schema.define(version: 20160923150458) do
   add_foreign_key "evidence_content_types", "evidence"
   add_foreign_key "provenance_agents", "evidence"
   add_foreign_key "provenance_agents", "names"
+  add_foreign_key "remediation_agents", "remediations"
   add_foreign_key "title_pages", "books"
   add_foreign_key "title_pages", "photos"
 end

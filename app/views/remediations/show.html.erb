@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <h2>Remediation: <%= @remediation.spreadsheet_file_name %></h2>
+</div>
+
+<% unless @remediation.problems.blank? %>
+  <div class="row">
+    <%= link_to 'Remediations list', remediations_path, class: 'btn btn-default' %>
+  </div>
+<% end %>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :spreadsheet %></div>
+  <div class="col-sm-6 field-value"><%= link_to @remediation.spreadsheet_file_name, @remediation.spreadsheet.url %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :remediation_agent_status %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.remediation_agent_status %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :processed_count %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.processed_count %></div>
+</div>
+
+<div class="row field-group">
+  <div class="col-sm-4 field-label"><%= human_name @remediation, :total_count %></div>
+  <div class="col-sm-6 field-value"><%= @remediation.total_count %></div>
+</div>
+
+<% if @remediation.publications_log.present? %>
+  <div class="row">
+  <h3>Pulication notes</h3>
+  </div>
+  <% @remediation.publications_log.each do |log| %>
+    <% column = log.keys.first %>
+    <div class="row">
+      Column: <%= column %><br>
+      <%# binding.pry %>
+      Item: <%= publishable_link(log[column]) %><br>
+      Parent book: <%= book_link(log[column]) %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if @remediation.problems.present? %>
+<div class="row">
+  <h3>Spreadsheet Problems</h3>
+  <ul>
+    <% @remediation.problems.each do |col, messages| %>
+    <li>Column: <%= col %>
+      <ul>
+        <% messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </li>
+    <% end %>
+  </ul>
+</div>
+
+<% end %>
+
+<div class="row">
+  <%= link_to 'Remediations list', remediations_path, class: 'btn btn-default' %>
+</div>

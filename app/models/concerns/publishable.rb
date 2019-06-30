@@ -39,8 +39,8 @@ module Publishable
     scope :active, -> { where deleted: false }
   end
 
-  def publish user_id
-    return              unless publishable?
+  def publish user_id, force: false
+    return              unless force || publishable?
 
     # TODO: Changing to update_columns as a kludge in order to prevent
     # changing the timestamp. Need to add locking/in_process tracking to
@@ -81,7 +81,7 @@ module Publishable
       info = client.get_info flickr_id
 
       self.publication_data.assign_attributes metadata: info.to_json
-      self.publication_data.update_by! User.find user_id
+      self.publication_data.save_by! User.find user_id
     ensure
       unmark_in_process
     end

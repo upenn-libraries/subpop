@@ -51,6 +51,10 @@
           <li class= " link-height <%= 'active' if params[:controller] == 'user' -%>"><%= link_to "Users", user_index_path %></li>
           <% end -%>
 
+          <% if can? :manage, Remediation -%>
+          <li class= " link-height <%= 'active' if params[:controller] == 'remediations' -%>"><%= link_to "Remediations", remediations_path %></li>
+          <% end -%>
+
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if user_signed_in? -%>

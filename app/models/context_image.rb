@@ -15,6 +15,7 @@ class ContextImage < ActiveRecord::Base
     return "context image" unless book_full_name.present?
     "context image of #{book_full_name}"
   end
+  alias_method :full_name, :name
 
   def to_s
     model_name.human

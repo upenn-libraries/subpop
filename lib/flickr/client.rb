@@ -138,6 +138,10 @@ module Flickr
       @flickr.photos.setMeta({ photo_id: photo_id }.merge(metadata))
     end
 
+    def original_url photo_id
+      url get_info(photo_id), :url_o
+    end
+
     def url info, url_type
       FlickRaw.send url_type, info
     end
